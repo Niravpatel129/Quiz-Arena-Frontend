@@ -1,10 +1,11 @@
+import { Box, Heading, Text, VStack } from 'native-base';
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import socketService from '../../services/socketService';
 
 export default function QueueScreen({ route, navigation }) {
   const { categoryName } = route.params;
-  const [queueTime, setQueueTime] = React.useState(0);
+  const [queueTime, setQueueTime] = React.useState(1);
   const [playersInQueue, setPlayersInQueue] = React.useState(0);
 
   const startTimer = () => {
@@ -34,12 +35,31 @@ export default function QueueScreen({ route, navigation }) {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>This is the queue screen.</Text>
-      <Text>{categoryName}</Text>
-      <Text>In queue for: {queueTime} second</Text>
-      <Text>Players in queue: {playersInQueue}</Text>
-    </View>
+    <Box flex={1} bg='#fff' alignItems='center' justifyContent='center' p={5}>
+      <VStack space={8} alignItems='center' bg='#feeafa' p={10} borderRadius='lg' shadow={2}>
+        <Heading color='#5856d6' fontSize='4xl' fontWeight='semibold'>
+          Queue
+        </Heading>
+        <Text color='#5856d6' fontSize='md' fontWeight='bold'>
+          Category:{' '}
+          <Text color='#ff65a3' fontSize='md' fontWeight='bold'>
+            {categoryName}
+          </Text>
+        </Text>
+        <Text color='#5856d6' fontSize='md' fontWeight='bold'>
+          Waiting Time:{' '}
+          <Text color='#ff65a3' fontSize='md' fontWeight='bold'>
+            {queueTime} seconds
+          </Text>
+        </Text>
+        <Text color='#5856d6' fontSize='md' fontWeight='bold'>
+          Players in Queue:{' '}
+          <Text color='#ff65a3' fontSize='md' fontWeight='bold'>
+            {playersInQueue}
+          </Text>
+        </Text>
+      </VStack>
+    </Box>
   );
 }
 
