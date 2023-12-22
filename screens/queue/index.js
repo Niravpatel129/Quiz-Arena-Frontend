@@ -28,8 +28,8 @@ export default function QueueScreen({ route, navigation }) {
     });
 
     return () => {
-      socketService.disconnect();
       setQueueTime(0);
+      socketService.emit('leave_queue', categoryName);
     };
   }, []);
 

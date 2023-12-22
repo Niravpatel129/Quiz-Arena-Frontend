@@ -10,14 +10,27 @@ export const useSocket = () => {
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
-  useEffect(() => {
+  const ConnectSocket = () => {
     const socketInstance = socketService.connect();
     setSocket(socketInstance);
+  };
+
+  useEffect(() => {
+    ConnectSocket();
 
     return () => {
       socketService.disconnect();
     };
   }, []);
 
-  return <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>;
+  return (
+    <SocketContext.Provider
+      value={{
+        socket,
+        ConnectSocket,
+      }}
+    >
+      {children}
+    </SocketContext.Provider>
+  );
 };

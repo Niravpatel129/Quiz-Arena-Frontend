@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { newRequest } from '../../api/newRequest';
+import { useSocket } from '../../context/socket/SocketContext';
 
 export default function HomeScreen({ navigation }) {
   const [loginInput, setLoginInput] = useState(localStorage.getItem('username') || 'nirav2');
+  const socket = useSocket();
 
   const NavigateToMainPage = () => {
     localStorage.setItem('username', loginInput);
@@ -14,6 +16,7 @@ export default function HomeScreen({ navigation }) {
         password: 'password',
       })
       .then((response) => {
+        socket.ConnectSocket();
         console.log('response', response);
         navigation.navigate('Categories');
       })

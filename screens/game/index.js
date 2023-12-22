@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import AnswerOptions from '../../components/AnswerOption';
 import Header from '../../components/Header';
 import Question from '../../components/Question';
@@ -28,25 +28,20 @@ const GameScreen = ({
 
   useEffect(() => {
     startTimer();
-    console.log('🚀  socketService:', socketService.socket.id);
 
     socketService.on('new_round', (data) => {
-      console.log('🚀  new_round:', data);
       setCountdown(0);
       setData(data);
     });
 
     socketService.on('game_over', (results) => {
-      console.log('🚀  game_over:', results);
       navigation.navigate('GameOver', {
         results: results,
         gameSession: data,
       });
     });
 
-    socketService.on('answer_result', (data) => {
-      console.log('🚀  answer_result:', data);
-    });
+    socketService.on('answer_result', (data) => {});
   }, []);
 
   const handleAnswer = (answer) => {
@@ -61,11 +56,11 @@ const GameScreen = ({
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Header yourData={myData} opponentData={opponentData} countdown={countdown} />
       <Question text={data?.question} />
       <AnswerOptions helperImage='' answersOptions={data?.options} handleAnswer={handleAnswer} />
-    </ScrollView>
+    </View>
   );
 };
 
