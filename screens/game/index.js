@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Animated, StyleSheet, View } from 'react-native';
 import AnswerOptions from '../../components/AnswerOption';
 import Header from '../../components/Header';
 import Question from '../../components/Question';
 import QuizAnimation from '../../components/QuizAnimation';
+import useConditionalFadeIn from '../../hooks/useConditionalFadeIn';
 import socketService from '../../services/socketService';
 
 const GameScreen = ({
@@ -21,6 +22,7 @@ const GameScreen = ({
     (player) => player.socketId !== socketService.socket.id,
   );
   const [showAnimation, setShowAnimation] = React.useState(true);
+  const fadeInOpacity = useConditionalFadeIn(countdown !== 0);
 
   const startTimer = () => {
     setInterval(() => {
@@ -71,7 +73,13 @@ const GameScreen = ({
       <View style={styles.container}>
         <Header yourData={myData} opponentData={opponentData} countdown={countdown} />
         <Question text={data?.question} />
-        <AnswerOptions helperImage='' answersOptions={data?.options} handleAnswer={handleAnswer} />
+        <Animated.View style={{ opacity: fadeInOpacity }}>
+          <AnswerOptions
+            helperImage=''
+            answersOptions={data?.options}
+            handleAnswer={handleAnswer}
+          />
+        </Animated.View>
       </View>
     </>
   );
