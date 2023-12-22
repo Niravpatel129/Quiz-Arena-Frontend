@@ -72,6 +72,7 @@ const GameScreen = ({
       <View style={styles.container}>
         <Header yourData={myData} opponentData={opponentData} countdown={countdown} />
         <Question text={data?.question} />
+
         <Animated.View style={{ opacity: fadeInOpacity }}>
           <AnswerOptions
             helperImage=''

@@ -1,10 +1,23 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 const Question = ({ text }) => {
+  // Create a reference to the animatable component
+  const animatableRef = useRef(null);
+
+  // Use useEffect to trigger the animation when the text changes
+  useEffect(() => {
+    if (animatableRef.current) {
+      animatableRef.current.bounceIn();
+    }
+  }, [text]);
+
   return (
     <View style={styles.questionContainer}>
-      <Text style={styles.questionText}>{text}</Text>
+      <Animatable.Text ref={animatableRef} animation='bounceIn' style={styles.questionText}>
+        {text}
+      </Animatable.Text>
     </View>
   );
 };

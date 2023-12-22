@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 export default function CategoriesScreen({ navigation }) {
   const categories = [
@@ -16,22 +17,36 @@ export default function CategoriesScreen({ navigation }) {
       name: 'Valorant',
     },
   ];
+
+  const baseDelay = 100;
+
   return (
     <View style={styles.container}>
       {/* list a array of categories */}
-      {categories.map((category) => (
-        <Pressable
-          style={styles.button}
+
+      {categories.map((category, index) => (
+        <Animatable.View
+          animation='bounceIn'
+          duration={800}
           key={category.id}
-          onPress={() =>
-            navigation.navigate('Queue', {
-              categoryId: category.id,
-              categoryName: category.name,
-            })
-          }
+          delay={baseDelay * index}
         >
-          <Text style={styles.text}>{category.name}</Text>
-        </Pressable>
+          <Pressable
+            style={{
+              ...styles.button,
+            }}
+            key={category.id}
+            color='#fff'
+            onPress={() =>
+              navigation.navigate('Queue', {
+                categoryId: category.id,
+                categoryName: category.name,
+              })
+            }
+          >
+            <Text style={styles.text}>{category.name}</Text>
+          </Pressable>
+        </Animatable.View>
       ))}
     </View>
   );
@@ -47,9 +62,9 @@ const styles = StyleSheet.create({
     marginBottom: '1rem',
     width: '100%',
     padding: '1rem',
-    border: '1px solid #ccc',
+    border: '1px solid #000',
     borderRadius: '5px',
-    backgroundColor: '#ff6d6d',
+    backgroundColor: '#f95656',
     color: '#fff',
   },
   text: {
