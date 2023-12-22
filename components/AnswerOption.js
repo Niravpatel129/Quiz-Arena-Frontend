@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
-const AnswerOptions = ({ answersOptions, handleAnswer }) => {
+const AnswerOptions = ({ answersOptions, handleAnswer, scores }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
 
@@ -19,13 +19,29 @@ const AnswerOptions = ({ answersOptions, handleAnswer }) => {
     handleAnswer(answerOption.optionText);
   };
 
+  const calculateScorePercentage = (score) => {
+    return ((10 - score) / 10) * 100;
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.leftBar}>
-        <View style={{ height: '50%', backgroundColor: '#adf2bc', borderRadius: 5 }}></View>
+        <View
+          style={{
+            height: `${calculateScorePercentage(scores.yourScore)}%`,
+            backgroundColor: '#adf2bc',
+            borderRadius: 5,
+          }}
+        ></View>
       </View>
       <View style={styles.rightBar}>
-        <View style={{ height: '50%', backgroundColor: '#f2adad', borderRadius: 5 }}></View>
+        <View
+          style={{
+            height: `${calculateScorePercentage(scores.opponentScore)}%`,
+            backgroundColor: '#f2adad',
+            borderRadius: 5,
+          }}
+        ></View>
       </View>
 
       <View style={styles.imageContainer}>
@@ -40,7 +56,7 @@ const AnswerOptions = ({ answersOptions, handleAnswer }) => {
         {answersOptions?.map((answerOption, index) => {
           let backgroundColor = '#fff'; // Default background
           if (answerOption === selectedAnswer) {
-            backgroundColor = isCorrect ? '#00ff00' : '#ff0000'; // Green if correct, red if incorrect
+            backgroundColor = isCorrect ? '#adf2bc' : '#f2adad'; // Green if correct, red if incorrect
           }
 
           return (
@@ -101,7 +117,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: 10,
     height: '100%',
-    backgroundColor: '#01ff38',
+    backgroundColor: '#00ff00',
     borderRadius: 5,
   },
   rightBar: {
@@ -110,7 +126,7 @@ const styles = StyleSheet.create({
     right: 0,
     width: 10,
     height: '100%',
-    backgroundColor: '#ff0101',
+    backgroundColor: '#ff0000',
     borderRadius: 5,
   },
 });

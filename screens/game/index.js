@@ -35,13 +35,12 @@ const GameScreen = ({
 
     socketService.on('new_round', (data) => {
       setCountdown(0);
-      setData(data);
+      if (data) setData(data);
     });
 
     socketService.on('game_over', (results) => {
       navigation.navigate('GameOver', {
         results: results,
-        gameSession: data,
       });
     });
 
@@ -78,6 +77,10 @@ const GameScreen = ({
             helperImage=''
             answersOptions={data?.options}
             handleAnswer={handleAnswer}
+            scores={{
+              yourScore: myData?.score,
+              opponentScore: opponentData?.score,
+            }}
           />
         </Animated.View>
       </View>
