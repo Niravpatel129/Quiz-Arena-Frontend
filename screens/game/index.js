@@ -60,10 +60,21 @@ const GameScreen = ({ GameState }) => {
     socketService.on('game_over', (data) => {
       console.log('🚀  game_over:', data);
     });
+
+    socketService.on('answer_result', (data) => {
+      console.log('🚀  answer_result:', data);
+    });
   }, []);
 
   const handleAnswer = (answer) => {
-    socketService.emit('answer', answer);
+    // Construct the data object to be sent
+    const resData = {
+      sessionId: data.sessionId,
+      answer: answer,
+    };
+
+    // Emit the event with the data
+    socketService.emit('submit_answer', resData);
   };
 
   return (
@@ -74,7 +85,7 @@ const GameScreen = ({ GameState }) => {
         countdown={countdown}
       />
       <Question text={data?.question} />
-      <AnswerOptions helperImage='' answersOptions={data?.options} />
+      <AnswerOptions helperImage='' answersOptions={data?.options} handleAnswer={handleAnswer} />
     </ScrollView>
   );
 };

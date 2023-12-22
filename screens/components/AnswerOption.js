@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
-const AnswerOptions = ({ answersOptions, onPress }) => {
+const AnswerOptions = ({ answersOptions, handleAnswer }) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftBar}>
@@ -22,7 +22,11 @@ const AnswerOptions = ({ answersOptions, onPress }) => {
       <View style={styles.answersContainer}>
         {answersOptions?.map((answerOption, index) => {
           return (
-            <Pressable style={styles.option} onPress={onPress} key={index}>
+            <Pressable
+              style={styles.option}
+              onPress={() => handleAnswer(answerOption.optionText)}
+              key={index}
+            >
               <Text style={styles.text}>{answerOption.optionText}</Text>
             </Pressable>
           );
