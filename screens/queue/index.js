@@ -46,7 +46,7 @@ export default function QueueScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    margin: '1rem',
+    margin: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -4,7 +4,7 @@ import { Animated, Dimensions, StyleSheet } from 'react-native';
 
 const HighlightEffect = ({ isCorrect, trigger }) => {
   const highlightAnim = useRef(new Animated.Value(0)).current;
-  const highlightColor = isCorrect ? 'green' : 'red';
+  const highlightColor = isCorrect ? '#5aff60' : '#ff7878';
   const { width } = Dimensions.get('window');
 
   useEffect(() => {

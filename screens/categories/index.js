@@ -55,20 +55,21 @@ export default function CategoriesScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: '1rem',
+    margin: 10,
   },
   button: {
-    // margin: '1rem',
-    marginBottom: '1rem',
+    marginBottom: 10,
+    marginTop: 10,
     width: '100%',
-    padding: '1rem',
-    border: '1px solid #000',
     borderRadius: '5px',
     backgroundColor: '#f95656',
     color: '#fff',
+    // height: 40,
+    padding: 10,
   },
   text: {
-    fontSize: '1.5rem',
+    fontSize: 20,
+    textAlign: 'center',
     color: '#fff',
   },
 });
