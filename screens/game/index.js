@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import AnswerOptions from '../../components/AnswerOption';
 import Header from '../../components/Header';
 import Question from '../../components/Question';
+import QuizAnimation from '../../components/QuizAnimation';
 import socketService from '../../services/socketService';
 
 const GameScreen = ({
@@ -19,6 +20,7 @@ const GameScreen = ({
   const opponentData = data?.gameSession?.players?.find(
     (player) => player.socketId !== socketService.socket.id,
   );
+  const [showAnimation, setShowAnimation] = React.useState(true);
 
   const startTimer = () => {
     setInterval(() => {
@@ -44,6 +46,10 @@ const GameScreen = ({
     socketService.on('answer_result', (data) => {});
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => setShowAnimation(false), 3000);
+  }, []);
+
   const handleAnswer = (answer) => {
     // Construct the data object to be sent
     const resData = {
@@ -56,11 +62,18 @@ const GameScreen = ({
   };
 
   return (
-    <View style={styles.container}>
-      <Header yourData={myData} opponentData={opponentData} countdown={countdown} />
-      <Question text={data?.question} />
-      <AnswerOptions helperImage='' answersOptions={data?.options} handleAnswer={handleAnswer} />
-    </View>
+    <>
+      <QuizAnimation
+        isVisible={showAnimation}
+        playerOneName={myData?.name}
+        playerTwoName={opponentData?.name}
+      />
+      <View style={styles.container}>
+        <Header yourData={myData} opponentData={opponentData} countdown={countdown} />
+        <Question text={data?.question} />
+        <AnswerOptions helperImage='' answersOptions={data?.options} handleAnswer={handleAnswer} />
+      </View>
+    </>
   );
 };
 

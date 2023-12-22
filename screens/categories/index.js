@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 export default function CategoriesScreen({ navigation }) {
   const categories = [
@@ -43,8 +43,9 @@ const styles = StyleSheet.create({
     margin: '1rem',
   },
   button: {
-    margin: '1rem',
-    width: '80%',
+    // margin: '1rem',
+    marginBottom: '1rem',
+    width: '100%',
     padding: '1rem',
     border: '1px solid #ccc',
     borderRadius: '5px',
