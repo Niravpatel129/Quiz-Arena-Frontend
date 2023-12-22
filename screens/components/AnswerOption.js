@@ -20,10 +20,10 @@ const AnswerOptions = ({ answersOptions, onPress }) => {
         />
       </View>
       <View style={styles.answersContainer}>
-        {answersOptions.map((answerOption, index) => {
+        {answersOptions?.map((answerOption, index) => {
           return (
             <Pressable style={styles.option} onPress={onPress} key={index}>
-              <Text style={styles.text}>{answerOption.text}</Text>
+              <Text style={styles.text}>{answerOption.optionText}</Text>
             </Pressable>
           );
         })}

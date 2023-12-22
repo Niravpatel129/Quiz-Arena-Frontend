@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import socketService from '../../services/socketService';
 import AnswerOptions from '../components/AnswerOption';
 import Header from '../components/Header';
 import Question from '../components/Question';
 
-const triviaGame = {
+const fakeGameState = {
   question: 'Who painted the Mona Lisa?',
   options: ['Leonardo da Vinci', 'Van Gogh', 'Gauguin', 'Matisse'],
   you: {
@@ -37,33 +38,39 @@ const triviaGame = {
   },
 };
 
-const GameScreen = () => {
-  const answerOptions = ['Leonardo da Vinci', 'Van Gogh', 'Gauguin', 'Matisse'];
+const GameScreen = ({ GameState }) => {
+  const [countdown, setCountdown] = React.useState(0);
+  const [data, setData] = React.useState(null);
+
+  const startTimer = () => {
+    setInterval(() => {
+      setCountdown((prevTime) => prevTime + 1);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    startTimer();
+
+    socketService.on('new_round', (data) => {
+      console.log('🚀  new_round:', data);
+      setCountdown(0);
+      setData(data);
+    });
+
+    socketService.on('game_over', (data) => {
+      console.log('🚀  game_over:', data);
+    });
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
-      <Header yourData={triviaGame.you} opponentData={triviaGame.opponent} />
-      <Question text='Who painted the Mona Lisa?' />
-      <AnswerOptions
-        helperImage=''
-        answersOptions={[
-          {
-            text: 'Leonardo da Vinci',
-            isCorrect: true,
-          },
-          {
-            text: 'Van Gogh',
-            isCorrect: false,
-          },
-          {
-            text: 'Gauguin',
-            isCorrect: false,
-          },
-          {
-            text: 'Matisse',
-            isCorrect: false,
-          },
-        ]}
+      <Header
+        yourData={fakeGameState.you}
+        opponentData={fakeGameState.opponent}
+        countdown={countdown}
       />
+      <Question text={data?.question} />
+      <AnswerOptions helperImage='' answersOptions={data?.options} />
     </ScrollView>
   );
 };

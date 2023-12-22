@@ -2,10 +2,7 @@ import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 
-const Header = ({ yourData, opponentData }) => {
-  console.log('🚀  opponentData:', opponentData);
-  console.log('🚀  yourData:', yourData);
-
+const Header = ({ yourData, opponentData, countdown }) => {
   const renderPlayerCard = (playerData, type) => {
     return (
       <View
@@ -45,15 +42,15 @@ const Header = ({ yourData, opponentData }) => {
         <View style={styles.timer}>
           <Text>
             <Progress.Circle
-              progress={0.4}
+              progress={countdown / 30}
               size={70}
               unfilledColor='#6f6f6f'
               borderColor={'#f2f2f2'}
               thickness={12}
               showsText={true}
-              formatText={(progress) => {
-                console.log('🚀  progress:', progress);
-                return 12;
+              formatText={(countdown) => {
+                // dont show decimals
+                return Math.round(countdown * 30);
               }}
               textStyle={{
                 fontSize: 24,

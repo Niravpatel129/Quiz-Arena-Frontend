@@ -14,14 +14,8 @@ export default function QueueScreen({ route, navigation }) {
   };
 
   useEffect(() => {
-    socketService.connect();
-
-    socketService.on('connection', () => {
-      console.log('connection');
-
-      socketService.emit('join_queue', categoryName);
-      startTimer();
-    });
+    socketService.emit('join_queue', categoryName);
+    startTimer();
 
     socketService.on('queue_update', (data) => {
       console.log('queue_update', data);
@@ -35,6 +29,7 @@ export default function QueueScreen({ route, navigation }) {
 
     return () => {
       socketService.disconnect();
+      setQueueTime(0);
     };
   }, []);
 
