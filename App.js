@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SocketProvider } from './context/socket/SocketContext';
 import CategoriesScreen from './screens/categories';
 import GameScreen from './screens/game';
+import GameOverScreen from './screens/game_over';
 import HomeScreen from './screens/home';
 import QueueScreen from './screens/queue';
 
@@ -13,11 +14,6 @@ export default function App() {
     <SocketProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          {/* <Stack.Screen
-          name='Game'
-          component={GameScreen}
-          options={{ title: 'Game', headerShown: false }}
-        /> */}
           <Stack.Screen name='Home' component={HomeScreen} options={{ title: 'Welcome' }} />
           <Stack.Screen
             name='Categories'
@@ -29,6 +25,11 @@ export default function App() {
             name='Game'
             component={GameScreen}
             options={{ title: 'Game', headerShown: false }}
+          />
+          <Stack.Screen
+            name='GameOver'
+            component={GameOverScreen}
+            options={{ title: 'Game Over', headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>

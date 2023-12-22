@@ -3,9 +3,11 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 
 export default function HomeScreen({ navigation }) {
-  const [loginInput, setLoginInput] = useState('nirav2');
+  const [loginInput, setLoginInput] = useState(localStorage.getItem('username') || 'nirav2');
 
   const NavigateToMainPage = () => {
+    localStorage.setItem('username', loginInput);
+
     newRequest
       .post('/auth/login', {
         username: loginInput,

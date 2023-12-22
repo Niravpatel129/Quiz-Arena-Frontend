@@ -1,46 +1,24 @@
 import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import AnswerOptions from '../../components/AnswerOption';
+import Header from '../../components/Header';
+import Question from '../../components/Question';
 import socketService from '../../services/socketService';
-import AnswerOptions from '../components/AnswerOption';
-import Header from '../components/Header';
-import Question from '../components/Question';
 
-const fakeGameState = {
-  question: 'Who painted the Mona Lisa?',
-  options: ['Leonardo da Vinci', 'Van Gogh', 'Gauguin', 'Matisse'],
-  you: {
-    name: 'Billy',
-    avatar: 'your_avatar.png',
-    score: 70,
-    pointsEarned: 18,
-    answer: 'Leonardo da Vinci',
-    isCorrect: true,
-    responseTime: 5,
+const GameScreen = ({
+  navigation,
+  route: {
+    params: { categoryId },
   },
-  opponent: {
-    name: 'Tommy',
-    avatar: 'opponent_avatar.png',
-    score: 80,
-    pointsEarned: 0,
-    answer: '',
-    isCorrect: false,
-    responseTime: 0,
-  },
-  scoreBar: {
-    you: {
-      visualScore: '70%',
-      visualPoints: '18%',
-    },
-    opponent: {
-      visualScore: '80%',
-      visualPoints: '0%',
-    },
-  },
-};
-
-const GameScreen = ({ GameState }) => {
+}) => {
   const [countdown, setCountdown] = React.useState(0);
   const [data, setData] = React.useState(null);
+  const myData = data?.gameSession?.players?.find(
+    (player) => player.socketId === socketService.socket.id,
+  );
+  const opponentData = data?.gameSession?.players?.find(
+    (player) => player.socketId !== socketService.socket.id,
+  );
 
   const startTimer = () => {
     setInterval(() => {
@@ -50,6 +28,7 @@ const GameScreen = ({ GameState }) => {
 
   useEffect(() => {
     startTimer();
+    console.log('🚀  socketService:', socketService.socket.id);
 
     socketService.on('new_round', (data) => {
       console.log('🚀  new_round:', data);
@@ -57,8 +36,12 @@ const GameScreen = ({ GameState }) => {
       setData(data);
     });
 
-    socketService.on('game_over', (data) => {
-      console.log('🚀  game_over:', data);
+    socketService.on('game_over', (results) => {
+      console.log('🚀  game_over:', results);
+      navigation.navigate('GameOver', {
+        results: results,
+        gameSession: data,
+      });
     });
 
     socketService.on('answer_result', (data) => {
@@ -79,11 +62,7 @@ const GameScreen = ({ GameState }) => {
 
   return (
     <ScrollView style={styles.container}>
-      <Header
-        yourData={fakeGameState.you}
-        opponentData={fakeGameState.opponent}
-        countdown={countdown}
-      />
+      <Header yourData={myData} opponentData={opponentData} countdown={countdown} />
       <Question text={data?.question} />
       <AnswerOptions helperImage='' answersOptions={data?.options} handleAnswer={handleAnswer} />
     </ScrollView>

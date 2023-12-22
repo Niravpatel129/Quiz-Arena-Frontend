@@ -27,9 +27,9 @@ const Header = ({ yourData, opponentData, countdown }) => {
             alignItems: type !== 'you' ? 'flex-end' : 'flex-start',
           }}
         >
-          <Text style={styles.playerName}>{playerData.name}</Text>
+          <Text style={styles.playerName}>{playerData?.name}</Text>
           <Text style={styles.playerTag}>Beginner</Text>
-          <Text style={styles.playerScore}>{playerData.score}</Text>
+          <Text style={styles.playerScore}>{playerData?.score}</Text>
         </View>
       </View>
     );

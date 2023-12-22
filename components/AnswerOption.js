@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 const AnswerOptions = ({ answersOptions, handleAnswer }) => {
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [isCorrect, setIsCorrect] = useState(null);
+
+  useEffect(() => {
+    setSelectedAnswer(null);
+    setIsCorrect(null);
+  }, [answersOptions]);
+
+  const onAnswerPress = (answerOption) => {
+    if (selectedAnswer !== null) return;
+
+    setSelectedAnswer(answerOption);
+
+    setIsCorrect(answerOption.isCorrect);
+    handleAnswer(answerOption.optionText);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.leftBar}>
@@ -21,10 +38,15 @@ const AnswerOptions = ({ answersOptions, handleAnswer }) => {
       </View>
       <View style={styles.answersContainer}>
         {answersOptions?.map((answerOption, index) => {
+          let backgroundColor = '#fff'; // Default background
+          if (answerOption === selectedAnswer) {
+            backgroundColor = isCorrect ? '#00ff00' : '#ff0000'; // Green if correct, red if incorrect
+          }
+
           return (
             <Pressable
-              style={styles.option}
-              onPress={() => handleAnswer(answerOption.optionText)}
+              style={[styles.option, { backgroundColor }]}
+              onPress={() => onAnswerPress(answerOption)}
               key={index}
             >
               <Text style={styles.text}>{answerOption.optionText}</Text>
