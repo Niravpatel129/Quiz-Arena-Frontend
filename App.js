@@ -14,7 +14,11 @@ export default function App() {
     <SocketProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name='Home' component={HomeScreen} options={{ title: 'Welcome' }} />
+          <Stack.Screen
+            name='Home'
+            component={HomeScreen}
+            options={{ title: 'Welcome', headerShown: false }}
+          />
           <Stack.Screen
             name='Categories'
             component={CategoriesScreen}
