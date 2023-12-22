@@ -62,6 +62,10 @@ const GameScreen = ({ GameState }) => {
     });
   }, []);
 
+  const handleAnswer = (answer) => {
+    socketService.emit('answer', answer);
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Header
