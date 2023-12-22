@@ -36,25 +36,25 @@ export default function QueueScreen({ route, navigation }) {
 
   return (
     <Box flex={1} bg='#fff' alignItems='center' justifyContent='center' p={5}>
-      <VStack space={8} alignItems='center' bg='#feeafa' p={10} borderRadius='lg' shadow={2}>
-        <Heading color='#5856d6' fontSize='4xl' fontWeight='semibold'>
+      <VStack space={8} alignItems='center' bg='#0099ff' p={10} borderRadius='lg' shadow={2}>
+        <Heading color='#fff' fontSize='4xl' fontWeight='semibold'>
           Queue
         </Heading>
-        <Text color='#5856d6' fontSize='md' fontWeight='bold'>
+        <Text color='#fff' fontSize='md' fontWeight='bold'>
           Category:{' '}
-          <Text color='#ff65a3' fontSize='md' fontWeight='bold'>
+          <Text color='#322a55' fontSize='md' fontWeight='bold'>
             {categoryName}
           </Text>
         </Text>
-        <Text color='#5856d6' fontSize='md' fontWeight='bold'>
+        <Text color='#fff' fontSize='md' fontWeight='bold'>
           Waiting Time:{' '}
-          <Text color='#ff65a3' fontSize='md' fontWeight='bold'>
-            {queueTime} seconds
+          <Text color='#322a55' fontSize='md' fontWeight='bold'>
+            {queueTime} seconds ⏳
           </Text>
         </Text>
-        <Text color='#5856d6' fontSize='md' fontWeight='bold'>
+        <Text color='#fff' fontSize='md' fontWeight='bold'>
           Players in Queue:{' '}
-          <Text color='#ff65a3' fontSize='md' fontWeight='bold'>
+          <Text color='#322a55' fontSize='md' fontWeight='bold'>
             {playersInQueue}
           </Text>
         </Text>
