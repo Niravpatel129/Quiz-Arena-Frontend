@@ -14,10 +14,14 @@ const GameScreen = ({
   },
 }) => {
   const [countdown, setCountdown] = React.useState(0);
+  const [pointsToAdd, setPointsToAdd] = React.useState(0);
   const [data, setData] = React.useState(null);
   const myData = data?.gameSession?.players?.find(
     (player) => player.socketId === socketService.socket.id,
   );
+
+  console.log('🚀  data:', data);
+  console.log('🚀  myData:', myData);
   const opponentData = data?.gameSession?.players?.find(
     (player) => player.socketId !== socketService.socket.id,
   );
@@ -33,9 +37,10 @@ const GameScreen = ({
   useEffect(() => {
     startTimer();
 
-    socketService.on('new_round', (data) => {
+    socketService.on('new_round', (roundData) => {
       setCountdown(0);
-      if (data) setData(data);
+      setPointsToAdd(0);
+      if (roundData) setData(roundData);
     });
 
     socketService.on('game_over', (results) => {
@@ -44,7 +49,29 @@ const GameScreen = ({
       });
     });
 
-    socketService.on('answer_result', (data) => {});
+    socketService.on('answer_result', (result) => {
+      console.log('🚀  data:', result);
+      console.log('data', data);
+      setData((prevData) => ({
+        ...prevData,
+        gameSession: {
+          ...prevData.gameSession,
+          players: prevData.gameSession.players.map((player) => {
+            const me = prevData?.gameSession?.players?.find(
+              (player) => player.socketId === socketService.socket.id,
+            );
+
+            if (player.socketId === me.socketId) {
+              return {
+                ...player,
+                score: result.currentScore,
+              };
+            }
+            return player;
+          }),
+        },
+      }));
+    });
   }, []);
 
   useEffect(() => {
