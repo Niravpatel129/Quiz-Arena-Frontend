@@ -1,14 +1,29 @@
-import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 import { useSocket } from '../../context/socket/SocketContext';
 
 export default function HomeScreen({ navigation }) {
-  const [loginInput, setLoginInput] = useState(localStorage.getItem('username') || 'nirav2');
+  const [loginInput, setLoginInput] = useState('nirav2');
   const socket = useSocket();
 
+  useEffect(() => {
+    const getUsername = async () => {
+      const username = await AsyncStorage.getItem('username');
+      console.log('🚀  username:', username);
+      if (!username) return;
+      if (username === 'null') return;
+      if (username === '') return;
+
+      setLoginInput(username || '');
+    };
+
+    getUsername();
+  }, []);
+
   const NavigateToMainPage = () => {
-    localStorage.setItem('username', loginInput);
+    AsyncStorage.setItem('username', loginInput);
 
     newRequest
       .post('/auth/login', {
@@ -34,6 +49,7 @@ export default function HomeScreen({ navigation }) {
         value={loginInput}
         onChangeText={setLoginInput}
       />
+
       <Pressable style={styles.button} title='login' onPress={() => NavigateToMainPage()}>
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>
