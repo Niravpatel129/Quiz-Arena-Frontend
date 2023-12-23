@@ -10,7 +10,7 @@ export default function PlayersScreen() {
   const fetchFriends = async () => {
     const response = await newRequest.get('/users/friends');
     const data = response.data;
-    setFriends(data);
+    setFriends(data.friends);
   };
 
   const fetchPlayers = async () => {
@@ -25,9 +25,9 @@ export default function PlayersScreen() {
   }, []);
 
   const handleAddFriend = async (id) => {
-    const response = await newRequest.post('/users/add_friend', { id });
-    const data = response.data;
-    setUsers(data);
+    await newRequest.post('/users/addFriend', { friendId: id });
+
+    fetchFriends();
   };
 
   return (

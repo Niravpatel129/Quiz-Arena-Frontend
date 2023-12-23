@@ -55,8 +55,6 @@ const GameScreen = ({
     });
 
     socketService.on('answer_result', (result) => {
-      console.log('🚀  result:', result);
-
       setData((prevData) => ({
         ...prevData,
         gameSession: {
@@ -79,7 +77,6 @@ const GameScreen = ({
     });
 
     socketService.on('opponent_guessed', (result) => {
-      console.log('🚀  opponent_guessed:', result.isCorrect);
       setIsCorrectAnswer(result.isCorrect);
       setHighlightTrigger(!highlightTrigger);
     });

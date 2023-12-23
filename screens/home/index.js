@@ -11,7 +11,6 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     const getUsername = async () => {
       const username = await AsyncStorage.getItem('username');
-      console.log('🚀  username:', username);
       if (!username) return;
       if (username === 'null') return;
       if (username === '') return;
@@ -32,7 +31,6 @@ export default function HomeScreen({ navigation }) {
       })
       .then((response) => {
         socket.ConnectSocket();
-        console.log('response', response);
         navigation.navigate('Categories');
       })
       .catch((error) => {
