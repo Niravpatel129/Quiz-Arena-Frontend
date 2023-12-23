@@ -50,9 +50,18 @@ export default function CategoriesScreen({ navigation }) {
         ))}
       </VStack>
 
+      <Text style={{ marginTop: 20, marginBottom: 20, fontSize: 20, textAlign: 'center' }}>
+        Extra
+      </Text>
+
       {/* add a button to go to leaderboards */}
       <Pressable style={styles.button} onPress={() => navigation.navigate('Leaderboards')}>
         <Text style={styles.text}>Leaderboards</Text>
+      </Pressable>
+
+      {/* add a button to go to leaderboards */}
+      <Pressable style={styles.button} onPress={() => navigation.navigate('Players')}>
+        <Text style={styles.text}>Players</Text>
       </Pressable>
     </View>
   );

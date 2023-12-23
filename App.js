@@ -7,6 +7,7 @@ import GameScreen from './screens/game';
 import GameOverScreen from './screens/game_over';
 import HomeScreen from './screens/home';
 import LeaderboardsScreen from './screens/leaderboards';
+import PlayersScreen from './screens/players';
 import QueueScreen from './screens/queue';
 
 const Stack = createNativeStackNavigator();
@@ -42,6 +43,11 @@ export default function App() {
               name='Leaderboards'
               component={LeaderboardsScreen}
               options={{ title: 'Leaderboards', headerShown: true }}
+            />
+            <Stack.Screen
+              name='Players'
+              component={PlayersScreen}
+              options={{ title: 'Players', headerShown: true }}
             />
           </Stack.Navigator>
         </NavigationContainer>
