@@ -49,6 +49,11 @@ export default function CategoriesScreen({ navigation }) {
           </Animatable.View>
         ))}
       </VStack>
+
+      {/* add a button to go to leaderboards */}
+      <Pressable style={styles.button} onPress={() => navigation.navigate('Leaderboards')}>
+        <Text style={styles.text}>Leaderboards</Text>
+      </Pressable>
     </View>
   );
 }
