@@ -37,6 +37,7 @@ export default function HomeScreen({ navigation }) {
       })
       .catch((error) => {
         console.log('error', error);
+        alert('Error logging in', error);
       });
   };
 

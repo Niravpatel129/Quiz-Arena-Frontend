@@ -19,7 +19,6 @@ export default function QueueScreen({ route, navigation }) {
     startTimer();
 
     socketService.on('queue_update', (data) => {
-      console.log('queue_update', data);
       setPlayersInQueue(data.queue.length);
     });
 
