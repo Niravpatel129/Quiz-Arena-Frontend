@@ -51,6 +51,8 @@ const GameScreen = ({
     });
 
     socketService.on('answer_result', (result) => {
+      console.log('🚀  result:', result);
+
       setData((prevData) => ({
         ...prevData,
         gameSession: {
@@ -73,8 +75,6 @@ const GameScreen = ({
     });
 
     socketService.on('opponent_guessed', (result) => {
-      // if correct answer flash the screen green
-      // if wrong answer flash the screen red
       console.log('🚀  opponent_guessed:', result.isCorrect);
       setIsCorrectAnswer(result.isCorrect);
       setHighlightTrigger(!highlightTrigger);
@@ -82,7 +82,7 @@ const GameScreen = ({
   }, []);
 
   useEffect(() => {
-    setTimeout(() => setShowAnimation(false), 3000);
+    setTimeout(() => setShowAnimation(false), 2000);
   }, []);
 
   const handleAnswer = (answer) => {

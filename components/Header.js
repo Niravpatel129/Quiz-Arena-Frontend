@@ -42,7 +42,7 @@ const Header = ({ yourData, opponentData, countdown }) => {
         <View style={styles.timer}>
           <Text>
             <Progress.Circle
-              progress={countdown / 30}
+              progress={countdown / 10}
               size={70}
               unfilledColor='#6f6f6f'
               borderColor={'#f2f2f2'}
@@ -50,7 +50,7 @@ const Header = ({ yourData, opponentData, countdown }) => {
               showsText={true}
               formatText={(countdown) => {
                 // dont show decimals
-                return Math.round(countdown * 30);
+                return Math.round(countdown * 10);
               }}
               textStyle={{
                 fontSize: 24,
