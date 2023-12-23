@@ -35,7 +35,7 @@ export default function QueueScreen({ route, navigation }) {
 
   return (
     <Box flex={1} bg='#fff' alignItems='center' justifyContent='center' p={5}>
-      <VStack space={8} alignItems='center' bg='#0099ff' p={10} borderRadius='lg' shadow={2}>
+      <VStack space={8} alignItems='center' bg='#0099ff' p={20} borderRadius='lg' shadow={2}>
         <Heading color='#fff' fontSize='4xl' fontWeight='semibold'>
           Queue
         </Heading>

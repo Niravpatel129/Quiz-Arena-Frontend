@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import shuffle from '../helpers/shuffle';
 
 const AnswerOptions = ({ answersOptions, handleAnswer, scores }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
+  const [answerOptionsRandomized, setAnswerOptionsRandomized] = useState([]);
 
   useEffect(() => {
     setSelectedAnswer(null);
     setIsCorrect(null);
+    answersOptions && setAnswerOptionsRandomized(shuffle(answersOptions));
   }, [answersOptions]);
 
   const onAnswerPress = (answerOption) => {
@@ -53,7 +56,7 @@ const AnswerOptions = ({ answersOptions, handleAnswer, scores }) => {
         />
       </View>
       <View style={styles.answersContainer}>
-        {answersOptions?.map((answerOption, index) => {
+        {answerOptionsRandomized.map((answerOption, index) => {
           let backgroundColor = '#fff'; // Default background
           if (answerOption === selectedAnswer) {
             backgroundColor = isCorrect ? '#adf2bc' : '#f2adad'; // Green if correct, red if incorrect
