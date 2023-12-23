@@ -1,5 +1,6 @@
+import { Box, Button, Divider, HStack, VStack } from 'native-base';
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text } from 'react-native';
 import socketService from '../../services/socketService';
 
 export default function GameOverScreen({ navigation, route }) {
@@ -27,36 +28,59 @@ export default function GameOverScreen({ navigation, route }) {
   console.log('🚀  opponentData:', opponentData);
 
   return (
-    <View style={styles.container}>
-      <Text>{whoWon()}</Text>
-      <Text>Your score: {myData.score}</Text>
-      <Text>Opponent score: {opponentData.score}</Text>
-
-      {/* play again */}
-      <Pressable style={styles.button} onPress={() => navigation.navigate('Categories')}>
-        <Text style={styles.text}>Play again</Text>
-      </Pressable>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <VStack space={4} alignItems='center' safeArea>
+        <Text fontSize='xl' bold>
+          {whoWon()}
+        </Text>
+        <HStack space={6}>
+          {/* Player Info */}
+          <VStack space={2} alignItems='center'>
+            <Text>{myData.username}</Text>
+            <Text>{myData.title || 'Title'}</Text>
+            <Box>
+              <Text>Match Score</Text>
+              <Text>{myData.score}</Text>
+            </Box>
+            <Box>
+              <Text>Bonus Points</Text>
+              <Text>{myData.bonus || 5}</Text>
+            </Box>
+          </VStack>
+          {/* Opponent Info */}
+          <VStack space={2} alignItems='center'>
+            <Text>{opponentData.username}</Text>
+            <Text>{opponentData.title || 'Title'}</Text>
+            <Box>
+              <Text>Victory</Text>
+              <Text>{opponentData.score}</Text>
+            </Box>
+            <Box>
+              <Text>Power Points</Text>
+              <Text>{opponentData.bonus || 5}</Text>
+            </Box>
+          </VStack>
+        </HStack>
+        <Divider my='2' />
+        <Text fontSize='md'>Level {myData.level || 2}</Text>
+        {/* Replace with your progress bar */}
+        <HStack space={3} mt='4'>
+          <Button onPress={() => navigation.navigate('Rematch')}>REMATCH</Button>
+          <Button onPress={() => navigation.navigate('NewGame')}>Play Another</Button>
+        </HStack>
+        <Button variant='outline' mt='4' onPress={() => console.log('Share')}>
+          Share
+        </Button>
+      </VStack>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: '1rem',
+    margin: 20,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  button: {
-    width: '100%',
-    padding: '1rem',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-    backgroundColor: '#ff6d6d',
-    color: '#fff',
-  },
-  text: {
-    fontSize: '1.5rem',
-    color: '#fff',
   },
 });
