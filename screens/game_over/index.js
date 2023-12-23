@@ -11,6 +11,8 @@ export default function GameOverScreen({ navigation, route }) {
     (player) => player?.socketId !== socketService?.socket?.id,
   );
 
+  console.log('🚀  socketService?.socket?.id:', socketService?.socket?.id);
+
   const whoWon = () => {
     if (myData?.score > opponentData?.score) {
       return 'You won!';
@@ -31,14 +33,9 @@ export default function GameOverScreen({ navigation, route }) {
           borderWidth={4}
         />
         <Text style={styles.playerName}>{player?.name}</Text>
-        <Text>{player?.title || 'Title'}</Text>
         <Box>
-          <Text>Match Score</Text>
+          <Text>Score</Text>
           <Text>{player?.score}</Text>
-        </Box>
-        <Box>
-          <Text>Bonus Points</Text>
-          <Text>{player?.bonus || 5}</Text>
         </Box>
       </VStack>
     );
