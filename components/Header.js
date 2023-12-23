@@ -42,7 +42,7 @@ const Header = ({ yourData, opponentData, countdown }) => {
         <View style={styles.timer}>
           <Text>
             <Progress.Circle
-              progress={countdown / 10}
+              progress={countdown / 100}
               size={70}
               unfilledColor='#6f6f6f'
               borderColor={'#f2f2f2'}

@@ -16,7 +16,7 @@ const GameScreen = ({
 }) => {
   const [highlightTrigger, setHighlightTrigger] = React.useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = React.useState(false);
-
+  const [timer, setTimer] = React.useState(100);
   const [countdown, setCountdown] = React.useState(0);
   const [data, setData] = React.useState(null);
   const myData = data?.gameSession?.players?.find(
@@ -31,6 +31,9 @@ const GameScreen = ({
 
   const startTimer = () => {
     setInterval(() => {
+      setTimer((prevTime) => prevTime - 1);
+    }, 100);
+    setInterval(() => {
       setCountdown((prevTime) => prevTime + 1);
     }, 1000);
   };
@@ -40,6 +43,7 @@ const GameScreen = ({
 
     socketService.on('new_round', (roundData) => {
       setCountdown(0);
+      setTimer(100);
       if (roundData) setData(roundData);
       setHighlightTrigger(false);
     });
@@ -107,7 +111,7 @@ const GameScreen = ({
       <HighlightEffect isCorrect={isCorrectAnswer} trigger={highlightTrigger} />
 
       <View style={styles.container}>
-        <Header yourData={myData} opponentData={opponentData} countdown={countdown} />
+        <Header yourData={myData} opponentData={opponentData} countdown={timer} />
         <Question text={data?.question} />
 
         <Animated.View style={{ opacity: fadeInOpacity }}>
