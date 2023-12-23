@@ -90,6 +90,7 @@ const GameScreen = ({
     const resData = {
       sessionId: data.sessionId,
       answer: answer,
+      timeRemaining: countdown,
     };
 
     // Emit the event with the data
