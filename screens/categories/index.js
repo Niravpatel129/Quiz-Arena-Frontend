@@ -23,7 +23,7 @@ export default function CategoriesScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <VStack space={4} alignItems='center'>
+      <VStack space={4} alignItems='stretch'>
         {categories.map((category, index) => (
           <Animatable.View
             animation='bounceIn'
@@ -42,7 +42,7 @@ export default function CategoriesScreen({ navigation }) {
                 })
               }
             >
-              <Center w='64' h='20' bg='indigo.300' rounded='md' shadow={3}>
+              <Center flex={1} padding={5} bg='indigo.400' rounded='md' shadow={3}>
                 <Text style={styles.text}>{category.name}</Text>
               </Center>
             </Pressable>

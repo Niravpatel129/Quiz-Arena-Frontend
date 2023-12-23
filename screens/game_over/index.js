@@ -65,8 +65,8 @@ export default function GameOverScreen({ navigation, route }) {
         <Text fontSize='md'>Level {myData.level || 2}</Text>
         {/* Replace with your progress bar */}
         <HStack space={3} mt='4'>
-          <Button onPress={() => navigation.navigate('Rematch')}>REMATCH</Button>
-          <Button onPress={() => navigation.navigate('NewGame')}>Play Another</Button>
+          <Button onPress={() => navigation.navigate('Categories')}>Categories</Button>
+          <Button onPress={() => navigation.navigate('Categories')}>Play Another</Button>
         </HStack>
         <Button variant='outline' mt='4' onPress={() => console.log('Share')}>
           Share
