@@ -11,8 +11,6 @@ export default function GameOverScreen({ navigation, route }) {
     (player) => player?.socketId !== socketService?.socket?.id,
   );
 
-  console.log('🚀  socketService?.socket?.id:', socketService?.socket?.id);
-
   const whoWon = () => {
     if (myData?.score > opponentData?.score) {
       return 'You won!';
