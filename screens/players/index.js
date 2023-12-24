@@ -25,11 +25,22 @@ export default function PlayersScreen({ navigation }) {
   }, []);
 
   const handleChallenge = async (id) => {
-    // notify the other user of the challenge
-    // await newRequest.post('/game/challenge', { friendId: id });
+    try {
+      const gameId = Math.floor(Math.random() * 1000000);
 
-    // redirect this user to the challenge screen
-    navigation.navigate('Challenge', { friendId: id });
+      await newRequest.post('/users/notifications', {
+        type: 'gameInvite',
+        receiverId: id,
+        options: {
+          gameId: gameId,
+          category: 'Valorant',
+        },
+      });
+
+      navigation.navigate('Challenge', { friendId: id });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleAddFriend = async (id) => {

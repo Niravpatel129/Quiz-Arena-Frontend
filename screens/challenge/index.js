@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import socketService from '../../services/socketService';
 
 export default function ChallengeScreen({ route, navigation }) {
   useEffect(() => {
