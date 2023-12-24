@@ -2,16 +2,18 @@ import React, { useEffect } from 'react';
 import socketService from '../../services/socketService';
 
 export default function ChallengeScreen({ route, navigation }) {
+  console.log('🚀  route:', route);
+
   useEffect(() => {
-    // check if this is a new challange or a response to a challange
-    // if new challange, emit a new challange event
-    if (route.params?.friendId) {
-      socketService.emit('new_challenge', route.params.friendId);
-    }
-    // if response to a challange, emit a response event
-    if (route.params?.challengeId) {
-      socketService.emit('challenge_response', route.params.challengeId);
-    }
+    socketService.emit('joinChallengeQueue', {
+      gameId: route.params.gameId,
+      category: route.params.category,
+    });
+
+    socketService.on('game_start', (data) => {
+      console.log('game_start', data);
+      navigation.navigate('Game', { game: data.game });
+    });
   }, []);
   return <div>ChallengeScreen</div>;
 }

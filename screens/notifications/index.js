@@ -2,8 +2,9 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 
-export default function NotificationsScreen() {
+export default function NotificationsScreen({ navigation }) {
   const [notifications, setNotifications] = React.useState([]);
+  console.log('🚀  notifications:', notifications);
 
   const fetchNotifications = async () => {
     const response = await newRequest.get('/users/notifications');
@@ -20,9 +21,11 @@ export default function NotificationsScreen() {
     fetchNotifications();
   };
 
-  const acceptNotification = async (id) => {
-    await newRequest.post(`/users/notifications/${id}`);
-    fetchNotifications();
+  const acceptNotification = async (id, gameId, category) => {
+    navigation.navigate('Challenge', { gameId: gameId, category: category });
+
+    // await newRequest.post(`/users/notifications/${id}`);
+    // fetchNotifications();
   };
 
   return (
@@ -33,9 +36,20 @@ export default function NotificationsScreen() {
             <Text key={index}>{notification.message}</Text>
             <Text key={index}>{notification.type}</Text>
             <Text key={index}>{notification.createdAt}</Text>
-            <Pressable style={styles.button} onPress={() => acceptNotification(notification._id)}>
-              <Text style={styles.buttonText}>Accept</Text>
-            </Pressable>
+            {notification.type === 'gameInvite' && (
+              <Pressable
+                style={styles.button}
+                onPress={() =>
+                  acceptNotification(
+                    notification._id,
+                    notification.options.gameId,
+                    notification.options.category,
+                  )
+                }
+              >
+                <Text style={styles.buttonText}>Accept</Text>
+              </Pressable>
+            )}
             <Pressable style={styles.button} onPress={() => deleteNotification(notification._id)}>
               <Text style={styles.buttonText}>Delete</Text>
             </Pressable>

@@ -3,7 +3,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
-export default function CategoriesScreen({ navigation }) {
+export default function CategoriesScreen({ navigation, route }) {
   const categories = [
     {
       id: 1,

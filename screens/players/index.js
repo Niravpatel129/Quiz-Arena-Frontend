@@ -37,7 +37,7 @@ export default function PlayersScreen({ navigation }) {
         },
       });
 
-      navigation.navigate('Challenge', { friendId: id });
+      navigation.navigate('Challenge', { gameId: gameId, category: 'Valorant' });
     } catch (err) {
       console.log(err);
     }
