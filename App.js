@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NativeBaseProvider } from 'native-base';
 import { SocketProvider } from './context/socket/SocketContext';
 import CategoriesScreen from './screens/categories';
+import ChallengeScreen from './screens/challenge';
 import GameScreen from './screens/game';
 import GameOverScreen from './screens/game_over';
 import HomeScreen from './screens/home';
@@ -48,6 +49,11 @@ export default function App() {
               name='Players'
               component={PlayersScreen}
               options={{ title: 'Players', headerShown: true }}
+            />
+            <Stack.Screen
+              name='Challenge'
+              component={ChallengeScreen}
+              options={{ title: 'Challenge', headerShown: true }}
             />
           </Stack.Navigator>
         </NavigationContainer>

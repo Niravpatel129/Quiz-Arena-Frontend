@@ -3,7 +3,7 @@ import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 
-export default function PlayersScreen() {
+export default function PlayersScreen({ navigation }) {
   const [users, setUsers] = React.useState([]);
   const [friends, setFriends] = React.useState([]);
 
@@ -23,6 +23,14 @@ export default function PlayersScreen() {
     fetchPlayers();
     fetchFriends();
   }, []);
+
+  const handleChallenge = async (id) => {
+    // notify the other user of the challenge
+    // await newRequest.post('/game/challenge', { friendId: id });
+
+    // redirect this user to the challenge screen
+    navigation.navigate('Challenge', { friendId: id });
+  };
 
   const handleAddFriend = async (id) => {
     await newRequest.post('/users/addFriend', { friendId: id });
@@ -46,11 +54,8 @@ export default function PlayersScreen() {
               </Text>
               <Text fontSize='md' color='coolGray.500'>
                 {/* Add Friend */}
-                <Pressable
-                  style={styles.button}
-                  onPress={() => navigation.navigate('Leaderboards')}
-                >
-                  <Text style={styles.text}>Add Friend</Text>
+                <Pressable style={styles.button} onPress={() => handleChallenge(item._id)}>
+                  <Text style={styles.text}>Challenge Friend</Text>
                 </Pressable>
               </Text>
             </Box>
