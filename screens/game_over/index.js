@@ -1,9 +1,12 @@
 import { Avatar, Box, Button, Divider, HStack, VStack } from 'native-base';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
+import RoundScoreTracker from '../../.storybook/stories/RoundScoreTracker/RoundScoreTracker';
 import socketService from '../../services/socketService';
 
 export default function GameOverScreen({ navigation, route }) {
+  const [roundScoreTrackerData, setRoundScoreTrackerData] = React.useState(null);
+
   const myData = route.params?.results?.gameSession.players?.find(
     (player) => player?.socketId === socketService?.socket?.id,
   );
@@ -20,6 +23,33 @@ export default function GameOverScreen({ navigation, route }) {
       return 'It was a tie!';
     }
   };
+
+  useEffect(() => {
+    // route.params?.results?.gameSession
+    const playersScoreData = [];
+
+    const playerOneData = route.params?.results?.gameSession.players[0].answers.map((answer) => {
+      return answer.points;
+    });
+
+    const playerTwoData = route.params?.results?.gameSession.players[1].answers.map((answer) => {
+      return answer.points;
+    });
+
+    playersScoreData.push({
+      name: route.params?.results?.gameSession.players[0].name,
+      rounds: playerOneData,
+      total: playerOneData.reduce((a, b) => a + b, 0),
+    });
+
+    playersScoreData.push({
+      name: route.params?.results?.gameSession.players[1].name,
+      rounds: playerTwoData,
+      total: playerTwoData.reduce((a, b) => a + b, 0),
+    });
+
+    setRoundScoreTrackerData(playersScoreData);
+  }, []);
 
   const renderPlayerCard = (player, result) => {
     return (
@@ -63,6 +93,7 @@ export default function GameOverScreen({ navigation, route }) {
           Share
         </Button>
       </VStack>
+      <RoundScoreTracker players={roundScoreTrackerData} />
     </SafeAreaView>
   );
 }

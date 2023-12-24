@@ -48,7 +48,6 @@ export default function HomeScreen({ navigation }) {
         value={loginInput}
         onChangeText={setLoginInput}
       />
-
       <Pressable style={styles.button} title='login' onPress={() => NavigateToMainPage()}>
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>
