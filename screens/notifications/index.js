@@ -22,10 +22,9 @@ export default function NotificationsScreen({ navigation }) {
   };
 
   const acceptNotification = async (id, gameId, category) => {
-    navigation.navigate('Challenge', { gameId: gameId, category: category });
+    await newRequest.delete(`/users/notifications/${id}`);
 
-    // await newRequest.post(`/users/notifications/${id}`);
-    // fetchNotifications();
+    navigation.navigate('Challenge', { gameId: gameId, category: category });
   };
 
   return (
