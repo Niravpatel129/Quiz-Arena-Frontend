@@ -8,6 +8,7 @@ import GameScreen from './screens/game';
 import GameOverScreen from './screens/game_over';
 import HomeScreen from './screens/home';
 import LeaderboardsScreen from './screens/leaderboards';
+import NotificationsScreen from './screens/notifications';
 import PlayersScreen from './screens/players';
 import QueueScreen from './screens/queue';
 
@@ -54,6 +55,11 @@ export default function App() {
               name='Challenge'
               component={ChallengeScreen}
               options={{ title: 'Challenge', headerShown: true }}
+            />
+            <Stack.Screen
+              name='Notifications'
+              component={NotificationsScreen}
+              options={{ title: 'Notifications', headerShown: true }}
             />
           </Stack.Navigator>
         </NavigationContainer>

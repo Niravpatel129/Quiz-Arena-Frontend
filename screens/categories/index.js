@@ -63,6 +63,11 @@ export default function CategoriesScreen({ navigation }) {
       <Pressable style={styles.button} onPress={() => navigation.navigate('Players')}>
         <Text style={styles.text}>Players</Text>
       </Pressable>
+
+      {/* add a button to go to notifications */}
+      <Pressable style={styles.button} onPress={() => navigation.navigate('Notifications')}>
+        <Text style={styles.text}>Notifications</Text>
+      </Pressable>
     </View>
   );
 }
