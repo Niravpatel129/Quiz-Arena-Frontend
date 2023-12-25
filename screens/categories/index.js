@@ -1,4 +1,4 @@
-import { Center, VStack } from 'native-base';
+import { VStack } from 'native-base';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -16,6 +16,9 @@ export default function CategoriesScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <VStack space={4} alignItems='stretch'>
+        <Text style={{ marginTop: 20, marginBottom: 5, fontSize: 20, textAlign: 'center' }}>
+          Categories
+        </Text>
         {categories.map((category, index) => (
           <Animatable.View
             animation='bounceIn'
@@ -24,9 +27,8 @@ export default function CategoriesScreen({ navigation, route }) {
             delay={baseDelay * index}
           >
             <Pressable
-              style={{}}
+              style={styles.categoryButton}
               key={category.id}
-              color='#fff'
               onPress={() =>
                 navigation.navigate('Queue', {
                   categoryId: category.id,
@@ -34,9 +36,7 @@ export default function CategoriesScreen({ navigation, route }) {
                 })
               }
             >
-              <Center flex={1} padding={5} bg='indigo.400' rounded='md' shadow={3}>
-                <Text style={styles.text}>{category.name}</Text>
-              </Center>
+              <Text style={styles.text}>{category.name}</Text>
             </Pressable>
           </Animatable.View>
         ))}
@@ -68,6 +68,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 10,
+  },
+  categoryButton: {
+    marginBottom: 10,
+    marginTop: 10,
+    width: '100%',
+    borderRadius: 5,
+    backgroundColor: '#56b2f9',
+    color: '#fff',
+    // height: 40,
+    padding: 10,
   },
   button: {
     marginBottom: 10,
