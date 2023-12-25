@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 const RoundScoreTracker = ({ players }) => {
-  console.log('🚀  players:', players);
   if (!players) return <View> no data </View>;
 
   const renderPlayer = (player) => {
@@ -29,9 +28,10 @@ const RoundScoreTracker = ({ players }) => {
         <View style={styles.middle}>
           {players[0].rounds.map((_, scoreIndex) => (
             <Text style={styles.roundCount} key={scoreIndex}>
-              {scoreIndex === players[0].rounds.length - 1 ? 'Total' : scoreIndex + 1}
+              {scoreIndex + 1}
             </Text>
           ))}
+          <Text style={styles.roundCount}>Total</Text>
         </View>
       </View>
       {renderPlayer(players[1])}
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     border: '1px solid black',
     padding: 5,
     fontSize: 26,
+    width: 60,
     flex: 1,
     margin: 2,
     textAlign: 'center',
@@ -74,6 +75,8 @@ const styles = StyleSheet.create({
     padding: 5,
     fontSize: 26,
     margin: 2,
+    width: 60,
+    textAlign: 'center',
   },
   middle: {
     display: 'flex',
