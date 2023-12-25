@@ -9,7 +9,9 @@
     "web": "expo start --web",
     "dev": "sb-rn-get-stories && expo start --web",
     "storybook-generate": "sb-rn-get-stories",
-    "storybook-watch": "sb-rn-watcher"
+    "storybook-watch": "sb-rn-watcher",
+    "build-android": "eas build --platform android",
+    "build-ios": "eas build --platform ios"
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
