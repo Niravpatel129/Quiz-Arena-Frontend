@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: '2rem',
     margin: '1rem',
   },
   input: {
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
     margin: 10,
     width: '80%',
     padding: 10,
-    borderRadius: '5px',
+    borderRadius: 5,
     backgroundColor: '#f194ff',
     color: '#fff',
     display: 'flex',
