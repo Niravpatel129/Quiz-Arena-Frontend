@@ -25,7 +25,7 @@ const MainComponent = SHOW_STORYBOOK
           <SocketProvider>
             <NavigationContainer>
               <Stack.Navigator>
-                {/* <Stack.Screen name='Dev' component={Dev} /> */}
+                {/* <Stack.Screen name='Dev' component={Dev} options={{ headerShown: false }} /> */}
                 <Stack.Screen
                   name='Home'
                   component={HomeScreen}

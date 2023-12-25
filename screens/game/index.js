@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
+import { Animated, SafeAreaView, StyleSheet, View } from 'react-native';
 import AnswerOptions from '../../components/AnswerOption';
 import Header from '../../components/Header';
 import HighlightEffect from '../../components/HighlightEffect';
@@ -8,23 +8,18 @@ import QuizAnimation from '../../components/QuizAnimation';
 import useConditionalFadeIn from '../../hooks/useConditionalFadeIn';
 import socketService from '../../services/socketService';
 
-const GameScreen = ({
-  navigation,
-  route: {
-    params: { categoryId },
-  },
-}) => {
+const GameScreen = ({ navigation, route }) => {
   const [highlightTrigger, setHighlightTrigger] = React.useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = React.useState(false);
   const [timer, setTimer] = React.useState(100);
   const [countdown, setCountdown] = React.useState(0);
   const [data, setData] = React.useState(null);
   const myData = data?.gameSession?.players?.find(
-    (player) => player.socketId === socketService.socket.id,
+    (player) => player.socketId === socketService?.socket?.id,
   );
 
   const opponentData = data?.gameSession?.players?.find(
-    (player) => player.socketId !== socketService.socket.id,
+    (player) => player.socketId !== socketService?.socket?.id,
   );
   const [showAnimation, setShowAnimation] = React.useState(true);
   const fadeInOpacity = useConditionalFadeIn(countdown !== 0);
@@ -42,7 +37,6 @@ const GameScreen = ({
     startTimer();
 
     socketService.on('new_round', (roundData) => {
-      console.log('🚀  roundData:', roundData);
       setCountdown(0);
       setTimer(100);
       if (roundData) setData(roundData);
@@ -50,6 +44,7 @@ const GameScreen = ({
     });
 
     socketService.on('game_over', (results) => {
+      // toggle game off for debugging
       navigation.navigate('GameOver', {
         results: results,
       });
@@ -100,7 +95,11 @@ const GameScreen = ({
   };
 
   return (
-    <>
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
       <QuizAnimation
         isVisible={showAnimation}
         playerOneName={myData?.name}
@@ -124,7 +123,7 @@ const GameScreen = ({
           />
         </Animated.View>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
@@ -132,6 +131,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 5,
+    paddingTop: 10,
   },
 });
 

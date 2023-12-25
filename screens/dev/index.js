@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import MatchHistory from '../../.storybook/stories/MatchHistory/MatchHistory';
+import GameScreen from '../game';
 
 const matchHistorydata = [
   {
@@ -26,6 +26,11 @@ const matchHistorydata = [
   },
 ];
 
+const players = [
+  { name: 'nirav2', rounds: [0, 19, 0, 0, 0, 19, 18, 0], total: 56 },
+  { name: 'nirav444', rounds: [0, 0, 20, 19, 0, 0, 0, 18], total: 57 },
+];
+
 export default function Dev() {
   return (
     <View
@@ -35,7 +40,9 @@ export default function Dev() {
         flex: 1,
       }}
     >
-      <MatchHistory matchHistory={matchHistorydata} />
+      <GameScreen />
+      {/* <RoundScoreTracker players={players} /> */}
+      {/* <MatchHistory matchHistory={matchHistorydata} /> */}
     </View>
   );
 }

@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Divider, HStack, VStack } from 'native-base';
 import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import RoundScoreTracker from '../../.storybook/stories/RoundScoreTracker/RoundScoreTracker';
 import socketService from '../../services/socketService';
 
@@ -70,7 +70,11 @@ export default function GameOverScreen({ navigation, route }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+    >
       <VStack space={4} alignItems='center' safeArea>
         <Text fontSize='xl' bold style={styles.title}>
           {whoWon()}
@@ -93,17 +97,14 @@ export default function GameOverScreen({ navigation, route }) {
           Share
         </Button>
       </VStack>
-      <RoundScoreTracker players={roundScoreTrackerData} />
-    </SafeAreaView>
+      {roundScoreTrackerData && <RoundScoreTracker players={roundScoreTrackerData} />}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     margin: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   title: {
     marginBottom: 20,

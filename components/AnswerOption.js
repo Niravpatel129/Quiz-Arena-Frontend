@@ -81,32 +81,37 @@ const AnswerOptions = ({ helperImage, answersOptions, handleAnswer, scores }) =>
           }}
         ></View>
       </View>
+      <View
+        style={{
+          padding: 30,
+        }}
+      >
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{
+              uri: helperImage,
+            }}
+          />
+        </View>
+        <View style={styles.answersContainer}>
+          {answerOptionsRandomized.map((answerOption, index) => {
+            let backgroundColor = '#fff'; // Default background
+            if (answerOption === selectedAnswer) {
+              backgroundColor = isCorrect ? '#adf2bc' : '#f2adad'; // Green if correct, red if incorrect
+            }
 
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: helperImage,
-          }}
-        />
-      </View>
-      <View style={styles.answersContainer}>
-        {answerOptionsRandomized.map((answerOption, index) => {
-          let backgroundColor = '#fff'; // Default background
-          if (answerOption === selectedAnswer) {
-            backgroundColor = isCorrect ? '#adf2bc' : '#f2adad'; // Green if correct, red if incorrect
-          }
-
-          return (
-            <Pressable
-              style={[styles.option, { backgroundColor }]}
-              onPress={() => onAnswerPress(answerOption)}
-              key={index}
-            >
-              <Text style={styles.text}>{answerOption.optionText}</Text>
-            </Pressable>
-          );
-        })}
+            return (
+              <Pressable
+                style={[styles.option, { backgroundColor }]}
+                onPress={() => onAnswerPress(answerOption)}
+                key={index}
+              >
+                <Text style={styles.text}>{answerOption.optionText}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
       </View>
     </View>
   );
@@ -146,7 +151,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 400,
+    height: 200,
     resizeMode: 'contain',
   },
   leftBar: {
