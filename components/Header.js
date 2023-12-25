@@ -9,7 +9,7 @@ const Header = ({ yourData, opponentData, countdown }) => {
         style={{
           display: 'flex',
           flexDirection: type !== 'you' ? 'row-reverse' : 'row',
-          gap: '1rem',
+          gap: 5,
           alignItems: 'center',
           justifyContent: 'space-between',
         }}
@@ -54,7 +54,6 @@ const Header = ({ yourData, opponentData, countdown }) => {
               }}
               textStyle={{
                 fontSize: 24,
-                fontFamily: 'HelveticaNeue-Medium',
                 fontWeight: 'bold',
                 color: '#007afe',
               }}

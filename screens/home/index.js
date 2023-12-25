@@ -34,7 +34,8 @@ export default function HomeScreen({ navigation }) {
         navigation.navigate('Categories');
       })
       .catch((error) => {
-        console.log('error', error);
+        console.log('login failed :(');
+        console.log('error', error.message);
         alert('Error logging in', error);
       });
   };
@@ -63,11 +64,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    margin: '1rem',
+    margin: 10,
   },
   input: {
     width: '80%',
-    padding: '1rem',
+    padding: 5,
     margin: 10,
     borderBottomWidth: 1,
     paddingBottom: 10,

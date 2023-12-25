@@ -130,7 +130,7 @@ const GameScreen = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: '2rem',
+    margin: 5,
   },
 });
 

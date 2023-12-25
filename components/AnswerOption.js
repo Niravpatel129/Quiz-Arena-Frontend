@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignContent: 'center',
     justifyContent: 'center',
-    paddingLeft: '2rem',
-    paddingRight: '2rem',
+    paddingLeft: 4,
+    paddingRight: 4,
   },
   imageContainer: {
     display: 'flex',
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
     marginTop: 20,
-    gap: '1rem',
+    gap: 5,
   },
   image: {
     width: '100%',
