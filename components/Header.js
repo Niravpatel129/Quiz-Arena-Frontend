@@ -1,6 +1,5 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import * as Progress from 'react-native-progress';
 
 const Header = ({ yourData, opponentData, countdown }) => {
   const renderPlayerCard = (playerData, type) => {
@@ -40,25 +39,7 @@ const Header = ({ yourData, opponentData, countdown }) => {
       <View style={styles.usersContainer}>
         <View>{renderPlayerCard(yourData, 'you')}</View>
         <View style={styles.timer}>
-          <Text>
-            <Progress.Circle
-              progress={countdown / 100}
-              size={70}
-              unfilledColor='#6f6f6f'
-              borderColor={'#f2f2f2'}
-              thickness={12}
-              showsText={true}
-              formatText={(countdown) => {
-                // dont show decimals
-                return Math.round(countdown * 10);
-              }}
-              textStyle={{
-                fontSize: 24,
-                fontWeight: 'bold',
-                color: '#007afe',
-              }}
-            ></Progress.Circle>
-          </Text>
+          {countdown > 0 ? <Text>Time Remaining: {countdown}</Text> : <Text>Time's Up!</Text>}
         </View>
         <View>{renderPlayerCard(opponentData)}</View>
       </View>
