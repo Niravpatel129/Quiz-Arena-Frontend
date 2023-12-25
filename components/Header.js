@@ -28,7 +28,7 @@ const Header = ({ yourData, opponentData, countdown }) => {
           }}
         >
           <Text style={styles.playerName}>{playerData?.name}</Text>
-          <Text style={styles.playerTag}>Beginner</Text>
+          <Text style={styles.playerTag}>Rating: {playerData?.playerInformation.elo?.rating}</Text>
           <Text style={styles.playerScore}>{playerData?.score}</Text>
         </View>
       </View>

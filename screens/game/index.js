@@ -42,6 +42,7 @@ const GameScreen = ({
     startTimer();
 
     socketService.on('new_round', (roundData) => {
+      console.log('🚀  roundData:', roundData);
       setCountdown(0);
       setTimer(100);
       if (roundData) setData(roundData);
