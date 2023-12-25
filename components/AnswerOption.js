@@ -22,8 +22,8 @@ const AnswerOptions = ({ helperImage, answersOptions, handleAnswer, scores }) =>
     handleAnswer(answerOption.optionText);
   };
 
-  const calculateScorePercentage = (score) => {
-    return ((10 - score) / 10) * 100;
+  const calculateHeight = (score) => {
+    return (score / 20) * 160;
   };
 
   return (
@@ -31,7 +31,7 @@ const AnswerOptions = ({ helperImage, answersOptions, handleAnswer, scores }) =>
       <View style={styles.leftBar}>
         <View
           style={{
-            height: `${calculateScorePercentage(scores.yourScore)}%`,
+            height: `${calculateHeight(scores.yourScore)}px`,
             backgroundColor: '#adf2bc',
             borderRadius: 5,
           }}
@@ -40,7 +40,7 @@ const AnswerOptions = ({ helperImage, answersOptions, handleAnswer, scores }) =>
       <View style={styles.rightBar}>
         <View
           style={{
-            height: `${calculateScorePercentage(scores.opponentScore)}%`,
+            height: `${calculateHeight(scores.opponentScore)}px`,
             backgroundColor: '#f2adad',
             borderRadius: 5,
           }}
