@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NativeBaseProvider } from 'native-base';
-import StorybookUI from './.storybook';
+import EnhancedStorybookUIRoot from './EnhancedStorybookUIRoot';
 import { SocketProvider } from './context/socket/SocketContext';
 import CategoriesScreen from './screens/categories';
 import ChallengeScreen from './screens/challenge';
@@ -18,13 +18,14 @@ const Stack = createNativeStackNavigator();
 const SHOW_STORYBOOK = false;
 
 const MainComponent = SHOW_STORYBOOK
-  ? StorybookUI
+  ? EnhancedStorybookUIRoot
   : function App() {
       return (
         <NativeBaseProvider>
           <SocketProvider>
             <NavigationContainer>
               <Stack.Navigator>
+                {/* <Stack.Screen name='Dev' component={Dev} /> */}
                 <Stack.Screen
                   name='Home'
                   component={HomeScreen}

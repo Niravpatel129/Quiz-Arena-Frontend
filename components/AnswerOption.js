@@ -12,11 +12,11 @@ const AnswerOptions = ({ helperImage, answersOptions, handleAnswer, scores }) =>
 
   async function loadSound() {
     const { sound: buttonSound } = await Audio.Sound.createAsync(
-      require('/assets/sounds/button_press.mp3'),
+      require('../assets/sounds/button_press.mp3'),
     );
 
     const { sound: correctSound } = await Audio.Sound.createAsync(
-      require('/assets/sounds/correct_answer.mp3'),
+      require('../assets/sounds/correct_answer.mp3'),
     );
     setSound(buttonSound);
     setCorrectAnswerSound(correctSound);
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     borderRadius: 5,
     marginBottom: 10,
-    border: '1px solid #000',
+    borderWidth: 1,
     backgroundColor: '#fff',
   },
   text: {

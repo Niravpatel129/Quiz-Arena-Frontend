@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
   },
   score: {
     color: 'black',
-    border: '1px solid black',
+    borderWidth: 1,
+
     padding: 5,
     fontSize: 26,
     width: 60,

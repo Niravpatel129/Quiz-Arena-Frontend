@@ -48,6 +48,7 @@ try {
 const getStories = () => {
   return {
     "./.storybook/stories/Button/Button.stories.js": require("./stories/Button/Button.stories.js"),
+    "./.storybook/stories/MatchHistory/MatchHistory.stories.js": require("./stories/MatchHistory/MatchHistory.stories.js"),
     "./.storybook/stories/RoundScoreTracker/RoundScoreTracker.stories.js": require("./stories/RoundScoreTracker/RoundScoreTracker.stories.js"),
   };
 };

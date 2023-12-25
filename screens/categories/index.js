@@ -9,14 +9,6 @@ export default function CategoriesScreen({ navigation, route }) {
       id: 1,
       name: 'Logos',
     },
-    {
-      id: 2,
-      name: 'League of Legends',
-    },
-    {
-      id: 3,
-      name: 'Valorant',
-    },
   ];
 
   const baseDelay = 100;

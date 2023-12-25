@@ -64,6 +64,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
+    fontWeight: 'bold',
+    fontSize: 32,
     margin: 10,
   },
   input: {
@@ -74,9 +76,9 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   button: {
-    margin: 10,
+    margin: 20,
     width: '80%',
-    padding: 10,
+    padding: 20,
     borderRadius: 5,
     backgroundColor: '#f194ff',
     color: '#fff',
