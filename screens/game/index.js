@@ -113,7 +113,7 @@ const GameScreen = ({
 
         <Animated.View style={{ opacity: fadeInOpacity }}>
           <AnswerOptions
-            helperImage=''
+            helperImage={data?.helperImage}
             answersOptions={data?.options}
             handleAnswer={handleAnswer}
             scores={{

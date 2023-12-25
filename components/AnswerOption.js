@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import shuffle from '../helpers/shuffle';
 
-const AnswerOptions = ({ answersOptions, handleAnswer, scores }) => {
+const AnswerOptions = ({ helperImage, answersOptions, handleAnswer, scores }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
   const [answerOptionsRandomized, setAnswerOptionsRandomized] = useState([]);
@@ -51,7 +51,7 @@ const AnswerOptions = ({ answersOptions, handleAnswer, scores }) => {
         <Image
           style={styles.image}
           source={{
-            uri: 'https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcQ-FvbbAq5IaJUhtwxXEwY0D-jiZju02ejnNHx_bQWL_27GF3srhwJgqusMAqKh3QqU',
+            uri: helperImage,
           }}
         />
       </View>

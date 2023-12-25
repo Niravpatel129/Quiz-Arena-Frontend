@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import socketService from '../../services/socketService';
 
 export default function ChallengeScreen({ route, navigation }) {
-  console.log('🚀  route:', route);
-
   useEffect(() => {
     socketService.emit('joinChallengeQueue', {
       gameId: route.params.gameId,
@@ -11,7 +9,6 @@ export default function ChallengeScreen({ route, navigation }) {
     });
 
     socketService.on('game_start', (data) => {
-      console.log('game_start', data);
       navigation.navigate('Game', { game: data.game });
     });
   }, []);

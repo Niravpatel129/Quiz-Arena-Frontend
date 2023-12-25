@@ -23,7 +23,6 @@ export default function QueueScreen({ route, navigation }) {
     });
 
     socketService.on('game_start', (data) => {
-      console.log('game_start', data);
       navigation.navigate('Game', { game: data.game });
     });
 
