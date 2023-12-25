@@ -1,3 +1,4 @@
+import { Audio } from 'expo-av';
 import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import shuffle from '../helpers/shuffle';
@@ -6,6 +7,32 @@ const AnswerOptions = ({ helperImage, answersOptions, handleAnswer, scores }) =>
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
   const [answerOptionsRandomized, setAnswerOptionsRandomized] = useState([]);
+  const [sound, setSound] = useState();
+  const [correctAnswerSound, setCorrectAnswerSound] = useState();
+
+  async function loadSound() {
+    const { sound: buttonSound } = await Audio.Sound.createAsync(
+      require('/assets/sounds/button_press.mp3'),
+    );
+
+    const { sound: correctSound } = await Audio.Sound.createAsync(
+      require('/assets/sounds/correct_answer.mp3'),
+    );
+    setSound(buttonSound);
+    setCorrectAnswerSound(correctSound);
+  }
+
+  useEffect(() => {
+    loadSound();
+
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync();
+          correctAnswerSound?.unloadAsync();
+        }
+      : undefined;
+  }, []);
 
   useEffect(() => {
     setSelectedAnswer(null);
@@ -13,8 +40,16 @@ const AnswerOptions = ({ helperImage, answersOptions, handleAnswer, scores }) =>
     answersOptions && setAnswerOptionsRandomized(shuffle(answersOptions));
   }, [answersOptions]);
 
-  const onAnswerPress = (answerOption) => {
+  const onAnswerPress = async (answerOption) => {
     if (selectedAnswer !== null) return;
+
+    if (answerOption.isCorrect) {
+      await correctAnswerSound?.playAsync();
+      setIsCorrect(true);
+    } else {
+      await sound?.playAsync();
+      setIsCorrect(false);
+    }
 
     setSelectedAnswer(answerOption);
 
