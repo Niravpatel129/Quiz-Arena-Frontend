@@ -2,7 +2,7 @@
   "expo": {
     "name": "Quiz-Arena-Frontend-Scaffold",
     "slug": "Quiz-Arena-Frontend-Scaffold",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.niravpatelp129.QuizArenaFrontendScaffold"
