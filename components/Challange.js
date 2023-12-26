@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useEffect } from 'react';
-import { Dimensions, Image, SafeAreaView, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Animated, Dimensions, Image, Platform, SafeAreaView, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import Colors from '../constants/Colors';
 import FontSize from '../constants/FontSize';
@@ -8,23 +8,47 @@ import Spacing from '../constants/Spacing';
 
 export default function Challange() {
   const [width, setWidth] = React.useState(Dimensions.get('window').width);
+  const topCardAnim = useState(new Animated.Value(-800))[0]; // Starts off-screen to the left
+  const bottomCardAnim = useState(new Animated.Value(800))[0]; // Starts off-screen to the right
+  const isWeb = Platform.OS === 'web';
 
   useEffect(() => {
     const onChange = () => {
       setWidth(Dimensions.get('window').width);
     };
 
-    Dimensions.addEventListener('change', onChange);
+    if (isWeb) Dimensions?.addEventListener('change', onChange);
+
+    // Animate
+    Animated.parallel([
+      Animated.timing(topCardAnim, {
+        toValue: 0,
+        useNativeDriver: true,
+        speed: 5,
+        bounciness: 10,
+      }),
+      Animated.timing(bottomCardAnim, {
+        toValue: 0,
+        useNativeDriver: true,
+        speed: 5,
+        bounciness: 10,
+      }),
+    ]).start();
 
     return () => {
-      Dimensions.removeEventListener('change', onChange);
+      if (isWeb) Dimensions?.removeEventListener('change', onChange);
     };
   }, []);
 
   const renderOpponentCard = (player, index) => {
+    const cardAnim = index === 1 ? topCardAnim : bottomCardAnim;
+
+    const translateX = cardAnim;
+
     return (
-      <View
+      <Animated.View
         style={{
+          transform: [{ translateX }],
           backgroundColor: '#3a4761',
           margin: Spacing.margin.base,
           borderColor: '#67728f',
@@ -83,14 +107,12 @@ export default function Challange() {
 
         <View
           style={{
-            // display: 'none',
-
             borderWidth: 2,
             borderColor: '#67728f',
             backgroundColor: '#3a4761',
             position: 'absolute',
-            left: index === 2 ? Spacing.margin.base : '',
-            right: index !== 2 ? Spacing.margin.base : '',
+            left: isWeb && index === 2 ? Spacing.margin.base : '',
+            right: index !== 2 ? Spacing.margin.base : 0,
             bottom: Spacing.margin.xl,
             height: '95%',
             width: '40%',
@@ -117,8 +139,6 @@ export default function Challange() {
               color: '#fff',
               borderRadius: Spacing.borderRadius.sm,
               backgroundColor: '#1b173c',
-              //   height: 60,
-              //   width: 60,
               padding: 10,
               alignItems: 'center',
               justifyContent: 'center',
@@ -148,7 +168,7 @@ export default function Challange() {
             </Text>
           </View>
         </View>
-      </View>
+      </Animated.View>
     );
   };
 
