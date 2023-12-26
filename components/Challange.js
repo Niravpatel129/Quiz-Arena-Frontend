@@ -5,8 +5,10 @@ import CountryFlag from 'react-native-country-flag';
 import Colors from '../constants/Colors';
 import FontSize from '../constants/FontSize';
 import Spacing from '../constants/Spacing';
+import { calculateExp } from '../helpers/calculateExp';
+import capitalizeFirstLetter from '../helpers/capitalizeFirstLetter';
 
-export default function Challange() {
+export default function Challange({ myData, opponentData, category }) {
   const [width, setWidth] = React.useState(Dimensions.get('window').width);
   const topCardAnim = useState(new Animated.Value(-800))[0]; // Starts off-screen to the left
   const bottomCardAnim = useState(new Animated.Value(800))[0]; // Starts off-screen to the right
@@ -40,7 +42,7 @@ export default function Challange() {
     };
   }, []);
 
-  const renderOpponentCard = (player, index) => {
+  const renderOpponentCard = ({ tag, playerName, country, elo, experience, avatar }, index) => {
     const cardAnim = index === 1 ? topCardAnim : bottomCardAnim;
 
     const translateX = cardAnim;
@@ -72,7 +74,7 @@ export default function Challange() {
               marginBottom: 10,
             }}
           >
-            Rookie
+            {tag || 'Rookie'}
           </Text>
           <View
             style={{
@@ -89,13 +91,13 @@ export default function Challange() {
                 fontFamily: 'poppins-regular',
               }}
             >
-              Alex
+              {playerName || 'Alex'}
             </Text>
             <CountryFlag
               style={{
                 marginBottom: 3,
               }}
-              isoCode='de'
+              isoCode={country || 'de'}
               size={25}
             />
           </View>
@@ -108,7 +110,7 @@ export default function Challange() {
               fontFamily: 'poppins-regular',
             }}
           >
-            Logos Rating: 1200 Elo
+            {capitalizeFirstLetter(category) || 'logos'} Rating: {elo || 1200} Elo
           </Text>
         </View>
 
@@ -129,7 +131,9 @@ export default function Challange() {
         >
           <Image
             source={{
-              uri: 'https://storage.googleapis.com/pai-images/04a4d16220a645408362ae47deb07737.jpeg',
+              uri:
+                avatar ||
+                'https://storage.googleapis.com/pai-images/04a4d16220a645408362ae47deb07737.jpeg',
             }}
             style={{
               height: '100%',
@@ -171,7 +175,7 @@ export default function Challange() {
                 fontFamily: 'poppins-regular',
               }}
             >
-              1
+              {calculateExp(experience) || 1}
             </Text>
           </View>
         </View>
@@ -218,10 +222,12 @@ export default function Challange() {
         >
           {renderOpponentCard(
             {
-              preTag: 'playing from USA florida',
-              playerName: 'Alex Johnson',
-              country: 'us',
-              subtext: 'Expert',
+              tag: myData.playerInformation.tag,
+              playerName: myData.playerInformation.username,
+              country: myData.playerInformation.country,
+              elo: myData.playerInformation.elo.rating,
+              experience: myData.playerInformation.experience,
+              avatar: myData.playerInformation?.avatar,
             },
             1,
           )}
@@ -256,10 +262,12 @@ export default function Challange() {
           </View>
           {renderOpponentCard(
             {
-              preTag: 'playing from USA florida',
-              playerName: 'Alex Johnson',
-              country: 'us',
-              subtext: 'Expert',
+              tag: opponentData.playerInformation.tag,
+              playerName: opponentData.playerInformation.username,
+              country: opponentData.playerInformation.country,
+              elo: opponentData.playerInformation.elo.rating,
+              experience: opponentData.playerInformation.experience,
+              avatar: opponentData.playerInformation?.avatar,
             },
             2,
           )}

@@ -14,6 +14,7 @@ const GameScreen = ({ navigation, route }) => {
   const [timer, setTimer] = React.useState(10);
   const [countdown, setCountdown] = React.useState(0);
   const [data, setData] = React.useState(null);
+  console.log('🚀  data:', data);
 
   const myData = data?.gameSession?.players?.find(
     (player) => player.socketId === socketService?.socket?.id,
@@ -104,7 +105,13 @@ const GameScreen = ({ navigation, route }) => {
       }}
     >
       {/* Intro animation */}
-      {showAnimation && <Challange />}
+      {showAnimation && data && (
+        <Challange
+          category={data.gameSession.category}
+          opponentData={opponentData}
+          myData={myData}
+        />
+      )}
       {/* <QuizAnimation
         isVisible={showAnimation}
         playerOneName={myData?.name}

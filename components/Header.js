@@ -14,9 +14,16 @@ const Header = ({ yourData, opponentData, countdown }) => {
         }}
       >
         <Image
-          style={styles.tinyLogo}
+          style={[
+            styles.tinyLogo,
+            {
+              borderColor: type !== 'you' ? '#ff0000' : '#01ff38',
+            },
+          ]}
           source={{
-            uri: 'https://assets-prd.ignimgs.com/2022/08/17/runescape-old-school-button-1660778096603.jpg',
+            uri:
+              playerData?.playerInformation?.avatar ||
+              'https://assets-prd.ignimgs.com/2022/08/17/runescape-old-school-button-1660778096603.jpg',
           }}
         />
         <View
@@ -81,7 +88,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     display: 'flex',
     borderWidth: 2,
-    borderColor: '#01ff38',
+    // borderColor: '#01ff38',
   },
   playercard: {
     display: 'flex',
