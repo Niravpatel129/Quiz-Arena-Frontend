@@ -1,7 +1,6 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
-import { Dimensions, Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, SafeAreaView, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import Colors from '../constants/Colors';
 import FontSize from '../constants/FontSize';
@@ -46,6 +45,7 @@ export default function Challange() {
               fontSize: FontSize.md,
               fontWeight: 'bold',
               fontFamily: 'sans-serif',
+              marginBottom: 10,
             }}
           >
             Playing from USA florida
@@ -108,91 +108,45 @@ export default function Challange() {
               overflow: 'hidden',
             }}
           />
-        </View>
-      </View>
-    );
-  };
-
-  const renderPlayerCard = (player) => {
-    return (
-      <View
-        style={{
-          backgroundColor: '#3a4761',
-          margin: Spacing.margin.base,
-          borderColor: '#67728f',
-          borderWidth: 2,
-          borderRadius: Spacing.borderRadius.lg,
-          minHeight: 190,
-          padding: Spacing.padding.base,
-          paddingLeft: Spacing.margin.xl,
-          paddingVertical: Spacing.padding.lg,
-          position: 'relative',
-        }}
-      >
-        <Text
-          style={{
-            color: '#69829c',
-            fontSize: FontSize.md,
-            fontWeight: 'bold',
-            fontFamily: 'sans-serif',
-          }}
-        >
-          Playing from USA florida
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            gap: Spacing.margin.xl,
-          }}
-        >
-          <Text
+          <View
             style={{
-              color: Colors.primary,
-              fontSize: FontSize.xl,
-              fontWeight: 'bold',
-              fontFamily: 'sans-serif',
+              position: 'absolute',
+              bottom: 0,
+              left: index === 2 && 0,
+              right: index !== 2 && 0,
+              color: '#fff',
+              borderRadius: Spacing.borderRadius.sm,
+              backgroundColor: '#1b173c',
+              //   height: 60,
+              //   width: 60,
+              padding: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'row',
+              paddingBottom: 8,
             }}
           >
-            Alex
-          </Text>
-          <CountryFlag isoCode='de' size={25} />
-        </View>
-
-        <Text
-          style={{
-            color: '#c6c082',
-            fontSize: FontSize.md,
-            fontWeight: 'bold',
-            fontFamily: 'sans-serif',
-          }}
-        >
-          Expert
-        </Text>
-
-        <View
-          style={{
-            borderWidth: 2,
-            borderColor: '#67728f',
-            backgroundColor: '#3a4761',
-            position: 'absolute',
-            right: Spacing.margin.base,
-            bottom: Spacing.margin.xl,
-            height: '95%',
-            width: '40%',
-            borderRadius: Spacing.borderRadius.lg,
-            overflow: 'hidden',
-          }}
-        >
-          <Image
-            source={{
-              uri: 'https://storage.googleapis.com/pai-images/04a4d16220a645408362ae47deb07737.jpeg',
-            }}
-            style={{
-              height: '100%',
-              width: '100%',
-              overflow: 'hidden',
-            }}
-          />
+            <Text
+              style={{
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: FontSize.sm,
+                fontFamily: 'sans-serif',
+              }}
+            >
+              Lv
+            </Text>
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: FontSize.base,
+                fontWeight: 'bold',
+                fontFamily: 'sans-serif',
+              }}
+            >
+              1
+            </Text>
+          </View>
         </View>
       </View>
     );
@@ -212,7 +166,7 @@ export default function Challange() {
           justifyContent: 'center',
         }}
       >
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             zIndex: 100,
             position: 'absolute',
@@ -227,7 +181,7 @@ export default function Challange() {
           }}
         >
           <Ionicons name='close' size={28} color={Colors.primary} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <View
           style={{
