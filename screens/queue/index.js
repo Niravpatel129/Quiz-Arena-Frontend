@@ -15,6 +15,13 @@ export default function QueueScreen({ route, navigation }) {
   };
 
   useEffect(() => {
+    if (queueTime === 15) {
+      console.log('adding bot');
+      socketService.emit('add_bot', categoryName);
+    }
+  }, [queueTime]);
+
+  useEffect(() => {
     socketService.emit('join_queue', categoryName);
     startTimer();
 
