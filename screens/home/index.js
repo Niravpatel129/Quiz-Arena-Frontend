@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { newRequest } from '../../api/newRequest';
+import LoginWithFacebook from '../../components/LoginWithFacebook';
 import { useSocket } from '../../context/socket/SocketContext';
 
 export default function HomeScreen({ navigation }) {
@@ -52,6 +53,8 @@ export default function HomeScreen({ navigation }) {
       <Pressable style={styles.button} title='login' onPress={() => NavigateToMainPage()}>
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>
+
+      <LoginWithFacebook />
     </View>
   );
 }
