@@ -30,6 +30,14 @@ export default function NotificationsScreen({ navigation }) {
   return (
     <View>
       <View>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {notifications.length === 0 && <Text>No notifications</Text>}
+        </View>
         {notifications.map((notification, index) => (
           <View key={index} style={styles.notificationContainer}>
             <Text key={index}>{notification.message}</Text>

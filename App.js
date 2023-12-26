@@ -1,8 +1,10 @@
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import { NativeBaseProvider } from 'native-base';
 import * as RNLocalize from 'react-native-localize';
+import TabBar from './components/MyTabBar/MyTabBar';
 import fonts from './config/fonts';
 import { SocketProvider } from './context/socket/SocketContext';
 import CategoriesScreen from './screens/categories';
@@ -11,11 +13,14 @@ import GameScreen from './screens/game';
 import GameOverScreen from './screens/game_over';
 import HomeScreen from './screens/home';
 import LeaderboardsScreen from './screens/leaderboards';
+import MatchHistoryScreen from './screens/match_history';
 import NotificationsScreen from './screens/notifications';
 import PlayersScreen from './screens/players';
+import ProfileScreen from './screens/profile';
 import QueueScreen from './screens/queue';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function App() {
   const [fontsLoaded] = useFonts(fonts);
@@ -24,54 +29,68 @@ function App() {
 
   if (!fontsLoaded) return null;
 
+  function HomeTabNavigator() {
+    return (
+      <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
+        <Tab.Screen
+          name='Categories'
+          component={CategoriesScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen name='History' component={MatchHistoryScreen} />
+        <Tab.Screen name='Profile' component={ProfileScreen} />
+        <Tab.Screen name='Leaderboards' component={LeaderboardsScreen} />
+        <Tab.Screen name='Notifications' component={NotificationsScreen} />
+      </Tab.Navigator>
+    );
+  }
+
+  function StackNavigator() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name='Home'
+          component={HomeScreen}
+          options={{ title: 'Welcome', headerShown: false }}
+        />
+        <Stack.Screen name='Queue' component={QueueScreen} options={{ title: 'Queue' }} />
+        <Stack.Screen
+          name='Game'
+          component={GameScreen}
+          options={{ title: 'Game', headerShown: false }}
+        />
+        <Stack.Screen
+          name='GameOver'
+          component={GameOverScreen}
+          options={{ title: 'Game Over', headerShown: false }}
+        />
+        <Stack.Screen
+          name='Players'
+          component={PlayersScreen}
+          options={{ title: 'Players', headerShown: true }}
+        />
+        <Stack.Screen
+          name='Challenge'
+          component={ChallengeScreen}
+          options={{ title: 'Challenge', headerShown: true }}
+        />
+        <Stack.Screen
+          name='Categories'
+          component={HomeTabNavigator}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    );
+  }
+
   return (
     <NativeBaseProvider>
       <SocketProvider>
         <NavigationContainer>
-          <Stack.Navigator>
-            {/* <Stack.Screen name='Dev' component={Challange} options={{ headerShown: false }} /> */}
-            <Stack.Screen
-              name='Home'
-              component={HomeScreen}
-              options={{ title: 'Welcome', headerShown: false }}
-            />
-            <Stack.Screen
-              name='Categories'
-              component={CategoriesScreen}
-              options={{ title: 'Categories' }}
-            />
-            <Stack.Screen name='Queue' component={QueueScreen} options={{ title: 'Queue' }} />
-            <Stack.Screen
-              name='Game'
-              component={GameScreen}
-              options={{ title: 'Game', headerShown: false }}
-            />
-            <Stack.Screen
-              name='GameOver'
-              component={GameOverScreen}
-              options={{ title: 'Game Over', headerShown: false }}
-            />
-            <Stack.Screen
-              name='Leaderboards'
-              component={LeaderboardsScreen}
-              options={{ title: 'Leaderboards', headerShown: true }}
-            />
-            <Stack.Screen
-              name='Players'
-              component={PlayersScreen}
-              options={{ title: 'Players', headerShown: true }}
-            />
-            <Stack.Screen
-              name='Challenge'
-              component={ChallengeScreen}
-              options={{ title: 'Challenge', headerShown: true }}
-            />
-            <Stack.Screen
-              name='Notifications'
-              component={NotificationsScreen}
-              options={{ title: 'Notifications', headerShown: true }}
-            />
-          </Stack.Navigator>
+          {/* <Stack.Screen name='Dev' component={Challange} options={{ headerShown: false }} /> */}
+          <StackNavigator />
         </NavigationContainer>
       </SocketProvider>
     </NativeBaseProvider>

@@ -7,6 +7,7 @@ import { useSocket } from '../../context/socket/SocketContext';
 
 export default function HomeScreen({ navigation }) {
   const [loginInput, setLoginInput] = useState('nirav2');
+
   const socket = useSocket();
 
   useEffect(() => {
