@@ -20,7 +20,7 @@ function App() {
       <SocketProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            {/* <Stack.Screen name='Dev' component={Dev} options={{ headerShown: false }} /> */}
+            {/* <Stack.Screen name='Dev' component={Challange} options={{ headerShown: false }} /> */}
             <Stack.Screen
               name='Home'
               component={HomeScreen}

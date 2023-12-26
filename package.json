@@ -36,6 +36,7 @@
     "react-native": "0.72.6",
     "react-native-animatable": "^1.4.0",
     "react-native-config": "^1.5.1",
+    "react-native-country-flag": "^2.0.2",
     "react-native-progress": "^5.0.1",
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
