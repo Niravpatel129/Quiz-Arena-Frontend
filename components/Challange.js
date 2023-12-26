@@ -68,16 +68,17 @@ export default function Challange() {
               color: '#69829c',
               fontSize: FontSize.md,
               fontWeight: 'bold',
-              fontFamily: 'sans-serif',
+              fontFamily: 'poppins-regular',
               marginBottom: 10,
             }}
           >
-            Playing from USA florida
+            Rookie
           </Text>
           <View
             style={{
               flexDirection: 'row',
               gap: Spacing.margin.xl,
+              alignItems: 'center',
             }}
           >
             <Text
@@ -85,12 +86,18 @@ export default function Challange() {
                 color: Colors.primary,
                 fontSize: FontSize.xl,
                 fontWeight: 'bold',
-                fontFamily: 'sans-serif',
+                fontFamily: 'poppins-regular',
               }}
             >
               Alex
             </Text>
-            <CountryFlag isoCode='de' size={25} />
+            <CountryFlag
+              style={{
+                marginBottom: 3,
+              }}
+              isoCode='de'
+              size={25}
+            />
           </View>
 
           <Text
@@ -98,10 +105,10 @@ export default function Challange() {
               color: '#c6c082',
               fontSize: FontSize.md,
               fontWeight: 'bold',
-              fontFamily: 'sans-serif',
+              fontFamily: 'poppins-regular',
             }}
           >
-            Expert
+            Logos Rating: 1200 Elo
           </Text>
         </View>
 
@@ -151,7 +158,7 @@ export default function Challange() {
                 color: 'white',
                 fontWeight: 'bold',
                 fontSize: FontSize.sm,
-                fontFamily: 'sans-serif',
+                fontFamily: 'poppins-regular',
               }}
             >
               Lv
@@ -161,7 +168,7 @@ export default function Challange() {
                 color: '#fff',
                 fontSize: FontSize.base,
                 fontWeight: 'bold',
-                fontFamily: 'sans-serif',
+                fontFamily: 'poppins-regular',
               }}
             >
               1
@@ -232,7 +239,7 @@ export default function Challange() {
                 color: '#f4a42d',
                 fontSize: 62,
                 fontWeight: 'bold',
-                fontFamily: 'sans-serif',
+                fontFamily: 'poppins-regular',
               }}
             >
               VS
@@ -241,7 +248,7 @@ export default function Challange() {
               style={{
                 color: Colors.primary,
                 fontWeight: 'bold',
-                fontFamily: 'sans-serif',
+                fontFamily: 'poppins-regular',
               }}
             >
               Prepraring Match
