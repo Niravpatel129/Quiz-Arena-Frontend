@@ -1,19 +1,20 @@
 import React, { useEffect } from 'react';
 import { Animated, SafeAreaView, StyleSheet, View } from 'react-native';
 import AnswerOptions from '../../components/AnswerOption';
+import Challange from '../../components/Challange';
 import Header from '../../components/Header';
 import HighlightEffect from '../../components/HighlightEffect';
 import Question from '../../components/Question';
-import QuizAnimation from '../../components/QuizAnimation';
 import useConditionalFadeIn from '../../hooks/useConditionalFadeIn';
 import socketService from '../../services/socketService';
 
 const GameScreen = ({ navigation, route }) => {
   const [highlightTrigger, setHighlightTrigger] = React.useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = React.useState(false);
-  const [timer, setTimer] = React.useState(100);
+  const [timer, setTimer] = React.useState(10);
   const [countdown, setCountdown] = React.useState(0);
   const [data, setData] = React.useState(null);
+
   const myData = data?.gameSession?.players?.find(
     (player) => player.socketId === socketService?.socket?.id,
   );
@@ -27,7 +28,9 @@ const GameScreen = ({ navigation, route }) => {
   const startTimer = () => {
     setInterval(() => {
       setTimer((prevTime) => prevTime - 1);
-    }, 100);
+    }, 1000);
+
+    // this is for the animation
     setInterval(() => {
       setCountdown((prevTime) => prevTime + 1);
     }, 1000);
@@ -38,7 +41,7 @@ const GameScreen = ({ navigation, route }) => {
 
     socketService.on('new_round', (roundData) => {
       setCountdown(0);
-      setTimer(100);
+      setTimer(10);
       if (roundData) setData(roundData);
       setHighlightTrigger(false);
     });
@@ -100,12 +103,14 @@ const GameScreen = ({ navigation, route }) => {
         flex: 1,
       }}
     >
-      <QuizAnimation
+      {/* Intro animation */}
+      {showAnimation && <Challange />}
+      {/* <QuizAnimation
         isVisible={showAnimation}
         playerOneName={myData?.name}
         playerTwoName={opponentData?.name}
-      />
-      <HighlightEffect isCorrect={isCorrectAnswer} trigger={highlightTrigger} />
+      /> */}
+      {!showAnimation && <HighlightEffect isCorrect={isCorrectAnswer} trigger={highlightTrigger} />}
 
       <View style={styles.container}>
         <Header yourData={myData} opponentData={opponentData} countdown={timer} />
