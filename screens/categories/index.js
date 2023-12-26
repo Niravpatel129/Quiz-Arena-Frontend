@@ -14,11 +14,15 @@ export default function CategoriesScreen({ navigation, route }) {
   const baseDelay = 100;
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: '#f2f2f2',
+        },
+      ]}
+    >
       <VStack space={4} alignItems='stretch'>
-        <Text style={{ marginTop: 20, marginBottom: 5, fontSize: 20, textAlign: 'center' }}>
-          Categories
-        </Text>
         {categories.map((category, index) => (
           <Animatable.View
             animation='bounceIn'
@@ -42,7 +46,15 @@ export default function CategoriesScreen({ navigation, route }) {
         ))}
       </VStack>
 
-      <Text style={{ marginTop: 20, marginBottom: 20, fontSize: 20, textAlign: 'center' }}>
+      <Text
+        style={{
+          marginTop: 20,
+          marginBottom: 20,
+          fontSize: 20,
+          textAlign: 'center',
+          color: '#000',
+        }}
+      >
         Extra
       </Text>
 
@@ -67,7 +79,8 @@ export default function CategoriesScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 10,
+    // margin: 10,
+    padding: 10,
   },
   categoryButton: {
     marginBottom: 10,

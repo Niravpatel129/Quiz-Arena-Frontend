@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -31,14 +32,33 @@ function App() {
 
   function HomeTabNavigator() {
     return (
-      <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
-        <Tab.Screen
-          name='Categories'
-          component={CategoriesScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
+      <Tab.Navigator
+        tabBar={(props) => <TabBar {...props} />}
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#1d284b',
+          },
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: 'white',
+            fontWeight: 'bold',
+          },
+          headerRight: () => (
+            <>
+              <Ionicons
+                name='menu'
+                size={24}
+                color='white'
+                style={{ marginRight: 20 }}
+                onPress={() => {
+                  console.log('🚀 ~ file: App.js ~ line 113 ~ onPress ~ onPress');
+                }}
+              />
+            </>
+          ),
+        }}
+      >
+        <Tab.Screen name='Categories' component={CategoriesScreen} options={{}} />
         <Tab.Screen name='History' component={MatchHistoryScreen} />
         <Tab.Screen name='Profile' component={ProfileScreen} />
         <Tab.Screen name='Leaderboards' component={LeaderboardsScreen} />
@@ -49,7 +69,13 @@ function App() {
 
   function StackNavigator() {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#1d284b',
+          },
+        }}
+      >
         <Stack.Screen
           name='Home'
           component={HomeScreen}
