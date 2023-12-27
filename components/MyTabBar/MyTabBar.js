@@ -20,7 +20,14 @@ const ICONS = {
 
 const TabBar = ({ state, descriptors, navigation }) => {
   return (
-    <View style={{ flexDirection: 'row', backgroundColor: theme.colors.background }}>
+    <View
+      style={{
+        flexDirection: 'row',
+        backgroundColor: theme.colors.background,
+        paddingBottom: 42,
+        paddingTop: 16,
+      }}
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -62,7 +69,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={{ flex: 1, alignItems: 'center', padding: 12 }}
+            style={{ flex: 1, alignItems: 'center' }}
           >
             <Ionicons
               name={iconName}

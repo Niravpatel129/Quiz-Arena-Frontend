@@ -121,7 +121,7 @@ export default function Challange({ myData, opponentData, category }) {
             backgroundColor: '#3a4761',
             position: 'absolute',
             left: isWeb && index === 2 ? Spacing.margin.base : '',
-            right: index !== 2 ? Spacing.margin.base : 0,
+            right: index !== 2 ? Spacing.margin.base : Spacing.margin.base,
             bottom: Spacing.margin.xl,
             height: '95%',
             width: '40%',
@@ -206,7 +206,7 @@ export default function Challange({ myData, opponentData, category }) {
           {renderOpponentCard(
             {
               tag: myData.playerInformation.tag,
-              playerName: myData.playerInformation.username,
+              playerName: myData.name,
               country: myData.playerInformation.country,
               elo: myData.playerInformation.elo.rating,
               experience: myData.playerInformation.experience,
@@ -246,7 +246,7 @@ export default function Challange({ myData, opponentData, category }) {
           {renderOpponentCard(
             {
               tag: opponentData.playerInformation.tag,
-              playerName: opponentData.playerInformation.username,
+              playerName: opponentData.name,
               country: opponentData.playerInformation.country,
               elo: opponentData.playerInformation.elo.rating,
               experience: opponentData.playerInformation.experience,

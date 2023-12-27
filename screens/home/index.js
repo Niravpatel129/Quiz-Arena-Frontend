@@ -33,7 +33,10 @@ export default function HomeScreen({ navigation }) {
       })
       .then((response) => {
         socket.ConnectSocket();
-        navigation.navigate('Categories');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Categories' }],
+        });
       })
       .catch((error) => {
         console.log('login failed :(');

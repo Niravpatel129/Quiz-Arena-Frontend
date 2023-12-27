@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+const IS_PRODUCTION = process.env.EXPO_PUBLIC_PROD_BACKEND || process.env.NODE_ENV === 'production';
 const SOCKET_URL = IS_PRODUCTION
   ? 'https://quiz-arena-backend-96d07772fd89.herokuapp.com'
   : 'ws://localhost:8001';

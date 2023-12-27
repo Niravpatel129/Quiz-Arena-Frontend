@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import CountryFlag from 'react-native-country-flag';
 
 export default function ProfileScreen() {
   return (
@@ -10,11 +11,12 @@ export default function ProfileScreen() {
         backgroundColor: '#1c2141',
       }}
     >
-      <ScrollView>
+      <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
         <View
           style={{
             alignItems: 'center',
             justifyContent: 'center',
+            marginBottom: 30,
           }}
         >
           <Image
@@ -30,11 +32,17 @@ export default function ProfileScreen() {
               uri: 'https://t4.ftcdn.net/jpg/05/69/84/67/360_F_569846700_i3o9u2fhPVVq7iJAzkqMqCwjWSyv53tT.jpg',
             }}
           />
-
-          <Text style={{ color: 'white', fontSize: 30, marginTop: 10 }}>
-            John Doe
-            {/* <CountryFlag isoCode='ru' size={18} style={{ marginLeft: 10 }} /> */}
-          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 20,
+            }}
+          >
+            <Text style={{ color: 'white', fontSize: 30 }}>John Doe</Text>
+            <CountryFlag isoCode='ru' size={18} style={{ marginLeft: 10 }} />
+          </View>
           <Text style={{ color: 'gray', fontSize: 18, marginTop: 3 }}>Element of Suprise</Text>
           <Text style={{ color: 'lightgray', fontSize: 18, marginTop: 30 }}>
             <Ionicons name='location' size={18} color='lightgray' />
@@ -67,8 +75,7 @@ export default function ProfileScreen() {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              gap: 10,
-              // minWidth: 400,
+              gap: 5,
             }}
           >
             <TouchableOpacity
@@ -77,11 +84,12 @@ export default function ProfileScreen() {
                 borderRadius: 10,
                 padding: 10,
                 borderWidth: 1,
-                borderColor: '#ffffff',
+                borderColor: 'gray',
                 paddingHorizontal: 20,
                 backgroundColor: '#c73dce',
                 flex: 1,
                 alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               <Text style={{ color: 'white', fontSize: 18 }}>Challenge</Text>
@@ -92,11 +100,12 @@ export default function ProfileScreen() {
                 borderRadius: 10,
                 padding: 10,
                 borderWidth: 1,
-                borderColor: '#ffffff',
+                borderColor: 'gray',
                 paddingHorizontal: 20,
                 backgroundColor: '#ce3d3d',
                 flex: 1,
                 alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               <Text style={{ color: 'white', fontSize: 18 }}>Add</Text>
@@ -107,15 +116,149 @@ export default function ProfileScreen() {
                 borderRadius: 10,
                 padding: 10,
                 borderWidth: 1,
-                borderColor: '#ffffff',
+                borderColor: 'gray',
                 paddingHorizontal: 20,
                 backgroundColor: '#ce753d',
+                justifyContent: 'center',
                 flex: 1,
                 alignItems: 'center',
               }}
             >
               <Text style={{ color: 'white', fontSize: 18 }}>Chat</Text>
             </TouchableOpacity>
+          </View>
+
+          <View style={{ marginTop: 30 }}>
+            <View>
+              <View
+                style={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row',
+                  alignItems: 'space-between',
+                  marginTop: 20,
+                  gap: 25,
+                }}
+              >
+                <View style={{}}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 18,
+                      textAlign: 'center',
+                      marginBottom: 10,
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    Total Games
+                  </Text>
+                  <View
+                    style={{
+                      padding: 20,
+                      backgroundColor: '#1d284b',
+                      borderRadius: 10,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: 120,
+                    }}
+                  >
+                    <Text style={{ color: 'white', fontSize: 18, color: 'white' }}>11230</Text>
+                  </View>
+                </View>
+                <View style={{}}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 18,
+                      textAlign: 'center',
+                      marginBottom: 10,
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    Win Rate
+                  </Text>
+                  <View
+                    style={{
+                      padding: 20,
+                      backgroundColor: '#1d284b',
+                      borderRadius: 10,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: 120,
+                    }}
+                  >
+                    <Text style={{ color: 'white', fontSize: 18 }}>44%</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          <View>
+            {/* You Vs */}
+            <View
+              style={{
+                marginTop: 30,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text style={{ color: 'white', fontSize: 44, fontWeight: 'bold', marginBottom: 10 }}>
+                You vs
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  gap: 10,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: 'lightgray',
+                    borderRadius: 10,
+                    width: 150,
+                    height: 150,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 48,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#1d284b',
+                    }}
+                  >
+                    1 W
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: 'lightgray',
+                    borderRadius: 10,
+                    width: 150,
+                    height: 150,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 48,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#1d284b',
+                    }}
+                  >
+                    11 L
+                  </Text>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
       </ScrollView>

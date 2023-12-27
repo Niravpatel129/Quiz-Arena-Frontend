@@ -36,7 +36,7 @@ function App() {
         tabBar={(props) => <TabBar {...props} />}
         screenOptions={{
           tabBarStyle: {
-            // borderTopWidth: 0,
+            borderTopWidth: 0,
           },
           tabBarHideOnKeyboard: true,
           headerStyle: {
@@ -91,7 +91,7 @@ function App() {
           },
         }}
       >
-        <Stack.Screen name='Dev' component={ProfileScreen} options={{ headerShown: true }} />
+        {/* <Stack.Screen name='Dev' component={ProfileScreen} options={{ headerShown: true }} /> */}
 
         <Stack.Screen
           name='Home'
