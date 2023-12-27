@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Animated, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Animated, AppState, SafeAreaView, StyleSheet, View } from 'react-native';
 import AnswerOptions from '../../components/AnswerOption';
 import Challange from '../../components/Challange';
 import Header from '../../components/Header';
@@ -14,6 +14,7 @@ const GameScreen = ({ navigation, route }) => {
   const [timer, setTimer] = React.useState(10);
   const [countdown, setCountdown] = React.useState(0);
   const [data, setData] = React.useState(null);
+  const [appState, setAppState] = React.useState(AppState.currentState);
 
   const myData = data?.gameSession?.players?.find(
     (player) => player.socketId === socketService?.socket?.id,
@@ -37,12 +38,28 @@ const GameScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (appState.match(/inactive|background/) && nextAppState === 'active') {
+        console.log('App has come to the foreground!');
+        socketService.emit('check_connection', data);
+      }
+
+      setAppState(nextAppState);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [appState]);
+
+  useEffect(() => {
     startTimer();
 
     socketService.on('new_round', (roundData) => {
       setCountdown(0);
       setTimer(10);
       if (roundData) setData(roundData);
+
       setHighlightTrigger(false);
     });
 
@@ -53,6 +70,9 @@ const GameScreen = ({ navigation, route }) => {
       });
     });
 
+    socketService.on('connection_lost', () => {
+      navigation.navigate('Categories');
+    });
     socketService.on('answer_result', (result) => {
       setData((prevData) => ({
         ...prevData,
@@ -122,6 +142,15 @@ const GameScreen = ({ navigation, route }) => {
         flex: 1,
       }}
     >
+      {/* <Pressable
+        onPress={() => {
+          console.log('🚀  data:', data);
+          socketService.emit('check_connection', data);
+        }}
+      >
+        <Text>Test </Text>
+      </Pressable> */}
+
       {/* <QuizAnimation
         isVisible={showAnimation}
         playerOneName={myData?.name}
