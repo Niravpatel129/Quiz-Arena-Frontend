@@ -101,8 +101,8 @@ function App() {
           }}
         />
         <Tab.Screen
-          name='Notifications'
-          component={NotificationsScreen}
+          name='Friends'
+          component={FriendsScreen}
           options={{
             headerShown: false,
           }}
@@ -134,15 +134,10 @@ function App() {
           headerRight: () => (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('Friends');
+                navigation.navigate('Notifications');
               }}
             >
-              <FontAwesome5
-                name='user-friends'
-                size={22}
-                color='white'
-                style={{ marginRight: 20 }}
-              />
+              <FontAwesome5 name='bell' size={22} color='white' style={{ marginRight: 12 }} />
             </TouchableOpacity>
           ),
         }}
@@ -172,9 +167,9 @@ function App() {
           options={{ title: 'Players', headerShown: true }}
         />
         <Stack.Screen
-          name='Friends'
-          component={FriendsScreen}
-          options={{ title: 'Friends', headerShown: true }}
+          name='Notifications'
+          component={NotificationsScreen}
+          options={{ title: 'Notifications', headerShown: true }}
         />
         <Stack.Screen
           name='Challenge'

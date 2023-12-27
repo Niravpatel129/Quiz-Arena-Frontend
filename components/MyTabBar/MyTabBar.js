@@ -15,7 +15,8 @@ const ICONS = {
   History: 'calendar',
   Profile: 'ios-person',
   Leaderboards: 'ios-trophy',
-  Notifications: 'ios-notifications',
+  Friends: 'ios-people',
+  // Notifications: 'ios-notifications',
 };
 
 const TabBar = ({ state, descriptors, navigation }) => {
@@ -30,16 +31,10 @@ const TabBar = ({ state, descriptors, navigation }) => {
     >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
 
         const isFocused = state.index === index;
 
-        const iconName = ICONS[route.name] || 'ios-alert';
+        const iconName = ICONS[route.name] || 'ios-people';
 
         const onPress = () => {
           const event = navigation.emit({
