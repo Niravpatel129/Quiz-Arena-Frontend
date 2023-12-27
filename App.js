@@ -91,7 +91,7 @@ function App() {
           },
         }}
       >
-        {/* <Stack.Screen name='Dev' component={ProfileScreen} options={{ headerShown: true }} /> */}
+        {/* <Stack.Screen name='Dev' component={LeaderboardsScreen} options={{ headerShown: true }} /> */}
 
         <Stack.Screen
           name='Home'

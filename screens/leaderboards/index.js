@@ -1,9 +1,19 @@
-import { Box, Divider, FlatList, Heading, Text } from 'native-base';
 import React from 'react';
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { newRequest } from '../../api/newRequest';
+import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
 export default function LeaderboardsScreen() {
   const [leaderboards, setLeaderboards] = React.useState([]);
+  const [activeTab, setActiveTab] = React.useState('tab1');
 
   const fetchLeaderboards = async () => {
     const response = await newRequest.get('/leaderboards');
@@ -17,26 +27,232 @@ export default function LeaderboardsScreen() {
     fetchLeaderboards();
   }, []);
 
+  const renderTopThree = ({ players }) => {
+    return players.map((player, index) => {
+      const color = index === 0 ? 'gold' : index === 1 ? 'silver' : '#CD7F32';
+
+      return (
+        <View key={index}>
+          <Image
+            style={{
+              width: 90,
+              height: 90,
+              borderRadius: 75,
+              borderWidth: 3,
+              borderColor: color,
+            }}
+            source={{
+              uri: 'https://upload.wikimedia.org/wikipedia/en/e/e0/Felicette%2C_spacecat.jpg',
+            }}
+          />
+
+          <Text
+            style={{
+              textAlign: 'center',
+              marginTop: 3,
+              fontSize: 13,
+              color: 'white',
+              fontWeight: 'bold',
+            }}
+          >
+            <Text style={{ color: color }}>
+              #{index + 1} {capitalizeFirstLetter(player.username)}
+            </Text>
+          </Text>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 13,
+              fontWeight: 'bold',
+              textAlign: 'center',
+            }}
+          >
+            <Text style={{ color: color }}>{Math.floor(player.averageRating)}</Text>
+          </Text>
+        </View>
+      );
+    });
+  };
+
+  const renderLeaderboardsPlayers = ({ players }) => {
+    return players.map((player, index) => {
+      return (
+        <View
+          key={index}
+          style={{
+            backgroundColor: 'lightgray',
+            marginHorizontal: 20,
+            borderRadius: 22,
+            padding: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: 12,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+                marginRight: 10,
+              }}
+            >
+              {index + 4}.
+            </Text>
+            <Image
+              style={{ width: 50, height: 50, borderRadius: 25 }}
+              source={{
+                uri: 'https://upload.wikimedia.org/wikipedia/en/e/e0/Felicette%2C_spacecat.jpg',
+              }}
+            />
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}
+            >
+              {player.username}
+            </Text>
+          </View>
+
+          <Text
+            style={{
+              paddingRight: 12,
+            }}
+          >
+            <Text
+              style={{
+                color: 'black',
+                fontSize: 20,
+                flex: 1,
+                width: '100%',
+                fontWeight: 'bold',
+              }}
+            >
+              {Math.floor(player.averageRating)}
+            </Text>
+          </Text>
+        </View>
+      );
+    });
+  };
+
   return (
-    <Box flex={1} px='4' py='3' bg='white' safeArea>
-      <Heading size='xl' color='coolGray.800' mb='4'>
-        Leaderboards
-      </Heading>
-      <FlatList
-        data={leaderboards}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <Box borderBottomWidth='1' borderColor='coolGray.200' pl='4' pr='5' py='2'>
-            <Text fontSize='lg' fontWeight='bold' color='emerald.600'>
-              {index + 1}. {item.username}
-            </Text>
-            <Text fontSize='md' color='coolGray.500'>
-              Average Rating: {Math.floor(item.averageRating)}
-            </Text>
-          </Box>
-        )}
-        ItemSeparatorComponent={() => <Divider my='2' />}
-      />
-    </Box>
+    <SafeAreaView
+      style={{
+        backgroundColor: '#1c2141',
+        height: '100%',
+      }}
+    >
+      <ScrollView>
+        <View style={styles.container}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              padding: 10,
+              backgroundColor: '#1d284b',
+              margin: 10,
+              borderRadius: 22,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => setActiveTab('tab1')}
+              style={{
+                backgroundColor: activeTab === 'tab1' ? 'lightgray' : '#1c2141',
+                borderRadius: 22,
+                flex: 1,
+                height: 40,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  color: activeTab === 'tab1' ? '#1c2141' : '#ffffff',
+                  fontSize: 22,
+                  fontWeight: 'bold',
+                }}
+              >
+                Global
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setActiveTab('tab2')}
+              style={{
+                backgroundColor: activeTab === 'tab2' ? 'lightgray' : '#1c2141',
+                borderRadius: 22,
+                flex: 1,
+                height: 40,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  color: activeTab === 'tab2' ? '#1c2141' : '#ffffff',
+                  fontSize: 22,
+                  fontWeight: 'bold',
+                }}
+              >
+                Friends
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              marginTop: 20,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
+                  width: '100%',
+                }}
+              >
+                {/* Top 3 */}
+                {renderTopThree({ players: leaderboards.slice(0, 3) })}
+              </View>
+              <View
+                style={{
+                  marginTop: 20,
+                }}
+              >
+                {renderLeaderboardsPlayers({ players: leaderboards.slice(3) })}
+              </View>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  tabSelector: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
+  tabText: {
+    fontSize: 16,
+  },
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
