@@ -1,10 +1,9 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 
 export default function NotificationsScreen({ navigation }) {
   const [notifications, setNotifications] = React.useState([]);
-  console.log('🚀  notifications:', notifications);
 
   const fetchNotifications = async () => {
     const response = await newRequest.get('/users/notifications');
@@ -21,14 +20,132 @@ export default function NotificationsScreen({ navigation }) {
     fetchNotifications();
   };
 
-  const acceptNotification = async (id, gameId, category) => {
+  const acceptNotification = async (id, gameId, category, type) => {
     await newRequest.delete(`/users/notifications/${id}`);
 
-    navigation.navigate('Challenge', { gameId: gameId, category: category });
+    if (type === 'challenge') {
+      navigation.navigate('Challenge', { gameId: gameId, category: category });
+    }
+  };
+
+  const renderNotification = (notificationInfo) => {
+    console.log('🚀  notificationInfo:', notificationInfo);
+    return (
+      <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+          }}
+        >
+          <View>
+            <Image
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: 100,
+                borderWidth: 3,
+                borderColor: 'white',
+              }}
+              source={{
+                uri: 'https://t4.ftcdn.net/jpg/05/69/84/67/360_F_569846700_i3o9u2fhPVVq7iJAzkqMqCwjWSyv53tT.jpg',
+              }}
+            />
+          </View>
+          <View
+            style={{
+              marginTop: 10,
+            }}
+          >
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 18,
+                maxWidth: 250,
+                marginLeft: 10,
+                marginTop: 10,
+              }}
+            >
+              {notificationInfo.message}
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: 10,
+                marginLeft: 10,
+                marginTop: 10,
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#2fdd10',
+                  padding: 10,
+                  borderRadius: 5,
+                }}
+              >
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                  }}
+                  onPress={() =>
+                    acceptNotification(
+                      notificationInfo._id,
+                      notificationInfo.gameId,
+                      notificationInfo.category,
+                      notificationInfo.type,
+                    )
+                  }
+                >
+                  Accept
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => deleteNotification(notificationInfo._id)}
+                style={{
+                  backgroundColor: '#dd1010',
+                  padding: 10,
+                  borderRadius: 5,
+                }}
+              >
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Decline
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <Text
+            style={{
+              color: 'lightgray',
+              fontSize: 18,
+              fontWeight: 'bold',
+              marginLeft: 20,
+              marginBottom: 50,
+            }}
+          >
+            1m
+          </Text>
+        </View>
+      </View>
+    );
   };
 
   return (
-    <View>
+    <ScrollView
+      style={{
+        flex: 1,
+        backgroundColor: '#1c2141',
+        padding: 10,
+      }}
+    >
       <View>
         <View
           style={{
@@ -36,58 +153,22 @@ export default function NotificationsScreen({ navigation }) {
             justifyContent: 'center',
           }}
         >
-          {notifications.length === 0 && <Text>No notifications</Text>}
+          {notifications.length === 0 && (
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 18,
+                marginTop: 30,
+              }}
+            >
+              No notifications right now, check later!
+            </Text>
+          )}
         </View>
         {notifications.map((notification, index) => (
-          <View key={index} style={styles.notificationContainer}>
-            <Text key={index}>{notification.message}</Text>
-            <Text key={index}>{notification.type}</Text>
-            <Text key={index}>{notification.createdAt}</Text>
-            {notification.type === 'gameInvite' && (
-              <Pressable
-                style={styles.button}
-                onPress={() =>
-                  acceptNotification(
-                    notification._id,
-                    notification.options.gameId,
-                    notification.options.category,
-                  )
-                }
-              >
-                <Text style={styles.buttonText}>Accept</Text>
-              </Pressable>
-            )}
-            <Pressable style={styles.button} onPress={() => deleteNotification(notification._id)}>
-              <Text style={styles.buttonText}>Delete</Text>
-            </Pressable>
-          </View>
+          <View key={index}>{renderNotification(notification)}</View>
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  notificationContainer: {
-    margin: 10,
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#f95656',
-    backgroundColor: '#fff',
-  },
-  button: {
-    marginBottom: 10,
-    marginTop: 10,
-    width: '100%',
-    borderRadius: 5,
-    backgroundColor: '#f95656',
-    padding: 10,
-  },
-
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-});

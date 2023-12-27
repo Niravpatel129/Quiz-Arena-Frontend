@@ -2,20 +2,41 @@ import { useNavigation } from '@react-navigation/native';
 import { formatDistanceToNow } from 'date-fns';
 import { Image, Text, View } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Pressable, StyleSheet } from 'react-native';
+import { Animated, FlatList, Pressable, StyleSheet } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
 import capitalizeFirstLetter from '../../../helpers/capitalizeFirstLetter';
 
 export default function MatchHistory() {
   const navigation = useNavigation();
   const [matchHistory, setMatchHistory] = useState([]);
-  const [userId, setUserId] = useState('');
+
   useEffect(() => {
     const getMatchHistory = async () => {
       const res = await newRequest.get('/matchHistory');
-      console.log('🚀  res:', res.data.matchHistory);
-      setMatchHistory(res.data.matchHistory);
-      setUserId(res.data.userId);
+      const animatedMatchHistory = res.data.matchHistory.map((item) => ({
+        ...item,
+        opacity: new Animated.Value(0),
+        translateY: new Animated.Value(50),
+      }));
+      setMatchHistory(animatedMatchHistory);
+
+      animatedMatchHistory.forEach((_, index) => {
+        Animated.sequence([
+          Animated.delay(index * 100),
+          Animated.parallel([
+            Animated.timing(animatedMatchHistory[index].opacity, {
+              toValue: 1,
+              duration: 500,
+              useNativeDriver: true,
+            }),
+            Animated.timing(animatedMatchHistory[index].translateY, {
+              toValue: 0,
+              duration: 500,
+              useNativeDriver: true,
+            }),
+          ]),
+        ]).start();
+      });
     };
 
     getMatchHistory();
@@ -26,7 +47,6 @@ export default function MatchHistory() {
   };
 
   const parseSubtitle = ({ opponentName, date }) => {
-    // Less than 1 hour ago
     return (
       <>
         You faced {capitalizeFirstLetter(opponentName)} {formatDate(date)}!
@@ -37,22 +57,19 @@ export default function MatchHistory() {
   return (
     <FlatList
       ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
-      style={{
-        paddingHorizontal: 10,
-        paddingTop: 20,
-        backgroundColor: '#1c2141',
-      }}
+      style={styles.container}
       data={matchHistory}
-      renderItem={({ item }) => {
-        const opponent = item.players.find((v) => v.id !== userId);
+      renderItem={({ item, index }) => {
+        const opponent = item.players.find((v) => v.id !== item.userId);
 
         return (
-          <View
+          <Animated.View
             key={item.id}
             style={[
               styles.bubble,
               {
-                justifyContent: 'space-between',
+                opacity: matchHistory[index].opacity,
+                transform: [{ translateY: matchHistory[index].translateY }],
               },
             ]}
           >
@@ -78,7 +95,6 @@ export default function MatchHistory() {
                 <Text style={styles.bubbleSubtitle}>
                   {parseSubtitle({
                     opponentName: opponent.name,
-                    opponentId: opponent.id,
                     date: item.startTime,
                   })}
                 </Text>
@@ -102,46 +118,36 @@ export default function MatchHistory() {
                 }}
               />
             </View>
-          </View>
+          </Animated.View>
         );
       }}
-      keyExtractor={(item) => item._id}
+      keyExtractor={(item) => item.id}
     />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    paddingTop: 40,
-  },
-  bubbleContainer: {
-    // flex: 1,
-    gap: 10,
+  container: {
+    paddingHorizontal: 10,
+    paddingTop: 20,
+    backgroundColor: '#1c2141',
   },
   bubble: {
     flexDirection: 'row',
-    // alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    // justifyContent: 'space-between',
-    // flex: 1,
     borderRadius: 15,
     borderWidth: 2,
     paddingLeft: 13,
     paddingTop: 20,
     paddingBottom: 20,
-    // width: 200,
-    // marginHorizontal: 50,
+    justifyContent: 'space-between',
   },
   bubbleIcon: {
     marginTop: 3,
     marginRight: 10,
   },
   bubbleTitle: {
-    fontWeight: 600,
+    fontWeight: '600',
     color: '#1d284b',
     fontSize: 20,
   },
@@ -149,7 +155,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#767676',
   },
-
   bubbleInnerContainer: {
     marginRight: 10,
     marginTop: 7,
