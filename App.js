@@ -35,8 +35,13 @@ function App() {
       <Tab.Navigator
         tabBar={(props) => <TabBar {...props} />}
         screenOptions={{
+          tabBarStyle: {
+            // borderTopWidth: 0,
+          },
           tabBarHideOnKeyboard: true,
           headerStyle: {
+            borderBottomWidth: 0,
+
             backgroundColor: '#1d284b',
           },
           headerTitleAlign: 'center',
@@ -72,8 +77,12 @@ function App() {
     return (
       <Stack.Navigator
         screenOptions={{
+          tabBarStyle: {
+            // borderTopWidth: 0,
+          },
           headerStyle: {
             backgroundColor: '#1d284b',
+            borderBottomWidth: 0,
           },
           headerTitleAlign: 'center',
           headerTitleStyle: {
@@ -82,6 +91,8 @@ function App() {
           },
         }}
       >
+        <Stack.Screen name='Dev' component={ProfileScreen} options={{ headerShown: true }} />
+
         <Stack.Screen
           name='Home'
           component={HomeScreen}
@@ -121,7 +132,6 @@ function App() {
     <NativeBaseProvider>
       <SocketProvider>
         <NavigationContainer>
-          {/* <Stack.Screen name='Dev' component={Challange} options={{ headerShown: false }} /> */}
           <StackNavigator />
         </NavigationContainer>
       </SocketProvider>
