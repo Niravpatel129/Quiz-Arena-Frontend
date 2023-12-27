@@ -12,6 +12,14 @@ export default function ProfileScreen() {
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+        <View>
+          <Ionicons
+            name='share'
+            size={24}
+            color='white'
+            style={{ marginTop: 20, marginLeft: 20 }}
+          />
+        </View>
         <View
           style={{
             alignItems: 'center',
