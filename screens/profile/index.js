@@ -41,7 +41,7 @@ export default function ProfileScreen() {
             }}
           >
             <Text style={{ color: 'white', fontSize: 30 }}>John Doe</Text>
-            <CountryFlag isoCode='ru' size={18} style={{ marginLeft: 10 }} />
+            <CountryFlag isoCode='aq' size={18} style={{ marginLeft: 10 }} />
           </View>
           <Text style={{ color: 'gray', fontSize: 18, marginTop: 3 }}>Element of Suprise</Text>
           <Text style={{ color: 'lightgray', fontSize: 18, marginTop: 30 }}>

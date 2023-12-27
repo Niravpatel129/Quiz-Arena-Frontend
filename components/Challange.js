@@ -10,8 +10,8 @@ import capitalizeFirstLetter from '../helpers/capitalizeFirstLetter';
 
 export default function Challange({ myData, opponentData, category }) {
   const [width, setWidth] = React.useState(Dimensions.get('window').width);
-  const topCardAnim = useState(new Animated.Value(-800))[0]; // Starts off-screen to the left
-  const bottomCardAnim = useState(new Animated.Value(800))[0]; // Starts off-screen to the right
+  const topCardAnim = useState(new Animated.Value(-800))[0];
+  const bottomCardAnim = useState(new Animated.Value(800))[0];
   const isWeb = Platform.OS === 'web';
 
   useEffect(() => {
@@ -97,7 +97,7 @@ export default function Challange({ myData, opponentData, category }) {
               style={{
                 marginBottom: 3,
               }}
-              isoCode={country || 'de'}
+              isoCode={country.toLowerCase() || 'aq'}
               size={25}
             />
           </View>
