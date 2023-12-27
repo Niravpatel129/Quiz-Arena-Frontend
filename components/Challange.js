@@ -197,23 +197,6 @@ export default function Challange({ myData, opponentData, category }) {
           justifyContent: 'center',
         }}
       >
-        {/* <TouchableOpacity
-          style={{
-            zIndex: 100,
-            position: 'absolute',
-            right: 20,
-            top: 80,
-            borderRadius: Spacing.borderRadius.xxl,
-            height: 40,
-            width: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#fd5e5c',
-          }}
-        >
-          <Ionicons name='close' size={28} color={Colors.primary} />
-        </TouchableOpacity> */}
-
         <View
           style={{
             justifyContent: 'center',

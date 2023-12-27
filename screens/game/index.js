@@ -14,7 +14,6 @@ const GameScreen = ({ navigation, route }) => {
   const [timer, setTimer] = React.useState(10);
   const [countdown, setCountdown] = React.useState(0);
   const [data, setData] = React.useState(null);
-  console.log('🚀  data:', data);
 
   const myData = data?.gameSession?.players?.find(
     (player) => player.socketId === socketService?.socket?.id,
@@ -98,20 +97,31 @@ const GameScreen = ({ navigation, route }) => {
     socketService.emit('submit_answer', resData);
   };
 
+  if (showAnimation && data) {
+    return (
+      <View
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          zIndex: 100,
+        }}
+      >
+        <Challange
+          category={data.gameSession.category}
+          opponentData={opponentData}
+          myData={myData}
+        />
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView
       style={{
         flex: 1,
       }}
     >
-      {/* Intro animation */}
-      {showAnimation && data && (
-        <Challange
-          category={data.gameSession.category}
-          opponentData={opponentData}
-          myData={myData}
-        />
-      )}
       {/* <QuizAnimation
         isVisible={showAnimation}
         playerOneName={myData?.name}

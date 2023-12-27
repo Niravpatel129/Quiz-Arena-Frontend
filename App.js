@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import { NativeBaseProvider } from 'native-base';
-import * as RNLocalize from 'react-native-localize';
+// import * as RNLocalize from 'react-native-localize';
 import TabBar from './components/MyTabBar/MyTabBar';
 import fonts from './config/fonts';
 import { SocketProvider } from './context/socket/SocketContext';
@@ -25,8 +25,8 @@ const Tab = createBottomTabNavigator();
 
 function App() {
   const [fontsLoaded] = useFonts(fonts);
-  const userCountry = RNLocalize.getCountry();
-  console.log('🚀  userCountry:', userCountry);
+  // const userCountry = RNLocalize.getCountry();
+  // console.log('🚀  userCountry:', userCountry);
 
   if (!fontsLoaded) return null;
 
