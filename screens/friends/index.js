@@ -1,5 +1,10 @@
 import React from 'react';
+import { Text, View } from 'react-native';
 
 export default function FriendsScreen() {
-  return <div>FriendsScreen</div>;
+  return (
+    <View>
+      <Text>Friends</Text>
+    </View>
+  );
 }

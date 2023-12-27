@@ -1,6 +1,6 @@
 import { FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 
@@ -13,6 +13,7 @@ import fonts from './config/fonts';
 import { SocketProvider } from './context/socket/SocketContext';
 import CategoriesScreen from './screens/categories';
 import ChallengeScreen from './screens/challenge';
+import FriendsScreen from './screens/friends';
 import GameScreen from './screens/game';
 import GameOverScreen from './screens/game_over';
 import HomeScreen from './screens/home';
@@ -71,16 +72,48 @@ function App() {
           ),
         }}
       >
-        <Tab.Screen name='Categories' component={CategoriesScreen} options={{}} />
-        <Tab.Screen name='History' component={MatchHistoryScreen} />
-        <Tab.Screen name='Profile' component={ProfileScreen} />
-        <Tab.Screen name='Leaderboards' component={LeaderboardsScreen} />
-        <Tab.Screen name='Notifications' component={NotificationsScreen} />
+        <Tab.Screen
+          name='Categories'
+          component={CategoriesScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name='History'
+          component={MatchHistoryScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name='Profile'
+          component={ProfileScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name='Leaderboards'
+          component={LeaderboardsScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name='Notifications'
+          component={NotificationsScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Tab.Navigator>
     );
   }
 
   function StackNavigator() {
+    const navigation = useNavigation();
+
     return (
       <Stack.Navigator
         screenOptions={{
@@ -92,10 +125,26 @@ function App() {
             borderBottomWidth: 0,
           },
           headerTitleAlign: 'center',
+          headerBackButtonMenuEnabled: false,
+          headerTintColor: 'white',
           headerTitleStyle: {
             color: 'white',
             fontWeight: 'bold',
           },
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Friends');
+              }}
+            >
+              <FontAwesome5
+                name='user-friends'
+                size={22}
+                color='white'
+                style={{ marginRight: 20 }}
+              />
+            </TouchableOpacity>
+          ),
         }}
       >
         {/* <Stack.Screen name='Dev' component={LeaderboardsScreen} options={{ headerShown: true }} /> */}
@@ -123,6 +172,11 @@ function App() {
           options={{ title: 'Players', headerShown: true }}
         />
         <Stack.Screen
+          name='Friends'
+          component={FriendsScreen}
+          options={{ title: 'Friends', headerShown: true }}
+        />
+        <Stack.Screen
           name='Challenge'
           component={ChallengeScreen}
           options={{ title: 'Challenge', headerShown: true }}
@@ -130,7 +184,7 @@ function App() {
         <Stack.Screen
           name='Categories'
           component={HomeTabNavigator}
-          options={{ headerShown: false }}
+          options={{ headerShown: true }}
         />
       </Stack.Navigator>
     );
