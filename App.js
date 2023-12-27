@@ -35,6 +35,7 @@ function App() {
       <Tab.Navigator
         tabBar={(props) => <TabBar {...props} />}
         screenOptions={{
+          tabBarHideOnKeyboard: true,
           headerStyle: {
             backgroundColor: '#1d284b',
           },
