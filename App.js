@@ -75,6 +75,11 @@ function App() {
           headerStyle: {
             backgroundColor: '#1d284b',
           },
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: 'white',
+            fontWeight: 'bold',
+          },
         }}
       >
         <Stack.Screen
