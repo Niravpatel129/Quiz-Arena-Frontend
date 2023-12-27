@@ -161,7 +161,7 @@ export default function NotificationsScreen({ navigation }) {
                 marginTop: 30,
               }}
             >
-              No notifications right now, check later!
+              Inbox is all clear!
             </Text>
           )}
         </View>

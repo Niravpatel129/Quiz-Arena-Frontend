@@ -1,10 +1,13 @@
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
+
 import { NativeBaseProvider } from 'native-base';
 // import * as RNLocalize from 'react-native-localize';
+
+import { TouchableOpacity } from 'react-native';
 import TabBar from './components/MyTabBar/MyTabBar';
 import fonts from './config/fonts';
 import { SocketProvider } from './context/socket/SocketContext';
@@ -49,18 +52,22 @@ function App() {
             color: 'white',
             fontWeight: 'bold',
           },
+          headerLeft: () => {
+            // return <Ionicons name='menu' size={24} color='white' style={{ marginLeft: 20 }} />;
+          },
           headerRight: () => (
-            <>
-              <Ionicons
-                name='menu'
-                size={24}
+            <TouchableOpacity
+              onPress={() => {
+                console.log('🚀 ~ file: App.js ~ line 113 ~ onPress ~ onPress');
+              }}
+            >
+              <FontAwesome5
+                name='user-friends'
+                size={22}
                 color='white'
                 style={{ marginRight: 20 }}
-                onPress={() => {
-                  console.log('🚀 ~ file: App.js ~ line 113 ~ onPress ~ onPress');
-                }}
               />
-            </>
+            </TouchableOpacity>
           ),
         }}
       >
@@ -98,6 +105,7 @@ function App() {
           component={HomeScreen}
           options={{ title: 'Welcome', headerShown: false }}
         />
+        {/* <Stack.Screen name='Drawer' component={DrawerNavigator} options={{ headerShown: false }} /> */}
         <Stack.Screen name='Queue' component={QueueScreen} options={{ title: 'Queue' }} />
         <Stack.Screen
           name='Game'
