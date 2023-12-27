@@ -29,7 +29,7 @@ export default function MatchHistory() {
     // Less than 1 hour ago
     return (
       <>
-        You beat {capitalizeFirstLetter(opponentName)} {formatDate(date)}!
+        You faced {capitalizeFirstLetter(opponentName)} {formatDate(date)}!
       </>
     );
   };
@@ -38,14 +38,24 @@ export default function MatchHistory() {
     <FlatList
       ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
       style={{
-        padding: 20,
+        paddingHorizontal: 10,
+        paddingTop: 20,
+        backgroundColor: '#1c2141',
       }}
       data={matchHistory}
       renderItem={({ item }) => {
         const opponent = item.players.find((v) => v.id !== userId);
 
         return (
-          <View key={item.id} style={styles.bubble}>
+          <View
+            key={item.id}
+            style={[
+              styles.bubble,
+              {
+                justifyContent: 'space-between',
+              },
+            ]}
+          >
             <View style={styles.bubbleIcon}>
               <Image
                 source={{
@@ -53,7 +63,7 @@ export default function MatchHistory() {
                 }}
                 alt='Alternate Text'
                 size='xs'
-                style={{ width: 45, height: 45 }}
+                style={{ width: 40, height: 40 }}
               />
             </View>
             <View style={styles.bubbleInnerContainer}>
@@ -74,6 +84,24 @@ export default function MatchHistory() {
                 </Text>
               </Pressable>
             </View>
+            <View>
+              <Image
+                source={{
+                  uri: 'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
+                }}
+                alt='Alternate Text'
+                size='xs'
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 20,
+                  marginRight: 15,
+                  marginTop: 5,
+                  borderWidth: 4,
+                  borderColor: 'gray',
+                }}
+              />
+            </View>
           </View>
         );
       }}
@@ -83,14 +111,12 @@ export default function MatchHistory() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
+  container: {},
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    paddingTop: 20,
+    paddingTop: 40,
   },
   bubbleContainer: {
     // flex: 1,
@@ -99,12 +125,12 @@ const styles = StyleSheet.create({
   bubble: {
     flexDirection: 'row',
     // alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     // justifyContent: 'space-between',
     // flex: 1,
-    borderRadius: 50,
+    borderRadius: 15,
     borderWidth: 2,
-    paddingLeft: 30,
+    paddingLeft: 13,
     paddingTop: 20,
     paddingBottom: 20,
     // width: 200,
@@ -112,15 +138,20 @@ const styles = StyleSheet.create({
   },
   bubbleIcon: {
     marginTop: 3,
-    marginRight: 20,
+    marginRight: 10,
   },
   bubbleTitle: {
     fontWeight: 600,
+    color: '#1d284b',
     fontSize: 20,
   },
   bubbleSubtitle: {
-    fontSize: 16,
+    fontSize: 13,
+    color: '#767676',
   },
 
-  bubbleInnerContainer: {},
+  bubbleInnerContainer: {
+    marginRight: 10,
+    marginTop: 7,
+  },
 });
