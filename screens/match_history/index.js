@@ -2,11 +2,7 @@ import React from 'react';
 import MatchHistory from '../../.storybook/stories/MatchHistory/MatchHistory';
 
 export default function MatchHistoryScreen() {
-  return (
-    <>
-      <MatchHistory matchHistory={matchHistorydata} />
-    </>
-  );
+  return <MatchHistory matchHistory={matchHistorydata} />;
 }
 
 const matchHistorydata = [

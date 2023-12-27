@@ -1,11 +1,25 @@
 import { useNavigation } from '@react-navigation/native';
 import { formatDistanceToNow } from 'date-fns';
-import { Image, Text, VStack, View } from 'native-base';
-import React from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { Image, Text, View } from 'native-base';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Pressable, StyleSheet } from 'react-native';
+import { newRequest } from '../../../api/newRequest';
+import capitalizeFirstLetter from '../../../helpers/capitalizeFirstLetter';
 
-export default function MatchHistory({ matchHistory }) {
+export default function MatchHistory() {
   const navigation = useNavigation();
+  const [matchHistory, setMatchHistory] = useState([]);
+  const [userId, setUserId] = useState('');
+  useEffect(() => {
+    const getMatchHistory = async () => {
+      const res = await newRequest.get('/matchHistory');
+      console.log('🚀  res:', res.data.matchHistory);
+      setMatchHistory(res.data.matchHistory);
+      setUserId(res.data.userId);
+    };
+
+    getMatchHistory();
+  }, []);
 
   const formatDate = (date) => {
     return formatDistanceToNow(new Date(date), { addSuffix: true });
@@ -15,17 +29,23 @@ export default function MatchHistory({ matchHistory }) {
     // Less than 1 hour ago
     return (
       <>
-        You beat {opponentName} {formatDate(date)}!
+        You beat {capitalizeFirstLetter(opponentName)} {formatDate(date)}!
       </>
     );
   };
 
   return (
-    <View height='100%' width='100%' style={styles.container}>
-      <Text style={styles.title}>HISTORY</Text>
-      <View style={styles.bubbleContainer}>
-        {matchHistory.map((match, index) => (
-          <VStack key={index} style={styles.bubble}>
+    <FlatList
+      ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
+      style={{
+        padding: 20,
+      }}
+      data={matchHistory}
+      renderItem={({ item }) => {
+        const opponent = item.players.find((v) => v.id !== userId);
+
+        return (
+          <View key={item.id} style={styles.bubble}>
             <View style={styles.bubbleIcon}>
               <Image
                 source={{
@@ -37,27 +57,28 @@ export default function MatchHistory({ matchHistory }) {
               />
             </View>
             <View style={styles.bubbleInnerContainer}>
-              <Text style={styles.bubbleTitle}>{match.category}</Text>
+              <Text style={styles.bubbleTitle}>{item.category}</Text>
               <Pressable
                 onPress={() => {
                   navigation.navigate('MatchHistoryDetails', {
-                    matchId: match.id,
+                    matchId: item.id,
                   });
                 }}
               >
                 <Text style={styles.bubbleSubtitle}>
                   {parseSubtitle({
-                    opponentName: match.opponent.name,
-                    opponentId: match.opponent.id,
-                    date: match.date,
+                    opponentName: opponent.name,
+                    opponentId: opponent.id,
+                    date: item.startTime,
                   })}
                 </Text>
               </Pressable>
             </View>
-          </VStack>
-        ))}
-      </View>
-    </View>
+          </View>
+        );
+      }}
+      keyExtractor={(item) => item._id}
+    />
   );
 }
 
@@ -88,12 +109,10 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     // width: 200,
     // marginHorizontal: 50,
-    gap: 5,
   },
   bubbleIcon: {
-    // width: 40,
-    // height: 40,
     marginTop: 3,
+    marginRight: 20,
   },
   bubbleTitle: {
     fontWeight: 600,
@@ -101,15 +120,7 @@ const styles = StyleSheet.create({
   },
   bubbleSubtitle: {
     fontSize: 16,
-    // flex: 1,
-    // width: 200
-    // flexWrap: 'wrap',
-    // flexShrink: 1,
-    // flexGrow: 12,
   },
 
-  bubbleInnerContainer: {
-    // paddingLeft: 10,
-    flex: 1,
-  },
+  bubbleInnerContainer: {},
 });
