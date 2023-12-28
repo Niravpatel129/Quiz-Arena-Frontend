@@ -13,6 +13,7 @@ const GameScreen = ({ navigation, route }) => {
   const [countdown, setCountdown] = React.useState(0);
   const [data, setData] = React.useState(null);
   const [appState, setAppState] = React.useState(AppState.currentState);
+  const [round, setRound] = React.useState(1);
 
   const myData = data?.gameSession?.players?.find(
     (player) => player.socketId === socketService?.socket?.id,
@@ -56,6 +57,7 @@ const GameScreen = ({ navigation, route }) => {
     socketService.on('new_round', (roundData) => {
       setCountdown(0);
       setTimer(10);
+      setRound((prevRound) => prevRound + 1);
       if (roundData) setData(roundData);
 
       setHighlightTrigger(false);
@@ -153,6 +155,7 @@ const GameScreen = ({ navigation, route }) => {
       {!showAnimation && <HighlightEffect isCorrect={isCorrectAnswer} trigger={highlightTrigger} />}
       {data && (
         <InGame
+          roundNumber={round}
           timer={timer}
           InGameData={{
             sessionId: data?.sessionId,

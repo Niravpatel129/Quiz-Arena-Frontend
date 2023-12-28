@@ -1,31 +1,15 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useState } from 'react';
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  Animated,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import socketService from '../../services/socketService';
-
-const InGameData = {
-  PlayerOneInformation: {
-    avatar:
-      'https://t3.ftcdn.net/jpg/05/56/38/38/360_F_556383860_pVMr2MpKfOPa2tQZiysUatpqhWm6AXaB.jpg',
-    username: 'Alex',
-    elo: 1300,
-    score: 109,
-  },
-  PlayerTwoInformation: {
-    avatar:
-      'https://t3.ftcdn.net/jpg/05/56/38/38/360_F_556383860_pVMr2MpKfOPa2tQZiysUatpqhWm6AXaB.jpg',
-    username: 'Bob',
-    elo: 1400,
-    score: 120,
-  },
-  RoundData: {
-    question: 'What was Taylor Swifts first song?',
-    image:
-      'https://s.abcnews.com/images/GMA/taylor-swift-singer-ap-mz-05-230317_1679057739039_hpMain_4x5_608.jpg',
-    answers: ['Bad Blood', 'Shake it Off', 'Love Story', 'Blank Space'],
-    correctAnswer: 'Love Story',
-  },
-};
 
 function clockBorderColor(clock) {
   let greenStart = 246;
@@ -94,13 +78,25 @@ const PlayerCard = ({ player, flipped }) => {
   );
 };
 
-const InGame = ({ InGameData, timer }) => {
+const InGame = ({ InGameData, timer, roundNumber }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const fadeAnim = useState(new Animated.Value(0))[0]; // Initial value for opacity: 0
 
   const handleAnswerSelection = (answer) => {
     setSelectedAnswer(answer);
     handleAnswer(answer);
   };
+
+  useEffect(() => {
+    fadeAnim.setValue(0);
+
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+      delay: 1000, // Delay for 1 second
+    }).start();
+  }, [roundNumber]);
 
   const renderAnswerBubble = (answer) => {
     let backgroundColor = 'rgba(50, 84, 122, 0.42)';
@@ -138,15 +134,16 @@ const InGame = ({ InGameData, timer }) => {
 
   const renderAnswerBubbles = () => {
     return (
-      <View
+      <Animated.View
         style={{
           flexWrap: 'wrap',
           flex: 1,
           gap: 20,
+          opacity: fadeAnim,
         }}
       >
         {InGameData.RoundData.answers.map((answer) => renderAnswerBubble(answer))}
-      </View>
+      </Animated.View>
     );
   };
 
