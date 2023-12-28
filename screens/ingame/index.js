@@ -96,20 +96,9 @@ const PlayerCard = ({ player, flipped }) => {
 
 const InGame = ({ InGameData, timer }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  // const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
-  // const [clock, setClock] = useState(12);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setClock((prev) => prev - 1);
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
 
   const handleAnswerSelection = (answer) => {
     setSelectedAnswer(answer);
-    // setIsAnswerCorrect(answer === InGameData.RoundData.correctAnswer);
     handleAnswer(answer);
   };
 
@@ -250,7 +239,6 @@ const InGame = ({ InGameData, timer }) => {
                   padding: 5,
                   backgroundColor: '#1A2545',
                   borderWidth: 2,
-                  //   borderColor: '#6EF62E',
                   borderColor: clockBorderColor(timer),
                   width: 50,
                   height: 50,
