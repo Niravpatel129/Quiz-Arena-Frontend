@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
-import { Animated, AppState, SafeAreaView, StyleSheet, View } from 'react-native';
-import AnswerOptions from '../../components/AnswerOption';
+import { AppState, View } from 'react-native';
 import Challange from '../../components/Challange';
-import Header from '../../components/Header';
 import HighlightEffect from '../../components/HighlightEffect';
-import Question from '../../components/Question';
 import useConditionalFadeIn from '../../hooks/useConditionalFadeIn';
 import socketService from '../../services/socketService';
+import InGame from '../ingame';
 
 const GameScreen = ({ navigation, route }) => {
   const [highlightTrigger, setHighlightTrigger] = React.useState(false);
@@ -137,11 +135,7 @@ const GameScreen = ({ navigation, route }) => {
   }
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-      }}
-    >
+    <>
       {/* <Pressable
         onPress={() => {
           console.log('🚀  data:', data);
@@ -157,8 +151,35 @@ const GameScreen = ({ navigation, route }) => {
         playerTwoName={opponentData?.name}
       /> */}
       {!showAnimation && <HighlightEffect isCorrect={isCorrectAnswer} trigger={highlightTrigger} />}
-
-      <View style={styles.container}>
+      {data && (
+        <InGame
+          timer={timer}
+          InGameData={{
+            sessionId: data?.sessionId,
+            RoundData: {
+              question: data?.question,
+              answers: data?.options,
+              image: data?.helperImage,
+              correctAnswer: 'test',
+            },
+            PlayerOneInformation: {
+              username: myData?.name,
+              score: myData?.score,
+              elo: myData?.playerInformation.elo.rating,
+              avatar: myData?.playerInformation.avatar,
+              country: myData?.playerInformation.country,
+            },
+            PlayerTwoInformation: {
+              username: opponentData?.name,
+              score: opponentData?.score,
+              elo: opponentData?.playerInformation.elo.rating,
+              avatar: opponentData?.playerInformation.avatar,
+              country: opponentData?.playerInformation.country,
+            },
+          }}
+        />
+      )}
+      {/* <View style={styles.container}>
         <Header yourData={myData} opponentData={opponentData} countdown={timer} />
         <Question text={data?.question} />
 
@@ -173,17 +194,9 @@ const GameScreen = ({ navigation, route }) => {
             }}
           />
         </Animated.View>
-      </View>
-    </SafeAreaView>
+      </View> */}
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    margin: 5,
-    paddingTop: 10,
-  },
-});
 
 export default GameScreen;

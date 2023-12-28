@@ -3,10 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
-
 import { NativeBaseProvider } from 'native-base';
-// import * as RNLocalize from 'react-native-localize';
-
 import { TouchableOpacity } from 'react-native';
 import TabBar from './components/MyTabBar/MyTabBar';
 import fonts from './config/fonts';
@@ -29,8 +26,6 @@ const Tab = createBottomTabNavigator();
 
 function App() {
   const [fontsLoaded] = useFonts(fonts);
-  // const userCountry = RNLocalize.getCountry();
-  // console.log('🚀  userCountry:', userCountry);
 
   if (!fontsLoaded) return null;
 
@@ -145,7 +140,7 @@ function App() {
           ),
         }}
       >
-        {/* <Stack.Screen name='Dev' component={LeaderboardsScreen} options={{ headerShown: true }} /> */}
+        {/* <Stack.Screen name='Dev' component={InGame} options={{ headerShown: false }} /> */}
 
         <Stack.Screen
           name='Home'

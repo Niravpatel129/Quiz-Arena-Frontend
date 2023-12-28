@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import socketService from '../../services/socketService';
 
 const InGameData = {
   PlayerOneInformation: {
@@ -93,33 +94,35 @@ const PlayerCard = ({ player, flipped }) => {
   );
 };
 
-const InGame = () => {
+const InGame = ({ InGameData, timer }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
-  const [clock, setClock] = useState(12);
+  // const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
+  // const [clock, setClock] = useState(12);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setClock((prev) => prev - 1);
-    }, 1000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setClock((prev) => prev - 1);
+  //   }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const handleAnswerSelection = (answer) => {
     setSelectedAnswer(answer);
-    setIsAnswerCorrect(answer === InGameData.RoundData.correctAnswer);
+    // setIsAnswerCorrect(answer === InGameData.RoundData.correctAnswer);
+    handleAnswer(answer);
   };
 
   const renderAnswerBubble = (answer) => {
-    let backgroundColor = 'rgba(50, 84, 122, 0.42)'; // default color
-    if (answer === selectedAnswer) {
-      backgroundColor = isAnswerCorrect ? 'rgb(110, 246, 46)' : 'rgb(246, 46, 46)';
+    let backgroundColor = 'rgba(50, 84, 122, 0.42)';
+
+    if (answer.optionText === selectedAnswer) {
+      backgroundColor = answer.isCorrect ? 'rgb(110, 246, 46)' : 'rgb(246, 46, 46)';
     }
 
     return (
       <TouchableOpacity
-        key={answer}
+        key={answer.optionText}
         style={{
           width: '100%',
           height: 55,
@@ -128,7 +131,7 @@ const InGame = () => {
           justifyContent: 'center',
           alignItems: 'center',
         }}
-        onPress={() => handleAnswerSelection(answer)}
+        onPress={() => handleAnswerSelection(answer.optionText)}
       >
         <Text
           style={{
@@ -138,7 +141,7 @@ const InGame = () => {
             fontSize: 18,
           }}
         >
-          {answer}
+          {answer.optionText}
         </Text>
       </TouchableOpacity>
     );
@@ -184,11 +187,25 @@ const InGame = () => {
             height: 230,
             borderRadius: 20,
             marginVertical: 20,
+            objectFit: 'contain',
+            resizeMode: 'contain',
           }}
           source={{ uri: InGameData.RoundData.image }}
         />
       </View>
     );
+  };
+
+  const handleAnswer = (answer) => {
+    // Construct the data object to be sent
+    const resData = {
+      sessionId: InGameData.sessionId,
+      answer: answer,
+      timeRemaining: timer,
+    };
+
+    // Emit the event with the data
+    socketService.emit('submit_answer', resData);
   };
 
   return (
@@ -234,7 +251,7 @@ const InGame = () => {
                   backgroundColor: '#1A2545',
                   borderWidth: 2,
                   //   borderColor: '#6EF62E',
-                  borderColor: clockBorderColor(clock),
+                  borderColor: clockBorderColor(timer),
                   width: 50,
                   height: 50,
                   alignItems: 'center',
@@ -249,37 +266,43 @@ const InGame = () => {
                     color: '#fff',
                   }}
                 >
-                  {clock < 1 ? `⏰` : clock}
+                  {timer < 1 ? `⏰` : timer}
                 </Text>
               </View>
               <PlayerCard player={InGameData.PlayerTwoInformation} flipped={true} />
             </View>
           </View>
           <ScrollView>
-            <View>{renderQuestion()}</View>
             <View
               style={{
-                flexDirection: 'row',
                 justifyContent: 'space-between',
-                paddingHorizontal: 10,
-                gap: 20,
               }}
             >
+              <View>{renderQuestion()}</View>
               <View
                 style={{
-                  width: 8,
-                  borderRadius: 10,
-                  backgroundColor: '#516696',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: 10,
+                  gap: 20,
                 }}
-              ></View>
-              {renderAnswerBubbles()}
-              <View
-                style={{
-                  width: 8,
-                  borderRadius: 10,
-                  backgroundColor: '#516696',
-                }}
-              ></View>
+              >
+                <View
+                  style={{
+                    width: 8,
+                    borderRadius: 10,
+                    backgroundColor: '#516696',
+                  }}
+                ></View>
+                {renderAnswerBubbles()}
+                <View
+                  style={{
+                    width: 8,
+                    borderRadius: 10,
+                    backgroundColor: '#516696',
+                  }}
+                ></View>
+              </View>
             </View>
           </ScrollView>
         </View>
