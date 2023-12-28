@@ -2,9 +2,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import EndGameChart from '../../components/EndGameChart';
 import Scoresheet from '../../components/Scoresheet/Scoresheet';
 
-export default function GameOver2() {
+export default function GameOver2({ navigation }) {
   const playerCard = () => {
     return (
       <View>
@@ -57,106 +59,130 @@ export default function GameOver2() {
         height: '100%',
       }}
     >
-      <ScrollView>
-        <View>
-          <Text
-            style={{
-              fontSize: 40,
-              color: '#00c03d',
-              textAlign: 'center',
-              marginTop: 120,
-              fontWeight: 'bold',
-              fontFamily: 'Inter-Black',
-            }}
-          >
-            You Win!
-          </Text>
-        </View>
-
-        <View
+      <SafeAreaView>
+        <ScrollView
           style={{
-            flexDirection: 'row',
-            marginTop: 50,
-            marginBottom: 30,
-            justifyContent: 'space-evenly',
-          }}
-        >
-          <View>{playerCard()}</View>
-          <View>{playerCard()}</View>
-        </View>
-
-        <Scoresheet />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            marginTop: 20,
-            gap: 10,
-            marginHorizontal: 10,
+            marginTop: 10,
           }}
         >
           <TouchableOpacity
             style={{
-              backgroundColor: '#32547A6B',
-              borderWidth: 2,
-              borderRadius: 15,
-              borderColor: '#667EB7',
-              padding: 15,
+              position: 'absolute',
+              zIndex: 100,
+              right: 10,
+            }}
+            onPress={() => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'Categories' }],
+              });
             }}
           >
-            <Ionicons name='ios-share-outline' size={22} color='#fff' />
+            <Ionicons name='ios-close' size={40} color='#fff' />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: '#32547A6B',
-              borderWidth: 2,
-              borderRadius: 15,
-              borderColor: '#667EB7',
-              padding: 15,
-              flex: 1,
-            }}
-          >
-            <View
+          <View>
+            <Text
               style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
+                fontSize: 40,
+                color: '#00c03d',
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontFamily: 'Inter-Black',
               }}
             >
-              <Text
-                style={{
-                  color: '#fff',
-                  fontFamily: 'Inter-Black',
-                  fontSize: 18,
-                  textAlign: 'center',
-                }}
-              >
-                Rematch
-              </Text>
-              <Ionicons
-                style={{
-                  paddingLeft: 10,
-                }}
-                name='ios-refresh-outline'
-                size={22}
-                color='#fff'
-              />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
+              You Win!
+            </Text>
+          </View>
+
+          <View
             style={{
-              backgroundColor: '#32547A6B',
-              borderWidth: 2,
-              borderRadius: 15,
-              borderColor: '#667EB7',
-              padding: 15,
+              flexDirection: 'row',
+              marginTop: 50,
+              marginBottom: 30,
+              justifyContent: 'space-evenly',
             }}
           >
-            <Ionicons name='ios-chatbox' size={22} color='#fff' />
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+            <View>{playerCard()}</View>
+            <View>{playerCard()}</View>
+          </View>
+
+          <Scoresheet />
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              marginTop: 20,
+              gap: 10,
+              marginHorizontal: 10,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#32547A6B',
+                borderWidth: 2,
+                borderRadius: 15,
+                borderColor: '#667EB7',
+                padding: 15,
+              }}
+            >
+              <Ionicons name='ios-share-outline' size={22} color='#fff' />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#32547A6B',
+                borderWidth: 2,
+                borderRadius: 15,
+                borderColor: '#667EB7',
+                padding: 15,
+                flex: 1,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontFamily: 'Inter-Black',
+                    fontSize: 18,
+                    textAlign: 'center',
+                  }}
+                >
+                  Rematch
+                </Text>
+                <Ionicons
+                  style={{
+                    paddingLeft: 10,
+                  }}
+                  name='ios-refresh-outline'
+                  size={22}
+                  color='#fff'
+                />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#32547A6B',
+                borderWidth: 2,
+                borderRadius: 15,
+                borderColor: '#667EB7',
+                padding: 15,
+              }}
+            >
+              <Ionicons name='ios-chatbox' size={22} color='#fff' />
+            </TouchableOpacity>
+          </View>
+
+          <View>
+            <EndGameChart />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     </LinearGradient>
   );
 }

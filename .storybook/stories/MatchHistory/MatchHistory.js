@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { formatDistanceToNow } from 'date-fns';
 import { Image, Text, View } from 'native-base';
@@ -74,14 +75,15 @@ export default function MatchHistory() {
             ]}
           >
             <View style={styles.bubbleIcon}>
-              <Image
+              {/* <Image
                 source={{
                   uri: 'https://cdn-icons-png.flaticon.com/512/1170/1170688.png',
                 }}
                 alt='Alternate Text'
                 size='xs'
                 style={{ width: 40, height: 40 }}
-              />
+              /> */}
+              <Ionicons name='ios-trophy' size={40} color='#fff' />
             </View>
             <View style={styles.bubbleInnerContainer}>
               <Text style={styles.bubbleTitle}>{item.category}</Text>
@@ -113,8 +115,8 @@ export default function MatchHistory() {
                   borderRadius: 20,
                   marginRight: 15,
                   marginTop: 5,
-                  borderWidth: 4,
-                  borderColor: 'gray',
+                  borderWidth: 2,
+                  borderColor: '#516696',
                 }}
               />
             </View>
@@ -134,26 +136,29 @@ const styles = StyleSheet.create({
   },
   bubble: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: 'rgba(48, 62, 95, 0.37)',
     borderRadius: 15,
     borderWidth: 2,
+    borderColor: '#516696',
     paddingLeft: 13,
     paddingTop: 20,
     paddingBottom: 20,
     justifyContent: 'space-between',
   },
   bubbleIcon: {
+    color: '#fff',
     marginTop: 3,
     marginRight: 10,
   },
   bubbleTitle: {
     fontWeight: '600',
-    color: '#1d284b',
+    color: '#fff',
     fontSize: 20,
   },
   bubbleSubtitle: {
     fontSize: 13,
-    color: '#767676',
+    fontWeight: '400',
+    color: '#fff',
   },
   bubbleInnerContainer: {
     marginRight: 10,
