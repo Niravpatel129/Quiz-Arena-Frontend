@@ -140,7 +140,7 @@ function App() {
           ),
         }}
       >
-        {/* <Stack.Screen name='Dev' component={InGame} options={{ headerShown: false }} /> */}
+        {/* <Stack.Screen name='Dev' component={GameOver2} options={{ headerShown: false }} /> */}
 
         <Stack.Screen
           name='Home'
