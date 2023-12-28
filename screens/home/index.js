@@ -47,7 +47,17 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text
+        style={[
+          styles.title,
+          {
+            fontFamily: 'inter',
+            fontWeight: 100,
+          },
+        ]}
+      >
+        Login
+      </Text>
       <TextInput
         style={styles.input}
         placeholder='Username'
