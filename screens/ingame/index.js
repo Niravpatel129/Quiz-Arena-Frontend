@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import CountryFlag from 'react-native-country-flag';
 import Scorebar from '../../components/Scorebar/Scorebar';
 import socketService from '../../services/socketService';
 
@@ -46,15 +47,23 @@ const PlayerCard = ({ player, flipped }) => {
           alignItems: !flipped ? 'flex-start' : 'flex-end',
         }}
       >
-        <Text
+        <View
           style={{
-            fontFamily: 'Inter-Black',
-            fontSize: 16,
-            color: '#fff',
+            flexDirection: 'row',
+            alignItems: 'center',
           }}
         >
-          {player.username}
-        </Text>
+          <Text
+            style={{
+              fontFamily: 'Inter-Black',
+              fontSize: 18,
+              color: '#fff',
+            }}
+          >
+            {player.username}
+          </Text>
+          <CountryFlag isoCode={player.country || 'aq'} size={16} style={{ marginHorizontal: 5 }} />
+        </View>
         <Text
           style={{
             fontFamily: 'Inter-Medium',
