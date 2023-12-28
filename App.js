@@ -117,6 +117,7 @@ function App() {
     return (
       <Stack.Navigator
         screenOptions={{
+          headerTitle: 'Quiz Arena',
           tabBarStyle: {
             // borderTopWidth: 0,
           },
