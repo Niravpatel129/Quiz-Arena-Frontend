@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Scorebar from '../../components/Scorebar/Scorebar';
 import socketService from '../../services/socketService';
 
 function clockBorderColor(clock) {
@@ -272,21 +273,9 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
                   gap: 20,
                 }}
               >
-                <View
-                  style={{
-                    width: 8,
-                    borderRadius: 10,
-                    backgroundColor: '#516696',
-                  }}
-                ></View>
+                <Scorebar score={InGameData.PlayerOneInformation.score} color='#AAFF00' />
                 {renderAnswerBubbles()}
-                <View
-                  style={{
-                    width: 8,
-                    borderRadius: 10,
-                    backgroundColor: '#516696',
-                  }}
-                ></View>
+                <Scorebar score={InGameData.PlayerTwoInformation.score} color='red' />
               </View>
             </View>
           </ScrollView>
