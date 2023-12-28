@@ -81,21 +81,24 @@ const PlayerCard = ({ player, flipped }) => {
 
 const InGame = ({ InGameData, timer, roundNumber }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const fadeAnim = useState(new Animated.Value(0))[0]; // Initial value for opacity: 0
+  const fadeAnim = useState(new Animated.Value(0))[0];
+  const [selectedForRound, setSelectedForRound] = useState(false);
 
   const handleAnswerSelection = (answer) => {
     setSelectedAnswer(answer);
     handleAnswer(answer);
+    setSelectedForRound(true);
   };
 
   useEffect(() => {
     fadeAnim.setValue(0);
+    setSelectedForRound(false);
 
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 1000,
+      duration: 700,
       useNativeDriver: true,
-      delay: 1000, // Delay for 1 second
+      delay: 700, // Delay for 1 second
     }).start();
   }, [roundNumber]);
 
@@ -117,7 +120,9 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}
-        onPress={() => handleAnswerSelection(answer.optionText)}
+        onPress={() => {
+          if (!selectedForRound) handleAnswerSelection(answer.optionText);
+        }}
       >
         <Text
           style={{
