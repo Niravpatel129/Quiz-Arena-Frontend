@@ -2,20 +2,20 @@ import React from 'react';
 import { Dimensions, View } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
-const fakePlayerData = {
-  playerOne: {
-    name: 'Alex',
-    scores: [10, 10, 40, 33, 65, 12, 43],
-  },
-  playerTwo: {
-    name: 'Zezima',
-    scores: [20, 20, 50, 43, 75, 22, 53],
-  },
-};
+// const fakePlayerData = {
+//   playerOne: {
+//     name: 'Alex',
+//     scores: [10, 10, 40, 33, 65, 12, 43],
+//   },
+//   playerTwo: {
+//     name: 'Zezima',
+//     scores: [20, 20, 50, 43, 75, 22, 53],
+//   },
+// };
 
-export default function EndGameChart() {
+export default function EndGameChart({ chartData }) {
   const chartWidth = Dimensions.get('window').width - 36;
-  const paddingRight = 20; // Adjust this value as needed
+  const paddingRight = 20;
 
   return (
     <View
@@ -30,12 +30,12 @@ export default function EndGameChart() {
           labels: ['1', '2', '3', '4', '5', '6', '7'],
           datasets: [
             {
-              data: fakePlayerData.playerOne.scores,
+              data: chartData.playerOne.scores,
               color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
               strokeWidth: 2,
             },
             {
-              data: fakePlayerData.playerTwo.scores,
+              data: chartData.playerTwo.scores,
               color: (opacity = 1) => `rgba(0, 128, 0, ${opacity})`,
               strokeWidth: 2,
             },

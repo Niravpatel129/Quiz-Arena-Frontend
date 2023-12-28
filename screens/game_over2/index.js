@@ -172,7 +172,7 @@ export default function GameOver2({ navigation, route }) {
               <View
                 style={{
                   flexDirection: 'row',
-                  justifyContent: 'center',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
                 }}
               >
@@ -191,7 +191,7 @@ export default function GameOver2({ navigation, route }) {
                     paddingLeft: 10,
                   }}
                   name='ios-refresh-outline'
-                  size={22}
+                  size={24}
                   color='#fff'
                 />
               </View>
@@ -209,6 +209,51 @@ export default function GameOver2({ navigation, route }) {
             </TouchableOpacity>
           </View>
 
+          <TouchableOpacity
+            onPress={() => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'Categories' }],
+              });
+            }}
+            style={{
+              backgroundColor: '#32547A6B',
+              borderWidth: 2,
+              borderRadius: 15,
+              borderColor: '#667EB7',
+              padding: 15,
+              flex: 1,
+              marginHorizontal: 10,
+              marginTop: 10,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  color: '#fff',
+                  fontFamily: 'Inter-Black',
+                  fontSize: 18,
+                  textAlign: 'center',
+                }}
+              >
+                Play Again
+              </Text>
+              <Ionicons
+                style={{
+                  paddingLeft: 10,
+                }}
+                name='ios-play'
+                size={24}
+                color='#fff'
+              />
+            </View>
+          </TouchableOpacity>
           <View>
             <EndGameChart
               chartData={{
