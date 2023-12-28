@@ -5,6 +5,7 @@ import RoundScoreTracker from '../../.storybook/stories/RoundScoreTracker/RoundS
 import socketService from '../../services/socketService';
 
 export default function GameOverScreen({ navigation, route }) {
+  console.log('🚀  route.params?.results:', route.params?.results);
   const [roundScoreTrackerData, setRoundScoreTrackerData] = React.useState(null);
 
   const myData = route.params?.results?.gameSession.players?.find(

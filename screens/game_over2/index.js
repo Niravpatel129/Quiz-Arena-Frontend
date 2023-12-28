@@ -6,8 +6,39 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import EndGameChart from '../../components/EndGameChart';
 import Scoresheet from '../../components/Scoresheet/Scoresheet';
 
-export default function GameOver2({ navigation }) {
-  const playerCard = () => {
+const fakeData = {
+  gameSessionId: '1',
+  yourData: {
+    id: '1',
+    username: 'Bob',
+    rating: 1400,
+    ratingChange: 30,
+    result: 'winner',
+
+    avatar:
+      'https://t4.ftcdn.net/jpg/01/62/72/29/360_F_162722972_3SlhxozZGdL3rGuWgKyVP2NTs8POtX2n.jpg',
+    gameData: {
+      scores: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+    },
+  },
+  opponentData: {
+    id: '2',
+    username: 'Zezima',
+    result: 'loser',
+    rating: 1400,
+    ratingChange: -30,
+    avatar:
+      'https://t4.ftcdn.net/jpg/01/62/72/29/360_F_162722972_3SlhxozZGdL3rGuWgKyVP2NTs8POtX2n.jpg',
+    gameData: {
+      scores: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+    },
+  },
+};
+
+export default function GameOver2({ navigation, route }) {
+  console.log('🚀  route.params?.results:', route.params?.results);
+
+  const playerCard = (playerInfo) => {
     return (
       <View>
         <Image
@@ -16,10 +47,10 @@ export default function GameOver2({ navigation }) {
             height: 100,
             borderRadius: 50,
             borderWidth: 3,
-            borderColor: '#00ff51',
+            borderColor: playerInfo.result === 'winner' ? '#00c03d' : '#ff0000',
           }}
           source={{
-            uri: 'https://t4.ftcdn.net/jpg/01/62/72/29/360_F_162722972_3SlhxozZGdL3rGuWgKyVP2NTs8POtX2n.jpg',
+            uri: playerInfo.avatar,
           }}
         />
         <Text
@@ -32,7 +63,7 @@ export default function GameOver2({ navigation }) {
             fontSize: 16,
           }}
         >
-          Bob
+          {playerInfo.username}
         </Text>
         <Text
           style={{
@@ -44,7 +75,7 @@ export default function GameOver2({ navigation }) {
             fontSize: 12,
           }}
         >
-          1400 (-30)
+          {playerInfo.rating} ({playerInfo.ratingChange})
         </Text>
       </View>
     );
@@ -84,13 +115,13 @@ export default function GameOver2({ navigation }) {
             <Text
               style={{
                 fontSize: 40,
-                color: '#00c03d',
+                color: fakeData.yourData.result === 'winner' ? '#00c03d' : '#ff0000',
                 textAlign: 'center',
                 fontWeight: 'bold',
                 fontFamily: 'Inter-Black',
               }}
             >
-              You Win!
+              {fakeData.yourData.result === 'winner' ? 'Victory' : 'Defeat'}
             </Text>
           </View>
 
@@ -102,8 +133,8 @@ export default function GameOver2({ navigation }) {
               justifyContent: 'space-evenly',
             }}
           >
-            <View>{playerCard()}</View>
-            <View>{playerCard()}</View>
+            <View>{playerCard(fakeData.yourData)}</View>
+            <View>{playerCard(fakeData.opponentData)}</View>
           </View>
 
           <Scoresheet />
@@ -179,7 +210,18 @@ export default function GameOver2({ navigation }) {
           </View>
 
           <View>
-            <EndGameChart />
+            <EndGameChart
+              chartData={{
+                playerOne: {
+                  name: fakeData.yourData.username,
+                  scores: fakeData.yourData.gameData.scores,
+                },
+                playerTwo: {
+                  name: fakeData.opponentData.username,
+                  scores: fakeData.opponentData.gameData.scores,
+                },
+              }}
+            />
           </View>
         </ScrollView>
       </SafeAreaView>
