@@ -1,88 +1,144 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
-export default function InGame() {
-  const PlayerCard = ({ flipped }) => {
-    return (
+const InGameData = {
+  PlayerOneInformation: {
+    avatar:
+      'https://t3.ftcdn.net/jpg/05/56/38/38/360_F_556383860_pVMr2MpKfOPa2tQZiysUatpqhWm6AXaB.jpg',
+    username: 'Alex',
+    elo: 1300,
+    score: 109,
+  },
+  PlayerTwoInformation: {
+    avatar:
+      'https://t3.ftcdn.net/jpg/05/56/38/38/360_F_556383860_pVMr2MpKfOPa2tQZiysUatpqhWm6AXaB.jpg',
+    username: 'Bob',
+    elo: 1400,
+    score: 120,
+  },
+  RoundData: {
+    question: 'What was Taylor Swifts first song?',
+    image:
+      'https://s.abcnews.com/images/GMA/taylor-swift-singer-ap-mz-05-230317_1679057739039_hpMain_4x5_608.jpg',
+    answers: ['Bad Blood', 'Shake it Off', 'Love Story', 'Blank Space'],
+    correctAnswer: 'Love Story',
+  },
+};
+
+function clockBorderColor(clock) {
+  let greenStart = 246;
+  let red = Math.floor(110 + 145 * (1 - clock / 12)); // 110 is the starting red value, 255-110=145 is the range
+  let green = Math.floor(greenStart * (clock / 12));
+
+  let borderColor = `rgb(${red}, ${green}, 0)`;
+
+  return borderColor;
+}
+
+const PlayerCard = ({ player, flipped }) => {
+  return (
+    <View
+      style={{
+        flexDirection: !flipped ? 'row' : 'row-reverse',
+        gap: 4,
+      }}
+    >
+      <Image
+        style={{
+          width: 70,
+          height: 70,
+          borderRadius: 15,
+          borderWidth: 1,
+          borderColor: '#516696',
+        }}
+        source={{ uri: player.avatar }}
+      />
       <View
         style={{
-          flexDirection: !flipped ? 'row' : 'row-reverse',
-          gap: 4,
-        }}
-      >
-        <Image
-          style={{
-            width: 70,
-            height: 70,
-            borderRadius: 15,
-            borderWidth: 1,
-            borderColor: '#516696',
-          }}
-          source={{
-            uri: 'https://t3.ftcdn.net/jpg/05/56/38/38/360_F_556383860_pVMr2MpKfOPa2tQZiysUatpqhWm6AXaB.jpg',
-          }}
-        />
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: !flipped ? 'start' : 'end',
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: 'Inter-Black',
-              fontSize: 16,
-              color: '#fff',
-            }}
-          >
-            Alex
-          </Text>
-          <Text
-            style={{
-              fontFamily: 'Inter-Medium',
-              fontSize: 12,
-              color: '#19B0FF',
-            }}
-          >
-            1300 ELO
-          </Text>
-          <Text
-            style={{
-              marginTop: 4,
-              fontFamily: 'Inter-Black',
-              color: '#F6CD2E',
-              fontSize: 20,
-            }}
-          >
-            109
-          </Text>
-        </View>
-      </View>
-    );
-  };
-
-  const renderAnswerBubble = () => {
-    return (
-      <TouchableOpacity
-        style={{
-          width: '100%',
-          height: 55,
-          borderRadius: 10,
-          backgroundColor: 'rgba(50, 84, 122, 0.42)',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: !flipped ? 'flex-start' : 'flex-end',
         }}
       >
         <Text
           style={{
+            fontFamily: 'Inter-Black',
+            fontSize: 16,
+            color: '#fff',
+          }}
+        >
+          {player.username}
+        </Text>
+        <Text
+          style={{
+            fontFamily: 'Inter-Medium',
+            fontSize: 12,
+            color: '#19B0FF',
+          }}
+        >
+          {player.elo} ELO
+        </Text>
+        <Text
+          style={{
+            marginTop: 4,
+            fontFamily: 'Inter-Black',
+            color: '#F6CD2E',
+            fontSize: 20,
+          }}
+        >
+          {player.score}
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+const InGame = () => {
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
+  const [clock, setClock] = useState(12);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setClock((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleAnswerSelection = (answer) => {
+    setSelectedAnswer(answer);
+    setIsAnswerCorrect(answer === InGameData.RoundData.correctAnswer);
+  };
+
+  const renderAnswerBubble = (answer) => {
+    let backgroundColor = 'rgba(50, 84, 122, 0.42)'; // default color
+    if (answer === selectedAnswer) {
+      backgroundColor = isAnswerCorrect ? 'rgb(110, 246, 46)' : 'rgb(246, 46, 46)';
+    }
+
+    return (
+      <TouchableOpacity
+        key={answer}
+        style={{
+          width: '100%',
+          height: 55,
+          borderRadius: 10,
+          backgroundColor,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        onPress={() => handleAnswerSelection(answer)}
+      >
+        <Text
+          style={{
             fontFamily: 'Inter-Bold',
-            fontWeight: 600,
+            fontWeight: '600',
             color: '#fff',
             fontSize: 18,
           }}
         >
-          Bad Blood
+          {answer}
         </Text>
       </TouchableOpacity>
     );
@@ -97,10 +153,7 @@ export default function InGame() {
           gap: 20,
         }}
       >
-        {renderAnswerBubble()}
-        {renderAnswerBubble()}
-        {renderAnswerBubble()}
-        {renderAnswerBubble()}
+        {InGameData.RoundData.answers.map((answer) => renderAnswerBubble(answer))}
       </View>
     );
   };
@@ -122,7 +175,7 @@ export default function InGame() {
             color: '#fff',
           }}
         >
-          What was Taylor Swift's first song?
+          {InGameData.RoundData.question}
         </Text>
 
         <Image
@@ -132,9 +185,7 @@ export default function InGame() {
             borderRadius: 20,
             marginVertical: 20,
           }}
-          source={{
-            uri: 'https://s.abcnews.com/images/GMA/taylor-swift-singer-ap-mz-05-230317_1679057739039_hpMain_4x5_608.jpg',
-          }}
+          source={{ uri: InGameData.RoundData.image }}
         />
       </View>
     );
@@ -175,14 +226,15 @@ export default function InGame() {
                 alignItems: 'center',
               }}
             >
-              {PlayerCard({ flipped: false })}
+              <PlayerCard player={InGameData.PlayerOneInformation} flipped={false} />
               <View
                 style={{
                   borderRadius: 50,
                   padding: 5,
                   backgroundColor: '#1A2545',
                   borderWidth: 2,
-                  borderColor: '#6EF62E',
+                  //   borderColor: '#6EF62E',
+                  borderColor: clockBorderColor(clock),
                   width: 50,
                   height: 50,
                   alignItems: 'center',
@@ -192,15 +244,15 @@ export default function InGame() {
                 <Text
                   style={{
                     fontFamily: 'Inter-Bold',
-                    fontWeight: 600,
-                    fontSize: 24,
+                    fontWeight: '600',
+                    fontSize: 21,
                     color: '#fff',
                   }}
                 >
-                  4
+                  {clock < 1 ? `⏰` : clock}
                 </Text>
               </View>
-              {PlayerCard({ flipped: true })}
+              <PlayerCard player={InGameData.PlayerTwoInformation} flipped={true} />
             </View>
           </View>
           <ScrollView>
@@ -234,4 +286,6 @@ export default function InGame() {
       </SafeAreaView>
     </LinearGradient>
   );
-}
+};
+
+export default InGame;
