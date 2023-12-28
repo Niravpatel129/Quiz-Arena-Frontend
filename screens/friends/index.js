@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 
 export default function FriendsScreen({ navigation }) {
@@ -124,7 +124,7 @@ export default function FriendsScreen({ navigation }) {
   };
 
   return (
-    <View
+    <ScrollView
       style={{
         backgroundColor: '#1c2141',
         height: '100%',
@@ -213,6 +213,6 @@ export default function FriendsScreen({ navigation }) {
           return <View key={index}>{renderFriendsBubble(friend)}</View>;
         })}
       </View>
-    </View>
+    </ScrollView>
   );
 }

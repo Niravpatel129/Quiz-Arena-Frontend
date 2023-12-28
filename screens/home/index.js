@@ -51,8 +51,8 @@ export default function HomeScreen({ navigation }) {
         style={[
           styles.title,
           {
-            fontFamily: 'inter',
-            fontWeight: 100,
+            fontFamily: 'Inter-Bold',
+            fontWeight: 'bold',
           },
         ]}
       >
