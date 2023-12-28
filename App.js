@@ -130,7 +130,9 @@ function App() {
           headerTitleStyle: {
             color: 'white',
             fontWeight: 'bold',
+            display: 'none',
           },
+
           headerRight: () => (
             <TouchableOpacity
               onPress={() => {
