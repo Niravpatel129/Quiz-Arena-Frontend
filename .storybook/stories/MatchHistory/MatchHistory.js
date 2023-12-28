@@ -121,7 +121,7 @@ export default function MatchHistory() {
           </Animated.View>
         );
       }}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item._id}
     />
   );
 }
