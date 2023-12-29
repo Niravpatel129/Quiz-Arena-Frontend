@@ -102,6 +102,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
   useEffect(() => {
     fadeAnim.setValue(0);
     setSelectedForRound(false);
+    setSelectedAnswer(null);
 
     Animated.timing(fadeAnim, {
       toValue: 1,
