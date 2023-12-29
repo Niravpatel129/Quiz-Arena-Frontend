@@ -71,8 +71,12 @@ const Scoresheet = ({ playerOneData, playerTwoData }) => {
       <View>
         {renderPlayerName(playerOneData)}
         <View style={styles.row}>
-          {playerOneData.scores.map((score) => {
-            return <Text style={styles.cell}>{score.points}</Text>;
+          {playerOneData.scores.map((score, index) => {
+            return (
+              <Text key={index} style={styles.cell}>
+                {score.points}
+              </Text>
+            );
           })}
           <Text style={styles.cellTotal}>
             {playerOneData.scores.reduce((acc, v) => acc + v.points, 0)}
@@ -101,8 +105,12 @@ const Scoresheet = ({ playerOneData, playerTwoData }) => {
           </View>
         </View>
         <View style={styles.row}>
-          {playerTwoData.scores.map((score) => {
-            return <Text style={styles.cell}>{score.points}</Text>;
+          {playerTwoData.scores.map((score, index) => {
+            return (
+              <Text key={index} style={styles.cell}>
+                {score.points}
+              </Text>
+            );
           })}
           <Text style={styles.cellTotal}>
             {playerTwoData.scores.reduce((acc, v) => v.points + acc, 0)}

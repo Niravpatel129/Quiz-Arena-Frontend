@@ -53,12 +53,16 @@ const GameScreen = ({ navigation, route }) => {
   }, [appState]);
 
   const giveBotAnswer = (botPlayer, sessionId, correctAnswer) => {
-    socketService.emit('bot_answer', {
-      sessionId: sessionId,
-      botPlayer: botPlayer,
-      correctAnswer: correctAnswer,
-      timeRemaining: timer,
-    });
+    const giveCorrectAnswer = Math.floor(Math.random() * 4) + 1 > 1;
+
+    setTimeout(() => {
+      socketService.emit('bot_answer', {
+        sessionId: sessionId,
+        botPlayer: botPlayer,
+        correctAnswer: giveCorrectAnswer ? correctAnswer : 'wrong answer',
+        timeRemaining: timer,
+      });
+    }, Math.floor(Math.random() * (2000 - 1000 + 1)) + 1000);
   };
 
   useEffect(() => {
