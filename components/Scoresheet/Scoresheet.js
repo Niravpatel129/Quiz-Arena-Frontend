@@ -1,8 +1,22 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const Scoresheet = () => {
-  const renderPlayerName = () => {
+const FakeData = {
+  playerOneData: {
+    username: 'Bob',
+    scores: [14, 0, 10, 10, 0, 10, 11, 65],
+  },
+  playerTwoData: {
+    username: 'Zezima',
+    scores: [17, 17, 17, 17, 17, 17, 17, 22],
+  },
+};
+
+const Scoresheet = ({ playerOneData, playerTwoData }) => {
+  console.log('🚀  playerOneData:', playerOneData.scores);
+  console.log('🚀  playerTwoData:', playerTwoData.scores);
+
+  const renderPlayerName = (player) => {
     return (
       <View
         style={{
@@ -28,7 +42,7 @@ const Scoresheet = () => {
             fontSize: 18,
           }}
         >
-          Zezima
+          {player.username}
         </Text>
         <View
           style={{
@@ -55,21 +69,19 @@ const Scoresheet = () => {
         Game Results
       </Text>
       <View>
-        {renderPlayerName()}
+        {renderPlayerName(playerOneData)}
         <View style={styles.row}>
-          <Text style={styles.cell}>14</Text>
-          <Text style={styles.cell}>0</Text>
-          <Text style={styles.cell}>10</Text>
-          <Text style={styles.cell}>10</Text>
-          <Text style={styles.cell}>0</Text>
-          <Text style={styles.cell}>10</Text>
-          <Text style={styles.cell}>11</Text>
-          <Text style={styles.cellTotal}>65</Text>
+          {playerOneData.scores.map((score) => {
+            return <Text style={styles.cell}>{score.points}</Text>;
+          })}
+          <Text style={styles.cellTotal}>
+            {playerOneData.scores.reduce((acc, v) => acc + v.points, 0)}
+          </Text>
         </View>
         <View style={styles.between}>
           <View style={[styles.row]}>
             {/* map 8 times */}
-            {Array.from(Array(8).keys()).map((i) => {
+            {Array.from(Array(9).keys()).map((i) => {
               return (
                 <Text
                   style={{
@@ -82,23 +94,21 @@ const Scoresheet = () => {
                     fontSize: 12,
                   }}
                 >
-                  {i === 7 ? 'Total' : i + 1}
+                  {i === 8 ? 'Total' : i + 1}
                 </Text>
               );
             })}
           </View>
         </View>
         <View style={styles.row}>
-          <Text style={styles.cell}>17</Text>
-          <Text style={styles.cell}>17</Text>
-          <Text style={styles.cell}>17</Text>
-          <Text style={styles.cell}>17</Text>
-          <Text style={styles.cell}>17</Text>
-          <Text style={styles.cell}>17</Text>
-          <Text style={styles.cell}>17</Text>
-          <Text style={styles.cellTotal}>136</Text>
+          {playerTwoData.scores.map((score) => {
+            return <Text style={styles.cell}>{score.points}</Text>;
+          })}
+          <Text style={styles.cellTotal}>
+            {playerTwoData.scores.reduce((acc, v) => v.points + acc, 0)}
+          </Text>
         </View>
-        {renderPlayerName()}
+        {renderPlayerName(playerTwoData)}
       </View>
     </View>
   );

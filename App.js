@@ -12,7 +12,7 @@ import CategoriesScreen from './screens/categories';
 import ChallengeScreen from './screens/challenge';
 import FriendsScreen from './screens/friends';
 import GameScreen from './screens/game';
-import GameOverScreen from './screens/game_over';
+import GameOver2 from './screens/game_over2';
 import HomeScreen from './screens/home';
 import LeaderboardsScreen from './screens/leaderboards';
 import MatchHistoryScreen from './screens/match_history';
@@ -156,7 +156,7 @@ function App() {
         />
         <Stack.Screen
           name='GameOver'
-          component={GameOverScreen}
+          component={GameOver2}
           options={{ title: 'Game Over', headerShown: false }}
         />
         <Stack.Screen

@@ -11,9 +11,9 @@ const GameScreen = ({ navigation, route }) => {
   const [isCorrectAnswer, setIsCorrectAnswer] = React.useState(false);
   const [timer, setTimer] = React.useState(10);
   const [countdown, setCountdown] = React.useState(0);
-  const [data, setData] = React.useState(null);
   const [appState, setAppState] = React.useState(AppState.currentState);
   const [round, setRound] = React.useState(1);
+  const [data, setData] = React.useState(null);
 
   const myData = data?.gameSession?.players?.find(
     (player) => player.socketId === socketService?.socket?.id,
@@ -64,9 +64,41 @@ const GameScreen = ({ navigation, route }) => {
     });
 
     socketService.on('game_over', (results) => {
+      // my socket id =
+      const mySocketId = socketService?.socket?.id;
+
+      // find my data
+      const myData = results.gameSession.players.find((player) => player.socketId === mySocketId);
+      const opponentData = results.gameSession.players.find(
+        (player) => player.socketId !== mySocketId,
+      );
+      console.log('🚀  opponentData:', opponentData);
+
       // toggle game off for debugging
       navigation.navigate('GameOver', {
-        results: results,
+        results: {
+          gameSessionId: results.gameSession._id,
+          yourData: {
+            username: myData.name,
+            rating: myData.playerInformation.elo.rating,
+            ratingChange: myData.playerInformation?.elo?.ratingChange || -5,
+            result: myData.score > opponentData.score ? 'winner' : 'loser',
+            avatar: myData.playerInformation.avatar,
+            gameData: {
+              scores: myData.answers,
+            },
+          },
+          opponentData: {
+            username: opponentData.name,
+            rating: opponentData.playerInformation.elo.rating,
+            ratingChange: opponentData?.playerInformation?.elo?.ratingChange || 5,
+            result: opponentData.score > myData.score ? 'winner' : 'loser',
+            avatar: opponentData.playerInformation.avatar,
+            gameData: {
+              scores: opponentData.answers,
+            },
+          },
+        },
       });
     });
 
@@ -138,20 +170,6 @@ const GameScreen = ({ navigation, route }) => {
 
   return (
     <>
-      {/* <Pressable
-        onPress={() => {
-          console.log('🚀  data:', data);
-          socketService.emit('check_connection', data);
-        }}
-      >
-        <Text>Test </Text>
-      </Pressable> */}
-
-      {/* <QuizAnimation
-        isVisible={showAnimation}
-        playerOneName={myData?.name}
-        playerTwoName={opponentData?.name}
-      /> */}
       {!showAnimation && <HighlightEffect isCorrect={isCorrectAnswer} trigger={highlightTrigger} />}
       {data && (
         <InGame

@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import EndGameChart from '../../components/EndGameChart';
 import Scoresheet from '../../components/Scoresheet/Scoresheet';
 
-const fakeData = {
+const fakeData2 = {
   gameSessionId: '1',
   yourData: {
     id: '1',
@@ -37,6 +37,9 @@ const fakeData = {
 
 export default function GameOver2({ navigation, route }) {
   console.log('🚀  route.params?.results:', route.params?.results);
+  const fakeData = route.params?.results || fakeData2;
+
+  if (!fakeData) return null;
 
   const playerCard = (playerInfo) => {
     return (
@@ -137,7 +140,16 @@ export default function GameOver2({ navigation, route }) {
             <View>{playerCard(fakeData.opponentData)}</View>
           </View>
 
-          <Scoresheet />
+          <Scoresheet
+            playerOneData={{
+              username: fakeData.yourData.username,
+              scores: fakeData.yourData.gameData.scores,
+            }}
+            playerTwoData={{
+              username: fakeData.opponentData.username,
+              scores: fakeData.opponentData.gameData.scores,
+            }}
+          />
 
           <View
             style={{
@@ -259,11 +271,11 @@ export default function GameOver2({ navigation, route }) {
               chartData={{
                 playerOne: {
                   name: fakeData.yourData.username,
-                  scores: fakeData.yourData.gameData.scores,
+                  scores: fakeData.yourData.gameData.scores.map((score) => score.points),
                 },
                 playerTwo: {
                   name: fakeData.opponentData.username,
-                  scores: fakeData.opponentData.gameData.scores,
+                  scores: fakeData.opponentData.gameData.scores.map((score) => score.points),
                 },
               }}
             />
