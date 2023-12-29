@@ -85,7 +85,7 @@ const Scoresheet = ({ playerOneData, playerTwoData }) => {
         <View style={styles.between}>
           <View style={[styles.row]}>
             {/* map 8 times */}
-            {Array.from(Array(9).keys()).map((i) => {
+            {Array.from(Array(8).keys()).map((i) => {
               return (
                 <Text
                   style={{
@@ -98,7 +98,7 @@ const Scoresheet = ({ playerOneData, playerTwoData }) => {
                     fontSize: 12,
                   }}
                 >
-                  {i === 8 ? 'Total' : i + 1}
+                  {i === 7 ? 'Total' : i + 1}
                 </Text>
               );
             })}
