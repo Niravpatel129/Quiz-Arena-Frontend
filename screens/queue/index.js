@@ -1,5 +1,5 @@
 import { Box, Heading, Text, VStack } from 'native-base';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StyleSheet } from 'react-native';
 import socketService from '../../services/socketService';
 
