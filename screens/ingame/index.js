@@ -92,49 +92,27 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const fadeAnim = useState(new Animated.Value(0))[0]; // Start fully visible
   const [selectedForRound, setSelectedForRound] = useState(false);
-  const [storedAnswered, setStoredAnswered] = useState(InGameData.RoundData.answers);
-  const [isFirstRound, setIsFirstRound] = useState(true); // State to track if it's the first round
+
+  useEffect(() => {
+    fadeAnim.setValue(0);
+
+    // Start the fade-in animation when the component mounts or roundNumber changes
+    Animated.timing(fadeAnim, {
+      toValue: 1, // Fully visible
+      duration: 1000, // Animation can last for 1000 milliseconds
+      useNativeDriver: true, // Add this to improve performance
+    }).start();
+
+    // Reset the selected answer when the round changes
+    setSelectedAnswer(null);
+    setSelectedForRound(false);
+  }, [roundNumber]); // Dependency array includes roundNumber
 
   const handleAnswerSelection = (answer) => {
     setSelectedAnswer(answer);
     handleAnswer(answer);
     setSelectedForRound(true);
   };
-
-  useEffect(() => {
-    // Directly set the answers for the first round without animation
-    if (isFirstRound) {
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 1000, // Duration for the fade-in
-        useNativeDriver: true,
-      }).start();
-
-      setIsFirstRound(false);
-      return;
-    }
-
-    // Fade out the current question and answers for subsequent rounds
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 200, // Duration for the fade-out
-      useNativeDriver: true,
-    }).start(() => {
-      // Update the question data after the fade-out
-      setStoredAnswered(InGameData.RoundData.answers);
-
-      // Reset the state for the new round
-      setSelectedForRound(false);
-      setSelectedAnswer(null);
-
-      // Fade in the new question
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 1000, // Duration for the fade-in
-        useNativeDriver: true,
-      }).start();
-    });
-  }, [roundNumber, InGameData.RoundData.answers]);
 
   const renderAnswerBubble = (answer) => {
     let backgroundColor = 'rgba(50, 84, 122, 0.42)';
@@ -182,7 +160,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
           opacity: fadeAnim,
         }}
       >
-        {storedAnswered.map((answer) => renderAnswerBubble(answer))}
+        {InGameData.RoundData.answers.map((answer) => renderAnswerBubble(answer))}
       </Animated.View>
     );
   };
