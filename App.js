@@ -19,7 +19,7 @@ import MatchHistoryScreen from './screens/match_history';
 import NotificationsScreen from './screens/notifications';
 import PlayersScreen from './screens/players';
 import ProfileScreen from './screens/profile';
-import QueueScreen from './screens/queue';
+import QueueScreen from './screens/queue_screen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -140,7 +140,7 @@ function App() {
           ),
         }}
       >
-        {/* <Stack.Screen name='Dev' component={GameOver2} options={{ headerShown: false }} /> */}
+        {/* <Stack.Screen name='Dev' component={QueueScreen} options={{ headerShown: false }} /> */}
 
         <Stack.Screen
           name='Home'
@@ -148,7 +148,11 @@ function App() {
           options={{ title: 'Welcome', headerShown: false }}
         />
         {/* <Stack.Screen name='Drawer' component={DrawerNavigator} options={{ headerShown: false }} /> */}
-        <Stack.Screen name='Queue' component={QueueScreen} options={{ title: 'Queue' }} />
+        <Stack.Screen
+          name='Queue'
+          component={QueueScreen}
+          options={{ title: 'Queue', headerShown: false }}
+        />
         <Stack.Screen
           name='Game'
           component={GameScreen}
