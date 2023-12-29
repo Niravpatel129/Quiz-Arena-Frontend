@@ -7,9 +7,10 @@ export default function QueueScreen({ route, navigation }) {
   const { categoryName } = route.params;
   const [queueTime, setQueueTime] = React.useState(1);
   const [playersInQueue, setPlayersInQueue] = React.useState(0);
+  const intervalRef = useRef(null);
 
   const startTimer = () => {
-    setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setQueueTime((prevTime) => prevTime + 1);
     }, 1000);
   };
@@ -31,11 +32,13 @@ export default function QueueScreen({ route, navigation }) {
 
     socketService.on('game_start', (data) => {
       navigation.navigate('Game', { game: data.game });
+      clearInterval(intervalRef.current);
     });
 
     return () => {
       setQueueTime(0);
       socketService.emit('leave_queue', categoryName);
+      clearInterval(intervalRef.current);
     };
   }, []);
 
