@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
-import { AppState, View } from 'react-native';
+import { AppState, Image, View } from 'react-native';
 import Challange from '../../components/Challange';
 import HighlightEffect from '../../components/HighlightEffect';
 import checkIfBot from '../../helpers/checkIfBot';
-import useConditionalFadeIn from '../../hooks/useConditionalFadeIn';
 import socketService from '../../services/socketService';
 import InGame from '../ingame';
+
+const preloadImages = (imageUrls) => {
+  imageUrls.forEach((url) => {
+    Image.prefetch(url);
+  });
+};
 
 const GameScreen = ({ navigation, route }) => {
   const [highlightTrigger, setHighlightTrigger] = React.useState(false);
@@ -24,7 +29,6 @@ const GameScreen = ({ navigation, route }) => {
     (player) => player.socketId !== socketService?.socket?.id,
   );
   const [showAnimation, setShowAnimation] = React.useState(true);
-  const fadeInOpacity = useConditionalFadeIn(countdown !== 0);
 
   const startTimer = () => {
     setInterval(() => {
@@ -69,6 +73,16 @@ const GameScreen = ({ navigation, route }) => {
     startTimer();
 
     socketService.on('new_round', (roundData) => {
+      console.log('🚀  roundData:', roundData);
+
+      if (round === 1) {
+        console.log('preload data');
+
+        if (roundData.helperImage) {
+          preloadImages([roundData.helperImage]);
+        }
+      }
+
       setCountdown(0);
       setTimer(10);
       setRound((prevRound) => prevRound + 1);

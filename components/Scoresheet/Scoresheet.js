@@ -88,6 +88,7 @@ const Scoresheet = ({ playerOneData, playerTwoData }) => {
             {Array.from(Array(8).keys()).map((i) => {
               return (
                 <Text
+                  key={i}
                   style={{
                     paddingHorizontal: 10,
                     paddingVertical: 5,

@@ -96,7 +96,6 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
   useEffect(() => {
     fadeAnim.setValue(0);
 
-    // Start the fade-in animation when the component mounts or roundNumber changes
     Animated.timing(fadeAnim, {
       toValue: 1, // Fully visible
       duration: 1000, // Animation can last for 1000 milliseconds
