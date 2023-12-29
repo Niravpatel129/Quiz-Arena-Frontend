@@ -76,9 +76,21 @@ export default function GameOver2({ navigation, route }) {
             fontFamily: 'Inter-Black',
             fontWeight: 'bold',
             fontSize: 12,
+            flexDirection: 'row',
+            gap: 2,
           }}
         >
-          {playerInfo.rating} ({playerInfo.ratingChange})
+          {playerInfo.rating}
+
+          <Text
+            style={{
+              color: playerInfo.ratingChange > 0 ? '#00c03d' : '#ff0000',
+              fontWeight: 'bold',
+              fontFamily: 'Inter-Black',
+            }}
+          >
+            {playerInfo.ratingChange > 0 ? '+' : ''}({playerInfo.ratingChange})
+          </Text>
         </Text>
       </View>
     );
