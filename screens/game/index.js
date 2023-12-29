@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { AppState, View } from 'react-native';
 import Challange from '../../components/Challange';
 import HighlightEffect from '../../components/HighlightEffect';
+import checkIfBot from '../../helpers/checkIfBot';
 import useConditionalFadeIn from '../../hooks/useConditionalFadeIn';
 import socketService from '../../services/socketService';
 import InGame from '../ingame';
@@ -51,6 +52,15 @@ const GameScreen = ({ navigation, route }) => {
     };
   }, [appState]);
 
+  const giveBotAnswer = (botPlayer, sessionId, correctAnswer) => {
+    socketService.emit('bot_answer', {
+      sessionId: sessionId,
+      botPlayer: botPlayer,
+      correctAnswer: correctAnswer,
+      timeRemaining: timer,
+    });
+  };
+
   useEffect(() => {
     startTimer();
 
@@ -59,6 +69,16 @@ const GameScreen = ({ navigation, route }) => {
       setTimer(10);
       setRound((prevRound) => prevRound + 1);
       if (roundData) setData(roundData);
+
+      const opponentData = roundData.gameSession.players.find(
+        (player) => player.socketId !== socketService?.socket?.id,
+      );
+      console.log('🚀  opponentData:', opponentData);
+
+      const isBot = checkIfBot(opponentData.socketId);
+      const correctAnswer = roundData.options.find((option) => option.isCorrect);
+
+      if (isBot) giveBotAnswer(opponentData, roundData.sessionId, correctAnswer.optionText);
 
       setHighlightTrigger(false);
     });
