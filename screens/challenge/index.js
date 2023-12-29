@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Text, View } from 'react-native';
 import socketService from '../../services/socketService';
 
 export default function ChallengeScreen({ route, navigation }) {
@@ -12,5 +13,9 @@ export default function ChallengeScreen({ route, navigation }) {
       navigation.navigate('Game', { game: data.game });
     });
   }, []);
-  return <div>ChallengeScreen</div>;
+  return (
+    <View>
+      <Text>ChallengeScreen</Text>
+    </View>
+  );
 }
