@@ -1,10 +1,10 @@
 import { FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import { NativeBaseProvider } from 'native-base';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import TabBar from './components/MyTabBar/MyTabBar';
 import fonts from './config/fonts';
 import { SocketProvider } from './context/socket/SocketContext';
@@ -29,6 +29,14 @@ function App() {
 
   if (!fontsLoaded) return null;
 
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: '#1d284b',
+    },
+  };
+
   function HomeTabNavigator() {
     return (
       <Tab.Navigator
@@ -48,6 +56,8 @@ function App() {
             color: 'white',
             fontWeight: 'bold',
           },
+          cardStyle: { backgroundColor: '#1d284b' },
+
           headerLeft: () => {
             // return <Ionicons name='menu' size={24} color='white' style={{ marginLeft: 20 }} />;
           },
@@ -113,6 +123,7 @@ function App() {
       <Stack.Navigator
         screenOptions={{
           headerTitle: 'Quiz Arena',
+          cardStyle: { backgroundColor: '#1d284b' },
           tabBarStyle: {
             // borderTopWidth: 0,
           },
@@ -188,13 +199,20 @@ function App() {
   }
 
   return (
-    <NativeBaseProvider>
-      <SocketProvider>
-        <NavigationContainer>
-          <StackNavigator />
-        </NavigationContainer>
-      </SocketProvider>
-    </NativeBaseProvider>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: 'rgb(15, 12, 41)',
+      }}
+    >
+      <NativeBaseProvider>
+        <SocketProvider>
+          <NavigationContainer theme={MyTheme}>
+            <StackNavigator />
+          </NavigationContainer>
+        </SocketProvider>
+      </NativeBaseProvider>
+    </View>
   );
 }
 
