@@ -124,11 +124,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 5,
+    gap: 2,
   },
   cell: {
     borderWidth: 1,
     padding: 10,
+    paddingHorizontal: 5,
     width: 40,
     textAlign: 'center',
     backgroundColor: '#303E5F',
@@ -139,6 +140,7 @@ const styles = StyleSheet.create({
   cellTotal: {
     borderWidth: 1,
     padding: 10,
+    paddingHorizontal: 5,
     width: 55,
     textAlign: 'center',
     backgroundColor: '#000',

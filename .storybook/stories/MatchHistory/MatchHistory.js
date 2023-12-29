@@ -3,13 +3,14 @@ import { useNavigation } from '@react-navigation/native';
 import { formatDistanceToNow } from 'date-fns';
 import { Image, Text, View } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { Animated, FlatList, Pressable, StyleSheet } from 'react-native';
+import { ActivityIndicator, Animated, FlatList, Pressable, StyleSheet } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
 import capitalizeFirstLetter from '../../../helpers/capitalizeFirstLetter';
 
 export default function MatchHistory() {
   const navigation = useNavigation();
   const [matchHistory, setMatchHistory] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getMatchHistory = async () => {
@@ -20,6 +21,7 @@ export default function MatchHistory() {
         translateY: new Animated.Value(50),
       }));
       setMatchHistory(animatedMatchHistory);
+      setIsLoading(false);
 
       animatedMatchHistory.forEach((_, index) => {
         Animated.sequence([
@@ -56,26 +58,47 @@ export default function MatchHistory() {
   };
 
   return (
-    <FlatList
-      ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
-      style={styles.container}
-      data={matchHistory}
-      renderItem={({ item, index }) => {
-        const opponent = item.players.find((v) => v.id !== item.userId);
+    <View style={styles.container}>
+      <Text
+        style={{
+          fontFamily: 'Inter-Black',
+          color: '#fff',
+          fontSize: 30,
+          marginBottom: 10,
+          textAlign: 'center',
+          paddingTop: 28,
+        }}
+      >
+        Match History
+      </Text>
 
-        return (
-          <Animated.View
-            key={item.id}
-            style={[
-              styles.bubble,
-              {
-                opacity: matchHistory[index].opacity,
-                transform: [{ translateY: matchHistory[index].translateY }],
-              },
-            ]}
-          >
-            <View style={styles.bubbleIcon}>
-              {/* <Image
+      {isLoading && (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size='large' color='#516696' />
+        </View>
+      )}
+      <FlatList
+        ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
+        style={{
+          backgroundColor: '#1c2141',
+        }}
+        data={matchHistory}
+        renderItem={({ item, index }) => {
+          const opponent = item.players.find((v) => v.id !== item.userId);
+
+          return (
+            <Animated.View
+              key={item.id}
+              style={[
+                styles.bubble,
+                {
+                  opacity: matchHistory[index].opacity,
+                  transform: [{ translateY: matchHistory[index].translateY }],
+                },
+              ]}
+            >
+              <View style={styles.bubbleIcon}>
+                {/* <Image
                 source={{
                   uri: 'https://cdn-icons-png.flaticon.com/512/1170/1170688.png',
                 }}
@@ -83,55 +106,57 @@ export default function MatchHistory() {
                 size='xs'
                 style={{ width: 40, height: 40 }}
               /> */}
-              <Ionicons name='ios-trophy' size={40} color='#fff' />
-            </View>
-            <View style={styles.bubbleInnerContainer}>
-              <Text style={styles.bubbleTitle}>{item.category}</Text>
-              <Pressable
-                onPress={() => {
-                  navigation.navigate('MatchHistoryDetails', {
-                    matchId: item.id,
-                  });
-                }}
-              >
-                <Text style={styles.bubbleSubtitle}>
-                  {parseSubtitle({
-                    opponentName: opponent.name,
-                    date: item.startTime,
-                  })}
-                </Text>
-              </Pressable>
-            </View>
-            <View>
-              <Image
-                source={{
-                  uri: 'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
-                }}
-                alt='Alternate Text'
-                size='xs'
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 20,
-                  marginRight: 15,
-                  marginTop: 5,
-                  borderWidth: 2,
-                  borderColor: '#516696',
-                }}
-              />
-            </View>
-          </Animated.View>
-        );
-      }}
-      keyExtractor={(item) => item._id}
-    />
+                <Ionicons name='ios-trophy' size={40} color='#fff' />
+              </View>
+              <View style={styles.bubbleInnerContainer}>
+                <Text style={styles.bubbleTitle}>{item.category}</Text>
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate('MatchHistoryDetails', {
+                      matchId: item.id,
+                    });
+                  }}
+                >
+                  <Text style={styles.bubbleSubtitle}>
+                    {parseSubtitle({
+                      opponentName: opponent.name,
+                      date: item.startTime,
+                    })}
+                  </Text>
+                </Pressable>
+              </View>
+              <View>
+                <Image
+                  source={{
+                    uri: 'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
+                  }}
+                  alt='Alternate Text'
+                  size='xs'
+                  style={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: 20,
+                    marginRight: 15,
+                    marginTop: 5,
+                    borderWidth: 2,
+                    borderColor: '#516696',
+                  }}
+                />
+              </View>
+            </Animated.View>
+          );
+        }}
+        keyExtractor={(item) => item._id}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
-    paddingTop: 20,
+    height: '100%',
+    paddingHorizontal: 20,
+    // paddingTop: 20,
     backgroundColor: '#1c2141',
   },
   bubble: {
@@ -159,9 +184,16 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '400',
     color: '#fff',
+    maxWidth: 200,
   },
   bubbleInnerContainer: {
     marginRight: 10,
     marginTop: 7,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#1c2141',
   },
 });
