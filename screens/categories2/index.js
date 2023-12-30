@@ -143,7 +143,7 @@ export default function Categories2({ navigation }) {
                 backgroundColor: '#516696',
                 borderColor: 'white',
                 borderWidth: 1,
-                borderRadius: 5,
+                borderRadius: 20,
               }}
               onChangeText={onChangeText}
               value={searchInput}
@@ -153,7 +153,7 @@ export default function Categories2({ navigation }) {
               style={{
                 position: 'absolute',
                 right: 16,
-                top: 19,
+                top: 17,
               }}
               name='search'
               size={24}
