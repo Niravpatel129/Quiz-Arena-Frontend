@@ -13,7 +13,8 @@
     "build-android": "eas build --platform android",
     "build-ios": "eas build --platform ios",
     "submit-ios": "eas submit --platform ios",
-    "submit-android": "eas submit --platform android"
+    "submit-android": "eas submit --platform android",
+    "deploy-ios": "eas build --platform ios && eas submit --platform ios"
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",

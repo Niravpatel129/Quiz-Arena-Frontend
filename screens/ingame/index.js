@@ -219,56 +219,57 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
           height: '100%',
         }}
       >
-        <View
-          style={{
-            height: '100%',
-          }}
-        >
+        <ScrollView>
           <View
             style={{
-              backgroundColor: '#303E5F',
-              marginHorizontal: 5,
-              marginVertical: 5,
-              borderRadius: 20,
-              padding: 10,
+              height: '100%',
             }}
           >
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
+                backgroundColor: '#303E5F',
+                marginHorizontal: 5,
+                marginVertical: 5,
+                borderRadius: 20,
+                padding: 10,
               }}
             >
-              <PlayerCard player={InGameData.PlayerOneInformation} flipped={false} />
               <View
                 style={{
-                  borderRadius: 50,
-                  padding: 5,
-                  backgroundColor: '#1A2545',
-                  borderWidth: 2,
-                  borderColor: clockBorderColor(timer),
-                  width: 50,
-                  height: 50,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  justifyContent: 'center',
                 }}
               >
-                <Text
+                <PlayerCard player={InGameData.PlayerOneInformation} flipped={false} />
+                <View
                   style={{
-                    fontFamily: 'Inter-Bold',
-                    fontWeight: '600',
-                    fontSize: 21,
-                    color: '#fff',
+                    borderRadius: 50,
+                    padding: 5,
+                    backgroundColor: '#1A2545',
+                    borderWidth: 2,
+                    borderColor: clockBorderColor(timer),
+                    width: 50,
+                    height: 50,
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
-                  {timer < 1 ? `⏰` : timer}
-                </Text>
+                  <Text
+                    style={{
+                      fontFamily: 'Inter-Bold',
+                      fontWeight: '600',
+                      fontSize: 21,
+                      color: '#fff',
+                    }}
+                  >
+                    {timer < 1 ? `⏰` : timer}
+                  </Text>
+                </View>
+                <PlayerCard player={InGameData.PlayerTwoInformation} flipped={true} />
               </View>
-              <PlayerCard player={InGameData.PlayerTwoInformation} flipped={true} />
             </View>
-          </View>
-          <ScrollView>
+
             <View
               style={{
                 justifyContent: 'space-between',
@@ -288,8 +289,8 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
                 <Scorebar score={InGameData.PlayerTwoInformation.score} color='red' />
               </View>
             </View>
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </LinearGradient>
   );

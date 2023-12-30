@@ -59,25 +59,26 @@ export default function MatchHistory() {
 
   return (
     <View style={styles.container}>
-      <Text
-        style={{
-          fontFamily: 'Inter-Black',
-          color: '#fff',
-          fontSize: 30,
-          marginBottom: 10,
-          textAlign: 'center',
-          paddingTop: 28,
-        }}
-      >
-        Match History
-      </Text>
-
       {isLoading && (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size='large' color='#516696' />
         </View>
       )}
       <FlatList
+        ListHeaderComponent={() => (
+          <Text
+            style={{
+              fontFamily: 'Inter-Black',
+              color: '#fff',
+              fontSize: 30,
+              marginBottom: 25,
+              textAlign: 'center',
+              paddingTop: 28,
+            }}
+          >
+            Match History
+          </Text>
+        )}
         ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
         style={{
           backgroundColor: '#1c2141',
