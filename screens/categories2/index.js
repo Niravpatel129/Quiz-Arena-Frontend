@@ -14,11 +14,17 @@ import {
 const categories = [
   {
     main: 'Tv Shows',
-    subCategories: ['Friends', 'The Office', 'The Simpsons', 'The Office', 'The Simpsons'],
+    subCategories: ['logos', 'logos', 'logos', 'logos', 'logos'],
   },
   {
     main: 'Movies',
-    subCategories: ['Friends', 'The Office', 'The Simpsons', 'The Office', 'The Simpsons'],
+    subCategories: [
+      'general knowledge',
+      'general knowledge',
+      'general knowledge',
+      'general knowledge',
+      'general knowledge',
+    ],
   },
   {
     main: 'General',
@@ -51,7 +57,7 @@ export default function Categories2({ navigation }) {
         onPress={() =>
           navigation.navigate('Queue', {
             categoryId: categoryTitle.split(' ').join('-'),
-            categoryName: 'logos' || categoryTitle,
+            categoryName: categoryTitle,
           })
         }
       >
