@@ -8,7 +8,7 @@ import { TouchableOpacity, View } from 'react-native';
 import TabBar from './components/MyTabBar/MyTabBar';
 import fonts from './config/fonts';
 import { SocketProvider } from './context/socket/SocketContext';
-import CategoriesScreen from './screens/categories';
+import Categories2 from './screens/categories2';
 import ChallengeScreen from './screens/challenge';
 import FriendsScreen from './screens/friends';
 import GameScreen from './screens/game';
@@ -79,7 +79,7 @@ function App() {
       >
         <Tab.Screen
           name='Categories'
-          component={CategoriesScreen}
+          component={Categories2}
           options={{
             headerShown: false,
           }}
@@ -151,7 +151,7 @@ function App() {
           ),
         }}
       >
-        {/* <Stack.Screen name='Dev' component={QueueScreen} options={{ headerShown: false }} /> */}
+        {/* <Stack.Screen name='Dev' component={Categories2} options={{ headerShown: true }} /> */}
 
         <Stack.Screen
           name='Home'
