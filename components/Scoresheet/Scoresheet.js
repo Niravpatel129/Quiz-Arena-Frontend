@@ -56,6 +56,14 @@ const Scoresheet = ({ playerOneData, playerTwoData }) => {
     <View style={styles.container}>
       <Text
         style={{
+          color: 'white',
+          fontSize: 44,
+        }}
+      >
+        {playerTwoData.scores.length}
+      </Text>
+      <Text
+        style={{
           color: '#fff',
           marginVertical: 6,
           fontFamily: 'Inter-Black',
@@ -103,7 +111,6 @@ const Scoresheet = ({ playerOneData, playerTwoData }) => {
           </View>
         </View>
         <View style={styles.row}>
-          {/* <Text>{playerTwoData.scores.length}</Text> */}
           {playerTwoData.scores.map((score, index) => {
             return (
               <Text key={index} style={styles.cell}>
