@@ -60,7 +60,7 @@ const Scoresheet = ({ playerOneData, playerTwoData }) => {
           fontSize: 44,
         }}
       >
-        {playerTwoData.scores.length}
+        +{playerTwoData.scores.length} Exp
       </Text>
       <Text
         style={{
