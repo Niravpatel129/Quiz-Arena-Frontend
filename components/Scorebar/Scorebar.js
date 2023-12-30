@@ -8,7 +8,7 @@ export default function Scorebar({ score, color }) {
   useEffect(() => {
     Animated.timing(animation, {
       toValue: score,
-      duration: 1000, // Adjust the duration of the animation as needed
+      duration: 1000,
       useNativeDriver: false,
     }).start();
   }, [score]);
@@ -21,7 +21,7 @@ export default function Scorebar({ score, color }) {
   return (
     <View
       style={{
-        height: 200,
+        height: 270,
         width: 8,
         borderRadius: 25,
         backgroundColor: '#516696',

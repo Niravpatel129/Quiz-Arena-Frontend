@@ -171,7 +171,8 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
           alignItems: 'center',
           margin: 10,
           marginBottom: 0,
-          minHeight: 250,
+          // minHeight: 250,
+          height: 350,
         }}
       >
         <Text
@@ -187,7 +188,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
         <Image
           style={{
             width: 230,
-            height: 230,
+            height: 200,
             borderRadius: 20,
             marginVertical: 20,
             objectFit: 'contain',
