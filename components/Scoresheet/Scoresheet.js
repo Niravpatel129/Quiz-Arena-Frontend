@@ -13,9 +13,6 @@ const FakeData = {
 };
 
 const Scoresheet = ({ playerOneData, playerTwoData }) => {
-  console.log('🚀  playerOneData:', playerOneData.scores);
-  console.log('🚀  playerTwoData:', playerTwoData.scores);
-
   const renderPlayerName = (player) => {
     return (
       <View
@@ -106,6 +103,7 @@ const Scoresheet = ({ playerOneData, playerTwoData }) => {
           </View>
         </View>
         <View style={styles.row}>
+          {/* <Text>{playerTwoData.scores.length}</Text> */}
           {playerTwoData.scores.map((score, index) => {
             return (
               <Text key={index} style={styles.cell}>

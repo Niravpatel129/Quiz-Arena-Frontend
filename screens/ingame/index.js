@@ -98,7 +98,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
 
     Animated.timing(fadeAnim, {
       toValue: 1, // Fully visible
-      duration: 1000, // Animation can last for 1000 milliseconds
+      duration: 2000, // Animation can last for 1000 milliseconds
       useNativeDriver: true, // Add this to improve performance
     }).start();
 
