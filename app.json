@@ -21,6 +21,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "googleServicesFile": "./google/elo-mastery-b6f43-f8db4624ebc1.json",
       "package": "com.niravpatelp129.QuizArenaFrontendScaffold"
     },
     "web": {
