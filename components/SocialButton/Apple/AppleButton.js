@@ -28,7 +28,7 @@ export default function SocialButton({ variation }) {
       const email = credential.email;
       const appleId = credential.user;
 
-      alert(JSON.stringify(credential));
+      //   alert(JSON.stringify(credential));
 
       const loginAuth = await newRequest.post('/auth/apple', {
         appleId,
