@@ -1,28 +1,25 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { useFacebookLogin } from '../../hooks/useFacebookLogin';
 
 const socialLoginVariations = {
   Facebook: {
-    onPress: () => {},
     icon: 'logo-facebook',
     text: 'Continue With Facebook',
     color: '#4768ab',
   },
   Google: {
-    onPress: () => {},
     icon: 'logo-google',
     text: 'Continue With Google',
     color: '#DB4437',
   },
   Twitter: {
-    onPress: () => {},
     icon: 'logo-twitter',
     text: 'Continue With Twitter',
     color: '#1DA1F2',
   },
   Apple: {
-    onPress: () => {},
     icon: 'logo-apple',
     text: 'Continue With Apple',
     color: 'black',
@@ -31,10 +28,28 @@ const socialLoginVariations = {
 
 export default function SocialButton({ variation }) {
   const { onPress, icon, text, color } = socialLoginVariations[variation] || {};
+  const { user, request, promptAsync } = useFacebookLogin();
+
+  console.log('🚀  user:', user);
+
+  const handlePress = (item) => {
+    switch (item) {
+      case 'Facebook':
+        return handleFacebookLogin();
+      default:
+        return;
+    }
+  };
+
+  const handleFacebookLogin = () => {
+    console.log('🚀  handleFacebookLogin:', handleFacebookLogin);
+    promptAsync();
+  };
 
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={() => handlePress(variation)}
+      disabled={!request}
       style={{
         backgroundColor: '#e9eef3',
         padding: 16,
