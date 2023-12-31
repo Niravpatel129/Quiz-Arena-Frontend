@@ -15,11 +15,13 @@ import GameScreen from './screens/game';
 import GameOver2 from './screens/game_over2';
 import HomeScreen from './screens/home';
 import LeaderboardsScreen from './screens/leaderboards';
+import Login2 from './screens/login2';
 import MatchHistoryScreen from './screens/match_history';
 import NotificationsScreen from './screens/notifications';
 import PlayersScreen from './screens/players';
 import ProfileScreen from './screens/profile';
 import QueueScreen from './screens/queue_screen';
+import SignUpLogin from './screens/signuplogin';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -151,12 +153,18 @@ function App() {
           ),
         }}
       >
-        {/* <Stack.Screen name='Dev' component={Categories2} options={{ headerShown: true }} /> */}
+        <Stack.Screen name='Dev' component={Login2} options={{ headerShown: false }} />
 
         <Stack.Screen
           name='Home'
           component={HomeScreen}
           options={{ title: 'Welcome', headerShown: false }}
+        />
+
+        <Stack.Screen
+          name='SignUpLogin'
+          component={SignUpLogin}
+          options={{ title: 'SignUpLogin', headerShown: false }}
         />
         {/* <Stack.Screen name='Drawer' component={DrawerNavigator} options={{ headerShown: false }} /> */}
         <Stack.Screen
