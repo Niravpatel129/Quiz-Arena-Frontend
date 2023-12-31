@@ -14,7 +14,6 @@ import ChallengeScreen from './screens/challenge';
 import FriendsScreen from './screens/friends';
 import GameScreen from './screens/game';
 import GameOver2 from './screens/game_over2';
-import HomeScreen from './screens/home';
 import LeaderboardsScreen from './screens/leaderboards';
 import Login2 from './screens/login2';
 import MatchHistoryScreen from './screens/match_history';
@@ -158,11 +157,11 @@ function App() {
           },
         })}
       >
-        <Stack.Screen name='Dev' component={Login2} options={{ headerShown: false }} />
+        {/* <Stack.Screen name='Dev' component={Login2} options={{ headerShown: false }} /> */}
 
         <Stack.Screen
           name='Home'
-          component={HomeScreen}
+          component={Login2}
           options={{ title: 'Welcome', headerShown: false }}
         />
 
