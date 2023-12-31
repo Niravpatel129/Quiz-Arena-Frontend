@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
 import {
   Image,
@@ -9,12 +10,57 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { newRequest } from '../../api/newRequest';
+import { useSocket } from '../../context/socket/SocketContext';
 
-export default function SignUpLogin() {
+export default function SignUpLogin({ navigation }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [username, setUsername] = React.useState('');
+  const [showUsername, setShowUsername] = React.useState(false);
+  const socket = useSocket();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const getEmail = async () => {
+      const email = await AsyncStorage.getItem('email');
+      if (!email) return;
+      if (email === 'null') return;
+      if (email === '') return;
+
+      setEmail(email || '');
+    };
+
+    getEmail();
+  }, []);
+
+  const handleLogin = () => {
+    AsyncStorage.setItem('email', email);
+
+    newRequest
+      .post('/auth/login', {
+        email: email,
+        password: password || 'password',
+        username: username || null,
+      })
+      .then((response) => {
+        console.log('🚀  response:', response);
+        if (!response.data.user.username) {
+          setShowUsername(true);
+          return;
+        }
+
+        socket.ConnectSocket();
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Categories' }],
+        });
+      })
+      .catch((error) => {
+        console.log('login failed :(');
+        console.log('error', error.message);
+        alert('Error logging in', error);
+      });
+  };
 
   return (
     <SafeAreaView>
@@ -58,82 +104,119 @@ export default function SignUpLogin() {
             >
               Sign up or login
             </Text>
-            {/* Input Email */}
-            <View
-              style={{
-                width: '100%',
-                position: 'relative',
-              }}
-            >
-              <Ionicons
+            {/* Input Username */}
+            {showUsername ? (
+              <View
                 style={{
-                  position: 'absolute',
-                  top: 12,
-                  right: 10,
-                  zIndex: 1,
-                }}
-                name={'person'}
-                size={30}
-                color={'#516696'}
-              />
-              <TextInput
-                style={{
-                  padding: 10,
-                  backgroundColor: 'white',
-                  borderRadius: 6,
-                  marginBottom: 10,
-                  fontSize: 20,
-                  paddingVertical: 17,
-                }}
-                placeholder='Email'
-                keyboardType='email-address'
-                onChangeText={setEmail}
-                value={email}
-              />
-            </View>
-            {/* Input Password */}
-            <View
-              style={{
-                position: 'relative',
-                width: '100%',
-              }}
-            >
-              <Ionicons
-                style={{
-                  position: 'absolute',
-                  top: 12,
-                  right: 10,
-                  zIndex: 1,
-                }}
-                name={'lock-closed'}
-                size={30}
-                color={'#516696'}
-              />
-              <TextInput
-                style={{
-                  padding: 10,
-                  backgroundColor: 'white',
-                  borderRadius: 6,
-                  marginBottom: 10,
-                  fontSize: 20,
-                  paddingVertical: 17,
-                }}
-                placeholder='Password'
-                secureTextEntry
-                onChangeText={setPassword}
-                value={password}
-              />
-            </View>
-            <TouchableOpacity>
-              <Text
-                style={{
-                  color: 'white',
-                  marginBottom: 20,
+                  width: '100%',
+                  position: 'relative',
                 }}
               >
-                Forgot your password?
-              </Text>
-            </TouchableOpacity>
+                <Ionicons
+                  style={{
+                    position: 'absolute',
+                    top: 12,
+                    right: 10,
+                    zIndex: 1,
+                  }}
+                  name={'person'}
+                  size={30}
+                  color={'#516696'}
+                />
+                <TextInput
+                  style={{
+                    padding: 10,
+                    backgroundColor: 'white',
+                    borderRadius: 6,
+                    marginBottom: 10,
+                    fontSize: 20,
+                    paddingVertical: 17,
+                  }}
+                  placeholder='Username'
+                  onChangeText={setUsername}
+                  value={username}
+                />
+              </View>
+            ) : (
+              <>
+                {/* Input Email */}
+                <View
+                  style={{
+                    width: '100%',
+                    position: 'relative',
+                  }}
+                >
+                  <Ionicons
+                    style={{
+                      position: 'absolute',
+                      top: 12,
+                      right: 10,
+                      zIndex: 1,
+                    }}
+                    name={'person'}
+                    size={30}
+                    color={'#516696'}
+                  />
+                  <TextInput
+                    style={{
+                      padding: 10,
+                      backgroundColor: 'white',
+                      borderRadius: 6,
+                      marginBottom: 10,
+                      fontSize: 20,
+                      paddingVertical: 17,
+                    }}
+                    placeholder='Email'
+                    keyboardType='email-address'
+                    onChangeText={setEmail}
+                    value={email}
+                  />
+                </View>
+                {/* Input Password */}
+                <View
+                  style={{
+                    position: 'relative',
+                    width: '100%',
+                  }}
+                >
+                  <Ionicons
+                    style={{
+                      position: 'absolute',
+                      top: 12,
+                      right: 10,
+                      zIndex: 1,
+                    }}
+                    name={'lock-closed'}
+                    size={30}
+                    color={'#516696'}
+                  />
+                  <TextInput
+                    style={{
+                      padding: 10,
+                      backgroundColor: 'white',
+                      borderRadius: 6,
+                      marginBottom: 10,
+                      fontSize: 20,
+                      paddingVertical: 17,
+                    }}
+                    placeholder='Password'
+                    secureTextEntry
+                    onChangeText={setPassword}
+                    value={password}
+                  />
+                </View>
+                <TouchableOpacity>
+                  <Text
+                    style={{
+                      color: 'white',
+                      marginBottom: 20,
+                    }}
+                  >
+                    Forgot your password?
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
 
             {/* bottom of the page submit button */}
             <TouchableOpacity
@@ -146,6 +229,7 @@ export default function SignUpLogin() {
                 justifyContent: 'center',
                 marginTop: 40,
               }}
+              onPress={() => handleLogin()}
             >
               <View
                 style={{
