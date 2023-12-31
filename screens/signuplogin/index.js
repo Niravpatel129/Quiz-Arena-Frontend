@@ -104,7 +104,7 @@ export default function SignUpLogin({ navigation }) {
                   fontWeight: 'bold',
                 }}
               >
-                Sign up or login
+                {showUsername ? 'Create a username' : 'Sign up or login'}
               </Text>
               {/* Input Username */}
               {showUsername ? (
@@ -138,6 +138,7 @@ export default function SignUpLogin({ navigation }) {
                     placeholder='Username'
                     onChangeText={setUsername}
                     value={username}
+                    onSubmitEditing={handleLogin}
                   />
                 </View>
               ) : (
@@ -206,6 +207,7 @@ export default function SignUpLogin({ navigation }) {
                       secureTextEntry
                       onChangeText={setPassword}
                       value={password}
+                      onSubmitEditing={handleLogin}
                     />
                   </View>
                   <TouchableOpacity>

@@ -3,7 +3,14 @@ import { useNavigation } from '@react-navigation/native';
 import { formatDistanceToNow } from 'date-fns';
 import { Image, Text, View } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Animated, FlatList, Pressable, StyleSheet } from 'react-native';
+import {
+  ActivityIndicator,
+  Animated,
+  FlatList,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+} from 'react-native';
 import { newRequest } from '../../../api/newRequest';
 import capitalizeFirstLetter from '../../../helpers/capitalizeFirstLetter';
 
@@ -58,48 +65,51 @@ export default function MatchHistory() {
   };
 
   return (
-    <View style={styles.container}>
-      {isLoading && (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size='large' color='#516696' />
-        </View>
-      )}
-      <FlatList
-        ListHeaderComponent={() => (
-          <Text
-            style={{
-              fontFamily: 'Inter-Black',
-              color: '#fff',
-              fontSize: 30,
-              marginBottom: 25,
-              textAlign: 'center',
-              paddingTop: 28,
-            }}
-          >
-            Match History
-          </Text>
+    <SafeAreaView>
+      <View style={styles.container}>
+        {isLoading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size='large' color='#516696' />
+          </View>
         )}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
-        style={{
-          backgroundColor: '#1c2141',
-        }}
-        data={matchHistory}
-        renderItem={({ item, index }) => {
-          const opponent = item.players.find((v) => v.id !== item.userId);
 
-          return (
-            <Animated.View
-              key={item.id}
-              style={[
-                styles.bubble,
-                {
-                  opacity: matchHistory[index].opacity,
-                  transform: [{ translateY: matchHistory[index].translateY }],
-                },
-              ]}
-            >
-              <View style={styles.bubbleIcon}>
-                {/* <Image
+        {matchHistory.length > 0 && (
+          <FlatList
+            ListHeaderComponent={() => (
+              <Text
+                style={{
+                  fontFamily: 'Inter-Black',
+                  color: '#fff',
+                  fontSize: 30,
+                  marginBottom: 25,
+                  textAlign: 'center',
+                  paddingTop: 28,
+                }}
+              >
+                Match History
+              </Text>
+            )}
+            ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
+            style={{
+              backgroundColor: '#1c2141',
+            }}
+            data={matchHistory}
+            renderItem={({ item, index }) => {
+              const opponent = item.players.find((v) => v.id !== item.userId);
+
+              return (
+                <Animated.View
+                  key={item.id}
+                  style={[
+                    styles.bubble,
+                    {
+                      opacity: matchHistory[index].opacity,
+                      transform: [{ translateY: matchHistory[index].translateY }],
+                    },
+                  ]}
+                >
+                  <View style={styles.bubbleIcon}>
+                    {/* <Image
                 source={{
                   uri: 'https://cdn-icons-png.flaticon.com/512/1170/1170688.png',
                 }}
@@ -107,49 +117,68 @@ export default function MatchHistory() {
                 size='xs'
                 style={{ width: 40, height: 40 }}
               /> */}
-                <Ionicons name='ios-trophy' size={40} color='#fff' />
-              </View>
-              <View style={styles.bubbleInnerContainer}>
-                <Text style={styles.bubbleTitle}>{item.category}</Text>
-                <Pressable
-                  onPress={() => {
-                    navigation.navigate('MatchHistoryDetails', {
-                      matchId: item.id,
-                    });
-                  }}
-                >
-                  <Text style={styles.bubbleSubtitle}>
-                    {parseSubtitle({
-                      opponentName: opponent.name,
-                      date: item.startTime,
-                    })}
-                  </Text>
-                </Pressable>
-              </View>
-              <View>
-                <Image
-                  source={{
-                    uri: 'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
-                  }}
-                  alt='Alternate Text'
-                  size='xs'
-                  style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 20,
-                    marginRight: 15,
-                    marginTop: 5,
-                    borderWidth: 2,
-                    borderColor: '#516696',
-                  }}
-                />
-              </View>
-            </Animated.View>
-          );
-        }}
-        keyExtractor={(item) => item._id}
-      />
-    </View>
+                    <Ionicons name='ios-trophy' size={40} color='#fff' />
+                  </View>
+                  <View style={styles.bubbleInnerContainer}>
+                    <Text style={styles.bubbleTitle}>{item.category}</Text>
+                    <Pressable
+                      onPress={() => {
+                        navigation.navigate('MatchHistoryDetails', {
+                          matchId: item.id,
+                        });
+                      }}
+                    >
+                      <Text style={styles.bubbleSubtitle}>
+                        {parseSubtitle({
+                          opponentName: opponent.name,
+                          date: item.startTime,
+                        })}
+                      </Text>
+                    </Pressable>
+                  </View>
+                  <View>
+                    <Image
+                      source={{
+                        uri: 'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
+                      }}
+                      alt='Alternate Text'
+                      size='xs'
+                      style={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: 20,
+                        marginRight: 15,
+                        marginTop: 5,
+                        borderWidth: 2,
+                        borderColor: '#516696',
+                      }}
+                    />
+                  </View>
+                </Animated.View>
+              );
+            }}
+            keyExtractor={(item) => item._id}
+          />
+        )}
+
+        {matchHistory.length === 0 && !isLoading && (
+          <View>
+            <Text
+              style={{
+                fontFamily: 'Inter-Black',
+                color: '#fff',
+                fontSize: 25,
+                marginTop: 25,
+                textAlign: 'center',
+                paddingTop: 28,
+              }}
+            >
+              No match history yet!
+            </Text>
+          </View>
+        )}
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -158,7 +187,7 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingHorizontal: 20,
     // paddingTop: 20,
-    backgroundColor: '#1c2141',
+    // backgroundColor: '#1c2141',
   },
   bubble: {
     flexDirection: 'row',

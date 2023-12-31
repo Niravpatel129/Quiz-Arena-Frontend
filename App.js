@@ -143,7 +143,7 @@ function App() {
           },
 
           headerRight: () => {
-            if (route.name !== 'SignUpLogin') return null;
+            if (route.name === 'SignUpLogin') return null;
 
             return (
               <TouchableOpacity
@@ -151,7 +151,7 @@ function App() {
                   navigation.navigate('Notifications');
                 }}
               >
-                <FontAwesome5 name='bell' size={22} color='white' style={{ marginRight: 12 }} />
+                <FontAwesome5 name='bell' size={22} color='white' style={{ marginRight: 10 }} />
               </TouchableOpacity>
             );
           },
@@ -209,7 +209,7 @@ function App() {
         <Stack.Screen
           name='Categories'
           component={HomeTabNavigator}
-          options={{ headerShown: true }}
+          options={{ headerShown: true, headerTransparent: true }}
         />
       </Stack.Navigator>
     );

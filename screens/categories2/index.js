@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
   FlatList,
@@ -119,66 +120,66 @@ export default function Categories2({ navigation }) {
     });
   };
   return (
-    <SafeAreaView>
-      <ScrollView
-        style={{
-          backgroundColor: '#1c2141',
-          padding: 10,
-          height: '100%',
-        }}
-      >
-        <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '100%',
-              position: 'relative',
-            }}
-          >
-            <TextInput
-              placeholder='Search Quiz Category'
-              placeholderTextColor='white'
+    <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ height: '100%' }}>
+      <SafeAreaView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{
+            // backgroundColor: '#1c2141',
+            padding: 10,
+            height: '100%',
+          }}
+        >
+          <View>
+            <View
               style={{
-                marginBottom: 10,
-                flex: 1,
-                color: 'white',
-                fontSize: 19,
-                fontFamily: 'Inter-Regular',
-                padding: 16,
-                backgroundColor: '#516696',
-                borderColor: 'white',
-                borderWidth: 1,
-                borderRadius: 20,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '100%',
+                position: 'relative',
               }}
-              onChangeText={onChangeText}
-              value={searchInput}
-            />
+            >
+              <TextInput
+                placeholder='Search Quiz Category'
+                placeholderTextColor='white'
+                style={{
+                  marginBottom: 10,
+                  flex: 1,
+                  color: 'white',
+                  fontSize: 19,
+                  fontFamily: 'Inter-Regular',
+                  padding: 16,
+                  backgroundColor: '#516696',
+                  borderColor: 'white',
+                  borderWidth: 1,
+                  borderRadius: 20,
+                }}
+                onChangeText={onChangeText}
+                value={searchInput}
+              />
 
-            <Ionicons
+              <Ionicons
+                style={{
+                  position: 'absolute',
+                  right: 16,
+                  top: 17,
+                }}
+                name='search'
+                size={24}
+                color='white'
+              />
+            </View>
+            <View
               style={{
-                position: 'absolute',
-                right: 16,
-                top: 17,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
-              name='search'
-              size={24}
-              color='white'
-            />
+            >
+              {renderCategories()}
+            </View>
           </View>
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {renderCategories()}
-          </View>
-          {/* Search  */}
-          {/* Container for Sub Section */}
-          {/* List of items in sub section */}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 
 export default function FriendsScreen({ navigation }) {
@@ -124,95 +124,97 @@ export default function FriendsScreen({ navigation }) {
   };
 
   return (
-    <ScrollView
-      style={{
-        backgroundColor: '#1c2141',
-        height: '100%',
-      }}
-    >
-      <View
+    <SafeAreaView>
+      <ScrollView
         style={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          padding: 10,
-          backgroundColor: '#1d284b',
-          margin: 10,
-          borderRadius: 22,
+          backgroundColor: '#1c2141',
+          height: '100%',
         }}
       >
-        <TouchableOpacity
-          onPress={() => setActiveTab('tab1')}
+        <View
           style={{
-            backgroundColor: activeTab === 'tab1' ? 'lightgray' : '#1c2141',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            padding: 10,
+            backgroundColor: '#1d284b',
+            margin: 10,
             borderRadius: 22,
-            flex: 1,
-            height: 40,
-            alignItems: 'center',
-            justifyContent: 'center',
           }}
         >
-          <Text
+          <TouchableOpacity
+            onPress={() => setActiveTab('tab1')}
             style={{
-              color: activeTab === 'tab1' ? '#1c2141' : '#ffffff',
-              fontSize: 22,
-              fontWeight: 'bold',
+              backgroundColor: activeTab === 'tab1' ? 'lightgray' : '#1c2141',
+              borderRadius: 22,
+              flex: 1,
+              height: 40,
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            Friends
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setActiveTab('tab2')}
+            <Text
+              style={{
+                color: activeTab === 'tab1' ? '#1c2141' : '#ffffff',
+                fontSize: 22,
+                fontWeight: 'bold',
+              }}
+            >
+              Friends
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setActiveTab('tab2')}
+            style={{
+              backgroundColor: activeTab === 'tab2' ? 'lightgray' : '#1c2141',
+              borderRadius: 22,
+              flex: 1,
+              height: 40,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text
+              style={{
+                color: activeTab === 'tab2' ? '#1c2141' : '#ffffff',
+                fontSize: 22,
+                fontWeight: 'bold',
+              }}
+            >
+              Chats
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setActiveTab('tab3')}
+            style={{
+              backgroundColor: activeTab === 'tab3' ? 'lightgray' : '#1c2141',
+              borderRadius: 22,
+              flex: 1,
+              height: 40,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text
+              style={{
+                color: activeTab === 'tab3' ? '#1c2141' : '#ffffff',
+                fontSize: 22,
+                fontWeight: 'bold',
+              }}
+            >
+              Social
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View
           style={{
-            backgroundColor: activeTab === 'tab2' ? 'lightgray' : '#1c2141',
-            borderRadius: 22,
-            flex: 1,
-            height: 40,
-            alignItems: 'center',
-            justifyContent: 'center',
+            gap: 12,
           }}
         >
-          <Text
-            style={{
-              color: activeTab === 'tab2' ? '#1c2141' : '#ffffff',
-              fontSize: 22,
-              fontWeight: 'bold',
-            }}
-          >
-            Chats
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setActiveTab('tab3')}
-          style={{
-            backgroundColor: activeTab === 'tab3' ? 'lightgray' : '#1c2141',
-            borderRadius: 22,
-            flex: 1,
-            height: 40,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Text
-            style={{
-              color: activeTab === 'tab3' ? '#1c2141' : '#ffffff',
-              fontSize: 22,
-              fontWeight: 'bold',
-            }}
-          >
-            Social
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View
-        style={{
-          gap: 12,
-        }}
-      >
-        {friends.map((friend, index) => {
-          return <View key={index}>{renderFriendsBubble(friend)}</View>;
-        })}
-      </View>
-    </ScrollView>
+          {friends.map((friend, index) => {
+            return <View key={index}>{renderFriendsBubble(friend)}</View>;
+          })}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
