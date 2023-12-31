@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
+import { LinearGradient } from 'expo-linear-gradient';
 import { NativeBaseProvider } from 'native-base';
 import { TouchableOpacity, View } from 'react-native';
 import TabBar from './components/MyTabBar/MyTabBar';
@@ -130,7 +131,7 @@ function App() {
             // borderTopWidth: 0,
           },
           headerStyle: {
-            backgroundColor: '#1d284b',
+            // backgroundColor: '#1d284b',
             borderBottomWidth: 0,
           },
           headerTitleAlign: 'center',
@@ -168,7 +169,12 @@ function App() {
         <Stack.Screen
           name='SignUpLogin'
           component={SignUpLogin}
-          options={{ title: 'SignUpLogin', headerShown: true }}
+          options={{
+            title: 'SignUpLogin',
+            headerShown: true,
+            headerTransparent: true,
+            headerTranslucent: true,
+          }}
         />
         {/* <Stack.Screen name='Drawer' component={DrawerNavigator} options={{ headerShown: false }} /> */}
         <Stack.Screen
@@ -214,13 +220,14 @@ function App() {
     <View
       style={{
         flex: 1,
-        backgroundColor: 'rgb(15, 12, 41)',
       }}
     >
       <NativeBaseProvider>
         <SocketProvider>
           <NavigationContainer theme={MyTheme}>
-            <StackNavigator />
+            <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
+              <StackNavigator />
+            </LinearGradient>
           </NavigationContainer>
         </SocketProvider>
       </NativeBaseProvider>
