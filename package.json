@@ -52,7 +52,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
     "react-native-web": "~0.19.6",
-    "socket.io-client": "^4.7.2"
+    "socket.io-client": "^4.7.2",
+    "expo-apple-authentication": "~6.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

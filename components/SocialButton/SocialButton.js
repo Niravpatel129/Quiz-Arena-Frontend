@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { useFacebookLogin } from '../../hooks/useFacebookLogin';
+import AppleButton from './Apple/AppleButton';
 
 const socialLoginVariations = {
   Facebook: {
@@ -36,6 +37,8 @@ export default function SocialButton({ variation }) {
     switch (item) {
       case 'Facebook':
         return handleFacebookLogin();
+      case 'Apple':
+        return handleAppleLogin();
       default:
         return;
     }
@@ -45,6 +48,14 @@ export default function SocialButton({ variation }) {
     console.log('🚀  handleFacebookLogin:', handleFacebookLogin);
     promptAsync();
   };
+
+  const handleAppleLogin = () => {
+    console.log('🚀  handleAppleLogin');
+  };
+
+  if (variation === 'Apple') {
+    return <AppleButton />;
+  }
 
   return (
     <TouchableOpacity
