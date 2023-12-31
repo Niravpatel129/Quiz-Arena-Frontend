@@ -123,7 +123,7 @@ function App() {
 
     return (
       <Stack.Navigator
-        screenOptions={{
+        screenOptions={(route) => ({
           headerTitle: 'Quiz Arena',
           cardStyle: { backgroundColor: '#1d284b' },
           tabBarStyle: {
@@ -142,16 +142,20 @@ function App() {
             display: 'none',
           },
 
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Notifications');
-              }}
-            >
-              <FontAwesome5 name='bell' size={22} color='white' style={{ marginRight: 12 }} />
-            </TouchableOpacity>
-          ),
-        }}
+          headerRight: () => {
+            if (route.name !== 'SignUpLogin') return null;
+
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Notifications');
+                }}
+              >
+                <FontAwesome5 name='bell' size={22} color='white' style={{ marginRight: 12 }} />
+              </TouchableOpacity>
+            );
+          },
+        })}
       >
         <Stack.Screen name='Dev' component={Login2} options={{ headerShown: false }} />
 
@@ -164,7 +168,7 @@ function App() {
         <Stack.Screen
           name='SignUpLogin'
           component={SignUpLogin}
-          options={{ title: 'SignUpLogin', headerShown: false }}
+          options={{ title: 'SignUpLogin', headerShown: true }}
         />
         {/* <Stack.Screen name='Drawer' component={DrawerNavigator} options={{ headerShown: false }} /> */}
         <Stack.Screen
