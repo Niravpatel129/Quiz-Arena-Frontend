@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const theme = {
@@ -21,60 +21,68 @@ const ICONS = {
 
 const TabBar = ({ state, descriptors, navigation }) => {
   return (
-    <View
+    <SafeAreaView
       style={{
-        flexDirection: 'row',
         backgroundColor: theme.colors.background,
-        paddingBottom: 42,
-        paddingTop: 16,
       }}
     >
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
+      <View
+        style={{
+          flexDirection: 'row',
+          backgroundColor: theme.colors.background,
+          // paddingBottom: 42,
+          // paddingTop: 16,
+          // paddingTop: 16,
+        }}
+      >
+        {state.routes.map((route, index) => {
+          const { options } = descriptors[route.key];
 
-        const isFocused = state.index === index;
+          const isFocused = state.index === index;
 
-        const iconName = ICONS[route.name] || 'ios-people';
+          const iconName = ICONS[route.name] || 'ios-people';
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
+          const onPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate(route.name);
+            }
+          };
 
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
+          const onLongPress = () => {
+            navigation.emit({
+              type: 'tabLongPress',
+              target: route.key,
+            });
+          };
 
-        return (
-          <TouchableOpacity
-            key={route.key}
-            accessibilityRole='button'
-            accessibilityStates={isFocused ? ['selected'] : []}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={{ flex: 1, alignItems: 'center' }}
-          >
-            <Ionicons
-              name={iconName}
-              size={25}
-              color={isFocused ? theme.colors.primary : theme.colors.text}
-            />
-          </TouchableOpacity>
-        );
-      })}
-    </View>
+          return (
+            <TouchableOpacity
+              key={route.key}
+              accessibilityRole='button'
+              accessibilityStates={isFocused ? ['selected'] : []}
+              accessibilityLabel={options.tabBarAccessibilityLabel}
+              testID={options.tabBarTestID}
+              onPress={onPress}
+              onLongPress={onLongPress}
+              style={{ flex: 1, alignItems: 'center', paddingTop: 16 }}
+            >
+              <Ionicons
+                style={{}}
+                name={iconName}
+                size={25}
+                color={isFocused ? 'white' : '#516696'}
+              />
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    </SafeAreaView>
   );
 };
 
