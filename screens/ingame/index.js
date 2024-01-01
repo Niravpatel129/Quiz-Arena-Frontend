@@ -4,6 +4,7 @@ import { Animated, Image, SafeAreaView, ScrollView, Text, View } from 'react-nat
 import CountryFlag from 'react-native-country-flag';
 import AnimatedButton from '../../components/AnimatedButton/AnimatedButton';
 import Scorebar from '../../components/Scorebar/Scorebar';
+import shuffle from '../../helpers/shuffle';
 import socketService from '../../services/socketService';
 
 function clockBorderColor(clock) {
@@ -85,6 +86,12 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const fadeAnim = useState(new Animated.Value(0))[0]; // Start fully visible
   const [selectedForRound, setSelectedForRound] = useState(false);
+  const [shuffledAnswers, setShuffledAnswers] = useState([]);
+
+  useEffect(() => {
+    // Shuffle the answers
+    setShuffledAnswers(shuffle(InGameData.RoundData.answers));
+  }, [InGameData.RoundData.answers]);
 
   useEffect(() => {
     fadeAnim.setValue(0);
@@ -152,7 +159,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
           opacity: fadeAnim,
         }}
       >
-        {InGameData.RoundData.answers.map((answer) => renderAnswerBubble(answer))}
+        {shuffledAnswers.map((answer) => renderAnswerBubble(answer))}
       </Animated.View>
     );
   };
