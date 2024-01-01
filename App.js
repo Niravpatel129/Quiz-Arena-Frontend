@@ -80,7 +80,7 @@ function App() {
         }}
       >
         <Tab.Screen
-          name='Categories'
+          name='CategoriesHome'
           component={Categories2}
           options={{
             headerShown: false,

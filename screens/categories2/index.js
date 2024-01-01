@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
 const categories = [
   {
@@ -42,7 +43,8 @@ const categories = [
 ];
 
 const ImageMap = {
-  Movies: 'https://i.pinimg.com/originals/4b/14/25/4b142585f92f62e3e2f372b174fb82a6.jpg',
+  Movies:
+    'https://cdn.dribbble.com/userupload/9424324/file/original-6e071eda3550f1a2c8fe70792dc31d7e.png?resize=400x0',
 };
 
 export default function Categories2({ navigation }) {
@@ -63,20 +65,29 @@ export default function Categories2({ navigation }) {
         }
       >
         <Image
-          style={{ width: 100, height: 100 }}
+          style={{
+            width: 100,
+            height: 100,
+            borderWidth: 2,
+            borderColor: '#516696',
+            borderRadius: 20,
+          }}
           source={{
-            uri: 'https://i.pinimg.com/originals/4b/14/25/4b142585f92f62e3e2f372b174fb82a6.jpg',
+            uri: 'https://cdn.dribbble.com/userupload/9424324/file/original-6e071eda3550f1a2c8fe70792dc31d7e.png?resize=400x0',
           }}
         />
         <Text
           style={{
             color: 'white',
-            fontSize: 12,
+            fontSize: 14,
             textAlign: 'center',
             marginTop: 5,
+            maxWidth: 100,
+            fontWeight: 'bold',
+            fontFamily: 'Inter-Bold',
           }}
         >
-          {categoryTitle}
+          {capitalizeFirstLetter(categoryTitle)}
         </Text>
       </TouchableOpacity>
     );
@@ -112,7 +123,7 @@ export default function Categories2({ navigation }) {
             showsHorizontalScrollIndicator={false}
             style={{
               flexDirection: 'row',
-              margin: 10,
+              // margin: 10,
             }}
           />
         </View>
@@ -120,7 +131,10 @@ export default function Categories2({ navigation }) {
     });
   };
   return (
-    <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ height: '100%' }}>
+    <LinearGradient
+      colors={['#0f0c29', '#302b63', '#24243e']}
+      style={{ height: '100%', marginBottom: 40, paddingBottom: 40 }}
+    >
       <SafeAreaView>
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -149,7 +163,7 @@ export default function Categories2({ navigation }) {
                   fontSize: 19,
                   fontFamily: 'Inter-Regular',
                   padding: 16,
-                  backgroundColor: '#516696',
+                  backgroundColor: '#1c2141',
                   borderColor: 'white',
                   borderWidth: 1,
                   borderRadius: 20,

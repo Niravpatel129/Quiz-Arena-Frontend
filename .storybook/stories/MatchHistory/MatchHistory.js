@@ -75,6 +75,7 @@ export default function MatchHistory() {
 
         {matchHistory.length > 0 && (
           <FlatList
+            showsVerticalScrollIndicator={false}
             ListHeaderComponent={() => (
               <Text
                 style={{
@@ -90,9 +91,11 @@ export default function MatchHistory() {
               </Text>
             )}
             ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
-            style={{
-              backgroundColor: '#1c2141',
-            }}
+            style={
+              {
+                // backgroundColor: '#1c2141',
+              }
+            }
             data={matchHistory}
             renderItem={({ item, index }) => {
               const opponent = item.players.find((v) => v.id !== item.userId);
@@ -185,13 +188,14 @@ export default function MatchHistory() {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
     // paddingTop: 20,
     // backgroundColor: '#1c2141',
   },
   bubble: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(48, 62, 95, 0.37)',
+    backgroundColor: '#1c2141',
+    // backgroundColor: 'rgba(48, 62, 95, 0.37)',
     borderRadius: 15,
     borderWidth: 2,
     borderColor: '#516696',
