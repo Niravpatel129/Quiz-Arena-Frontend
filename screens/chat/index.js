@@ -36,7 +36,8 @@ const fakeChatData = {
 };
 
 export default function Chat() {
-  const renderChatBubble = ({ isSender = false, message }) => {
+  const renderChatBubble = (messageData) => {
+    const { name, message, isSender, sentAgo } = messageData;
     return (
       <View
         style={{
@@ -45,38 +46,19 @@ export default function Chat() {
           alignSelf: isSender ? 'flex-start' : 'flex-end',
         }}
       >
-        <Text
-          style={{
-            color: 'white',
-            marginHorizontal: 5,
-            marginBottom: 5,
-            // marginVertical: 10,
-          }}
-        >
-          John 7 mins ago
+        <Text style={{ color: 'white', marginHorizontal: 5, marginBottom: 5 }}>
+          {name} {sentAgo}
         </Text>
         <View
           style={{
-            // height: 50,
             width: '90%',
             backgroundColor: 'white',
-            minWidth: '80%',
             borderRadius: 10,
             justifyContent: 'center',
-            // padding: 30,
             minHeight: 50,
           }}
         >
-          <Text
-            style={{
-              zIndex: 1,
-              color: 'black',
-              fontSize: 16,
-              padding: 10,
-            }}
-          >
-            {message || 'Hello, how are you?'}
-          </Text>
+          <Text style={{ zIndex: 1, color: 'black', fontSize: 16, padding: 10 }}>{message}</Text>
         </View>
       </View>
     );
@@ -98,70 +80,29 @@ export default function Chat() {
             marginHorizontal: 10,
           }}
         >
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image
-              style={{
-                width: 50,
-                height: 50,
-                borderRadius: 25,
-              }}
-              source={{
-                uri: 'https://storage.googleapis.com/pai-images/04a4d16220a645408362ae47deb07737.jpeg',
-              }}
+              style={{ width: 50, height: 50, borderRadius: 25 }}
+              source={{ uri: fakeChatData.chatingWith.avatar }}
             />
-            <View
-              style={{
-                flexDirection: 'column',
-                marginHorizontal: 20,
-              }}
-            >
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                }}
-              >
-                LTX Sam
+            <View style={{ flexDirection: 'column', marginHorizontal: 20 }}>
+              <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
+                {fakeChatData.chatingWith.name}
               </Text>
-              <Text
-                style={{
-                  color: '#d2d2d2',
-                  fontSize: 14,
-                }}
-              >
-                Active 8 mins ago
+              <Text style={{ color: '#d2d2d2', fontSize: 14 }}>
+                Active {fakeChatData.chatingWith.lastActive}
               </Text>
             </View>
           </View>
           <TouchableOpacity>
-            <Ionicons
-              style={{
-                marginRight: 10,
-              }}
-              name='close'
-              size={32}
-              color='white'
-            />
+            <Ionicons name='close' size={32} color='white' />
           </TouchableOpacity>
         </View>
         <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
-          <ScrollView
-            style={{
-              flex: 1,
-            }}
-          >
-            {renderChatBubble({
-              isSender: true,
-            })}
-            {renderChatBubble({
-              isSender: false,
-            })}
+          <ScrollView style={{ flex: 1 }}>
+            {fakeChatData.chatMessages.map((msg, index) => (
+              <View key={index}>{renderChatBubble(msg)}</View>
+            ))}
           </ScrollView>
         </LinearGradient>
 
@@ -193,15 +134,7 @@ export default function Chat() {
               borderRadius: 5,
             }}
           >
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 16,
-                fontWeight: 'bold',
-              }}
-            >
-              Send
-            </Text>
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Send</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
