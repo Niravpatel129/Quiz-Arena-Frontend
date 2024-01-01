@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { newRequest } from '../../api/newRequest';
 
 const fakeChatData = {
   chatingWith: {
@@ -35,7 +36,23 @@ const fakeChatData = {
   ],
 };
 
-export default function Chat() {
+export default function Chat({
+  route: {
+    params: { chattingWithId },
+  },
+}) {
+  const fetchChat = async () => {
+    const chatRes = await newRequest.post('/chat/create', {
+      friendId: chattingWithId,
+    });
+
+    console.log('🚀  chatRes:', chatRes);
+  };
+
+  useEffect(() => {
+    fetchChat();
+  }, []);
+
   const renderChatBubble = (messageData) => {
     const { name, message, isSender, sentAgo } = messageData;
     return (
