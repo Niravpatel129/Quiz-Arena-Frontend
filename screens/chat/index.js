@@ -13,6 +13,28 @@ import {
   View,
 } from 'react-native';
 
+const fakeChatData = {
+  chatingWith: {
+    name: 'LTX Sam',
+    avatar: 'https://storage.googleapis.com/pai-images/04a4d16220a645408362ae47deb07737.jpeg',
+    lastActive: '8 mins ago',
+  },
+  chatMessages: [
+    {
+      name: 'John',
+      message: 'Hello, how are you?',
+      isSender: true,
+      sentAgo: '7 mins ago',
+    },
+    {
+      name: 'LTX Sam',
+      message: 'I am good, how are you?',
+      isSender: false,
+      sentAgo: '6 mins ago',
+    },
+  ],
+};
+
 export default function Chat() {
   const renderChatBubble = ({ isSender = false, message }) => {
     return (
