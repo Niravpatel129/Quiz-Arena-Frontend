@@ -131,15 +131,11 @@ export default function Categories2({ navigation }) {
     });
   };
   return (
-    <LinearGradient
-      colors={['#0f0c29', '#302b63', '#24243e']}
-      style={{ height: '100%', marginBottom: 40, paddingBottom: 40 }}
-    >
+    <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ height: '100%' }}>
       <SafeAreaView>
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{
-            // backgroundColor: '#1c2141',
             padding: 10,
             height: '100%',
           }}

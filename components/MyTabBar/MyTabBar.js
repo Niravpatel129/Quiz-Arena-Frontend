@@ -24,6 +24,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
     <SafeAreaView
       style={{
         backgroundColor: theme.colors.background,
+        // marginTop: 0,
       }}
     >
       <View
