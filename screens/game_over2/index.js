@@ -42,6 +42,7 @@ export default function GameOver2({ navigation, route }) {
   if (!fakeData) return null;
 
   const playerCard = (playerInfo) => {
+    console.log('🚀  playerInfo:', playerInfo);
     return (
       <View>
         <Image
@@ -80,7 +81,7 @@ export default function GameOver2({ navigation, route }) {
             gap: 2,
           }}
         >
-          {playerInfo.rating}
+          {playerInfo.rating || 1200}
 
           <Text
             style={{

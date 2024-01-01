@@ -89,7 +89,7 @@ export default function Login({ navigation }) {
             }}
           >
             <SocialButton variation={'Facebook'} />
-            <SocialButton variation={'Google'} />
+            {/* <SocialButton variation={'Google'} /> */}
             <SocialButton variation={'Apple'} />
 
             <TouchableOpacity

@@ -64,6 +64,7 @@ const GameScreen = ({ navigation, route }) => {
       botPlayer: botPlayer,
       correctAnswer: giveCorrectAnswer ? correctAnswer : 'wrong answer',
       timeRemaining: Math.floor(Math.random() * 10) + 1,
+      currentRound: round,
     });
 
     //
