@@ -11,7 +11,6 @@ import fonts from './config/fonts';
 import { SocketProvider } from './context/socket/SocketContext';
 import Categories2 from './screens/categories2';
 import ChallengeScreen from './screens/challenge';
-import Chat from './screens/chat';
 import FriendsScreen from './screens/friends';
 import GameScreen from './screens/game';
 import GameOver2 from './screens/game_over2';
@@ -158,11 +157,11 @@ function App() {
           },
         })}
       >
-        <Stack.Screen
+        {/* <Stack.Screen
           name='Dev'
           component={Chat}
           options={{ headerShown: false, headerTransparent: true }}
-        />
+        /> */}
 
         <Stack.Screen
           name='Home'

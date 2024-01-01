@@ -34,8 +34,22 @@ export default function SignUpLogin({ navigation }) {
     getEmail();
   }, []);
 
+  useEffect(() => {
+    const getEmail = async () => {
+      const password = await AsyncStorage.getItem('password');
+      if (!password) return;
+      if (password === 'null') return;
+      if (password === '') return;
+
+      setPassword(password || '');
+    };
+
+    getEmail();
+  }, []);
+
   const handleLogin = () => {
     AsyncStorage.setItem('email', email);
+    AsyncStorage.setItem('password', password);
 
     newRequest
       .post('/auth/login', {
