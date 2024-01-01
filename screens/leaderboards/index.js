@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
   Image,
@@ -80,7 +81,7 @@ export default function LeaderboardsScreen() {
         <View
           key={index}
           style={{
-            backgroundColor: 'lightgray',
+            backgroundColor: '#1c2141',
             marginHorizontal: 20,
             borderRadius: 22,
             padding: 10,
@@ -101,6 +102,7 @@ export default function LeaderboardsScreen() {
                 fontSize: 16,
                 fontWeight: 'bold',
                 marginRight: 10,
+                color: 'white',
               }}
             >
               {index + 4}.
@@ -115,9 +117,12 @@ export default function LeaderboardsScreen() {
               style={{
                 fontSize: 18,
                 fontWeight: 'bold',
+                color: 'white',
+                paddingLeft: 10,
+                maxWidth: 150,
               }}
             >
-              {player.username}
+              {capitalizeFirstLetter(player.username || 'Anonymous')}
             </Text>
           </View>
 
@@ -128,7 +133,7 @@ export default function LeaderboardsScreen() {
           >
             <Text
               style={{
-                color: 'black',
+                color: 'white',
                 fontSize: 20,
                 flex: 1,
                 width: '100%',
@@ -144,97 +149,102 @@ export default function LeaderboardsScreen() {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        backgroundColor: '#1c2141',
-        height: '100%',
-      }}
+    <LinearGradient
+      colors={['#0f0c29', '#302b63', '#24243e']}
+      style={{ height: '100%', marginBottom: 40, paddingBottom: 40 }}
     >
-      <ScrollView>
-        <View style={styles.container}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              padding: 10,
-              backgroundColor: '#1d284b',
-              margin: 10,
-              borderRadius: 22,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => setActiveTab('tab1')}
+      <SafeAreaView
+        style={{
+          // backgroundColor: '#1c2141',
+          height: '100%',
+        }}
+      >
+        <ScrollView>
+          <View style={styles.container}>
+            <View
               style={{
-                backgroundColor: activeTab === 'tab1' ? 'lightgray' : '#1c2141',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                padding: 10,
+                backgroundColor: '#1c2141',
+                margin: 10,
                 borderRadius: 22,
-                flex: 1,
-                height: 40,
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => setActiveTab('tab1')}
+                style={{
+                  backgroundColor: activeTab === 'tab1' ? 'lightgray' : '#1c2141',
+                  borderRadius: 22,
+                  flex: 1,
+                  height: 40,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text
+                  style={{
+                    color: activeTab === 'tab1' ? '#1c2141' : '#ffffff',
+                    fontSize: 22,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Global
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setActiveTab('tab2')}
+                style={{
+                  backgroundColor: activeTab === 'tab2' ? 'lightgray' : '#1c2141',
+                  borderRadius: 22,
+                  flex: 1,
+                  height: 40,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text
+                  style={{
+                    color: activeTab === 'tab2' ? '#1c2141' : '#ffffff',
+                    fontSize: 22,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Friends
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                marginTop: 20,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <Text
-                style={{
-                  color: activeTab === 'tab1' ? '#1c2141' : '#ffffff',
-                  fontSize: 22,
-                  fontWeight: 'bold',
-                }}
-              >
-                Global
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setActiveTab('tab2')}
-              style={{
-                backgroundColor: activeTab === 'tab2' ? 'lightgray' : '#1c2141',
-                borderRadius: 22,
-                flex: 1,
-                height: 40,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Text
-                style={{
-                  color: activeTab === 'tab2' ? '#1c2141' : '#ffffff',
-                  fontSize: 22,
-                  fontWeight: 'bold',
-                }}
-              >
-                Friends
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              marginTop: 20,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-evenly',
-                  width: '100%',
-                }}
-              >
-                {/* Top 3 */}
-                {renderTopThree({ players: leaderboards.slice(0, 3) })}
-              </View>
-              <View
-                style={{
-                  marginTop: 20,
-                }}
-              >
-                {renderLeaderboardsPlayers({ players: leaderboards.slice(3) })}
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
+                    width: '100%',
+                  }}
+                >
+                  {/* Top 3 */}
+                  {renderTopThree({ players: leaderboards.slice(0, 3) })}
+                </View>
+                <View
+                  style={{
+                    marginTop: 20,
+                  }}
+                >
+                  {renderLeaderboardsPlayers({ players: leaderboards.slice(3) })}
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
 
