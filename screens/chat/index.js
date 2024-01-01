@@ -14,6 +14,52 @@ import {
 } from 'react-native';
 
 export default function Chat() {
+  const renderChatBubble = ({ isSender = false, message }) => {
+    return (
+      <View
+        style={{
+          marginVertical: 20,
+          marginHorizontal: 10,
+          alignSelf: isSender ? 'flex-start' : 'flex-end',
+        }}
+      >
+        <Text
+          style={{
+            color: 'white',
+            marginHorizontal: 5,
+            marginBottom: 5,
+            // marginVertical: 10,
+          }}
+        >
+          John 7 mins ago
+        </Text>
+        <View
+          style={{
+            // height: 50,
+            width: '90%',
+            backgroundColor: 'white',
+            minWidth: '80%',
+            borderRadius: 10,
+            justifyContent: 'center',
+            // padding: 30,
+            minHeight: 50,
+          }}
+        >
+          <Text
+            style={{
+              zIndex: 1,
+              color: 'black',
+              fontSize: 16,
+              padding: 10,
+            }}
+          >
+            {message || 'Hello, how are you?'}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView
@@ -46,17 +92,30 @@ export default function Chat() {
                 uri: 'https://storage.googleapis.com/pai-images/04a4d16220a645408362ae47deb07737.jpeg',
               }}
             />
-
-            <Text
+            <View
               style={{
-                color: 'white',
-                fontSize: 20,
-                fontWeight: 'bold',
+                flexDirection: 'column',
                 marginHorizontal: 20,
               }}
             >
-              LTX Sam
-            </Text>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                }}
+              >
+                LTX Sam
+              </Text>
+              <Text
+                style={{
+                  color: '#d2d2d2',
+                  fontSize: 14,
+                }}
+              >
+                Active 8 mins ago
+              </Text>
+            </View>
           </View>
           <TouchableOpacity>
             <Ionicons
@@ -75,13 +134,12 @@ export default function Chat() {
               flex: 1,
             }}
           >
-            <Text
-              style={{
-                color: 'white',
-              }}
-            >
-              Placeholder
-            </Text>
+            {renderChatBubble({
+              isSender: true,
+            })}
+            {renderChatBubble({
+              isSender: false,
+            })}
           </ScrollView>
         </LinearGradient>
 
@@ -95,11 +153,11 @@ export default function Chat() {
         >
           <TextInput
             style={{
-              backgroundColor: '#cccccc',
+              backgroundColor: '#ffffff',
               height: 50,
               width: '90%',
               padding: 10,
-              borderRadius: 4,
+              borderRadius: 8,
               fontSize: 16,
             }}
             placeholder='Type here'
