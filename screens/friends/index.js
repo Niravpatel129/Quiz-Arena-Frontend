@@ -1,5 +1,13 @@
 import React, { useEffect } from 'react';
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { newRequest } from '../../api/newRequest';
 
 export default function FriendsScreen({ navigation }) {
@@ -208,8 +216,69 @@ export default function FriendsScreen({ navigation }) {
         <View
           style={{
             gap: 12,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
+          <View
+            style={{
+              width: '90%',
+            }}
+          >
+            <TextInput
+              placeholder='Search Friends'
+              style={{
+                backgroundColor: 'white',
+                borderRadius: 12,
+                padding: 20,
+              }}
+            >
+              {/* <Text>Search Friends</Text> */}
+            </TextInput>
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
+                right: -68,
+                top: 4,
+                backgroundColor: 'gold',
+                borderRadius: 12,
+                // paddingVertical: 15,
+                // paddingHorizontal: 0,
+                marginRight: 70,
+                zIndex: 1,
+                backgroundColor: '#1c2141',
+                width: 70,
+                height: 50,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  fontFamily: 'Inter-Bold',
+                }}
+              >
+                Add
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {friends.length === 0 && (
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                paddingTop: 28,
+                fontSize: 20,
+              }}
+            >
+              You have no friends. Add some friends to challenge them to a game!
+            </Text>
+          )}
+
           {friends.map((friend, index) => {
             return <View key={index}>{renderFriendsBubble(friend)}</View>;
           })}
