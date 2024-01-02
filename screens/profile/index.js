@@ -1,16 +1,42 @@
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
+import { newRequest } from '../../api/newRequest';
+import formatLastActive from '../../helpers/formatLastActive';
 
-export default function ProfileScreen() {
+const fakeData = {
+  userId: '1',
+  username: 'John Doe',
+  avatar:
+    'https://t4.ftcdn.net/jpg/05/69/84/67/360_F_569846700_i3o9u2fhPVVq7iJAzkqMqCwjWSyv53tT.jpg',
+  country: 'aq',
+  lastActive: '8 min ago',
+  averageRating: '2212',
+  totalGames: '11230',
+  winRate: '44%',
+};
+
+export default function ProfileScreen({ navigation, route }) {
+  // const userData = fakeData;
+  const [userData, setUserData] = React.useState({});
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      console.log('🚀  route?.params?.userId:', route?.params?.userId);
+      const userRes = await newRequest.get(`/users/${route?.params?.userId}`);
+
+      console.log('🚀  userRes:', userRes.data);
+      setUserData(userRes.data);
+    };
+
+    fetchUser();
+  }, []);
+
+  if (!userData.username) return null;
+
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: '#1c2141',
-      }}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#1c2141' }}>
       <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
         <View>
           <Ionicons
@@ -20,13 +46,7 @@ export default function ProfileScreen() {
             style={{ marginTop: 20, marginLeft: 20 }}
           />
         </View>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 30,
-          }}
-        >
+        <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 30 }}>
           <Image
             style={{
               width: 200,
@@ -36,9 +56,7 @@ export default function ProfileScreen() {
               borderWidth: 8,
               borderColor: 'white',
             }}
-            source={{
-              uri: 'https://t4.ftcdn.net/jpg/05/69/84/67/360_F_569846700_i3o9u2fhPVVq7iJAzkqMqCwjWSyv53tT.jpg',
-            }}
+            source={{ uri: userData.avatar }}
           />
           <View
             style={{
@@ -48,13 +66,13 @@ export default function ProfileScreen() {
               marginTop: 20,
             }}
           >
-            <Text style={{ color: 'white', fontSize: 30 }}>John Doe</Text>
-            <CountryFlag isoCode='aq' size={18} style={{ marginLeft: 10 }} />
+            <Text style={{ color: 'white', fontSize: 30 }}>{userData.username}</Text>
+            <CountryFlag isoCode={userData.country} size={18} style={{ marginLeft: 10 }} />
           </View>
-          <Text style={{ color: 'gray', fontSize: 18, marginTop: 3 }}>Element of Suprise</Text>
+          <Text style={{ color: 'gray', fontSize: 18, marginTop: 3 }}>Element of Surprise</Text>
           <Text style={{ color: 'lightgray', fontSize: 18, marginTop: 30 }}>
             <Ionicons name='location' size={18} color='lightgray' />
-            Last Active 8 min ago
+            Last Active {formatLastActive(userData.lastActive)}
           </Text>
 
           <View
@@ -68,27 +86,14 @@ export default function ProfileScreen() {
               borderRadius: 22,
             }}
           >
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 18,
-                fontWeight: 'bold',
-              }}
-            >
-              Average Rating: 2212
+            <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+              Average Rating: {userData.averageRating}
             </Text>
           </View>
 
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              gap: 5,
-            }}
-          >
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>
             <TouchableOpacity
               style={{
-                marginTop: 30,
                 borderRadius: 10,
                 padding: 10,
                 borderWidth: 1,
@@ -104,7 +109,6 @@ export default function ProfileScreen() {
             </TouchableOpacity>
             <TouchableOpacity
               style={{
-                marginTop: 30,
                 borderRadius: 10,
                 padding: 10,
                 borderWidth: 1,
@@ -119,17 +123,21 @@ export default function ProfileScreen() {
               <Text style={{ color: 'white', fontSize: 18 }}>Add</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Chat', {
+                  chattingWithId: route?.params?.userId,
+                })
+              }
               style={{
-                marginTop: 30,
                 borderRadius: 10,
                 padding: 10,
                 borderWidth: 1,
                 borderColor: 'gray',
                 paddingHorizontal: 20,
                 backgroundColor: '#ce753d',
-                justifyContent: 'center',
                 flex: 1,
                 alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               <Text style={{ color: 'white', fontSize: 18 }}>Chat</Text>
@@ -137,134 +145,88 @@ export default function ProfileScreen() {
           </View>
 
           <View style={{ marginTop: 30 }}>
-            <View>
-              <View
-                style={{
-                  justifyContent: 'space-between',
-                  flexDirection: 'row',
-                  alignItems: 'space-between',
-                  marginTop: 20,
-                  gap: 25,
-                }}
-              >
-                <View style={{}}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 18,
-                      textAlign: 'center',
-                      marginBottom: 10,
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    Total Games
-                  </Text>
-                  <View
-                    style={{
-                      padding: 20,
-                      backgroundColor: '#1d284b',
-                      borderRadius: 10,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: 120,
-                    }}
-                  >
-                    <Text style={{ color: 'white', fontSize: 18, color: 'white' }}>11230</Text>
-                  </View>
+            <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 20 }}>
+              <View>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 18,
+                    textAlign: 'center',
+                    marginBottom: 10,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Total Games
+                </Text>
+                <View
+                  style={{
+                    padding: 20,
+                    backgroundColor: '#1d284b',
+                    borderRadius: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text style={{ color: 'white', fontSize: 18 }}>{userData.totalGames}</Text>
                 </View>
-                <View style={{}}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 18,
-                      textAlign: 'center',
-                      marginBottom: 10,
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    Win Rate
+              </View>
+              <View>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 18,
+                    textAlign: 'center',
+                    marginBottom: 10,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Win Rate
+                </Text>
+                <View
+                  style={{
+                    padding: 20,
+                    backgroundColor: '#1d284b',
+                    borderRadius: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text style={{ color: 'white', fontSize: 18 }}>
+                    {userData.winRate.toFixed(0)}%
                   </Text>
-                  <View
-                    style={{
-                      padding: 20,
-                      backgroundColor: '#1d284b',
-                      borderRadius: 10,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: 120,
-                    }}
-                  >
-                    <Text style={{ color: 'white', fontSize: 18 }}>44%</Text>
-                  </View>
                 </View>
               </View>
             </View>
           </View>
 
-          <View>
-            {/* You Vs */}
-            <View
-              style={{
-                marginTop: 30,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Text style={{ color: 'white', fontSize: 44, fontWeight: 'bold', marginBottom: 10 }}>
-                You vs
-              </Text>
+          <View style={{ marginTop: 30, alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={{ color: 'white', fontSize: 44, fontWeight: 'bold', marginBottom: 10 }}>
+              You vs
+            </Text>
+            <View style={{ flexDirection: 'row' }}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  gap: 10,
+                  backgroundColor: 'lightgray',
+                  borderRadius: 10,
+                  width: 150,
+                  height: 150,
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
-                <View
-                  style={{
-                    backgroundColor: 'lightgray',
-                    borderRadius: 10,
-                    width: 150,
-                    height: 150,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 48,
-                      fontWeight: 'bold',
-                      textAlign: 'center',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#1d284b',
-                    }}
-                  >
-                    1 W
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    backgroundColor: 'lightgray',
-                    borderRadius: 10,
-                    width: 150,
-                    height: 150,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 48,
-                      fontWeight: 'bold',
-                      textAlign: 'center',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#1d284b',
-                    }}
-                  >
-                    11 L
-                  </Text>
-                </View>
+                <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#1d284b' }}>1 W</Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: 'lightgray',
+                  borderRadius: 10,
+                  width: 150,
+                  height: 150,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#1d284b' }}>11 L</Text>
               </View>
             </View>
           </View>

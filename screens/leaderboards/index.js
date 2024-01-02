@@ -12,7 +12,7 @@ import {
 import { newRequest } from '../../api/newRequest';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
-export default function LeaderboardsScreen() {
+export default function LeaderboardsScreen({ navigation }) {
   const [leaderboards, setLeaderboards] = React.useState([]);
   const [activeTab, setActiveTab] = React.useState('tab1');
 
@@ -31,21 +31,30 @@ export default function LeaderboardsScreen() {
   const renderTopThree = ({ players }) => {
     return players.map((player, index) => {
       const color = index === 0 ? 'gold' : index === 1 ? 'silver' : '#CD7F32';
+      console.log('🚀  player:', player);
 
       return (
         <View key={index}>
-          <Image
-            style={{
-              width: 90,
-              height: 90,
-              borderRadius: 75,
-              borderWidth: 3,
-              borderColor: color,
-            }}
-            source={{
-              uri: 'https://upload.wikimedia.org/wikipedia/en/e/e0/Felicette%2C_spacecat.jpg',
-            }}
-          />
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Profile', {
+                userId: player._id,
+              })
+            }
+          >
+            <Image
+              style={{
+                width: 90,
+                height: 90,
+                borderRadius: 75,
+                borderWidth: 3,
+                borderColor: color,
+              }}
+              source={{
+                uri: 'https://upload.wikimedia.org/wikipedia/en/e/e0/Felicette%2C_spacecat.jpg',
+              }}
+            />
+          </TouchableOpacity>
 
           <Text
             style={{
@@ -107,12 +116,20 @@ export default function LeaderboardsScreen() {
             >
               {index + 4}.
             </Text>
-            <Image
-              style={{ width: 50, height: 50, borderRadius: 25 }}
-              source={{
-                uri: 'https://upload.wikimedia.org/wikipedia/en/e/e0/Felicette%2C_spacecat.jpg',
-              }}
-            />
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Profile', {
+                  userId: player._id,
+                })
+              }
+            >
+              <Image
+                style={{ width: 50, height: 50, borderRadius: 25 }}
+                source={{
+                  uri: 'https://upload.wikimedia.org/wikipedia/en/e/e0/Felicette%2C_spacecat.jpg',
+                }}
+              />
+            </TouchableOpacity>
             <Text
               style={{
                 fontSize: 18,

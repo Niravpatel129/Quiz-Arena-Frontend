@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native';
 import { newRequest } from '../../api/newRequest';
+import { useAuth } from '../../context/auth/AuthContext';
 import { useSocket } from '../../context/socket/SocketContext';
 
 export default function SignUpLogin({ navigation }) {
@@ -20,6 +21,7 @@ export default function SignUpLogin({ navigation }) {
   const [username, setUsername] = React.useState('');
   const [showUsername, setShowUsername] = React.useState(false);
   const socket = useSocket();
+  const { userToken, signIn } = useAuth();
 
   useEffect(() => {
     const getEmail = async () => {
@@ -59,11 +61,13 @@ export default function SignUpLogin({ navigation }) {
       })
       .then((response) => {
         console.log('🚀  response:', response);
+
         if (!response.data.user.username) {
           setShowUsername(true);
           return;
         }
 
+        signIn(response.data.token);
         socket.ConnectSocket();
         navigation.reset({
           index: 0,

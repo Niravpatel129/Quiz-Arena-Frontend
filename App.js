@@ -8,9 +8,11 @@ import { NativeBaseProvider } from 'native-base';
 import { TouchableOpacity, View } from 'react-native';
 import TabBar from './components/MyTabBar/MyTabBar';
 import fonts from './config/fonts';
+import { AuthProvider } from './context/auth/AuthContext';
 import { SocketProvider } from './context/socket/SocketContext';
 import Categories2 from './screens/categories2';
 import ChallengeScreen from './screens/challenge';
+import Chat from './screens/chat';
 import FriendsScreen from './screens/friends';
 import GameScreen from './screens/game';
 import GameOver2 from './screens/game_over2';
@@ -179,6 +181,7 @@ function App() {
             headerTranslucent: true,
           }}
         />
+        <Stack.Screen name='Chat' component={Chat} options={{ headerShown: false }} />
         {/* <Stack.Screen name='Drawer' component={DrawerNavigator} options={{ headerShown: false }} /> */}
         <Stack.Screen
           name='Queue'
@@ -228,9 +231,11 @@ function App() {
       <NativeBaseProvider>
         <SocketProvider>
           <NavigationContainer theme={MyTheme}>
-            <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
-              <StackNavigator />
-            </LinearGradient>
+            <AuthProvider>
+              <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
+                <StackNavigator />
+              </LinearGradient>
+            </AuthProvider>
           </NavigationContainer>
         </SocketProvider>
       </NativeBaseProvider>
