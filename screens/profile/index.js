@@ -45,26 +45,25 @@ export default function ProfileScreen({ navigation, route }) {
             style={{ marginTop: 20, marginLeft: 20 }}
           />
         </View>
-        <View>
-          <View
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 30,
+            position: 'relative',
+          }}
+        >
+          <Image
             style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: 30,
+              width: 200,
+              height: 200,
+              borderRadius: 100,
+              marginTop: 20,
+              borderWidth: 8,
+              borderColor: 'white',
             }}
-          >
-            <Image
-              style={{
-                width: 200,
-                height: 200,
-                borderRadius: 100,
-                marginTop: 20,
-                borderWidth: 8,
-                borderColor: 'white',
-              }}
-              source={{ uri: userData.avatar }}
-            />
-          </View>
+            source={{ uri: userData.avatar }}
+          ></Image>
 
           <View
             style={{
