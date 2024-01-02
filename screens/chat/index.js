@@ -13,6 +13,7 @@ import {
   View,
 } from 'react-native';
 import { newRequest } from '../../api/newRequest';
+import formatLastActive from '../../helpers/formatLastActive';
 
 const fakeChatData = {
   chatingWith: {
@@ -41,20 +42,37 @@ export default function Chat({
     params: { chattingWithId },
   },
 }) {
+  const [chat, setChat] = React.useState([]);
+  const [textInput, setTextInput] = React.useState('');
+
   const fetchChat = async () => {
     const chatRes = await newRequest.post('/chat/create', {
       friendId: chattingWithId,
     });
 
-    console.log('🚀  chatRes:', chatRes);
+    setChat(chatRes.data);
   };
 
   useEffect(() => {
     fetchChat();
   }, []);
 
+  const sendMessage = async () => {
+    try {
+      const messageRes = await newRequest.post(`/chat/send/${chat._id}`, {
+        message: textInput,
+      });
+
+      setTextInput('');
+      fetchChat();
+    } catch (err) {
+      console.log('🚀 ~ file: index.js ~ line 114 ~ sendMessage ~ err', err);
+    }
+  };
+
   const renderChatBubble = (messageData) => {
     const { name, message, isSender, sentAgo } = messageData;
+
     return (
       <View
         style={{
@@ -64,7 +82,7 @@ export default function Chat({
         }}
       >
         <Text style={{ color: 'white', marginHorizontal: 5, marginBottom: 5 }}>
-          {name} {sentAgo}
+          {name} {sentAgo && formatLastActive(sentAgo)}
         </Text>
         <View
           style={{
@@ -80,6 +98,8 @@ export default function Chat({
       </View>
     );
   };
+
+  if (!chat.chatingWith) return null;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -100,14 +120,15 @@ export default function Chat({
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image
               style={{ width: 50, height: 50, borderRadius: 25 }}
-              source={{ uri: fakeChatData.chatingWith.avatar }}
+              source={{ uri: chat.chatingWith?.avatar }}
             />
             <View style={{ flexDirection: 'column', marginHorizontal: 20 }}>
               <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
-                {fakeChatData.chatingWith.name}
+                {chat.chatingWith?.name}
               </Text>
               <Text style={{ color: '#d2d2d2', fontSize: 14 }}>
-                Active {fakeChatData.chatingWith.lastActive}
+                Active{' '}
+                {chat.chatingWith?.lastActive && formatLastActive(chat.chatingWith?.lastActive)}
               </Text>
             </View>
           </View>
@@ -117,7 +138,7 @@ export default function Chat({
         </View>
         <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
           <ScrollView style={{ flex: 1 }}>
-            {fakeChatData.chatMessages.map((msg, index) => (
+            {chat.chatMessages.map((msg, index) => (
               <View key={index}>{renderChatBubble(msg)}</View>
             ))}
           </ScrollView>
@@ -140,9 +161,12 @@ export default function Chat({
               borderRadius: 8,
               fontSize: 16,
             }}
+            onChangeText={(text) => setTextInput(text)}
+            value={textInput}
             placeholder='Type here'
           />
           <TouchableOpacity
+            onPress={() => sendMessage(chat._id)}
             style={{
               position: 'absolute',
               right: 25,

@@ -1,4 +1,5 @@
 const formatLastActive = (dateString) => {
+  console.log('🚀  dateString:', dateString);
   // Parse the date string to a Date object
   const date = new Date(dateString);
   if (isNaN(date)) {
