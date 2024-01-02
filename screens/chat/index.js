@@ -38,6 +38,7 @@ const fakeChatData = {
 };
 
 export default function Chat({
+  navigation,
   route: {
     params: { chattingWithId },
   },
@@ -137,11 +138,26 @@ export default function Chat({
               </Text>
             </View>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
             <Ionicons name='close' size={32} color='white' />
           </TouchableOpacity>
         </View>
         <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
+          {chat.chatMessages.length === 0 && (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text style={{ color: 'white', fontSize: 20 }}>No messages yet</Text>
+            </View>
+          )}
           <ScrollView style={{ flex: 1 }} ref={scrollViewRef}>
             {chat.chatMessages.map((msg, index) => (
               <View key={index}>{renderChatBubble(msg)}</View>
