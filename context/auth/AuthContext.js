@@ -16,8 +16,7 @@ export const AuthProvider = ({ children }) => {
         console.log('🚀  useEffect AuthContext');
         // validate token with backend
         try {
-          const response = await newRequest.get('/auth/validate-token');
-          console.log('🚀  response:', response);
+          await newRequest.get('/auth/validate-token');
 
           setUserToken(token);
           navigation.navigate('Categories');
