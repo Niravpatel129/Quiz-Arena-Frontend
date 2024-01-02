@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { newRequest } from '../../api/newRequest';
+import Trophies from '../../components/Trophies/Trophies';
 import formatLastActive from '../../helpers/formatLastActive';
 
 const fakeData = {
@@ -90,62 +91,65 @@ export default function ProfileScreen({ navigation, route }) {
               Average Rating: {userData.averageRating}
             </Text>
           </View>
+          {route.params?.userId && (
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>
+              <TouchableOpacity
+                style={{
+                  borderRadius: 10,
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: 'gray',
+                  paddingHorizontal: 20,
+                  backgroundColor: '#c73dce',
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text style={{ color: 'white', fontSize: 18 }}>Challenge</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  borderRadius: 10,
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: 'gray',
+                  paddingHorizontal: 20,
+                  backgroundColor: '#ce3d3d',
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text style={{ color: 'white', fontSize: 18 }}>Add</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('Chat', {
+                    chattingWithId: route?.params?.userId,
+                  })
+                }
+                style={{
+                  borderRadius: 10,
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: 'gray',
+                  paddingHorizontal: 20,
+                  backgroundColor: '#ce753d',
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text style={{ color: 'white', fontSize: 18 }}>Chat</Text>
+              </TouchableOpacity>
+            </View>
+          )}
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>
-            <TouchableOpacity
-              style={{
-                borderRadius: 10,
-                padding: 10,
-                borderWidth: 1,
-                borderColor: 'gray',
-                paddingHorizontal: 20,
-                backgroundColor: '#c73dce',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+          <View style={{ marginTop: 30, width: '100%' }}>
+            <View
+              style={{ justifyContent: 'center', gap: 20, flexDirection: 'row', marginTop: 20 }}
             >
-              <Text style={{ color: 'white', fontSize: 18 }}>Challenge</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                borderRadius: 10,
-                padding: 10,
-                borderWidth: 1,
-                borderColor: 'gray',
-                paddingHorizontal: 20,
-                backgroundColor: '#ce3d3d',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Text style={{ color: 'white', fontSize: 18 }}>Add</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('Chat', {
-                  chattingWithId: route?.params?.userId,
-                })
-              }
-              style={{
-                borderRadius: 10,
-                padding: 10,
-                borderWidth: 1,
-                borderColor: 'gray',
-                paddingHorizontal: 20,
-                backgroundColor: '#ce753d',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Text style={{ color: 'white', fontSize: 18 }}>Chat</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ marginTop: 30 }}>
-            <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 20 }}>
               <View>
                 <Text
                   style={{
@@ -160,14 +164,17 @@ export default function ProfileScreen({ navigation, route }) {
                 </Text>
                 <View
                   style={{
-                    padding: 20,
+                    padding: 18,
                     backgroundColor: '#1d284b',
                     borderRadius: 10,
                     alignItems: 'center',
                     justifyContent: 'center',
+                    minWidth: 100,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 18 }}>{userData.totalGames}</Text>
+                  <Text style={{ color: 'white', fontSize: 20, fontFamily: 'Inter-Black' }}>
+                    {userData.totalGames}
+                  </Text>
                 </View>
               </View>
               <View>
@@ -184,52 +191,103 @@ export default function ProfileScreen({ navigation, route }) {
                 </Text>
                 <View
                   style={{
-                    padding: 20,
+                    padding: 18,
                     backgroundColor: '#1d284b',
                     borderRadius: 10,
                     alignItems: 'center',
                     justifyContent: 'center',
+                    minWidth: 100,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 18 }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 20,
+                      fontFamily: 'Inter-Black',
+                    }}
+                  >
                     {userData.winRate.toFixed(0)}%
                   </Text>
                 </View>
               </View>
+              <View>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 18,
+                    textAlign: 'center',
+                    marginBottom: 10,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Avg Score
+                </Text>
+                <View
+                  style={{
+                    padding: 18,
+                    backgroundColor: '#1d284b',
+                    borderRadius: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minWidth: 100,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 20,
+                      fontFamily: 'Inter-Black',
+                    }}
+                  >
+                    {userData.winRate.toFixed(0)}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 30,
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Trophies />
             </View>
           </View>
-
-          <View style={{ marginTop: 30, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ color: 'white', fontSize: 44, fontWeight: 'bold', marginBottom: 10 }}>
-              You vs
-            </Text>
-            <View style={{ flexDirection: 'row' }}>
-              <View
-                style={{
-                  backgroundColor: 'lightgray',
-                  borderRadius: 10,
-                  width: 150,
-                  height: 150,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#1d284b' }}>1 W</Text>
-              </View>
-              <View
-                style={{
-                  backgroundColor: 'lightgray',
-                  borderRadius: 10,
-                  width: 150,
-                  height: 150,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#1d284b' }}>11 L</Text>
+          {route?.params?.userId && (
+            <View style={{ marginTop: 30, alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ color: 'white', fontSize: 44, fontWeight: 'bold', marginBottom: 10 }}>
+                You vs
+              </Text>
+              <View style={{ flexDirection: 'row' }}>
+                <View
+                  style={{
+                    backgroundColor: 'lightgray',
+                    borderRadius: 10,
+                    width: 150,
+                    height: 150,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#1d284b' }}>1 W</Text>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: 'lightgray',
+                    borderRadius: 10,
+                    width: 150,
+                    height: 150,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#1d284b' }}>11 L</Text>
+                </View>
               </View>
             </View>
-          </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
