@@ -86,6 +86,7 @@ export default function LeaderboardsScreen({ navigation }) {
 
   const renderLeaderboardsPlayers = ({ players }) => {
     return players.map((player, index) => {
+      console.log('🚀  player:', player);
       return (
         <View
           key={index}

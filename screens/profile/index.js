@@ -32,7 +32,7 @@ export default function ProfileScreen({ navigation, route }) {
     };
 
     fetchUser();
-  }, []);
+  }, [route.params?.userId]);
 
   if (!userData.username) return null;
 
