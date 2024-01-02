@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -44,6 +44,7 @@ export default function Chat({
 }) {
   const [chat, setChat] = React.useState([]);
   const [textInput, setTextInput] = React.useState('');
+  const scrollViewRef = useRef();
 
   const fetchChat = async () => {
     const chatRes = await newRequest.post('/chat/create', {
@@ -56,6 +57,10 @@ export default function Chat({
   useEffect(() => {
     fetchChat();
   }, []);
+
+  useEffect(() => {
+    scrollViewRef.current?.scrollToEnd({ animated: true });
+  }, [chat]);
 
   const sendMessage = async () => {
     try {
@@ -137,7 +142,7 @@ export default function Chat({
           </TouchableOpacity>
         </View>
         <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
-          <ScrollView style={{ flex: 1 }}>
+          <ScrollView style={{ flex: 1 }} ref={scrollViewRef}>
             {chat.chatMessages.map((msg, index) => (
               <View key={index}>{renderChatBubble(msg)}</View>
             ))}
