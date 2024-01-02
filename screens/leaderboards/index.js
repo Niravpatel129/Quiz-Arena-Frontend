@@ -31,7 +31,6 @@ export default function LeaderboardsScreen({ navigation }) {
   const renderTopThree = ({ players }) => {
     return players.map((player, index) => {
       const color = index === 0 ? 'gold' : index === 1 ? 'silver' : '#CD7F32';
-      console.log('🚀  player:', player);
 
       return (
         <View key={index}>
@@ -86,7 +85,6 @@ export default function LeaderboardsScreen({ navigation }) {
 
   const renderLeaderboardsPlayers = ({ players }) => {
     return players.map((player, index) => {
-      console.log('🚀  player:', player);
       return (
         <View
           key={index}

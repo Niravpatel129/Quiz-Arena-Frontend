@@ -66,11 +66,7 @@ function App() {
             // return <Ionicons name='menu' size={24} color='white' style={{ marginLeft: 20 }} />;
           },
           headerRight: () => (
-            <TouchableOpacity
-              onPress={() => {
-                console.log('🚀 ~ file: App.js ~ line 113 ~ onPress ~ onPress');
-              }}
-            >
+            <TouchableOpacity onPress={() => {}}>
               <FontAwesome5
                 name='user-friends'
                 size={22}

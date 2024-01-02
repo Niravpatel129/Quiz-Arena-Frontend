@@ -24,10 +24,8 @@ export default function ProfileScreen({ navigation, route }) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      console.log('🚀  route?.params?.userId:', route?.params?.userId);
       const userRes = await newRequest.get(`/users/${route?.params?.userId}`);
 
-      console.log('🚀  userRes:', userRes.data);
       setUserData(userRes.data);
     };
 
