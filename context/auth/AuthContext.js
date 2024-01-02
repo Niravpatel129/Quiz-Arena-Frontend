@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { newRequest } from '../../api/newRequest';
 
 const AuthContext = createContext();
 
@@ -12,8 +13,18 @@ export const AuthProvider = ({ children }) => {
     const loadStoredToken = async () => {
       const token = await AsyncStorage.getItem('userToken');
       if (token) {
-        setUserToken(token);
-        navigation.navigate('Categories');
+        console.log('🚀  useEffect AuthContext');
+        // validate token with backend
+        try {
+          const response = await newRequest.get('/auth/validate-token');
+          console.log('🚀  response:', response);
+
+          setUserToken(token);
+          navigation.navigate('Categories');
+        } catch (error) {
+          console.log('🚀  token is not valid');
+          await AsyncStorage.removeItem('userToken');
+        }
       }
     };
 
