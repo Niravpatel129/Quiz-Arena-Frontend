@@ -53,7 +53,8 @@
     "react-native-svg": "13.9.0",
     "react-native-web": "~0.19.6",
     "socket.io-client": "^4.7.2",
-    "expo-apple-authentication": "~6.1.0"
+    "expo-apple-authentication": "~6.1.0",
+    "expo-localization": "~14.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
+import { getLocales } from 'expo-localization';
 import React, { useEffect } from 'react';
 import {
   Image,
@@ -11,7 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import * as RNLocalize from 'react-native-localize';
 import { newRequest } from '../../api/newRequest';
 import { useAuth } from '../../context/auth/AuthContext';
 import { useSocket } from '../../context/socket/SocketContext';
@@ -59,7 +59,7 @@ export default function SignUpLogin({ navigation }) {
         email: email,
         password: password || 'password',
         username: username || null,
-        country: RNLocalize?.getCountry()?.toLowerCase(),
+        country: getLocales()[0]?.regionCode?.toLowerCase(),
       })
       .then((response) => {
         console.log('🚀  response:', response);
