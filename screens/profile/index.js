@@ -7,9 +7,7 @@ import Trophies from '../../components/Trophies/Trophies';
 import formatLastActive from '../../helpers/formatLastActive';
 
 export default function ProfileScreen({ navigation, route }) {
-  // const userData = fakeData;
   const [userData, setUserData] = React.useState({});
-  console.log('🚀  userData:', userData);
 
   const handleProfileAvatarEdit = async () => {
     try {
