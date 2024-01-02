@@ -6,29 +6,32 @@ import { newRequest } from '../../api/newRequest';
 import Trophies from '../../components/Trophies/Trophies';
 import formatLastActive from '../../helpers/formatLastActive';
 
-const fakeData = {
-  userId: '1',
-  username: 'John Doe',
-  avatar:
-    'https://t4.ftcdn.net/jpg/05/69/84/67/360_F_569846700_i3o9u2fhPVVq7iJAzkqMqCwjWSyv53tT.jpg',
-  country: 'aq',
-  lastActive: '8 min ago',
-  averageRating: '2212',
-  totalGames: '11230',
-  winRate: '44%',
-};
-
 export default function ProfileScreen({ navigation, route }) {
   // const userData = fakeData;
   const [userData, setUserData] = React.useState({});
+  console.log('🚀  userData:', userData);
 
+  const handleProfileAvatarEdit = async () => {
+    try {
+      await newRequest.put(`/users/${userData.userId}`, {
+        profile: {
+          avatar:
+            'https://thumbs.dreamstime.com/b/random-cat-love-cats-pet-catsslave-110819582.jpg',
+        },
+      });
+
+      fetchUser();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchUser = async () => {
+    const userRes = await newRequest.get(`/users/${route?.params?.userId}`);
+
+    setUserData(userRes.data);
+  };
   useEffect(() => {
-    const fetchUser = async () => {
-      const userRes = await newRequest.get(`/users/${route?.params?.userId}`);
-
-      setUserData(userRes.data);
-    };
-
     fetchUser();
   }, [route.params?.userId]);
 
@@ -53,17 +56,24 @@ export default function ProfileScreen({ navigation, route }) {
             position: 'relative',
           }}
         >
-          <Image
-            style={{
-              width: 200,
-              height: 200,
-              borderRadius: 100,
-              marginTop: 20,
-              borderWidth: 8,
-              borderColor: 'white',
+          <TouchableOpacity
+            onPress={() => {
+              if (route?.params?.userId) return;
+              handleProfileAvatarEdit();
             }}
-            source={{ uri: userData.avatar }}
-          ></Image>
+          >
+            <Image
+              style={{
+                width: 200,
+                height: 200,
+                borderRadius: 100,
+                marginTop: 20,
+                borderWidth: 8,
+                borderColor: 'white',
+              }}
+              source={{ uri: userData.avatar }}
+            ></Image>
+          </TouchableOpacity>
 
           <View
             style={{
