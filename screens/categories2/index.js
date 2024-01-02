@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  Animated,
   FlatList,
   Image,
   SafeAreaView,
@@ -49,6 +50,18 @@ const ImageMap = {
 
 export default function Categories2({ navigation }) {
   const [searchInput, setSearchInput] = React.useState('');
+  const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity value
+
+  useEffect(() => {
+    Animated.timing(
+      fadeAnim, // The animated value to drive
+      {
+        toValue: 1, // Animate to opacity: 1 (opaque)
+        duration: 1000, // Make it take a while
+        useNativeDriver: true, // Add this line
+      },
+    ).start(); // Starts the animation
+  }, [fadeAnim]);
 
   const onChangeText = (text) => {
     setSearchInput(text);
@@ -56,40 +69,46 @@ export default function Categories2({ navigation }) {
 
   const renderCategoryBox = ({ categoryTitle }) => {
     return (
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('Queue', {
-            categoryId: categoryTitle.split(' ').join('-'),
-            categoryName: categoryTitle,
-          })
-        }
+      <Animated.View
+        style={{
+          opacity: fadeAnim,
+        }}
       >
-        <Image
-          style={{
-            width: 100,
-            height: 100,
-            borderWidth: 2,
-            borderColor: '#516696',
-            borderRadius: 20,
-          }}
-          source={{
-            uri: 'https://cdn.dribbble.com/userupload/9424324/file/original-6e071eda3550f1a2c8fe70792dc31d7e.png?resize=400x0',
-          }}
-        />
-        <Text
-          style={{
-            color: 'white',
-            fontSize: 14,
-            textAlign: 'center',
-            marginTop: 5,
-            maxWidth: 100,
-            fontWeight: 'bold',
-            fontFamily: 'Inter-Bold',
-          }}
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Queue', {
+              categoryId: categoryTitle.split(' ').join('-'),
+              categoryName: categoryTitle,
+            })
+          }
         >
-          {capitalizeFirstLetter(categoryTitle)}
-        </Text>
-      </TouchableOpacity>
+          <Image
+            style={{
+              width: 100,
+              height: 100,
+              borderWidth: 2,
+              borderColor: '#516696',
+              borderRadius: 20,
+            }}
+            source={{
+              uri: 'https://cdn.dribbble.com/userupload/9424324/file/original-6e071eda3550f1a2c8fe70792dc31d7e.png?resize=400x0',
+            }}
+          />
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 14,
+              textAlign: 'center',
+              marginTop: 5,
+              maxWidth: 100,
+              fontWeight: 'bold',
+              fontFamily: 'Inter-Bold',
+            }}
+          >
+            {capitalizeFirstLetter(categoryTitle)}
+          </Text>
+        </TouchableOpacity>
+      </Animated.View>
     );
   };
 
