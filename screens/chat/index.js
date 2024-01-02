@@ -59,7 +59,7 @@ export default function Chat({
 
   const sendMessage = async () => {
     try {
-      const messageRes = await newRequest.post(`/chat/send/${chat._id}`, {
+      await newRequest.post(`/chat/send/${chat._id}`, {
         message: textInput,
       });
 
