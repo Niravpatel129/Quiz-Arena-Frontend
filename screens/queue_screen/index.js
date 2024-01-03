@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Text, TouchableOpacity, View } from 'react-native';
+import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import socketService from '../../services/socketService';
 
 export default function QueueScreen({ route, navigation }) {
@@ -210,7 +211,7 @@ export default function QueueScreen({ route, navigation }) {
             textAlign: 'center',
           }}
         >
-          {categoryName || 'Logos'}
+          {capitalizeFirstLetter(categoryName) || 'Logos'}
         </Text>
       </View>
       <View
