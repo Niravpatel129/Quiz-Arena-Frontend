@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { newRequest } from '../../api/newRequest';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
 const categories = [
@@ -51,6 +52,15 @@ const ImageMap = {
 export default function Categories2({ navigation }) {
   const [searchInput, setSearchInput] = React.useState('');
   const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity value
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await newRequest('/homepage/list');
+      console.log('🚀  res:', res.data);
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     Animated.timing(
