@@ -8,14 +8,12 @@ import formatLastActive from '../../helpers/formatLastActive';
 
 export default function ChatHistory() {
   const [chats, setChats] = React.useState([]);
-  console.log('🚀  chats:', chats);
   const navigation = useNavigation();
   const { userId } = useAuth();
 
   const fetchChats = async () => {
     const response = await newRequest.get('/chat');
     const data = response.data;
-    console.log('🚀  data:', data);
     setChats(data);
   };
 
@@ -43,7 +41,6 @@ export default function ChatHistory() {
           style={{
             backgroundColor: '#1d284b',
             flexDirection: 'row',
-            // justifyContent: 'space-between',
             alignItems: 'center',
             width: '100%',
             padding: 10,
@@ -53,11 +50,6 @@ export default function ChatHistory() {
           }}
         >
           <TouchableOpacity
-            style={
-              {
-                //   flexDirection: 'row',
-              }
-            }
             onPress={() => {
               navigation.navigate('Profile', {
                 userId: otherParticipant._id,
