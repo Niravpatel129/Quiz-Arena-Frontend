@@ -12,6 +12,20 @@ export default function FriendsList() {
     setFriends(data.friends);
   };
 
+  const sendFriendRequest = async () => {
+    try {
+      await newRequest.post('/users/notifications', {
+        type: 'friendRequest',
+        receiverName: textInput,
+      });
+
+      setTextInput('');
+      alert('Friend request sent!');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     fetchFriends();
   }, []);
@@ -146,6 +160,7 @@ export default function FriendsList() {
               padding: 20,
             }}
             onChangeText={(text) => setTextInput(text)}
+            onSubmitEditing={() => sendFriendRequest()}
             value={textInput}
           ></TextInput>
           <TouchableOpacity
@@ -163,6 +178,7 @@ export default function FriendsList() {
               alignItems: 'center',
               justifyContent: 'center',
             }}
+            onPress={() => sendFriendRequest()}
           >
             <Text
               style={{
