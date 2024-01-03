@@ -15,7 +15,7 @@ import {
 import { newRequest } from '../../api/newRequest';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
-const categories = [
+const categories2 = [
   {
     main: 'Tv Shows',
     subCategories: ['logos', 'logos', 'logos', 'logos', 'logos'],
@@ -47,11 +47,12 @@ const categories = [
 export default function Categories2({ navigation }) {
   const [searchInput, setSearchInput] = React.useState('');
   const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity value
-
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const res = await newRequest('/homepage/list');
       console.log('🚀  res:', res.data);
+      setCategories(res.data);
     };
 
     fetchData();
@@ -136,7 +137,7 @@ export default function Categories2({ navigation }) {
               marginLeft: 10,
             }}
           >
-            {category.main}
+            {category.parentCategory}
           </Text>
           <FlatList
             ItemSeparatorComponent={() => <View style={{ width: 10 }}></View>}
