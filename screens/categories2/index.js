@@ -44,11 +44,6 @@ const categories = [
   },
 ];
 
-const ImageMap = {
-  Movies:
-    'https://cdn.dribbble.com/userupload/9424324/file/original-6e071eda3550f1a2c8fe70792dc31d7e.png?resize=400x0',
-};
-
 export default function Categories2({ navigation }) {
   const [searchInput, setSearchInput] = React.useState('');
   const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity value
