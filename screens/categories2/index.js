@@ -78,6 +78,7 @@ export default function Categories2({ navigation }) {
       <Animated.View
         style={{
           opacity: fadeAnim,
+          marginLeft: 10,
         }}
       >
         <TouchableOpacity
@@ -126,7 +127,8 @@ export default function Categories2({ navigation }) {
         <View
           key={index}
           style={{
-            marginVertical: 10,
+            // marginVertical: 10,
+            marginBottom: 10,
             width: '100%',
           }}
         >
@@ -137,6 +139,7 @@ export default function Categories2({ navigation }) {
               fontWeight: 'bold',
               marginBottom: 10,
               marginLeft: 10,
+              textAlign: 'left',
             }}
           >
             {capitalizeFirstLetter(category.parentCategory)}
@@ -159,15 +162,19 @@ export default function Categories2({ navigation }) {
   };
   return (
     <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ height: '100%' }}>
-      <SafeAreaView>
+      <SafeAreaView style={{}}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{
-            padding: 10,
             height: '100%',
+            marginTop: 20,
           }}
         >
-          <View>
+          <View
+            style={{
+              marginBottom: 40,
+            }}
+          >
             <View
               style={{
                 flexDirection: 'row',
@@ -180,6 +187,7 @@ export default function Categories2({ navigation }) {
                 placeholder='Search Quiz Category'
                 placeholderTextColor='white'
                 style={{
+                  margin: 10,
                   marginBottom: 10,
                   flex: 1,
                   color: 'white',
@@ -198,8 +206,8 @@ export default function Categories2({ navigation }) {
               <Ionicons
                 style={{
                   position: 'absolute',
-                  right: 16,
-                  top: 17,
+                  right: 22,
+                  top: 27,
                 }}
                 name='search'
                 size={24}
