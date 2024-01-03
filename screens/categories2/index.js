@@ -83,8 +83,8 @@ export default function Categories2({ navigation }) {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('Queue', {
-              categoryId: categoryTitle.split(' ').join('-'),
-              categoryName: categoryTitle,
+              categoryId: categoryTitle.name.split(' ').join('-'),
+              categoryName: categoryTitle.name,
             })
           }
         >
@@ -97,7 +97,9 @@ export default function Categories2({ navigation }) {
               borderRadius: 20,
             }}
             source={{
-              uri: 'https://cdn.dribbble.com/userupload/9424324/file/original-6e071eda3550f1a2c8fe70792dc31d7e.png?resize=400x0',
+              uri:
+                categoryTitle.image ||
+                'https://cdn.dribbble.com/userupload/9424324/file/original-6e071eda3550f1a2c8fe70792dc31d7e.png?resize=400x0',
             }}
           />
           <Text
@@ -111,7 +113,7 @@ export default function Categories2({ navigation }) {
               fontFamily: 'Inter-Bold',
             }}
           >
-            {capitalizeFirstLetter(categoryTitle)}
+            {capitalizeFirstLetter(categoryTitle.name)}
           </Text>
         </TouchableOpacity>
       </Animated.View>

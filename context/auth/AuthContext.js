@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
           setUserId(tokenRes.data.userId);
 
           setUserToken(token);
-          // navigation.navigate('Categories');
+
           // dont allow back
           navigation.reset({
             index: 0,

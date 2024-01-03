@@ -1,10 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
 
 export default function SocialButton({ variation }) {
+  const navigation = useNavigation();
+
   const handlePress = async (item) => {
     if (item === 'apple') {
       await signInWithApple();
@@ -15,13 +18,15 @@ export default function SocialButton({ variation }) {
 
   const signInWithApple = async () => {
     try {
+      console.log('🚀  signInWithApple');
+
       const credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
           AppleAuthentication.AppleAuthenticationScope.EMAIL,
         ],
       });
-      console.log('🚀  credential:', credential);
+      // console.log('🚀  credential:', credential);
       // Signed in
 
       const username = credential.fullName?.givenName;
@@ -30,18 +35,30 @@ export default function SocialButton({ variation }) {
 
       //   alert(JSON.stringify(credential));
 
-      const loginAuth = await newRequest.post('/auth/apple', {
-        appleId,
-        email,
-        username,
-      });
+      const loginAuth = await newRequest
+        .post('/auth/apple', {
+          appleId,
+          email,
+          username,
+        })
+        .then((res) => {
+          console.log('🚀  navigating to categories:', res);
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Categories' }],
+          });
+        })
+        .catch((err) => {
+          console.log('🚀  err:', err);
+        });
 
-      console.log('🚀  loginAuth:', loginAuth);
+      console.log('🚀  loginAuth:', loginAuth.data);
     } catch (e) {
       if (e.code === 'ERR_REQUEST_CANCELED') {
         // Handle that the user canceled the sign-in flow
       } else {
         // Handle other errors
+        console.log('🚀  error:', e);
       }
     }
   };
@@ -49,6 +66,7 @@ export default function SocialButton({ variation }) {
   return (
     <>
       {/* Your Custom Button */}
+
       <TouchableOpacity
         onPress={() => handlePress('apple')}
         style={{
