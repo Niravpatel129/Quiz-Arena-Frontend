@@ -137,7 +137,7 @@ export default function Categories2({ navigation }) {
               marginLeft: 10,
             }}
           >
-            {category.parentCategory}
+            {capitalizeFirstLetter(category.parentCategory)}
           </Text>
           <FlatList
             ItemSeparatorComponent={() => <View style={{ width: 10 }}></View>}
