@@ -23,6 +23,7 @@ export default function FriendsList() {
       alert('Friend request sent!');
     } catch (err) {
       console.log(err);
+      alert('User not found');
     }
   };
 
