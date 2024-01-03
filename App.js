@@ -202,7 +202,7 @@ function App() {
         <Stack.Screen
           name='Notifications'
           component={NotificationsScreen}
-          options={{ title: 'Notifications', headerShown: true }}
+          options={{ title: 'Notifications', headerShown: false }}
         />
         <Stack.Screen
           name='Challenge'

@@ -1,14 +1,20 @@
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 
 export default function NotificationsScreen({ navigation }) {
   const [notifications, setNotifications] = React.useState([]);
 
   const fetchNotifications = async () => {
-    const response = await newRequest.get('/users/notifications');
-    const data = response.data;
-    setNotifications(data.notifications);
+    try {
+      const response = await newRequest.get('/users/notifications');
+      const data = response.data;
+      console.log('🚀  data:', data);
+      setNotifications(data.notifications);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   React.useEffect(() => {
@@ -139,36 +145,54 @@ export default function NotificationsScreen({ navigation }) {
   };
 
   return (
-    <ScrollView
+    <View
       style={{
-        flex: 1,
+        height: '100%',
         backgroundColor: '#1c2141',
-        padding: 10,
       }}
     >
-      <View>
-        <View
+      <SafeAreaView>
+        <Ionicons
+          name='arrow-back'
+          size={24}
+          color='white'
+          style={{ marginTop: 16, marginLeft: 16 }}
+          onPress={() => navigation.goBack()}
+        />
+        <ScrollView
           style={{
-            alignItems: 'center',
-            justifyContent: 'center',
+            padding: 10,
           }}
         >
-          {notifications.length === 0 && (
-            <Text
+          <View
+            style={{
+              height: '100%',
+            }}
+          >
+            <View
               style={{
-                color: 'white',
-                fontSize: 18,
-                marginTop: 30,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              Inbox is all clear!
-            </Text>
-          )}
-        </View>
-        {notifications.map((notification, index) => (
-          <View key={index}>{renderNotification(notification)}</View>
-        ))}
-      </View>
-    </ScrollView>
+              {notifications?.length === 0 && (
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 18,
+                    marginTop: 30,
+                  }}
+                >
+                  Inbox is all clear!
+                </Text>
+              )}
+            </View>
+            {notifications?.map((notification, index) => (
+              <View key={index}>{renderNotification(notification)}</View>
+            ))}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </View>
   );
 }
