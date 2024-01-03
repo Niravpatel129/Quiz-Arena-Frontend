@@ -7,7 +7,12 @@ export default function FriendsScreen({ navigation }) {
   const [activeTab, setActiveTab] = React.useState('tab1');
 
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={{
+        backgroundColor: '#1c2141',
+        height: '100%',
+      }}
+    >
       <ScrollView
         style={{
           backgroundColor: '#1c2141',

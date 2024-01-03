@@ -11,12 +11,18 @@ export default function ChatHistory() {
   const [animations, setAnimations] = useState([]);
   const navigation = useNavigation();
   const { userId } = useAuth();
+  const [loading, setLoading] = useState(true);
 
   const fetchChats = async () => {
-    const response = await newRequest.get('/chat');
-    const data = response.data;
-    setChats(data);
-    setAnimations(data.map(() => new Animated.Value(0))); // Initialize animations for each chat
+    try {
+      const response = await newRequest.get('/chat');
+      const data = response.data;
+      setChats(data);
+      setAnimations(data.map(() => new Animated.Value(0))); // Initialize animations for each chat
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -43,28 +49,28 @@ export default function ChatHistory() {
     };
 
     return (
-      <Animated.View
-        style={[
-          {
-            marginBottom: 10,
-            backgroundColor: '#1d284b',
-            flexDirection: 'row',
-            alignItems: 'center',
-            width: '100%',
-            padding: 10,
-            borderWidth: 1,
-            borderColor: 'gray',
-            borderRadius: 30,
-          },
-          slideAnimation,
-        ]}
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Profile', {
+            userId: otherParticipant._id,
+          });
+        }}
       >
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Profile', {
-              userId: otherParticipant._id,
-            });
-          }}
+        <Animated.View
+          style={[
+            {
+              marginBottom: 10,
+              backgroundColor: '#1d284b',
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              padding: 10,
+              borderWidth: 1,
+              borderColor: 'gray',
+              borderRadius: 30,
+            },
+            slideAnimation,
+          ]}
         >
           <Image
             style={{
@@ -80,53 +86,55 @@ export default function ChatHistory() {
                 'https://upload.wikimedia.org/wikipedia/en/e/e0/Felicette%2C_spacecat.jpg',
             }}
           />
-        </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginBottom: 8,
-          }}
-        >
           <View
             style={{
-              flex: 1,
-              marginLeft: 10,
+              flexDirection: 'row',
+              marginBottom: 8,
             }}
           >
-            <Text
+            <View
               style={{
-                fontWeight: 'bold',
-                fontSize: 16,
-                color: 'white',
-                maxWidth: 200,
+                flex: 1,
+                marginLeft: 10,
               }}
             >
-              {capitalizeFirstLetter(otherParticipant.username) || 'Player Name'}
-              {otherParticipant.lastActive && (
-                <Text
-                  style={{
-                    color: 'gray',
-                    fontSize: 12,
-                  }}
-                >
-                  {' '}
-                  Last Active {formatLastActive(otherParticipant.lastActive)}
-                </Text>
-              )}
-            </Text>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 16,
+                  color: 'white',
+                  maxWidth: 200,
+                }}
+              >
+                {capitalizeFirstLetter(otherParticipant.username) || 'Player Name'}
+                {otherParticipant.lastActive && (
+                  <Text
+                    style={{
+                      color: 'gray',
+                      fontSize: 12,
+                    }}
+                  >
+                    {' '}
+                    Last Active {formatLastActive(otherParticipant.lastActive)}
+                  </Text>
+                )}
+              </Text>
 
-            <Text
-              style={{
-                color: 'gray',
-                fontSize: 14,
-                maxWidth: 200,
-              }}
-            >
-              {chat.messages.length > 0 ? `${chat.messages[chat.messages.length - 1].message}` : ''}
-            </Text>
+              <Text
+                style={{
+                  color: 'gray',
+                  fontSize: 14,
+                  maxWidth: 200,
+                }}
+              >
+                {chat.messages.length > 0
+                  ? `${chat.messages[chat.messages.length - 1].message}`
+                  : ''}
+              </Text>
+            </View>
           </View>
-        </View>
-      </Animated.View>
+        </Animated.View>
+      </TouchableOpacity>
     );
   };
 
@@ -136,7 +144,7 @@ export default function ChatHistory() {
         marginHorizontal: 10,
       }}
     >
-      {chats.length === 0 && (
+      {!loading && chats.length === 0 && (
         <Text
           style={{
             color: 'white',
