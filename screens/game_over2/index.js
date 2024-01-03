@@ -1,10 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EndGameChart from '../../components/EndGameChart';
+import RematchModal from '../../components/RematchModal/RematchModal';
 import Scoresheet from '../../components/Scoresheet/Scoresheet';
+import socketService from '../../services/socketService';
 
 const fakeData2 = {
   gameSessionId: '1',
@@ -36,10 +38,22 @@ const fakeData2 = {
 };
 
 export default function GameOver2({ navigation, route }) {
-  console.log('🚀  route.params?.results:', route.params?.results);
+  const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
   const fakeData = route.params?.results || fakeData2;
 
   if (!fakeData) return null;
+
+  const handleRematch = () => {
+    socketService.socket.emit('rematch', fakeData.gameSessionId);
+  };
+
+  useEffect(() => {
+    socketService.socket.on('rematch', (gameSessionId) => {
+      // show rematch modal
+
+      setRematchModalVisible(true);
+    });
+  }, []);
 
   const playerCard = (playerInfo) => {
     console.log('🚀  playerInfo:', playerInfo);
@@ -107,6 +121,7 @@ export default function GameOver2({ navigation, route }) {
       }}
     >
       <SafeAreaView>
+        <RematchModal visible={rematchModalVisible} />
         <ScrollView
           style={{
             marginTop: 10,
@@ -192,6 +207,9 @@ export default function GameOver2({ navigation, route }) {
                 borderColor: '#667EB7',
                 padding: 15,
                 flex: 1,
+              }}
+              onPress={() => {
+                handleRematch();
               }}
             >
               <View
