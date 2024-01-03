@@ -4,6 +4,7 @@ import { newRequest } from '../../api/newRequest';
 
 export default function FriendsList() {
   const [friends = [], setFriends] = React.useState([]);
+  const [textInput = '', setTextInput] = React.useState('');
 
   const fetchFriends = async () => {
     const response = await newRequest.get('/users/friends');
@@ -144,6 +145,8 @@ export default function FriendsList() {
               borderRadius: 12,
               padding: 20,
             }}
+            onChangeText={(text) => setTextInput(text)}
+            value={textInput}
           ></TextInput>
           <TouchableOpacity
             style={{
