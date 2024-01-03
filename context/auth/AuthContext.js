@@ -7,6 +7,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
+  const [userId, setUserId] = useState(null);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -16,10 +17,16 @@ export const AuthProvider = ({ children }) => {
         console.log('🚀  useEffect AuthContext');
         // validate token with backend
         try {
-          await newRequest.get('/auth/validate-token');
+          const tokenRes = await newRequest.get('/auth/validate-token');
+          setUserId(tokenRes.data.userId);
 
           setUserToken(token);
-          navigation.navigate('Categories');
+          // navigation.navigate('Categories');
+          // dont allow back
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Categories' }],
+          });
         } catch (error) {
           console.log('🚀  token is not valid');
           await AsyncStorage.removeItem('userToken');
@@ -42,7 +49,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ userToken, signIn, signOut }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ userToken, signIn, signOut, userId }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

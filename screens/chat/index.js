@@ -105,7 +105,26 @@ export default function Chat({
     );
   };
 
-  if (!chat.chatingWith) return null;
+  if (!chat.chatingWith)
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text
+          style={{
+            color: 'white',
+            fontSize: 20,
+            fontWeight: 'bold',
+          }}
+        >
+          Loading...
+        </Text>
+      </View>
+    );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
