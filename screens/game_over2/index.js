@@ -40,18 +40,53 @@ const fakeData2 = {
 export default function GameOver2({ navigation, route }) {
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
   const fakeData = route.params?.results || fakeData2;
+  console.log('🚀  fakeData:', fakeData);
 
   if (!fakeData) return null;
 
   const handleRematch = () => {
-    socketService.socket.emit('rematch', fakeData.gameSessionId);
+    socketService.socket.emit('triggerRematch', {
+      gameId: fakeData.gameSessionId,
+      otherPlayerSocketId: fakeData.opponentData.socketId,
+      otherPlayerUserId: fakeData.opponentData.id,
+    });
+  };
+
+  const handleRematchAccept = () => {
+    console.log('emiting acceptRematch');
+    socketService.socket.emit('acceptRematch', {
+      gameId: fakeData.gameSessionId,
+      otherPlayerSocketId: fakeData.opponentData.socketId,
+      otherPlayerUserId: fakeData.opponentData.id,
+      category: fakeData.category,
+    });
+  };
+
+  const handleRematchDecline = () => {
+    console.log('emiting declineRematch');
+    socketService.socket.emit('declineRematch', {
+      gameId: fakeData.gameSessionId,
+      otherPlayerSocketId: fakeData.opponentData.socketId,
+      otherPlayerUserId: fakeData.opponentData.id,
+    });
   };
 
   useEffect(() => {
-    socketService.socket.on('rematch', (gameSessionId) => {
-      // show rematch modal
+    socketService.socket.on('rematchRequest', (gameSessionId) => {
+      console.log('rematch request');
 
       setRematchModalVisible(true);
+    });
+
+    socketService.socket.on('rematchAccepted', (gameSessionId) => {
+      console.log('rematch accepted');
+      navigation.navigate('Game', { game: data.game });
+    });
+
+    socketService.socket.on('rematchDeclined', (gameSessionId) => {
+      console.log('rematch declined');
+      alert('Rematch declined');
+      setRematchModalVisible(false);
     });
   }, []);
 
@@ -121,7 +156,12 @@ export default function GameOver2({ navigation, route }) {
       }}
     >
       <SafeAreaView>
-        <RematchModal visible={rematchModalVisible} />
+        <RematchModal
+          modalVisible={rematchModalVisible}
+          setModalVisible={setRematchModalVisible}
+          handleRematchAccept={handleRematchAccept}
+          handleRematchDecline={handleRematchDecline}
+        />
         <ScrollView
           style={{
             marginTop: 10,

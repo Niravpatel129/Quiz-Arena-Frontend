@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Alert, Image, Modal, Pressable, Text, View } from 'react-native';
 
-const RematchModal = ({ visible }) => {
-  const [modalVisible, setModalVisible] = useState(visible);
-
+const RematchModal = ({
+  modalVisible,
+  setModalVisible,
+  handleRematchAccept,
+  handleRematchDecline,
+}) => {
   return (
     <Modal
       animationType='slide'
@@ -102,7 +105,10 @@ const RematchModal = ({ visible }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {
+                handleRematchAccept();
+                setModalVisible(!modalVisible);
+              }}
             >
               <Text
                 style={{
@@ -127,7 +133,10 @@ const RematchModal = ({ visible }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {
+                handleRematchDecline();
+                setModalVisible(!modalVisible);
+              }}
             >
               <Text
                 style={{

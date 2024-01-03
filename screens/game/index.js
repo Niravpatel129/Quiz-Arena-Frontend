@@ -117,6 +117,7 @@ const GameScreen = ({ navigation, route }) => {
       // toggle game off for debugging
       navigation.navigate('GameOver', {
         results: {
+          category: results.gameSession.category,
           gameSessionId: results.gameSession._id,
           yourData: {
             username: myData.name,
@@ -127,6 +128,8 @@ const GameScreen = ({ navigation, route }) => {
             gameData: {
               scores: myData.answers,
             },
+            socketId: myData.socketId,
+            userId: myData._id,
           },
           opponentData: {
             username: opponentData.name,
@@ -137,6 +140,8 @@ const GameScreen = ({ navigation, route }) => {
             gameData: {
               scores: opponentData.answers,
             },
+            socketId: opponentData.socketId,
+            userId: opponentData._id,
           },
         },
       });
