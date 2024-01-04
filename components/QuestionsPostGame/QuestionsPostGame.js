@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
-const QuestionsData = [
+const fakeQuestionsData = [
   {
     Question: 'What is the capital of France?',
     Answers: ['Paris', 'London', 'Berlin', 'Madrid'],
@@ -62,7 +62,10 @@ const QuestionsData = [
   },
 ];
 
-export default function QuestionsPostGame() {
+export default function QuestionsPostGame({ questions }) {
+  const QuestionsData = questions || fakeQuestionsData;
+  console.log('🚀  questions:', questions);
+
   const [thumbsStatus, setThumbsStatus] = useState(
     QuestionsData.map(() => ({ thumbsUp: false, thumbsDown: false })),
   );
@@ -85,6 +88,8 @@ export default function QuestionsPostGame() {
   };
 
   const renderQuestionBubble = (question, index) => {
+    console.log('🚀  question:', question);
+
     return (
       <View
         key={index}
@@ -125,7 +130,7 @@ export default function QuestionsPostGame() {
                     width: 25,
                   }}
                 >
-                  {question.PlayerAnswers.you.answer === answer && (
+                  {question.PlayerAnswers.you.answer === answer.optionText && (
                     <>
                       <Image
                         style={{
@@ -148,18 +153,18 @@ export default function QuestionsPostGame() {
                     fontSize: 20,
                     fontfamily: 'Inter-SemiBold',
                     marginRight: 10,
-                    color: question.CorrectAnswer === answer ? '#adf2bc' : '#f2adad',
+                    color: question.CorrectAnswer === answer.optionText ? '#adf2bc' : '#f2adad',
                     maxWidth: '80%',
                   }}
                 >
-                  {answer}
+                  {answer.optionText}
                 </Text>
                 <View
                   style={{
                     width: 25,
                   }}
                 >
-                  {question.PlayerAnswers.opponent.answer === answer && (
+                  {question.PlayerAnswers.opponent.answer === answer.optionText && (
                     <>
                       <Image
                         style={{ width: 25, height: 25, borderRadius: 50 }}

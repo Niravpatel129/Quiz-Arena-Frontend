@@ -117,6 +117,8 @@ const GameScreen = ({ navigation, route }) => {
       // toggle game off for debugging
       navigation.navigate('GameOver', {
         results: {
+          rounds: results.gameSession.rounds,
+          playersRoundData: results.gameSession.players,
           category: results.gameSession.category,
           gameSessionId: results.gameSession._id,
           yourData: {
@@ -223,6 +225,7 @@ const GameScreen = ({ navigation, route }) => {
           InGameData={{
             sessionId: data?.sessionId,
             RoundData: {
+              questionId: data?.questionId,
               question: data?.question,
               answers: data?.options,
               image: data?.helperImage,

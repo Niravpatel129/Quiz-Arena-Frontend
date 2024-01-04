@@ -41,7 +41,6 @@ const fakeData2 = {
 export default function GameOver2({ navigation, route }) {
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
   const fakeData = route.params?.results || fakeData2;
-  console.log('🚀  fakeData:', fakeData);
 
   if (!fakeData) return null;
 
@@ -358,7 +357,39 @@ export default function GameOver2({ navigation, route }) {
               marginVertical: 10,
             }}
           >
-            <QuestionsPostGame results={route.params?.results} />
+            <QuestionsPostGame
+              questions={fakeData.rounds.map((roundData, index) => {
+                // fakeData.playersRoundData
+
+                const yourAnswers = fakeData.playersRoundData.find(
+                  (player) => player.name === fakeData.yourData.username,
+                );
+
+                const opponentAnswers = fakeData.playersRoundData.find(
+                  (player) => player.name === fakeData.opponentData.username,
+                );
+
+                return {
+                  Question: roundData.questionText,
+                  QuestionId: roundData.questionId,
+                  Answers: roundData.options,
+                  CorrectAnswer: roundData.correctAnswer,
+                  QuestionImage: roundData.helperImage,
+                  PlayerAnswers: {
+                    you: {
+                      playerName: fakeData.yourData.username,
+                      answer: yourAnswers.answers[index].answer,
+                      playerAvatar: fakeData.yourData.avatar,
+                    },
+                    opponent: {
+                      playerName: fakeData.opponentData.username,
+                      answer: opponentAnswers.answers[index].answer,
+                      playerAvatar: fakeData.opponentData.avatar,
+                    },
+                  },
+                };
+              })}
+            />
           </View>
         </ScrollView>
       </SafeAreaView>
