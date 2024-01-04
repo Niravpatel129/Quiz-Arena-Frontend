@@ -2,10 +2,12 @@ import { useNavigation } from '@react-navigation/native';
 import * as Facebook from 'expo-auth-session/providers/facebook';
 import { useEffect, useState } from 'react';
 import { newRequest } from '../api/newRequest';
+import { useSocket } from '../context/socket/SocketContext';
 
 const FB_APP_ID = '1015444866200816';
 
 export const useFacebookLogin = () => {
+  const socket = useSocket();
   const navigation = useNavigation();
   const [user, setUser] = useState(null);
   const [request, response, promptAsync] = Facebook.useAuthRequest({
@@ -33,6 +35,9 @@ export const useFacebookLogin = () => {
             email: userInfo.email,
             accessToken,
           });
+
+          // Connect socket
+          socket.ConnectSocket();
 
           // Route to categories
           navigation.reset({
