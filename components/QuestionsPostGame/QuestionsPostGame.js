@@ -215,17 +215,27 @@ export default function QuestionsPostGame({ questions }) {
             justifyContent: 'flex-end',
           }}
         >
-          <TouchableOpacity onPress={() => handleThumbsClick(index, 'thumbsUp')}>
+          <TouchableOpacity
+            style={{
+              padding: 2,
+            }}
+            onPress={() => handleThumbsClick(index, 'thumbsUp')}
+          >
             <Ionicons
               name={thumbsStatus[index].thumbsUp ? 'thumbs-up' : 'thumbs-up-outline'}
-              size={24}
+              size={28}
               color='#adf2bc'
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleThumbsClick(index, 'thumbsDown')}>
+          <TouchableOpacity
+            style={{
+              padding: 2,
+            }}
+            onPress={() => handleThumbsClick(index, 'thumbsDown')}
+          >
             <Ionicons
               name={thumbsStatus[index].thumbsDown ? 'thumbs-down' : 'thumbs-down-outline'}
-              size={24}
+              size={28}
               color='#f2adad'
             />
           </TouchableOpacity>
