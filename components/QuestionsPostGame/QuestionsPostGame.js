@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { newRequest } from '../../api/newRequest';
 
 const fakeQuestionsData = [
   {
@@ -70,7 +71,7 @@ export default function QuestionsPostGame({ questions }) {
     QuestionsData.map(() => ({ thumbsUp: false, thumbsDown: false })),
   );
 
-  const handleThumbsClick = (index, thumbType) => {
+  const handleThumbsClick = async (index, thumbType) => {
     // dont allow undoing of thumbs up or down
 
     if (thumbsStatus[index].thumbsUp || thumbsStatus[index].thumbsDown) return;
@@ -85,6 +86,14 @@ export default function QuestionsPostGame({ questions }) {
 
     // Dummy console log function
     console.log(`Thumbs ${thumbType} clicked for question ${index + 1}`);
+
+    if (thumbType === 'thumbsUp') {
+      await newRequest.put(`/question/${QuestionsData[index].QuestionId}/upvote`);
+    }
+
+    if (thumbType === 'thumbsDown') {
+      await newRequest.put(`/question/${QuestionsData[index].QuestionId}/downvote`);
+    }
   };
 
   const renderQuestionBubble = (question, index) => {
@@ -114,6 +123,21 @@ export default function QuestionsPostGame({ questions }) {
         >
           {question.Question}
         </Text>
+        {question.QuestionImage && (
+          <View>
+            <Image
+              source={{
+                uri: question.QuestionImage,
+              }}
+              style={{
+                width: 200,
+                height: 200,
+                alignSelf: 'center',
+                justifyContent: 'center',
+              }}
+            />
+          </View>
+        )}
         <View style={{}}>
           {question.Answers.map((answer) => {
             return (
