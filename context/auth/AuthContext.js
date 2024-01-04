@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
             routes: [{ name: 'Categories' }],
           });
         } catch (error) {
-          console.log('🚀  token is not valid');
+          console.log('🚀  token is not valid', token);
           await AsyncStorage.removeItem('userToken');
         }
       }
