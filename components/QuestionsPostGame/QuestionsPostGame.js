@@ -126,6 +126,7 @@ export default function QuestionsPostGame({ questions }) {
         {question.QuestionImage && (
           <View>
             <Image
+              resizeMode='contain'
               source={{
                 uri: question.QuestionImage,
               }}
@@ -157,6 +158,7 @@ export default function QuestionsPostGame({ questions }) {
                   {question.PlayerAnswers.you.answer === answer.optionText && (
                     <>
                       <Image
+                        resizeMode='stretch'
                         style={{
                           width: 25,
                           height: 25,
@@ -177,6 +179,7 @@ export default function QuestionsPostGame({ questions }) {
                     fontSize: 20,
                     fontfamily: 'Inter-SemiBold',
                     marginRight: 10,
+                    fontWeight: question.CorrectAnswer === answer.optionText && 'bold',
                     color: question.CorrectAnswer === answer.optionText ? '#adf2bc' : '#f2adad',
                     maxWidth: '80%',
                   }}

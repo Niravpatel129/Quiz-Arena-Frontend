@@ -88,6 +88,7 @@ const AnswerOptions = ({ helperImage, answersOptions, handleAnswer, scores }) =>
       >
         <View style={styles.imageContainer}>
           <Image
+            resizeMode='contain'
             style={styles.image}
             source={{
               uri: helperImage,
