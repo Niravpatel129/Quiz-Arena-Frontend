@@ -4,9 +4,11 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
+import { useSocket } from '../../../context/socket/SocketContext';
 
 export default function SocialButton({ variation }) {
   const navigation = useNavigation();
+  const socket = useSocket();
 
   const handlePress = async (item) => {
     if (item === 'apple') {
@@ -42,6 +44,8 @@ export default function SocialButton({ variation }) {
           username,
         })
         .then((res) => {
+          socket.ConnectSocket();
+
           console.log('🚀  navigating to categories:', res);
           navigation.reset({
             index: 0,
