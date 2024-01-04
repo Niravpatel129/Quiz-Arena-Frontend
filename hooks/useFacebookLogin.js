@@ -25,7 +25,6 @@ export const useFacebookLogin = () => {
           );
           const userInfo = await userInfoResponse.json();
           setUser(userInfo);
-          console.log('🚀  userInfo:', userInfo);
 
           // Send userInfo and accessToken to backend
           await newRequest.post('/auth/facebook', {
