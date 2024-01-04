@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EndGameChart from '../../components/EndGameChart';
+import QuestionsPostGame from '../../components/QuestionsPostGame/QuestionsPostGame';
 import RematchModal from '../../components/RematchModal/RematchModal';
 import Scoresheet from '../../components/Scoresheet/Scoresheet';
 import socketService from '../../services/socketService';
@@ -351,6 +352,13 @@ export default function GameOver2({ navigation, route }) {
                 },
               }}
             />
+          </View>
+          <View
+            style={{
+              marginVertical: 10,
+            }}
+          >
+            <QuestionsPostGame results={route.params?.results} />
           </View>
         </ScrollView>
       </SafeAreaView>

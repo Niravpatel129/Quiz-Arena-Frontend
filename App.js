@@ -157,7 +157,7 @@ function App() {
       >
         {/* <Stack.Screen
           name='Dev'
-          component={Chat}
+          component={QuestionsPostGame}
           options={{ headerShown: false, headerTransparent: true }}
         /> */}
 
