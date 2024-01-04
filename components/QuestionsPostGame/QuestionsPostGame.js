@@ -255,7 +255,7 @@ export default function QuestionsPostGame({ questions }) {
             textAlign: 'center',
           }}
         >
-          Questions Post Game
+          Questions
         </Text>
         {QuestionsData.map((question, index) => renderQuestionBubble(question, index))}
       </View>
