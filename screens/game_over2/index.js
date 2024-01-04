@@ -161,6 +161,7 @@ export default function GameOver2({ navigation, route }) {
           setModalVisible={setRematchModalVisible}
           handleRematchAccept={handleRematchAccept}
           handleRematchDecline={handleRematchDecline}
+          otherPlayer={fakeData.opponentData.username}
         />
         <ScrollView
           style={{

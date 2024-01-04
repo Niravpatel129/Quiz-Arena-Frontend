@@ -1,11 +1,13 @@
 import React from 'react';
 import { Alert, Image, Modal, Pressable, Text, View } from 'react-native';
+import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
 const RematchModal = ({
   modalVisible,
   setModalVisible,
   handleRematchAccept,
   handleRematchDecline,
+  otherPlayer,
 }) => {
   return (
     <Modal
@@ -83,7 +85,7 @@ const RematchModal = ({
               marginBottom: 10,
             }}
           >
-            John wants to play again!
+            {capitalizeFirstLetter(otherPlayer)} wants to play again!
           </Text>
 
           <View
