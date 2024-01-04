@@ -53,6 +53,10 @@ export default function SignUpLogin({ navigation }) {
   const handleLogin = () => {
     AsyncStorage.setItem('email', email);
     AsyncStorage.setItem('password', password);
+    if (!email || !password) {
+      alert('Please enter your email and password');
+      return;
+    }
 
     newRequest
       .post('/auth/login', {
