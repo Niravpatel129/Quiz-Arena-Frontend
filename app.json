@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.niravpatelp129.QuizArenaFrontendScaffold",
@@ -24,24 +22,18 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "googleServicesFile": "./google/elo-mastery-b6f43-f8db4624ebc1.json",
-      "package": "com.niravpatelp129.QuizArenaFrontendScaffold"
+      "package": "com.niravpatelp129.QuizArenaFrontendScaffold",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": [
-      "facebookLogin",
-      "fb1015444866200816"
-    ],
+    "scheme": ["facebookLogin", "fb1015444866200816"],
     "extra": {
       "eas": {
         "projectId": "8c111cf0-8ea7-4e8d-a8c6-a92bb5e06340"
       }
     },
-    "plugins": [
-      "expo-apple-authentication",
-      "expo-localization"
-    ]
+    "plugins": ["expo-apple-authentication", "expo-localization"]
   }
 }
