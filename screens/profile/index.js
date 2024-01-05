@@ -19,7 +19,7 @@ export default function ProfileScreen({ navigation, route }) {
     fetchUser();
   }, [route.params?.userId]);
 
-  if (!userData.username) return null;
+  // if (!userData.username) return null;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#1c2141' }}>
@@ -47,7 +47,7 @@ export default function ProfileScreen({ navigation, route }) {
           }}
         >
           <View>
-            <AvatarPicker defaultImage={userData.avatar} disablePress={route?.params?.userId} />
+            <AvatarPicker defaultImage={userData?.avatar} disablePress={route?.params?.userId} />
           </View>
           {/* <TouchableOpacity
             onPress={() => {
@@ -76,13 +76,15 @@ export default function ProfileScreen({ navigation, route }) {
               marginTop: 20,
             }}
           >
-            <Text style={{ color: 'white', fontSize: 30 }}>{userData.username}</Text>
-            <CountryFlag isoCode={userData.country} size={18} style={{ marginLeft: 10 }} />
+            <Text style={{ color: 'white', fontSize: 30 }}>{userData?.username}</Text>
+            {userData?.country && (
+              <CountryFlag isoCode={userData?.country} size={18} style={{ marginLeft: 10 }} />
+            )}
           </View>
           <Text style={{ color: 'gray', fontSize: 18, marginTop: 3 }}>Element of Surprise</Text>
           <Text style={{ color: 'lightgray', fontSize: 18, marginTop: 30 }}>
             <Ionicons name='location' size={18} color='lightgray' />
-            Last Active {formatLastActive(userData.lastActive)}
+            Last Active {formatLastActive(userData?.lastActive)}
           </Text>
 
           <View
@@ -97,7 +99,7 @@ export default function ProfileScreen({ navigation, route }) {
             }}
           >
             <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
-              Average Rating: {userData.averageRating}
+              Average Rating: {userData?.averageRating}
             </Text>
           </View>
           {route.params?.userId && (
@@ -182,7 +184,7 @@ export default function ProfileScreen({ navigation, route }) {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 20, fontFamily: 'Inter-Black' }}>
-                    {userData.totalGames}
+                    {userData?.totalGames}
                   </Text>
                 </View>
               </View>
@@ -215,7 +217,7 @@ export default function ProfileScreen({ navigation, route }) {
                       fontFamily: 'Inter-Black',
                     }}
                   >
-                    {userData.winRate.toFixed(0)}%
+                    {userData?.winRate?.toFixed(0)}%
                   </Text>
                 </View>
               </View>
@@ -248,7 +250,7 @@ export default function ProfileScreen({ navigation, route }) {
                       fontFamily: 'Inter-Black',
                     }}
                   >
-                    {userData.winRate.toFixed(0)}
+                    {userData?.winRate?.toFixed(0)}
                   </Text>
                 </View>
               </View>
