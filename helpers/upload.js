@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Platform } from 'react-native';
 import { keys } from '../keys';
 
 let FileSystem;
@@ -24,7 +25,7 @@ const upload = async (file) => {
   const uploadUrl = `https://api.cloudinary.com/v1_1/gamercoach/image/upload?api_key=${keys.cloudinary}`;
 
   let dataURL;
-  if (FileSystem) {
+  if ((Platform.OS === 'ios' || Platform.OS === 'android') && FileSystem) {
     // Use fileToDataURL if FileSystem is available (React Native)
     dataURL = await fileToDataURL(file);
   } else {

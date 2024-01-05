@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from 'expo-linear-gradient';
 import { getLocales } from 'expo-localization';
 import React, { useEffect } from 'react';
@@ -15,6 +16,7 @@ import {
 import { newRequest } from '../../api/newRequest';
 import { useAuth } from '../../context/auth/AuthContext';
 import { useSocket } from '../../context/socket/SocketContext';
+import upload from '../../helpers/upload';
 
 export default function SignUpLogin({ navigation }) {
   const [email, setEmail] = React.useState('');
@@ -23,6 +25,8 @@ export default function SignUpLogin({ navigation }) {
   const [showUsername, setShowUsername] = React.useState(false);
   const socket = useSocket();
   const { signIn } = useAuth();
+  const [avatarUri, setAvatarUri] = React.useState(null);
+  const [avatar, setAvatar] = React.useState(null);
 
   useEffect(() => {
     const getEmail = async () => {
@@ -50,6 +54,25 @@ export default function SignUpLogin({ navigation }) {
     getEmail();
   }, []);
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    console.log('🚀  result:', result);
+    const newUri = result.assets[0].uri;
+    console.log('🚀  newUri:', newUri);
+
+    if (!result.canceled) {
+      setAvatarUri(newUri);
+      const url = await upload(newUri);
+      setAvatar(url);
+    }
+  };
+
   const handleLogin = () => {
     AsyncStorage.setItem('email', email);
     AsyncStorage.setItem('password', password);
@@ -64,6 +87,9 @@ export default function SignUpLogin({ navigation }) {
         password: password || 'password',
         username: username || null,
         country: getLocales()[0]?.regionCode?.toLowerCase(),
+        profile: {
+          avatar: avatar || null,
+        },
       })
       .then((response) => {
         console.log('🚀  response:', response);
@@ -128,8 +154,38 @@ export default function SignUpLogin({ navigation }) {
                   fontWeight: 'bold',
                 }}
               >
-                {showUsername ? 'Create a username' : 'Sign up or login'}
+                {showUsername ? 'Create your profile' : 'Sign up or login'}
               </Text>
+              {showUsername && (
+                <>
+                  <TouchableOpacity
+                    onPress={() => {
+                      pickImage();
+                    }}
+                    style={{
+                      marginBottom: 20,
+                      width: 200,
+                      height: 200,
+                      borderRadius: 100,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#DDD',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {avatarUri ? (
+                      <Image source={{ uri: avatarUri }} style={{ width: 200, height: 200 }} />
+                    ) : (
+                      <Image
+                        source={{
+                          uri: 'https://media.istockphoto.com/id/1316420668/vector/user-icon-human-person-symbol-social-profile-icon-avatar-login-sign-web-user-symbol.jpg?s=612x612&w=0&k=20&c=AhqW2ssX8EeI2IYFm6-ASQ7rfeBWfrFFV4E87SaFhJE=',
+                        }}
+                        style={{ width: 200, height: 200 }}
+                      />
+                    )}
+                  </TouchableOpacity>
+                </>
+              )}
               {/* Input Username */}
               {showUsername ? (
                 <View
