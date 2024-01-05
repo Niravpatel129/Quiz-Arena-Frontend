@@ -36,5 +36,3 @@ yarn-error.*
 *.tsbuildinfo
 
 google/
-google-services.json
-keys.js
