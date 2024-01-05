@@ -200,17 +200,19 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
           {InGameData.RoundData.question}
         </Text>
 
-        <Image
-          style={{
-            width: 230,
-            height: 200,
-            borderRadius: 20,
-            marginVertical: 20,
-            objectFit: 'contain',
-            resizeMode: 'contain',
-          }}
-          source={{ uri: InGameData.RoundData.image }}
-        />
+        {InGameData?.RoundData?.image && (
+          <Image
+            style={{
+              width: 230,
+              height: 200,
+              borderRadius: 20,
+              marginVertical: 20,
+              objectFit: 'contain',
+              resizeMode: 'contain',
+            }}
+            source={{ uri: InGameData.RoundData.image }}
+          />
+        )}
       </View>
     );
   };
