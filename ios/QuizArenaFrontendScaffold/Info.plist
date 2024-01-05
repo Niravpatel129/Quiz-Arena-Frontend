@@ -68,6 +68,8 @@
     <false/>
     <key>UIStatusBarStyle</key>
     <string>UIStatusBarStyleDefault</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Our app needs access to your photo library to allow you to select and upload photos for your profile page.</string>
     <key>UISupportedInterfaceOrientations</key>
     <array>
       <string>UIInterfaceOrientationPortrait</string>
