@@ -110,7 +110,17 @@ export default function Challange({ myData, opponentData, category }) {
               fontFamily: 'poppins-regular',
             }}
           >
-            {capitalizeFirstLetter(category) || 'logos'} Rating: {elo || 1200} Elo
+            {capitalizeFirstLetter(category) || 'logos'} Rating:
+          </Text>
+          <Text
+            style={{
+              color: '#c6c082',
+              fontSize: FontSize.md,
+              fontWeight: 'bold',
+              fontFamily: 'poppins-regular',
+            }}
+          >
+            {elo || 1200} Elo
           </Text>
         </View>
 

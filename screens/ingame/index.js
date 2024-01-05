@@ -47,16 +47,31 @@ const PlayerCard = ({ player, flipped }) => {
             alignItems: 'center',
           }}
         >
+          {flipped && (
+            <CountryFlag
+              isoCode={player.country || 'aq'}
+              size={16}
+              style={{ marginHorizontal: 5 }}
+            />
+          )}
+
           <Text
             style={{
               fontFamily: 'Inter-Black',
-              fontSize: 18,
+              fontSize: 14,
               color: '#fff',
+              maxWidth: 100,
             }}
           >
             {player.username}
           </Text>
-          <CountryFlag isoCode={player.country || 'aq'} size={16} style={{ marginHorizontal: 5 }} />
+          {!flipped && (
+            <CountryFlag
+              isoCode={player.country || 'aq'}
+              size={16}
+              style={{ marginHorizontal: 5 }}
+            />
+          )}
         </View>
         <Text
           style={{

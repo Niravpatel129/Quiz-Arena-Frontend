@@ -2,6 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Text, TouchableOpacity, View } from 'react-native';
+import CountryFlag from 'react-native-country-flag';
+import { useAuth } from '../../context/auth/AuthContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import socketService from '../../services/socketService';
 
@@ -13,6 +15,14 @@ export default function QueueScreen({ route, navigation }) {
   const [playersInQueue, setPlayersInQueue] = useState(0);
   const categoryName = routeParam?.categoryName || 'Logos';
   const [estimatedWaitTime, setEstimatedWaitTime] = useState(0);
+  const { userData, fetchUser } = useAuth();
+  console.log('🚀  userData:', userData);
+
+  useEffect(() => {
+    if (userData) return;
+
+    fetchUser();
+  }, [userData]);
 
   useEffect(() => {
     function getRandomWaitTime() {
@@ -110,7 +120,8 @@ export default function QueueScreen({ route, navigation }) {
             textShadowRadius: 10,
           }}
         >
-          {isPlaceholder ? 'Searching...' : playerData.playerName}
+          {isPlaceholder ? 'Searching...' : capitalizeFirstLetter(playerData.playerName)}{' '}
+          <CountryFlag isoCode={playerData.country || ''} size={14} />
         </Text>
         <Text
           style={{
@@ -165,11 +176,13 @@ export default function QueueScreen({ route, navigation }) {
           {PlayerCard(
             {
               tag: 'Player Tag',
-              playerName: 'Alex Smith',
-              country: 'Country',
-              avatar: 'https://d.newsweek.com/en/full/2151501/comp-image-cats-space.webp',
-              elo: 1332,
-              experience: 0,
+              playerName: userData?.username || 'Alex Smith',
+              country: userData?.country || 'ca',
+              avatar:
+                userData?.avatar ||
+                'https://d.newsweek.com/en/full/2151501/comp-image-cats-space.webp',
+              elo: userData?.averageRating || 1332,
+              experience: userData?.experience,
             },
             false,
           )}

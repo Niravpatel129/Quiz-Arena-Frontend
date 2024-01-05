@@ -8,7 +8,20 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [userData, setUserData] = useState(null);
   const navigation = useNavigation();
+
+  const fetchUser = async () => {
+    const userRes = await newRequest.get(`/users/undefined`);
+
+    setUserData(userRes.data);
+  };
+
+  useEffect(() => {
+    if (userId) {
+      fetchUser();
+    }
+  }, []);
 
   useEffect(() => {
     const loadStoredToken = async () => {
@@ -19,7 +32,6 @@ export const AuthProvider = ({ children }) => {
         try {
           const tokenRes = await newRequest.get('/auth/validate-token');
           setUserId(tokenRes.data.userId);
-
           setUserToken(token);
 
           // dont allow back
@@ -39,7 +51,7 @@ export const AuthProvider = ({ children }) => {
 
   const signIn = async (newToken) => {
     setUserToken(newToken);
-    console.log('🚀  newToken:', newToken);
+
     await AsyncStorage.setItem('userToken', newToken);
   };
 
@@ -49,7 +61,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ userToken, signIn, signOut, userId }}>
+    <AuthContext.Provider value={{ userToken, fetchUser, signIn, signOut, userId, userData }}>
       {children}
     </AuthContext.Provider>
   );
