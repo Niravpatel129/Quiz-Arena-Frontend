@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import CountryFlag from 'react-native-country-flag';
 import { newRequest } from '../../api/newRequest';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
@@ -84,6 +85,7 @@ export default function LeaderboardsScreen({ navigation }) {
   };
 
   const renderLeaderboardsPlayers = ({ players }) => {
+    console.log('🚀  players:', players);
     return players.map((player, index) => {
       return (
         <View
@@ -131,17 +133,29 @@ export default function LeaderboardsScreen({ navigation }) {
                 }}
               />
             </TouchableOpacity>
-            <Text
+            <View
               style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                color: 'white',
-                paddingLeft: 10,
-                maxWidth: 150,
+                flexDirection: 'row',
+                alignItems: 'center',
               }}
             >
-              {capitalizeFirstLetter(player.username || 'Anonymous')}
-            </Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  color: 'white',
+                  paddingLeft: 10,
+                  maxWidth: 150,
+                }}
+              >
+                {capitalizeFirstLetter(player.username || 'Anonymous')}
+              </Text>
+              <CountryFlag
+                isoCode={player.country || 'ca'}
+                size={16}
+                style={{ marginHorizontal: 5 }}
+              />
+            </View>
           </View>
 
           <Text

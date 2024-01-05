@@ -42,7 +42,11 @@ export default function Challange({ myData, opponentData, category }) {
     };
   }, []);
 
-  const renderOpponentCard = ({ tag, playerName, country, elo, experience, avatar }, index) => {
+  const renderOpponentCard = (
+    { tag, playerName, country, elo, experience, avatar, isSecond },
+    index,
+  ) => {
+    console.log('🚀  isSecond:', isSecond);
     const cardAnim = index === 1 ? topCardAnim : bottomCardAnim;
 
     const translateX = cardAnim;
@@ -79,10 +83,19 @@ export default function Challange({ myData, opponentData, category }) {
           <View
             style={{
               flexDirection: 'row',
-              gap: Spacing.margin.xl,
+              gap: 5,
               alignItems: 'center',
             }}
           >
+            {isSecond && (
+              <CountryFlag
+                style={{
+                  marginBottom: 3,
+                }}
+                isoCode={country.toLowerCase() || 'aq'}
+                size={20}
+              />
+            )}
             <Text
               style={{
                 color: Colors.primary,
@@ -93,13 +106,15 @@ export default function Challange({ myData, opponentData, category }) {
             >
               {playerName || 'Alex'}
             </Text>
-            <CountryFlag
-              style={{
-                marginBottom: 3,
-              }}
-              isoCode={country.toLowerCase() || 'aq'}
-              size={25}
-            />
+            {!isSecond && (
+              <CountryFlag
+                style={{
+                  marginBottom: 3,
+                }}
+                isoCode={country.toLowerCase() || 'aq'}
+                size={20}
+              />
+            )}
           </View>
 
           <Text
@@ -221,6 +236,7 @@ export default function Challange({ myData, opponentData, category }) {
               elo: myData.playerInformation.elo.rating,
               experience: myData.playerInformation.experience,
               avatar: myData.playerInformation?.avatar,
+              isSecond: false,
             },
             1,
           )}
@@ -261,6 +277,7 @@ export default function Challange({ myData, opponentData, category }) {
               elo: opponentData.playerInformation.elo.rating,
               experience: opponentData.playerInformation.experience,
               avatar: opponentData.playerInformation?.avatar,
+              isSecond: true,
             },
             2,
           )}
