@@ -65,9 +65,19 @@ export default function LeaderboardsScreen({ navigation }) {
               fontWeight: 'bold',
             }}
           >
-            <Text style={{ color: color }}>
-              #{index + 1} {capitalizeFirstLetter(player.username)}
-            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 2,
+              }}
+            >
+              <Text style={{ color: color, maxWidth: 100 }}>
+                #{index + 1} {capitalizeFirstLetter(player.username)}
+              </Text>
+              <CountryFlag isoCode={player.country || 'ca'} size={12} />
+            </View>
           </Text>
           <Text
             style={{
