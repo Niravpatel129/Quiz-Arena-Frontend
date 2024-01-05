@@ -9,7 +9,6 @@ import { TouchableOpacity, View } from 'react-native';
 import TabBar from './components/MyTabBar/MyTabBar';
 import fonts from './config/fonts';
 import { AuthProvider } from './context/auth/AuthContext';
-import { NotificationsProvider } from './context/notifications/notificationsContext';
 import { SocketProvider } from './context/socket/SocketContext';
 import Categories2 from './screens/categories2';
 import ChallengeScreen from './screens/challenge';
@@ -225,19 +224,17 @@ function App() {
         flex: 1,
       }}
     >
-      <NotificationsProvider>
-        <NativeBaseProvider>
-          <SocketProvider>
-            <NavigationContainer theme={MyTheme}>
-              <AuthProvider>
-                <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
-                  <StackNavigator />
-                </LinearGradient>
-              </AuthProvider>
-            </NavigationContainer>
-          </SocketProvider>
-        </NativeBaseProvider>
-      </NotificationsProvider>
+      <NativeBaseProvider>
+        <SocketProvider>
+          <NavigationContainer theme={MyTheme}>
+            <AuthProvider>
+              <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
+                <StackNavigator />
+              </LinearGradient>
+            </AuthProvider>
+          </NavigationContainer>
+        </SocketProvider>
+      </NativeBaseProvider>
     </View>
   );
 }

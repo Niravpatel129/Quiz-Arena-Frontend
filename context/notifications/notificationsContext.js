@@ -3,6 +3,7 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
+import { newRequest } from '../../api/newRequest';
 
 const NotificationsContext = createContext();
 
@@ -21,7 +22,13 @@ export const NotificationsProvider = ({ children }) => {
   const responseListener = useRef();
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then((token) => {
+      setExpoPushToken(token);
+
+      newRequest.post('/notifications/register', {
+        pushToken: token,
+      });
+    });
 
     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
       setNotification(notification);

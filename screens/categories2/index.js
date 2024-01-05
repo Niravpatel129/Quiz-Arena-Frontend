@@ -13,6 +13,7 @@ import {
   View,
 } from 'react-native';
 import { newRequest } from '../../api/newRequest';
+import { NotificationsProvider } from '../../context/notifications/notificationsContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
 const categories2 = [
@@ -160,71 +161,74 @@ export default function Categories2({ navigation }) {
       );
     });
   };
+
   return (
-    <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ height: '100%' }}>
-      <SafeAreaView style={{}}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={{
-            height: '100%',
-            marginTop: 20,
-          }}
-        >
-          <View
+    <NotificationsProvider>
+      <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ height: '100%' }}>
+        <SafeAreaView style={{}}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
             style={{
-              marginBottom: 40,
+              height: '100%',
+              marginTop: 20,
             }}
           >
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: '100%',
-                position: 'relative',
+                marginBottom: 40,
               }}
             >
-              <TextInput
-                placeholder='Search Quiz Category'
-                placeholderTextColor='white'
+              <View
                 style={{
-                  margin: 10,
-                  marginBottom: 10,
-                  flex: 1,
-                  color: 'white',
-                  fontSize: 19,
-                  fontFamily: 'Inter-Regular',
-                  padding: 16,
-                  backgroundColor: '#1c2141',
-                  borderColor: 'white',
-                  borderWidth: 1,
-                  borderRadius: 20,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                  position: 'relative',
                 }}
-                onChangeText={onChangeText}
-                value={searchInput}
-              />
+              >
+                <TextInput
+                  placeholder='Search Quiz Category'
+                  placeholderTextColor='white'
+                  style={{
+                    margin: 10,
+                    marginBottom: 10,
+                    flex: 1,
+                    color: 'white',
+                    fontSize: 19,
+                    fontFamily: 'Inter-Regular',
+                    padding: 16,
+                    backgroundColor: '#1c2141',
+                    borderColor: 'white',
+                    borderWidth: 1,
+                    borderRadius: 20,
+                  }}
+                  onChangeText={onChangeText}
+                  value={searchInput}
+                />
 
-              <Ionicons
+                <Ionicons
+                  style={{
+                    position: 'absolute',
+                    right: 22,
+                    top: 27,
+                  }}
+                  name='search'
+                  size={24}
+                  color='white'
+                />
+              </View>
+              <View
                 style={{
-                  position: 'absolute',
-                  right: 22,
-                  top: 27,
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
-                name='search'
-                size={24}
-                color='white'
-              />
+              >
+                {renderCategories()}
+              </View>
             </View>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              {renderCategories()}
-            </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </LinearGradient>
+          </ScrollView>
+        </SafeAreaView>
+      </LinearGradient>
+    </NotificationsProvider>
   );
 }
