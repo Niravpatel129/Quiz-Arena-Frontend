@@ -51,7 +51,9 @@ export default function LeaderboardsScreen({ navigation }) {
                 borderColor: color,
               }}
               source={{
-                uri: 'https://upload.wikimedia.org/wikipedia/en/e/e0/Felicette%2C_spacecat.jpg',
+                uri:
+                  player.profile?.avatar ||
+                  'https://upload.wikimedia.org/wikipedia/en/e/e0/Felicette%2C_spacecat.jpg',
               }}
             />
           </TouchableOpacity>
