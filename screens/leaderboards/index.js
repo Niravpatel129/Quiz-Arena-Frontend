@@ -97,7 +97,6 @@ export default function LeaderboardsScreen({ navigation }) {
   };
 
   const renderLeaderboardsPlayers = ({ players }) => {
-    console.log('🚀  players:', players);
     return players.map((player, index) => {
       return (
         <View
