@@ -56,12 +56,28 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signOut = async () => {
-    setUserToken(null);
-    await AsyncStorage.removeItem('userToken');
+    try {
+      await newRequest.post('/auth/logout');
+
+      setUserToken(null);
+      await AsyncStorage.removeItem('userToken');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Home' }],
+      });
+    } catch (err) {
+      console.log(err);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Home' }],
+      });
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ userToken, fetchUser, signIn, signOut, userId, userData }}>
+    <AuthContext.Provider
+      value={{ userToken, fetchUser, signIn, signOut, userId, userData, signOut }}
+    >
       {children}
     </AuthContext.Provider>
   );

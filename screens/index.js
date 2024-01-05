@@ -2,11 +2,18 @@ import { Text } from 'native-base';
 import React from 'react';
 import { Alert, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../api/newRequest';
+import { useAuth } from '../context/auth/AuthContext';
 
 export default function ProfileEditScreen() {
+  const auth = useAuth();
+
   const handleDelete = async () => {
     try {
-      await newRequest.delete('/users/');
+      await newRequest.delete('/users');
+
+      alert('Account deleted, logging out...');
+
+      auth.signOut();
 
       //   logout user
     } catch (err) {
