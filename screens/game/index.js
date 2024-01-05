@@ -103,7 +103,6 @@ const GameScreen = ({ navigation, route }) => {
     });
 
     socketService.on('game_over', (results) => {
-      console.log('🚀  results:', results);
       // my socket id =
       const mySocketId = socketService?.socket?.id;
 

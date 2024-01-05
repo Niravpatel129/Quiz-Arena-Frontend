@@ -10,6 +10,7 @@ import TabBar from './components/MyTabBar/MyTabBar';
 import fonts from './config/fonts';
 import { AuthProvider } from './context/auth/AuthContext';
 import { SocketProvider } from './context/socket/SocketContext';
+import ProfileEditScreen from './screens';
 import Categories2 from './screens/categories2';
 import ChallengeScreen from './screens/challenge';
 import Chat from './screens/chat';
@@ -128,7 +129,7 @@ function App() {
             // borderTopWidth: 0,
           },
           headerStyle: {
-            // backgroundColor: '#1d284b',
+            backgroundColor: '#1d284b',
             borderBottomWidth: 0,
           },
           headerTitleAlign: 'center',
@@ -188,6 +189,12 @@ function App() {
           name='Game'
           component={GameScreen}
           options={{ title: 'Game', headerShown: false }}
+        />
+
+        <Stack.Screen
+          name='ProfileEdit'
+          component={ProfileEditScreen}
+          options={{ title: 'Profile Edit', headerShown: true }}
         />
         <Stack.Screen
           name='GameOver'

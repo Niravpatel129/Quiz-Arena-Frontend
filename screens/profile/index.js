@@ -10,21 +10,6 @@ import formatLastActive from '../../helpers/formatLastActive';
 export default function ProfileScreen({ navigation, route }) {
   const [userData, setUserData] = React.useState({});
 
-  const handleProfileAvatarEdit = async () => {
-    try {
-      await newRequest.put(`/users`, {
-        profile: {
-          avatar:
-            'https://thumbs.dreamstime.com/b/random-cat-love-cats-pet-catsslave-110819582.jpg',
-        },
-      });
-
-      fetchUser();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const fetchUser = async () => {
     const userRes = await newRequest.get(`/users/${route?.params?.userId}`);
 
@@ -39,14 +24,20 @@ export default function ProfileScreen({ navigation, route }) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#1c2141' }}>
       <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
-        <View>
-          <Ionicons
-            name='share'
-            size={24}
-            color='white'
-            style={{ marginTop: 20, marginLeft: 20 }}
-          />
-        </View>
+        {!route?.params?.userId && (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('ProfileEdit');
+            }}
+          >
+            <Ionicons
+              name='share'
+              size={24}
+              color='white'
+              style={{ marginTop: 20, marginLeft: 20 }}
+            />
+          </TouchableOpacity>
+        )}
         <View
           style={{
             alignItems: 'center',

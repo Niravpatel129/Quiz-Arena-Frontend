@@ -62,7 +62,6 @@ export default function SignUpLogin({ navigation }) {
       quality: 1,
     });
 
-    console.log('🚀  result:', result);
     const newUri = result.assets[0].uri;
     console.log('🚀  newUri:', newUri);
 
