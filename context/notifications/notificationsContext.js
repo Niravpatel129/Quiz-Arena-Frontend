@@ -37,40 +37,12 @@ export const NotificationsProvider = ({ children }) => {
     };
   }, []);
 
-  return (
-    <NotificationsContext.Provider value={{}}>
-      {/* <Pressable
-        style={{
-          marginTop: 100,
-          padding: 20,
-          borderRadius: 10,
-          backgroundColor: '#292929',
-        }}
-        onPress={async () => {
-          await schedulePushNotification();
-        }}
-      >
-        <Text>Press here to schedule a notification</Text>
-      </Pressable> */}
-      {children}
-    </NotificationsContext.Provider>
-  );
+  return <NotificationsContext.Provider value={{}}>{children}</NotificationsContext.Provider>;
 };
 
 export const useNotifications = () => {
   return useContext(NotificationsContext);
 };
-
-async function schedulePushNotification() {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "You've got mail! 📬",
-      body: 'Here is the notification body',
-      data: { data: 'goes here' },
-    },
-    trigger: { seconds: 2 },
-  });
-}
 
 async function registerForPushNotificationsAsync() {
   let token;
