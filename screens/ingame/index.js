@@ -80,7 +80,7 @@ const PlayerCard = ({ player, flipped }) => {
             color: '#19B0FF',
           }}
         >
-          {player.elo} ELO
+          {player.elo || 1200} ELO
         </Text>
         <Text
           style={{
