@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect } from 'react';
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { newRequest } from '../../api/newRequest';
+import AvatarPicker from '../../components/AvatarPicker/AvatarPicker';
 import Trophies from '../../components/Trophies/Trophies';
 import formatLastActive from '../../helpers/formatLastActive';
 
@@ -11,7 +12,7 @@ export default function ProfileScreen({ navigation, route }) {
 
   const handleProfileAvatarEdit = async () => {
     try {
-      await newRequest.put(`/users/${userData.userId}`, {
+      await newRequest.put(`/users`, {
         profile: {
           avatar:
             'https://thumbs.dreamstime.com/b/random-cat-love-cats-pet-catsslave-110819582.jpg',
@@ -54,7 +55,10 @@ export default function ProfileScreen({ navigation, route }) {
             position: 'relative',
           }}
         >
-          <TouchableOpacity
+          <View>
+            <AvatarPicker defaultImage={userData.avatar} disablePress={route?.params?.userId} />
+          </View>
+          {/* <TouchableOpacity
             onPress={() => {
               if (route?.params?.userId) return;
               handleProfileAvatarEdit();
@@ -71,7 +75,7 @@ export default function ProfileScreen({ navigation, route }) {
               }}
               source={{ uri: userData.avatar }}
             ></Image>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <View
             style={{

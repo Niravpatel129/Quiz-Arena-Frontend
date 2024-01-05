@@ -57,7 +57,9 @@
     "expo-localization": "~14.3.0",
     "expo-notifications": "~0.20.1",
     "expo-device": "~5.4.0",
-    "expo-constants": "~14.4.2"
+    "expo-constants": "~14.4.2",
+    "expo-image-picker": "~14.3.2",
+    "expo-file-system": "~15.4.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

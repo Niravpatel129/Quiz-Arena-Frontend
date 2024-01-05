@@ -34,6 +34,15 @@
         "projectId": "8c111cf0-8ea7-4e8d-a8c6-a92bb5e06340"
       }
     },
-    "plugins": ["expo-apple-authentication", "expo-localization"]
+    "plugins": [
+      "expo-apple-authentication",
+      "expo-localization",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you set your profile picture."
+        }
+      ]
+    ]
   }
 }
