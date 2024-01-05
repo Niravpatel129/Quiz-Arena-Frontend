@@ -16,13 +16,10 @@ export default function QueueScreen({ route, navigation }) {
   const categoryName = routeParam?.categoryName || 'Logos';
   const [estimatedWaitTime, setEstimatedWaitTime] = useState(0);
   const { userData, fetchUser } = useAuth();
-  console.log('🚀  userData:', userData);
 
   useEffect(() => {
-    if (userData) return;
-
     fetchUser();
-  }, [userData]);
+  }, []);
 
   useEffect(() => {
     function getRandomWaitTime() {
@@ -92,6 +89,7 @@ export default function QueueScreen({ route, navigation }) {
   }, []);
 
   const PlayerCard = (playerData, isPlaceholder) => {
+    console.log('🚀  playerData:', playerData);
     return (
       <View style={{}}>
         <Animated.Image
@@ -181,7 +179,7 @@ export default function QueueScreen({ route, navigation }) {
               avatar:
                 userData?.avatar ||
                 'https://d.newsweek.com/en/full/2151501/comp-image-cats-space.webp',
-              elo: userData?.averageRating || 1332,
+              elo: userData?.allRating[categoryName] || 1200,
               experience: userData?.experience,
             },
             false,
