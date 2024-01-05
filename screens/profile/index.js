@@ -49,25 +49,6 @@ export default function ProfileScreen({ navigation, route }) {
           <View>
             <AvatarPicker defaultImage={userData?.avatar} disablePress={route?.params?.userId} />
           </View>
-          {/* <TouchableOpacity
-            onPress={() => {
-              if (route?.params?.userId) return;
-              handleProfileAvatarEdit();
-            }}
-          >
-            <Image
-              style={{
-                width: 200,
-                height: 200,
-                borderRadius: 100,
-                marginTop: 20,
-                borderWidth: 8,
-                borderColor: 'white',
-              }}
-              source={{ uri: userData.avatar }}
-            ></Image>
-          </TouchableOpacity> */}
-
           <View
             style={{
               flexDirection: 'row',
