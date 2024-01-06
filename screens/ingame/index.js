@@ -110,7 +110,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
   }, [InGameData.RoundData.answers]);
 
   useEffect(() => {
-    if (!imageLoaded) return;
+    if (!imageLoaded && InGameData?.RoundData?.image) return;
 
     fadeAnim.setValue(0);
 
@@ -122,6 +122,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
 
     setSelectedAnswer(null);
     setSelectedForRound(false);
+
     setImageLoaded(false);
   }, [roundNumber, imageLoaded]);
 
@@ -199,10 +200,14 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
             textAlign: 'center',
             justifyContent: 'center',
             letterSpacing: 0.5,
-            fontSize: !InGameData.RoundData?.image ? 30 : 24,
+            fontSize: !InGameData.RoundData?.image
+              ? 30
+              : InGameData.RoundData.question.split(' ').length > 10
+              ? 20
+              : 24,
             width: '80%',
             color: '#fff',
-            minHeight: 200,
+            minHeight: 100,
           }}
         >
           {InGameData.RoundData.question}

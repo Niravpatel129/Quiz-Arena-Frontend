@@ -206,7 +206,7 @@ export default function QueueScreen({ route, navigation }) {
         <Text
           style={{
             color: 'white',
-            fontSize: 45,
+            fontSize: 25,
             fontFamily: 'Inter-Regular',
             textAlign: 'center',
           }}
@@ -216,7 +216,7 @@ export default function QueueScreen({ route, navigation }) {
         <Text
           style={{
             color: 'white',
-            fontSize: 45,
+            fontSize: 25,
             fontFamily: 'Inter-Bold',
             textAlign: 'center',
           }}
