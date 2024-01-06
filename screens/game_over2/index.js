@@ -192,17 +192,18 @@ export default function GameOver2({ navigation, route }) {
                 color: fakeData.yourData.result === 'winner' ? '#00c03d' : '#ff0000',
                 textAlign: 'center',
                 fontWeight: 'bold',
+                marginTop: 20,
                 fontFamily: 'Inter-Black',
               }}
             >
-              {fakeData.yourData.result === 'winner' ? 'Victory' : 'Defeat'}
+              {fakeData.yourData.result === 'winner' ? 'You Win!' : 'You Lose!'}
             </Text>
           </View>
 
           <View
             style={{
               flexDirection: 'row',
-              marginTop: 50,
+              marginTop: 40,
               marginBottom: 30,
               justifyContent: 'space-evenly',
             }}
