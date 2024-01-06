@@ -108,7 +108,7 @@ export default function SignUpLogin({ navigation }) {
       .catch((error) => {
         console.log('login failed :(');
         console.log('error', error.message);
-        alert('Server is down for maintenance, please try again later');
+        alert('please try again');
       });
   };
 

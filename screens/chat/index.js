@@ -209,7 +209,7 @@ export default function Chat({
             onPress={() => sendMessage(chat._id)}
             style={{
               position: 'absolute',
-              right: 25,
+              right: 55,
               backgroundColor: '#1c2141',
               padding: 10,
               borderRadius: 5,
