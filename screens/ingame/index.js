@@ -102,7 +102,6 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
   const [selectedForRound, setSelectedForRound] = useState(false);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
   const [imageLoaded, setImageLoaded] = useState(false);
-  console.log('🚀  imageLoaded:', imageLoaded);
 
   useEffect(() => {
     // Shuffle the answers
