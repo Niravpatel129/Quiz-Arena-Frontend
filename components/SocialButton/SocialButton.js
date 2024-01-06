@@ -31,8 +31,6 @@ export default function SocialButton({ variation }) {
   const { onPress, icon, text, color } = socialLoginVariations[variation] || {};
   const { user, request, promptAsync } = useFacebookLogin();
 
-  console.log('🚀  user:', user);
-
   const handlePress = (item) => {
     switch (item) {
       case 'Facebook':

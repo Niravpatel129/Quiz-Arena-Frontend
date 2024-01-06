@@ -65,7 +65,6 @@ const fakeQuestionsData = [
 
 export default function QuestionsPostGame({ questions }) {
   const QuestionsData = questions || fakeQuestionsData;
-  console.log('🚀  questions:', questions);
 
   const [thumbsStatus, setThumbsStatus] = useState(
     QuestionsData.map(() => ({ thumbsUp: false, thumbsDown: false })),

@@ -27,14 +27,12 @@ const AvatarPicker = ({ defaultImage, disablePress }) => {
   const uploadImage = async (uri) => {
     try {
       const url = await upload(uri);
-      console.log('🚀  url:', url);
 
       const res = await newRequest.put(`/users`, {
         profile: {
           avatar: url,
         },
       });
-      console.log('🚀  res:', res);
     } catch (error) {
       console.error('Error uploading image:', error);
       Alert.alert('Upload Failed', 'Please try again.');

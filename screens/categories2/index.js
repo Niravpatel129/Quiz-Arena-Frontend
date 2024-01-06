@@ -52,7 +52,6 @@ export default function Categories2({ navigation }) {
   useEffect(() => {
     const fetchData = async () => {
       const res = await newRequest('/homepage/list');
-      console.log('🚀  res:', res.data);
       setCategories(res.data);
     };
 

@@ -12,12 +12,14 @@ import {
   StyleSheet,
 } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
+import { useAuth } from '../../../context/auth/AuthContext';
 import capitalizeFirstLetter from '../../../helpers/capitalizeFirstLetter';
 
 export default function MatchHistory() {
   const navigation = useNavigation();
   const [matchHistory, setMatchHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { userId } = useAuth();
 
   useEffect(() => {
     const getMatchHistory = async () => {
@@ -98,7 +100,8 @@ export default function MatchHistory() {
             }
             data={matchHistory}
             renderItem={({ item, index }) => {
-              const opponent = item.players.find((v) => v.id !== item.userId);
+              console.log('🚀  item:', item);
+              const opponent = item.players.find((v) => v.id !== userId);
 
               return (
                 <Animated.View
