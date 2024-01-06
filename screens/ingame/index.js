@@ -193,7 +193,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
         <Text
           style={{
             textAlign: 'center',
-            fontSize: 38,
+            fontSize: !InGameData.RoundData?.image ? 38 : 28,
             color: '#fff',
           }}
         >
