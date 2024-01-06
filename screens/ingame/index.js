@@ -102,6 +102,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
   const fadeAnim = useState(new Animated.Value(0))[0]; // Start fully visible
   const [selectedForRound, setSelectedForRound] = useState(false);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     // Shuffle the answers
@@ -109,18 +110,20 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
   }, [InGameData.RoundData.answers]);
 
   useEffect(() => {
+    if (!imageLoaded) return;
+
     fadeAnim.setValue(0);
 
     Animated.timing(fadeAnim, {
-      toValue: 1, // Fully visible
-      duration: 2000, // Animation can last for 1000 milliseconds
-      useNativeDriver: true, // Add this to improve performance
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
     }).start();
 
-    // Reset the selected answer when the round changes
     setSelectedAnswer(null);
     setSelectedForRound(false);
-  }, [roundNumber]); // Dependency array includes roundNumber
+    setImageLoaded(false);
+  }, [roundNumber, imageLoaded]);
 
   const handleAnswerSelection = (answer) => {
     setSelectedAnswer(answer);
@@ -195,12 +198,11 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
           style={{
             textAlign: 'center',
             justifyContent: 'center',
-            // height: '100%',
             letterSpacing: 0.5,
             fontSize: !InGameData.RoundData?.image ? 30 : 24,
             width: '80%',
             color: '#fff',
-            // justifyContent: 'center',
+            minHeight: 200,
           }}
         >
           {InGameData.RoundData.question}
@@ -215,6 +217,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
               borderRadius: 20,
               marginVertical: 20,
             }}
+            onLoad={() => setImageLoaded(true)}
             source={{ uri: InGameData.RoundData.image }}
           />
         )}
