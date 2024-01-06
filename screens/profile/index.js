@@ -5,6 +5,7 @@ import CountryFlag from 'react-native-country-flag';
 import { newRequest } from '../../api/newRequest';
 import AvatarPicker from '../../components/AvatarPicker/AvatarPicker';
 import Trophies from '../../components/Trophies/Trophies';
+import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import formatLastActive from '../../helpers/formatLastActive';
 
 export default function ProfileScreen({ navigation, route }) {
@@ -57,7 +58,9 @@ export default function ProfileScreen({ navigation, route }) {
               marginTop: 20,
             }}
           >
-            <Text style={{ color: 'white', fontSize: 30 }}>{userData?.username}</Text>
+            <Text style={{ color: 'white', fontSize: 30 }}>
+              {userData.username && <>{capitalizeFirstLetter(userData?.username)}</>}
+            </Text>
             {userData?.country && (
               <CountryFlag isoCode={userData?.country} size={18} style={{ marginLeft: 10 }} />
             )}
@@ -247,7 +250,7 @@ export default function ProfileScreen({ navigation, route }) {
               <Trophies />
             </View>
           </View>
-          {route?.params?.userId && (
+          {/* {route?.params?.userId && (
             <View style={{ marginTop: 30, alignItems: 'center', justifyContent: 'center' }}>
               <Text style={{ color: 'white', fontSize: 44, fontWeight: 'bold', marginBottom: 10 }}>
                 You vs
@@ -279,7 +282,7 @@ export default function ProfileScreen({ navigation, route }) {
                 </View>
               </View>
             </View>
-          )}
+          )} */}
         </View>
       </ScrollView>
     </SafeAreaView>

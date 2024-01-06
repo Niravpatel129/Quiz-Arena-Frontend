@@ -10,6 +10,7 @@ import {
   Pressable,
   SafeAreaView,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
 import { useAuth } from '../../../context/auth/AuthContext';
@@ -100,8 +101,9 @@ export default function MatchHistory() {
             }
             data={matchHistory}
             renderItem={({ item, index }) => {
-              console.log('🚀  item:', item);
               const opponent = item.players.find((v) => v.id !== userId);
+              const result = item.winnerId === userId ? 'Won' : 'Lost';
+              const opponentAvatar = opponent.playerInformation.avatar;
 
               return (
                 <Animated.View
@@ -123,10 +125,17 @@ export default function MatchHistory() {
                 size='xs'
                 style={{ width: 40, height: 40 }}
               /> */}
-                    <Ionicons name='ios-trophy' size={40} color='#fff' />
+                    <Ionicons
+                      style={{
+                        marginTop: 13,
+                      }}
+                      name='ios-trophy'
+                      size={40}
+                      color={result === 'Won' ? '#53d769' : '#fc3158'}
+                    />
                   </View>
                   <View style={styles.bubbleInnerContainer}>
-                    <Text style={styles.bubbleTitle}>{item.category}</Text>
+                    <Text style={styles.bubbleTitle}>{capitalizeFirstLetter(item.category)}</Text>
                     <Pressable
                       onPress={() => {
                         navigation.navigate('MatchHistoryDetails', {
@@ -142,24 +151,32 @@ export default function MatchHistory() {
                       </Text>
                     </Pressable>
                   </View>
-                  <View>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('Profile', {
+                        userId: opponent.id,
+                      });
+                    }}
+                  >
                     <Image
                       source={{
-                        uri: 'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
+                        uri:
+                          opponentAvatar ||
+                          'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
                       }}
                       alt='Alternate Text'
                       size='xs'
                       style={{
                         width: 50,
                         height: 50,
-                        borderRadius: 20,
+                        borderRadius: 10,
                         marginRight: 15,
                         marginTop: 5,
                         borderWidth: 2,
                         borderColor: '#516696',
                       }}
                     />
-                  </View>
+                  </TouchableOpacity>
                 </Animated.View>
               );
             }}
@@ -215,7 +232,7 @@ const styles = StyleSheet.create({
   bubbleTitle: {
     fontWeight: '600',
     color: '#fff',
-    fontSize: 20,
+    fontSize: 16,
     maxWidth: 200,
   },
   bubbleSubtitle: {
