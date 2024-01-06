@@ -170,6 +170,7 @@ const GameScreen = ({ navigation, route }) => {
     });
 
     socketService.on('opponent_guessed', (result) => {
+      console.log('opponent guessed', result);
       setIsCorrectAnswer(result.isCorrect);
       setHighlightTrigger(!highlightTrigger);
     });
@@ -178,18 +179,6 @@ const GameScreen = ({ navigation, route }) => {
   useEffect(() => {
     setTimeout(() => setShowAnimation(false), 2000);
   }, []);
-
-  const handleAnswer = (answer) => {
-    // Construct the data object to be sent
-    const resData = {
-      sessionId: data.sessionId,
-      answer: answer,
-      timeRemaining: countdown,
-    };
-
-    // Emit the event with the data
-    socketService.emit('submit_answer', resData);
-  };
 
   if (showAnimation && data) {
     return (

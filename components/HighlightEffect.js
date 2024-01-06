@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, Dimensions, StyleSheet } from 'react-native';
 
 const HighlightEffect = ({ isCorrect, trigger }) => {
+  console.log('🚀  trigger:', trigger);
   const highlightAnim = useRef(new Animated.Value(0)).current;
   const highlightColor = isCorrect ? '#5aff60' : '#ff7878';
   const { width } = Dimensions.get('window');
@@ -49,6 +50,8 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     bottom: 0,
+    zIndex: 100,
+    height: '100%',
     backgroundColor: 'transparent',
   },
 });
