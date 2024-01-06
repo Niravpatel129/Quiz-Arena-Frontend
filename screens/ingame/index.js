@@ -99,10 +99,10 @@ const PlayerCard = ({ player, flipped }) => {
 
 const InGame = ({ InGameData, timer, roundNumber }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const fadeAnim = useState(new Animated.Value(0))[0]; // Start fully visible
   const [selectedForRound, setSelectedForRound] = useState(false);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
   const [imageLoaded, setImageLoaded] = useState(false);
+  console.log('🚀  imageLoaded:', imageLoaded);
 
   useEffect(() => {
     // Shuffle the answers
@@ -110,26 +110,45 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
   }, [InGameData.RoundData.answers]);
 
   useEffect(() => {
-    if (!imageLoaded && InGameData?.RoundData?.image) return;
-
-    fadeAnim.setValue(0);
-
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-
     setSelectedAnswer(null);
     setSelectedForRound(false);
-
     setImageLoaded(false);
-  }, [roundNumber, imageLoaded]);
+  }, [roundNumber]);
 
   const handleAnswerSelection = (answer) => {
     setSelectedAnswer(answer);
     handleAnswer(answer);
     setSelectedForRound(true);
+
+    // fade out the other answers
+    // fadeAnim.setValue(0);
+  };
+
+  const renderCachedAnswerBubble = (answer) => {
+    return (
+      <AnimatedButton
+        key={answer.optionText}
+        style={{
+          width: '100%',
+          height: 55,
+          borderRadius: 10,
+          backgroundColor: answer.isCorrect ? 'rgb(110, 246, 46)' : 'rgb(246, 46, 46)',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: 'Inter-Bold',
+            fontWeight: '600',
+            color: '#fff',
+            fontSize: 18,
+          }}
+        >
+          {answer.optionText}
+        </Text>
+      </AnimatedButton>
+    );
   };
 
   const renderAnswerBubble = (answer) => {
@@ -175,10 +194,9 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
           flexWrap: 'wrap',
           flex: 1,
           gap: 20,
-          opacity: fadeAnim,
         }}
       >
-        {shuffledAnswers.map((answer) => renderAnswerBubble(answer))}
+        {<>{shuffledAnswers.map((answer) => renderAnswerBubble(answer))}</>}
       </Animated.View>
     );
   };
