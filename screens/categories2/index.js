@@ -98,6 +98,7 @@ export default function Categories2({ navigation }) {
               borderColor: '#516696',
               borderRadius: 20,
             }}
+            blurRadius={0.5}
             source={{
               uri:
                 categoryTitle.image ||
