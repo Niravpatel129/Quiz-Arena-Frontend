@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#fff',
     fontSize: 20,
+    maxWidth: 200,
   },
   bubbleSubtitle: {
     fontSize: 13,
