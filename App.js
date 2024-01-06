@@ -233,13 +233,13 @@ function App() {
     >
       <NativeBaseProvider>
         <SocketProvider>
-          <NavigationContainer theme={MyTheme}>
-            <AuthProvider>
+          <AuthProvider>
+            <NavigationContainer theme={MyTheme}>
               <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
                 <StackNavigator />
               </LinearGradient>
-            </AuthProvider>
-          </NavigationContainer>
+            </NavigationContainer>
+          </AuthProvider>
         </SocketProvider>
       </NativeBaseProvider>
     </View>
