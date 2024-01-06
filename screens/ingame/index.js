@@ -184,6 +184,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
       <View
         style={{
           alignItems: 'center',
+          justifyContent: 'center',
           margin: 10,
           marginBottom: 0,
           // minHeight: 250,
@@ -193,9 +194,13 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
         <Text
           style={{
             textAlign: 'center',
+            justifyContent: 'center',
+            // height: '100%',
+            letterSpacing: 0.5,
             fontSize: !InGameData.RoundData?.image ? 30 : 24,
-            width: '100%',
+            width: '80%',
             color: '#fff',
+            // justifyContent: 'center',
           }}
         >
           {InGameData.RoundData.question}
@@ -203,13 +208,12 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
 
         {InGameData?.RoundData?.image && (
           <Image
+            resizeMode='contain'
             style={{
-              width: 230,
+              width: 200,
               height: 200,
               borderRadius: 20,
               marginVertical: 20,
-              objectFit: 'contain',
-              resizeMode: 'contain',
             }}
             source={{ uri: InGameData.RoundData.image }}
           />
