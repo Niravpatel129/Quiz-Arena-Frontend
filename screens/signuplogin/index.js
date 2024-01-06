@@ -107,6 +107,11 @@ export default function SignUpLogin({ navigation }) {
       })
       .catch((error) => {
         console.log('login failed :(');
+        if (username) {
+          alert('Username already taken');
+          return;
+        }
+
         console.log('error', error.message);
         alert('please try again');
       });
