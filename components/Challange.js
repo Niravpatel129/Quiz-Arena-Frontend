@@ -123,9 +123,10 @@ export default function Challange({ myData, opponentData, category }) {
               fontSize: FontSize.md,
               fontWeight: 'bold',
               fontFamily: 'poppins-regular',
+              maxWidth: 200,
             }}
           >
-            {capitalizeFirstLetter(category) || 'logos'} Rating:
+            {capitalizeFirstLetter(category) || 'logos'}
           </Text>
           <Text
             style={{
@@ -135,7 +136,7 @@ export default function Challange({ myData, opponentData, category }) {
               fontFamily: 'poppins-regular',
             }}
           >
-            {elo || 1200} Elo
+            Rating: {elo || 1200}
           </Text>
         </View>
 
