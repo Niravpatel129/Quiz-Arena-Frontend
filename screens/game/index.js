@@ -74,8 +74,6 @@ const GameScreen = ({ navigation, route }) => {
     startTimer();
 
     socketService.on('new_round', (roundData) => {
-      console.log('🚀  roundData:', roundData);
-
       if (round === 1) {
         console.log('preload data');
 
@@ -92,7 +90,6 @@ const GameScreen = ({ navigation, route }) => {
       const opponentData = roundData.gameSession.players.find(
         (player) => player.socketId !== socketService?.socket?.id,
       );
-      console.log('🚀  opponentData:', opponentData);
 
       const isBot = checkIfBot(opponentData.socketId);
       const correctAnswer = roundData.options.find((option) => option.isCorrect);
@@ -111,7 +108,6 @@ const GameScreen = ({ navigation, route }) => {
       const opponentData = results.gameSession.players.find(
         (player) => player.socketId !== mySocketId,
       );
-      console.log('🚀  opponentData:', opponentData);
 
       // toggle game off for debugging
       navigation.navigate('GameOver', {

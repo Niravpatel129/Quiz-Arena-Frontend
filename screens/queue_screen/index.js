@@ -89,7 +89,6 @@ export default function QueueScreen({ route, navigation }) {
   }, []);
 
   const PlayerCard = (playerData, isPlaceholder) => {
-    console.log('🚀  playerData:', playerData);
     return (
       <View style={{}}>
         <Animated.Image
