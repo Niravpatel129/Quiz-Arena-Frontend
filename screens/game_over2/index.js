@@ -103,7 +103,9 @@ export default function GameOver2({ navigation, route }) {
             borderColor: playerInfo.result === 'winner' ? '#00c03d' : '#ff0000',
           }}
           source={{
-            uri: playerInfo.avatar,
+            uri:
+              playerInfo.avatar ||
+              'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
           }}
         />
         <Text
