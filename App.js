@@ -5,7 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NativeBaseProvider } from 'native-base';
-import { TouchableOpacity, View } from 'react-native';
+import { useEffect } from 'react';
+import { LogBox, TouchableOpacity, View } from 'react-native';
 import TabBar from './components/MyTabBar/MyTabBar';
 import fonts from './config/fonts';
 import { AuthProvider } from './context/auth/AuthContext';
@@ -31,6 +32,12 @@ const Tab = createBottomTabNavigator();
 
 function App() {
   const [fontsLoaded] = useFonts(fonts);
+
+  useEffect(() => {
+    LogBox.ignoreLogs([
+      'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
+    ]);
+  }, []);
 
   if (!fontsLoaded) return null;
 
