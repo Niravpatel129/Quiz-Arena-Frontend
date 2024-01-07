@@ -126,7 +126,7 @@ export default function FriendsList() {
                   </Text> */}
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => deleteFriendRequest(notificationInfo._id)}
+                  onPress={() => deleteFriendRequest(friend._id)}
                   style={{
                     backgroundColor: '',
                     // padding: 8,
@@ -177,7 +177,7 @@ export default function FriendsList() {
 
   const deleteFriendRequest = async (id) => {
     await newRequest.delete(`/users/notifications/${id}`);
-    fetchNotifications();
+    fetchFriendRequests();
   };
 
   const acceptFriendRequest = async (friendId) => {};
