@@ -15,6 +15,7 @@ import ProfileEditScreen from './screens';
 import Categories2 from './screens/categories2';
 import ChallengeScreen from './screens/challenge';
 import Chat from './screens/chat';
+import CreateProfile from './screens/createProfile';
 import FriendsScreen from './screens/friends';
 import GameScreen from './screens/game';
 import GameOver2 from './screens/game_over2';
@@ -165,7 +166,7 @@ function App() {
       >
         {/* <Stack.Screen
           name='Dev'
-          component={AvatarPicker}
+          component={CreateProfile}
           options={{ headerShown: false, headerTransparent: true }}
         /> */}
 
@@ -185,6 +186,15 @@ function App() {
             headerTranslucent: true,
           }}
         />
+
+        <Stack.Screen
+          name='CreateProfile'
+          component={CreateProfile}
+          options={{
+            headerShown: false,
+          }}
+        />
+
         <Stack.Screen name='Chat' component={Chat} options={{ headerShown: false }} />
         {/* <Stack.Screen name='Drawer' component={DrawerNavigator} options={{ headerShown: false }} /> */}
         <Stack.Screen

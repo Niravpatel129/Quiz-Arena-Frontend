@@ -47,6 +47,22 @@ export default function SocialButton({ variation }) {
           socket.ConnectSocket();
 
           console.log('🚀  navigating to categories:', res);
+
+          if (!res.data.username || !res.data.profile.avatar) {
+            navigation.reset({
+              index: 0,
+              routes: [
+                { name: 'CreateProfile' },
+                {
+                  currentUsername: res.data.username,
+                  currentAvatar: res.data.profile.avatar,
+                },
+              ],
+            });
+
+            return;
+          }
+
           navigation.reset({
             index: 0,
             routes: [{ name: 'Categories' }],
