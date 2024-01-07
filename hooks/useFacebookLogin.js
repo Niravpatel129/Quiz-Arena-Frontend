@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import * as Facebook from 'expo-auth-session/providers/facebook';
+import { getLocales } from 'expo-localization';
 import { useEffect, useState } from 'react';
 import { newRequest } from '../api/newRequest';
 import { useSocket } from '../context/socket/SocketContext';
@@ -32,6 +33,7 @@ export const useFacebookLogin = () => {
             name: userInfo.name,
             profilePicture: userInfo.picture.data.url,
             email: userInfo.email,
+            country: getLocales()[0]?.regionCode?.toLowerCase(),
             accessToken,
           });
 
