@@ -102,6 +102,7 @@ export default function FriendsList() {
                 }}
               >
                 <TouchableOpacity
+                  onPress={() => acceptFriendRequest(friend.from, friend._id)}
                   style={{
                     backgroundColor: '',
                     // padding: 8,
@@ -180,7 +181,13 @@ export default function FriendsList() {
     fetchFriendRequests();
   };
 
-  const acceptFriendRequest = async (friendId) => {};
+  const acceptFriendRequest = async (friendId, notificationId) => {
+    await newRequest.post('/users/addFriend', { friendId });
+    await newRequest.delete(`/users/notifications/${notificationId}`);
+
+    fetchFriends();
+    fetchFriendRequests();
+  };
 
   const handleChallenge = async (id) => {
     try {
@@ -226,8 +233,8 @@ export default function FriendsList() {
               width: 60,
               height: 60,
               borderRadius: 75,
-              borderWidth: 3,
-              borderColor: 'gold',
+              borderWidth: 1,
+              borderColor: 'white',
             }}
             source={{
               uri:
@@ -252,6 +259,7 @@ export default function FriendsList() {
               style={{
                 fontWeight: 'bold',
                 fontSize: 16,
+                color: 'white',
               }}
             >
               {friend.username || 'Player Name'}
@@ -275,14 +283,25 @@ export default function FriendsList() {
           >
             <TouchableOpacity
               style={{
-                backgroundColor: 'gold',
+                backgroundColor: '#1c2141',
+                textweight: 'bold',
+                fontFamily: 'Inter-Bold',
                 borderRadius: 12,
                 padding: 10,
                 marginRight: 70,
               }}
               onPress={() => handleChallenge(friend._id)}
             >
-              <Text>Challenge</Text>
+              <Text
+                style={{
+                  // color: '#1c2141',
+                  color: 'white',
+                  textweight: 'bold',
+                  fontFamily: 'Inter-Bold',
+                }}
+              >
+                Challenge
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
