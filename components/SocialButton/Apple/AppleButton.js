@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as AppleAuthentication from 'expo-apple-authentication';
+import { getLocales } from 'expo-localization';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
@@ -42,6 +43,7 @@ export default function SocialButton({ variation }) {
           appleId,
           email,
           username,
+          country: getLocales()[0]?.regionCode?.toLowerCase(),
         })
         .then((res) => {
           socket.ConnectSocket();
