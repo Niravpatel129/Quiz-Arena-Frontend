@@ -120,114 +120,82 @@ export default function SignUpLogin({ navigation }) {
   return (
     <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
       <SafeAreaView>
-        <ScrollView
-          keyboardShouldPersistTaps='handled'
-          style={{
-            margin: 20,
-            height: '100%',
-          }}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{ flex: 1 }}
         >
-          <View
+          <ScrollView
+            keyboardShouldPersistTaps='handled'
             style={{
-              width: '100%',
-              alignItems: 'center',
+              margin: 20,
+              height: '100%',
             }}
           >
-            <Image
-              source={require('../../assets/logo.png')}
-              style={{
-                width: 180,
-                height: 180,
-                resizeMode: 'contain',
-                marginBottom: 10,
-              }}
-            />
             <View
               style={{
                 width: '100%',
                 alignItems: 'center',
               }}
             >
-              <Text
+              <Image
+                source={require('../../assets/logo.png')}
                 style={{
-                  fontSize: 30,
-                  fontWeight: 'bold',
-                  marginBottom: 20,
-                  color: 'white',
-                  fontFamily: 'Inter-Bold',
-                  fontWeight: 'bold',
+                  width: 180,
+                  height: 180,
+                  resizeMode: 'contain',
+                  marginBottom: 10,
+                }}
+              />
+              <View
+                style={{
+                  width: '100%',
+                  alignItems: 'center',
                 }}
               >
-                {showUsername ? 'Create your profile' : 'Sign up or login'}
-              </Text>
-              {showUsername && (
-                <>
-                  <TouchableOpacity
-                    onPress={() => {
-                      pickImage();
-                    }}
-                    style={{
-                      marginBottom: 20,
-                      width: 200,
-                      height: 200,
-                      borderRadius: 100,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: '#DDD',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    {avatarUri ? (
-                      <Image source={{ uri: avatarUri }} style={{ width: 200, height: 200 }} />
-                    ) : (
-                      <Image
-                        source={{
-                          uri: 'https://media.istockphoto.com/id/1316420668/vector/user-icon-human-person-symbol-social-profile-icon-avatar-login-sign-web-user-symbol.jpg?s=612x612&w=0&k=20&c=AhqW2ssX8EeI2IYFm6-ASQ7rfeBWfrFFV4E87SaFhJE=',
-                        }}
-                        style={{ width: 200, height: 200 }}
-                      />
-                    )}
-                  </TouchableOpacity>
-                </>
-              )}
-              {/* Input Username */}
-              {showUsername ? (
-                <View
+                <Text
                   style={{
-                    width: '100%',
-                    position: 'relative',
+                    fontSize: 30,
+                    fontWeight: 'bold',
+                    marginBottom: 20,
+                    color: 'white',
+                    fontFamily: 'Inter-Bold',
+                    fontWeight: 'bold',
                   }}
                 >
-                  <Ionicons
-                    style={{
-                      position: 'absolute',
-                      top: 12,
-                      right: 10,
-                      zIndex: 1,
-                    }}
-                    name={'person'}
-                    size={30}
-                    color={'#516696'}
-                  />
-                  <TextInput
-                    style={{
-                      padding: 10,
-                      // backgroundColor: 'white',
-                      borderRadius: 6,
-                      marginBottom: 10,
-                      fontSize: 20,
-                      paddingVertical: 17,
-                      backgroundColor: '#e9eef3',
-                    }}
-                    placeholder='Username'
-                    onChangeText={setUsername}
-                    value={username}
-                    onSubmitEditing={handleLogin}
-                  />
-                </View>
-              ) : (
-                <>
-                  {/* Input Email */}
+                  {showUsername ? 'Create your profile' : 'Sign up or login'}
+                </Text>
+                {showUsername && (
+                  <>
+                    <TouchableOpacity
+                      onPress={() => {
+                        pickImage();
+                      }}
+                      style={{
+                        marginBottom: 20,
+                        width: 200,
+                        height: 200,
+                        borderRadius: 100,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#DDD',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {avatarUri ? (
+                        <Image source={{ uri: avatarUri }} style={{ width: 200, height: 200 }} />
+                      ) : (
+                        <Image
+                          source={{
+                            uri: 'https://media.istockphoto.com/id/1316420668/vector/user-icon-human-person-symbol-social-profile-icon-avatar-login-sign-web-user-symbol.jpg?s=612x612&w=0&k=20&c=AhqW2ssX8EeI2IYFm6-ASQ7rfeBWfrFFV4E87SaFhJE=',
+                          }}
+                          style={{ width: 200, height: 200 }}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  </>
+                )}
+                {/* Input Username */}
+                {showUsername ? (
                   <View
                     style={{
                       width: '100%',
@@ -248,98 +216,135 @@ export default function SignUpLogin({ navigation }) {
                     <TextInput
                       style={{
                         padding: 10,
-                        backgroundColor: '#e9eef3',
+                        // backgroundColor: 'white',
                         borderRadius: 6,
                         marginBottom: 10,
                         fontSize: 20,
                         paddingVertical: 17,
-                      }}
-                      placeholder='Email'
-                      onChangeText={setEmail}
-                      value={email}
-                    />
-                  </View>
-                  {/* Input Password */}
-                  <View
-                    style={{
-                      position: 'relative',
-                      width: '100%',
-                    }}
-                  >
-                    <Ionicons
-                      style={{
-                        position: 'absolute',
-                        top: 12,
-                        right: 10,
-                        zIndex: 1,
-                      }}
-                      name={'lock-closed'}
-                      size={30}
-                      color={'#516696'}
-                    />
-                    <TextInput
-                      style={{
-                        padding: 10,
                         backgroundColor: '#e9eef3',
-                        borderRadius: 6,
-                        marginBottom: 10,
-                        fontSize: 20,
-                        paddingVertical: 17,
                       }}
-                      placeholder='Password'
-                      secureTextEntry
-                      onChangeText={setPassword}
-                      value={password}
+                      placeholder='Username'
+                      onChangeText={setUsername}
+                      value={username}
                       onSubmitEditing={handleLogin}
                     />
                   </View>
-                  <TouchableOpacity>
-                    <Text
+                ) : (
+                  <>
+                    {/* Input Email */}
+                    <View
                       style={{
-                        color: 'white',
-                        marginBottom: 20,
+                        width: '100%',
+                        position: 'relative',
                       }}
                     >
-                      Forgot your password?
-                    </Text>
-                  </TouchableOpacity>
-                </>
-              )}
+                      <Ionicons
+                        style={{
+                          position: 'absolute',
+                          top: 12,
+                          right: 10,
+                          zIndex: 1,
+                        }}
+                        name={'person'}
+                        size={30}
+                        color={'#516696'}
+                      />
+                      <TextInput
+                        style={{
+                          padding: 10,
+                          backgroundColor: '#e9eef3',
+                          borderRadius: 6,
+                          marginBottom: 10,
+                          fontSize: 20,
+                          paddingVertical: 17,
+                        }}
+                        placeholder='Email'
+                        onChangeText={setEmail}
+                        value={email}
+                      />
+                    </View>
+                    {/* Input Password */}
+                    <View
+                      style={{
+                        position: 'relative',
+                        width: '100%',
+                      }}
+                    >
+                      <Ionicons
+                        style={{
+                          position: 'absolute',
+                          top: 12,
+                          right: 10,
+                          zIndex: 1,
+                        }}
+                        name={'lock-closed'}
+                        size={30}
+                        color={'#516696'}
+                      />
+                      <TextInput
+                        style={{
+                          padding: 10,
+                          backgroundColor: '#e9eef3',
+                          borderRadius: 6,
+                          marginBottom: 10,
+                          fontSize: 20,
+                          paddingVertical: 17,
+                        }}
+                        placeholder='Password'
+                        secureTextEntry
+                        onChangeText={setPassword}
+                        value={password}
+                        onSubmitEditing={handleLogin}
+                      />
+                    </View>
+                    <TouchableOpacity>
+                      <Text
+                        style={{
+                          color: 'white',
+                          marginBottom: 20,
+                        }}
+                      >
+                        Forgot your password?
+                      </Text>
+                    </TouchableOpacity>
+                  </>
+                )}
 
-              {/* bottom of the page submit button */}
-              <TouchableOpacity
-                style={{
-                  backgroundColor: '#e9eef3',
-                  padding: 18,
-                  borderRadius: 10,
-                  width: '100%',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  marginTop: 40,
-                }}
-                onPress={() => handleLogin()}
-              >
-                <View
+                {/* bottom of the page submit button */}
+                <TouchableOpacity
                   style={{
+                    backgroundColor: '#e9eef3',
+                    padding: 18,
+                    borderRadius: 10,
+                    width: '100%',
                     flexDirection: 'row',
+                    justifyContent: 'center',
+                    marginTop: 40,
                   }}
+                  onPress={() => handleLogin()}
                 >
-                  <Text
+                  <View
                     style={{
-                      marginLeft: 6,
-                      color: '#516696',
-                      fontSize: 20,
-                      fontWeight: 'bold',
+                      flexDirection: 'row',
                     }}
                   >
-                    Continue
-                  </Text>
-                  <Ionicons name={'arrow-forward'} size={20} color={'#516696'} />
-                </View>
-              </TouchableOpacity>
+                    <Text
+                      style={{
+                        marginLeft: 6,
+                        color: '#516696',
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      Continue
+                    </Text>
+                    <Ionicons name={'arrow-forward'} size={20} color={'#516696'} />
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </LinearGradient>
   );
