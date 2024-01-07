@@ -78,7 +78,7 @@ export default function LeaderboardsScreen({ navigation }) {
               <Text style={{ color: color, maxWidth: 100 }}>
                 #{index + 1} {capitalizeFirstLetter(player.username)}
               </Text>
-              <CountryFlag isoCode={player.country || 'ca'} size={12} />
+              <CountryFlag isoCode={player?.profile?.country || 'ca'} size={12} />
             </View>
           </Text>
           <Text
@@ -162,7 +162,7 @@ export default function LeaderboardsScreen({ navigation }) {
                 {capitalizeFirstLetter(player.username || 'Anonymous')}
               </Text>
               <CountryFlag
-                isoCode={player.country || 'ca'}
+                isoCode={player?.profile?.country || 'ca'}
                 size={16}
                 style={{ marginHorizontal: 5 }}
               />
