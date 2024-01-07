@@ -7,6 +7,8 @@ import { useAuth } from '../../context/auth/AuthContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import socketService from '../../services/socketService';
 
+const addBotTime = Math.floor(Math.random() * 20) + 50;
+
 export default function QueueScreen({ route, navigation }) {
   const [queueTime, setQueueTime] = useState(1);
   const [playerImageIndex, setPlayerImageIndex] = useState(0);
@@ -57,7 +59,7 @@ export default function QueueScreen({ route, navigation }) {
   };
 
   useEffect(() => {
-    if (queueTime === 15) {
+    if (queueTime === addBotTime) {
       console.log('adding bot');
       socketService.emit('add_bot', categoryName);
     }

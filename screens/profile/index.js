@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import React, { useEffect } from 'react';
 import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
@@ -31,8 +31,14 @@ export default function ProfileScreen({ navigation, route }) {
               navigation.navigate('ProfileEdit');
             }}
           >
-            <Ionicons
-              name='share'
+            {/* <Ionicons
+              name='gear'
+              size={24}
+              color='white'
+              style={{ marginTop: 20, marginLeft: 20 }}
+            /> */}
+            <FontAwesome
+              name='gear'
               size={24}
               color='white'
               style={{ marginTop: 20, marginLeft: 20 }}
