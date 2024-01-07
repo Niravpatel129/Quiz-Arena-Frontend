@@ -52,10 +52,12 @@ export default function SocialButton({ variation }) {
             navigation.reset({
               index: 0,
               routes: [
-                { name: 'CreateProfile' },
                 {
-                  currentUsername: res.data.username,
-                  currentAvatar: res.data.profile.avatar,
+                  name: 'CreateProfile',
+                  params: {
+                    currentUsername: res?.data?.username,
+                    currentAvatar: res?.data?.profile?.avatar,
+                  },
                 },
               ],
             });
