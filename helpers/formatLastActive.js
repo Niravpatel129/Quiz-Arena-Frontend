@@ -1,5 +1,6 @@
-const formatLastActive = (dateString) => {
-  console.log('🚀  dateString:', dateString);
+const formatLastActive = (dateString, options) => {
+  const type = options?.type;
+
   // Parse the date string to a Date object
   const date = new Date(dateString);
   if (isNaN(date)) {
@@ -16,17 +17,22 @@ const formatLastActive = (dateString) => {
   const secondsInYear = 31536000;
 
   if (diffInSeconds < secondsInMinute) {
-    return `${diffInSeconds} secs ago`;
+    return type === 'short' ? `${diffInSeconds}s` : `${diffInSeconds} secs ago`;
   } else if (diffInSeconds < secondsInHour) {
-    return `${Math.floor(diffInSeconds / secondsInMinute)} mins ago`;
+    const minutes = Math.floor(diffInSeconds / secondsInMinute);
+    return type === 'short' ? `${minutes}m` : `${minutes} mins ago`;
   } else if (diffInSeconds < secondsInDay) {
-    return `${Math.floor(diffInSeconds / secondsInHour)} hours ago`;
+    const hours = Math.floor(diffInSeconds / secondsInHour);
+    return type === 'short' ? `${hours}h` : `${hours} hours ago`;
   } else if (diffInSeconds < secondsInMonth) {
-    return `${Math.floor(diffInSeconds / secondsInDay)} days ago`;
+    const days = Math.floor(diffInSeconds / secondsInDay);
+    return type === 'short' ? `${days}d` : `${days} days ago`;
   } else if (diffInSeconds < secondsInYear) {
-    return `${Math.floor(diffInSeconds / secondsInMonth)} months ago`;
+    const months = Math.floor(diffInSeconds / secondsInMonth);
+    return type === 'short' ? `${months}mo` : `${months} months ago`;
   } else {
-    return `${Math.floor(diffInSeconds / secondsInYear)} years ago`;
+    const years = Math.floor(diffInSeconds / secondsInYear);
+    return type === 'short' ? `${years}y` : `${years} years ago`;
   }
 };
 

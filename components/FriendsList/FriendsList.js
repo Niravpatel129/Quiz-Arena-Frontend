@@ -1,15 +1,36 @@
+import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../api/newRequest';
+import formatLastActive from '../../helpers/formatLastActive';
 
 export default function FriendsList() {
   const [friends = [], setFriends] = React.useState([]);
   const [textInput = '', setTextInput] = React.useState('');
+  const [friendRequests = [], setFriendRequests] = React.useState([]);
 
   const fetchFriends = async () => {
-    const response = await newRequest.get('/users/friends');
-    const data = response.data;
-    setFriends(data.friends);
+    try {
+      const response = await newRequest.get('/users/friends');
+      const data = response.data;
+      setFriends(data.friends);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchFriendRequests = async () => {
+    try {
+      const response = await newRequest.get('/users/notifications');
+      console.log('🚀  response:', response);
+      const data = response.data.notifications.map((notification) => {
+        return notification.type === 'friendRequest' ? notification : null;
+      });
+
+      setFriendRequests(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const sendFriendRequest = async () => {
@@ -27,9 +48,139 @@ export default function FriendsList() {
     }
   };
 
+  const renderRequestsBubble = (friend) => {
+    console.log('🚀  friend:', friend);
+    return (
+      <View>
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              // alignItems: 'center',
+              justifyContent: 'space-around',
+            }}
+          >
+            <View>
+              <Image
+                style={{
+                  width: 55,
+                  height: 55,
+                  marginTop: 9,
+                  borderRadius: 100,
+                  borderWidth: 1,
+                  borderColor: 'white',
+                }}
+                source={{
+                  uri: 'https://png.pngtree.com/png-vector/20230120/ourlarge/pngtree-social-media-friend-add-icon-png-image_6564195.png',
+                }}
+              />
+            </View>
+            <View
+              style={{
+                marginTop: 10,
+              }}
+            >
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 14,
+                  maxWidth: 250,
+                  marginLeft: 10,
+                  // marginTop: 10,
+                  maxWidth: 300,
+                  fontFamily: 'Inter-Bold',
+                }}
+              >
+                {friend.message}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  gap: 7,
+                  marginLeft: 10,
+                  marginTop: 2,
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '',
+                    // padding: 8,
+                    // paddingHorizontal: 18,
+                    height: 40,
+                    width: 40,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 5,
+                  }}
+                >
+                  <Ionicons name='checkmark' size={40} color='#5aff60' />
+                  {/* <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                    }}
+                    onPress={() => acceptFriendRequest()}
+                  >
+                    Accept
+                  </Text> */}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => deleteFriendRequest(notificationInfo._id)}
+                  style={{
+                    backgroundColor: '',
+                    // padding: 8,
+                    // paddingHorizontal: 18,
+                    height: 40,
+                    width: 40,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 5,
+                  }}
+                >
+                  <Ionicons name='close' size={40} color='#ff7878' />
+                  {/* <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    Decline
+                  </Text> */}
+                </TouchableOpacity>
+              </View>
+            </View>
+            <Text
+              style={{
+                color: 'lightgray',
+                fontSize: 14,
+                fontFamily: 'Inter-SemiBold',
+                marginLeft: 5,
+                marginTop: 10,
+              }}
+            >
+              {formatLastActive(friend.createdAt, {
+                type: 'short',
+              })}
+            </Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   useEffect(() => {
     fetchFriends();
+    fetchFriendRequests();
   }, []);
+
+  const deleteFriendRequest = async (id) => {
+    await newRequest.delete(`/users/notifications/${id}`);
+    fetchNotifications();
+  };
+
+  const acceptFriendRequest = async (friendId) => {};
 
   const handleChallenge = async (id) => {
     try {
@@ -194,7 +345,7 @@ export default function FriendsList() {
           </TouchableOpacity>
         </View>
 
-        {friends.length === 0 && (
+        {friends.length === 0 && friendRequests.length === 0 && (
           <Text
             style={{
               color: 'white',
@@ -205,6 +356,14 @@ export default function FriendsList() {
           >
             You have no friends. Add some friends to challenge them to a game!
           </Text>
+        )}
+
+        {friendRequests.length > 0 && (
+          <>
+            {friendRequests.map((friend, index) => {
+              return <View key={index}>{renderRequestsBubble(friend)}</View>;
+            })}
+          </>
         )}
 
         {friends.map((friend, index) => {
