@@ -30,6 +30,7 @@ const GameScreen = ({ navigation, route }) => {
   const opponentData = data?.gameSession?.players?.find(
     (player) => player.socketId !== socketService?.socket?.id,
   );
+
   const [showAnimation, setShowAnimation] = React.useState(true);
 
   const startTimer = () => {
@@ -203,7 +204,9 @@ const GameScreen = ({ navigation, route }) => {
 
   return (
     <>
-      {!showAnimation && <HighlightEffect isCorrect={isCorrectAnswer} trigger={highlightTrigger} />}
+      {!showAnimation && !opponentData?.socketId.includes('BOT') && (
+        <HighlightEffect isCorrect={isCorrectAnswer} trigger={highlightTrigger} />
+      )}
       {data && (
         <InGame
           roundNumber={round}
