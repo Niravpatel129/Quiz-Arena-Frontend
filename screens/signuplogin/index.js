@@ -255,7 +255,6 @@ export default function SignUpLogin({ navigation }) {
                         paddingVertical: 17,
                       }}
                       placeholder='Email'
-                      keyboardType='email-address'
                       onChangeText={setEmail}
                       value={email}
                     />
