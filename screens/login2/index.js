@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Linking, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import SocialButton from '../../components/SocialButton/SocialButton';
 
 export default function Login({ navigation }) {
@@ -133,6 +133,9 @@ export default function Login({ navigation }) {
                 By continuing, you agree to the
               </Text>
               <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL('https://quizarena.gg/privacy');
+                }}
                 style={{
                   marginLeft: 2,
                 }}
