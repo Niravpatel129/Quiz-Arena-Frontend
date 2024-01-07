@@ -75,6 +75,7 @@ export default function SocialButton({ variation }) {
         })
         .catch((err) => {
           console.log('🚀  err:', err);
+          alert('Apple login failed. Please try again later');
         });
 
       console.log('🚀  loginAuth:', loginAuth.data);
@@ -84,6 +85,7 @@ export default function SocialButton({ variation }) {
       } else {
         // Handle other errors
         console.log('🚀  error:', e);
+        alert('Apple login failed. Please try again later');
       }
     }
   };
