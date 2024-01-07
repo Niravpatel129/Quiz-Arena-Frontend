@@ -16,6 +16,23 @@ export default function QueueScreen({ route, navigation }) {
   const categoryName = routeParam?.categoryName || 'Logos';
   const [estimatedWaitTime, setEstimatedWaitTime] = useState(0);
   const { userData, fetchUser } = useAuth();
+  const scaleAnim = new Animated.Value(0.5);
+  const opacityAnim = new Animated.Value(0);
+
+  const onImageLoad = () => {
+    Animated.parallel([
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        friction: 5,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
 
   useEffect(() => {
     fetchUser();
@@ -92,6 +109,7 @@ export default function QueueScreen({ route, navigation }) {
     return (
       <View style={{}}>
         <Animated.Image
+          onLoad={onImageLoad}
           style={{
             width: 120,
             height: 120,
@@ -99,6 +117,8 @@ export default function QueueScreen({ route, navigation }) {
             overflow: 'hidden',
             borderWidth: 3,
             borderColor: '#69829c',
+            transform: [{ scale: scaleAnim }],
+            opacity: opacityAnim,
             // opacity: isPlaceholder && fadeAnim, // Apply animated opacity
           }}
           source={{
