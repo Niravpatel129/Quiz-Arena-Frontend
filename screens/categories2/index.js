@@ -45,10 +45,73 @@ const categories2 = [
   },
 ];
 
+function CategoryBox({ categoryTitle, navigation, fadeAnim }) {
+  const scaleAnim = useState(new Animated.Value(0.5))[0]; // Initial scale value
+
+  const onImageLoad = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      friction: 5,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  return (
+    <Animated.View
+      style={{
+        opacity: fadeAnim,
+        marginLeft: 10,
+        transform: [{ scale: scaleAnim }],
+      }}
+    >
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('Queue', {
+            categoryId: categoryTitle.name.split(' ').join('-'),
+            categoryName: categoryTitle.name,
+          })
+        }
+      >
+        <Image
+          style={{
+            width: 100,
+            height: 100,
+            borderWidth: 2,
+            borderColor: '#516696',
+            borderRadius: 20,
+          }}
+          blurRadius={0.5}
+          source={{
+            uri:
+              categoryTitle.image ||
+              'https://cdn.dribbble.com/userupload/9424324/file/original-6e071eda3550f1a2c8fe70792dc31d7e.png?resize=400x0',
+          }}
+          onLoad={onImageLoad}
+        />
+        <Text
+          style={{
+            color: 'white',
+            fontSize: 14,
+            textAlign: 'center',
+            marginTop: 5,
+            maxWidth: 100,
+            fontWeight: 'bold',
+            fontFamily: 'Inter-Bold',
+          }}
+        >
+          {capitalizeFirstLetter(categoryTitle.name)}
+        </Text>
+      </TouchableOpacity>
+    </Animated.View>
+  );
+}
+
 export default function Categories2({ navigation }) {
   const [searchInput, setSearchInput] = React.useState('');
   const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity value
   const [categories, setCategories] = useState([]);
+  const scaleAnim = useState(new Animated.Value(0.5))[0]; // Initial scale value
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await newRequest('/homepage/list');
@@ -59,15 +122,20 @@ export default function Categories2({ navigation }) {
   }, []);
 
   useEffect(() => {
-    Animated.timing(
-      fadeAnim, // The animated value to drive
-      {
-        toValue: 1, // Animate to opacity: 1 (opaque)
-        duration: 1000, // Make it take a while
-        useNativeDriver: true, // Add this line
-      },
-    ).start(); // Starts the animation
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
   }, [fadeAnim]);
+
+  useEffect(() => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      friction: 5,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const onChangeText = (text) => {
     setSearchInput(text);
@@ -79,6 +147,7 @@ export default function Categories2({ navigation }) {
         style={{
           opacity: fadeAnim,
           marginLeft: 10,
+          transform: [{ scale: scaleAnim }],
         }}
       >
         <TouchableOpacity
@@ -148,7 +217,9 @@ export default function Categories2({ navigation }) {
           <FlatList
             ItemSeparatorComponent={() => <View style={{ width: 10 }}></View>}
             data={category.subCategories}
-            renderItem={({ item }) => renderCategoryBox({ categoryTitle: item })}
+            renderItem={({ item }) => (
+              <CategoryBox categoryTitle={item} navigation={navigation} fadeAnim={fadeAnim} />
+            )}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
