@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { useAuth } from '../../context/auth/AuthContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
@@ -16,23 +16,6 @@ export default function QueueScreen({ route, navigation }) {
   const categoryName = routeParam?.categoryName || 'Logos';
   const [estimatedWaitTime, setEstimatedWaitTime] = useState(0);
   const { userData, fetchUser } = useAuth();
-  const scaleAnim = new Animated.Value(0.5);
-  const opacityAnim = new Animated.Value(0);
-
-  const onImageLoad = () => {
-    Animated.parallel([
-      Animated.spring(scaleAnim, {
-        toValue: 1,
-        friction: 5,
-        useNativeDriver: true,
-      }),
-      Animated.timing(opacityAnim, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
 
   useEffect(() => {
     fetchUser();
@@ -108,8 +91,7 @@ export default function QueueScreen({ route, navigation }) {
   const PlayerCard = (playerData, isPlaceholder) => {
     return (
       <View style={{}}>
-        <Animated.Image
-          onLoad={onImageLoad}
+        <Image
           style={{
             width: 120,
             height: 120,
@@ -117,9 +99,6 @@ export default function QueueScreen({ route, navigation }) {
             overflow: 'hidden',
             borderWidth: 3,
             borderColor: '#69829c',
-            transform: [{ scale: scaleAnim }],
-            opacity: opacityAnim,
-            // opacity: isPlaceholder && fadeAnim, // Apply animated opacity
           }}
           source={{
             uri: isPlaceholder ? playerImages[playerImageIndex] : playerData.avatar,
@@ -195,9 +174,7 @@ export default function QueueScreen({ route, navigation }) {
               tag: 'Player Tag',
               playerName: userData?.username || 'Alex Smith',
               country: userData?.country || 'ca',
-              avatar:
-                userData?.avatar ||
-                'https://d.newsweek.com/en/full/2151501/comp-image-cats-space.webp',
+              avatar: userData?.avatar || '',
               elo: userData?.allRating[categoryName] || 1200,
               experience: userData?.experience,
             },
