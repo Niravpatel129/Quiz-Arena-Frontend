@@ -48,7 +48,7 @@ export default function SocialButton({ variation }) {
 
           console.log('🚀  navigating to categories:', res);
 
-          if (!res.data.username || !res.data.profile.avatar) {
+          if (!res.data.username || !res?.data?.profile?.avatar) {
             navigation.reset({
               index: 0,
               routes: [
