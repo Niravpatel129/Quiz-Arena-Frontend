@@ -70,6 +70,7 @@ export default function SignUpLogin({ navigation }) {
     if (!result.canceled) {
       setAvatarUri(newUri);
       const url = await upload(newUri);
+      console.log('🚀  url:', url);
       setAvatar(url);
     }
   };
@@ -91,11 +92,12 @@ export default function SignUpLogin({ navigation }) {
         profile: {
           avatar: avatar || null,
         },
+        isNewUser: true,
       })
       .then((response) => {
         console.log('🚀  response:', response);
 
-        if (!response.data.user.username) {
+        if (response.data.isNewUser) {
           setShowUsername(true);
           return;
         }
