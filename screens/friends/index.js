@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import ChatHistory from '../../components/ChatHistory/ChatHistory';
 import FriendsList from '../../components/FriendsList/FriendsList';
 
@@ -13,7 +13,7 @@ export default function FriendsScreen({ navigation }) {
         height: '100%',
       }}
     >
-      <ScrollView
+      <View
         style={{
           backgroundColor: '#1c2141',
           height: '100%',
@@ -99,7 +99,7 @@ export default function FriendsScreen({ navigation }) {
 
           {activeTab === 'tab2' && <ChatHistory />}
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }

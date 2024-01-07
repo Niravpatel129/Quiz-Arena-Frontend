@@ -45,6 +45,8 @@ export default function ProfileScreen({ navigation, route }) {
             justifyContent: 'center',
             marginBottom: 30,
             position: 'relative',
+            marginTop: 20,
+            paddingTop: 20,
           }}
         >
           <View>

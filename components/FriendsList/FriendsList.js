@@ -1,6 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useEffect } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import {
+  Image,
+  RefreshControl,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { newRequest } from '../../api/newRequest';
 import formatLastActive from '../../helpers/formatLastActive';
 
@@ -8,8 +17,12 @@ export default function FriendsList() {
   const [friends = [], setFriends] = React.useState([]);
   const [textInput = '', setTextInput] = React.useState('');
   const [friendRequests = [], setFriendRequests] = React.useState([]);
+  const navigation = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchFriends = async () => {
+    setRefreshing(true);
+
     try {
       const response = await newRequest.get('/users/friends');
       const data = response.data;
@@ -17,9 +30,13 @@ export default function FriendsList() {
     } catch (err) {
       console.log(err);
     }
+
+    setRefreshing(false);
   };
 
   const fetchFriendRequests = async () => {
+    setRefreshing(true);
+
     try {
       const response = await newRequest.get('/users/notifications');
       console.log('🚀  response:', response);
@@ -31,6 +48,8 @@ export default function FriendsList() {
     } catch (err) {
       console.log(err);
     }
+
+    setRefreshing(false);
   };
 
   const sendFriendRequest = async () => {
@@ -46,6 +65,11 @@ export default function FriendsList() {
       console.log(err);
       alert('User not found');
     }
+  };
+
+  const onRefresh = () => {
+    fetchFriends();
+    fetchFriendRequests();
   };
 
   const renderRequestsBubble = (friend) => {
@@ -216,7 +240,7 @@ export default function FriendsList() {
           flexDirection: 'row',
           // justifyContent: 'space-between',
           alignItems: 'center',
-          width: '100%',
+          // width: '100%',
           padding: 10,
           borderRadius: 52,
         }}
@@ -310,7 +334,12 @@ export default function FriendsList() {
   };
 
   return (
-    <>
+    <ScrollView
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      style={{
+        height: '100%',
+      }}
+    >
       <View
         style={{
           gap: 12,
@@ -386,9 +415,21 @@ export default function FriendsList() {
         )}
 
         {friends.map((friend, index) => {
-          return <View key={index}>{renderFriendsBubble(friend)}</View>;
+          return (
+            <View
+              style={{
+                marginTop: 10,
+                width: '100%',
+                marginHorizontal: 10,
+                paddingHorizontal: 10,
+              }}
+              key={index}
+            >
+              {renderFriendsBubble(friend)}
+            </View>
+          );
         })}
       </View>
-    </>
+    </ScrollView>
   );
 }
