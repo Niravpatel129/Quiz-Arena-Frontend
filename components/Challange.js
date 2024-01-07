@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Animated, Dimensions, Image, Platform, SafeAreaView, Text, View } from 'react-native';
+import { Animated, Dimensions, Platform, SafeAreaView, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import Colors from '../constants/Colors';
 import FontSize from '../constants/FontSize';
@@ -13,6 +13,23 @@ export default function Challange({ myData, opponentData, category }) {
   const topCardAnim = useState(new Animated.Value(-800))[0];
   const bottomCardAnim = useState(new Animated.Value(800))[0];
   const isWeb = Platform.OS === 'web';
+  const scaleAnim = new Animated.Value(0.5);
+  const opacityAnim = new Animated.Value(0);
+
+  const onImageLoad = () => {
+    Animated.parallel([
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        friction: 5,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
 
   useEffect(() => {
     const onChange = () => {
@@ -155,7 +172,8 @@ export default function Challange({ myData, opponentData, category }) {
             overflow: 'hidden',
           }}
         >
-          <Image
+          <Animated.Image
+            onLoad={onImageLoad}
             source={{
               uri:
                 avatar ||
@@ -165,6 +183,8 @@ export default function Challange({ myData, opponentData, category }) {
               height: '100%',
               width: '100%',
               overflow: 'hidden',
+              transform: [{ scale: scaleAnim }],
+              opacity: opacityAnim,
             }}
           />
           <View
