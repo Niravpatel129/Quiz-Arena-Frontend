@@ -4,6 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
   Image,
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
   ScrollView,
   Text,
@@ -64,7 +66,11 @@ export default function CreateProfile({ route, navigation }) {
 
   return (
     <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
-      <SafeAreaView>
+      <SafeAreaView
+        style={{
+          flex: 1,
+        }}
+      >
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={{ flex: 1 }}
