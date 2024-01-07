@@ -46,17 +46,18 @@ export default function SocialButton({ variation }) {
         .then((res) => {
           socket.ConnectSocket();
 
-          console.log('🚀  navigating to categories:', res);
+          if (!res.data.user?.username || !res.data.user?.profile?.avatar) {
+            console.log('🚀  navigating to create profile:', res.data?.user?.username);
+            console.log('🚀  navigating to create profile:', res.data.user?.profile?.avatar);
 
-          if (!res.data.username || !res?.data?.profile?.avatar) {
             navigation.reset({
               index: 0,
               routes: [
                 {
                   name: 'CreateProfile',
                   params: {
-                    currentUsername: res?.data?.username,
-                    currentAvatar: res?.data?.profile?.avatar,
+                    currentUsername: res?.data?.user?.username,
+                    currentAvatar: res?.data?.user?.profile?.avatar,
                   },
                 },
               ],
