@@ -80,7 +80,7 @@ function CategoryBox({ categoryTitle, navigation, fadeAnim }) {
             borderColor: '#516696',
             borderRadius: 20,
           }}
-          blurRadius={0.5}
+          // blurRadius={0.5}
           source={{
             uri:
               categoryTitle.image ||
@@ -241,7 +241,7 @@ export default function Categories2({ navigation }) {
             showsVerticalScrollIndicator={false}
             style={{
               height: '100%',
-              marginTop: 20,
+              // marginTop: 20,
             }}
           >
             <View
@@ -262,6 +262,7 @@ export default function Categories2({ navigation }) {
                   placeholderTextColor='white'
                   style={{
                     margin: 10,
+                    marginTop: 20,
                     marginBottom: 10,
                     flex: 1,
                     color: 'white',
