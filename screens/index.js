@@ -1,6 +1,6 @@
 import { Text } from 'native-base';
 import React from 'react';
-import { Alert, TouchableOpacity, View } from 'react-native';
+import { Alert, Linking, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../api/newRequest';
 import { useAuth } from '../context/auth/AuthContext';
 
@@ -90,6 +90,29 @@ export default function ProfileEditScreen() {
             }}
           >
             Delete Account
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            marginTop: 20,
+            backgroundColor: '#f96363',
+            padding: 10,
+            width: 200,
+            borderRadius: 5,
+          }}
+          onPress={() => {
+            Linking.openURL('https://quizarena.gg/privacy');
+          }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              fontSize: 20,
+              fontWeight: 'bold',
+            }}
+          >
+            Terms of Use
           </Text>
         </TouchableOpacity>
       </View>
