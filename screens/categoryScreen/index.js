@@ -20,8 +20,6 @@ export default function CategoryScreen() {
 
   const renderLeaderboardsPlayers = ({ players }) => {
     return players.map((player, index) => {
-      console.log(player);
-
       return (
         <View
           key={index}
