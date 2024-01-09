@@ -194,7 +194,14 @@ export default function Categories2({ navigation }) {
   // };
 
   const renderCategories = () => {
-    return categories.map((category, index) => {
+    const filteredCategories = categories.filter((category) => {
+      return (
+        category.parentCategory.toLowerCase().includes(searchInput) ||
+        category.subCategories.some((sub) => sub.name.toLowerCase().includes(searchInput))
+      );
+    });
+
+    return filteredCategories.map((category, index) => {
       return (
         <View
           key={index}
