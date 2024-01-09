@@ -13,9 +13,10 @@ export default function ChallengeScreen({ route, navigation }) {
       navigation.navigate('Game', { game: data.game });
     });
   }, []);
+
   return (
     <View>
-      <Text>ChallengeScreen</Text>
+      <Text>ChallengeScreen {route.params.category}</Text>
     </View>
   );
 }

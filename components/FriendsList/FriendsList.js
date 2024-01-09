@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 import formatLastActive from '../../helpers/formatLastActive';
+import ChallangeModal from '../ChallangeModal/ChallangeModal';
 
 export default function FriendsList() {
   const [friends = [], setFriends] = React.useState([]);
@@ -19,6 +20,10 @@ export default function FriendsList() {
   const [friendRequests = [], setFriendRequests] = React.useState([]);
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => setIsModalVisible(true);
+  const hideModal = () => setIsModalVisible(false);
 
   const fetchFriends = async () => {
     setRefreshing(true);
@@ -73,7 +78,8 @@ export default function FriendsList() {
   };
 
   const renderRequestsBubble = (friend) => {
-    console.log('🚀  friend:', friend);
+    if (!friend) return null;
+
     return (
       <View>
         <View>
@@ -115,7 +121,7 @@ export default function FriendsList() {
                   fontFamily: 'Inter-Bold',
                 }}
               >
-                {friend.message}
+                {friend?.message}
               </Text>
               <View
                 style={{
@@ -215,6 +221,9 @@ export default function FriendsList() {
 
   const handleChallenge = async (id) => {
     try {
+      showModal();
+      return;
+
       const gameId = Math.floor(Math.random() * 1000000);
 
       await newRequest.post('/users/notifications', {
@@ -340,6 +349,7 @@ export default function FriendsList() {
         height: '100%',
       }}
     >
+      <ChallangeModal isModalVisible={isModalVisible} hideModal={hideModal} />
       <View
         style={{
           gap: 12,
