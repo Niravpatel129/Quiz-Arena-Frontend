@@ -11,7 +11,7 @@ const theme = {
 };
 
 const ICONS = {
-  Categories: 'ios-home',
+  Categories: 'ios-tree',
   History: 'calendar',
   Profile: 'ios-person',
   Leaderboards: 'ios-trophy',
@@ -31,7 +31,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
         style={{
           flexDirection: 'row',
           backgroundColor: theme.colors.background,
-          // paddingBottom: 42,
+          paddingBottom: 10,
           // paddingTop: 16,
           // paddingTop: 16,
         }}
@@ -41,7 +41,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
           const isFocused = state.index === index;
 
-          const iconName = ICONS[route.name] || 'ios-people';
+          const iconName = ICONS[route.name] || 'book';
 
           const onPress = () => {
             const event = navigation.emit({
@@ -76,7 +76,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
               <Ionicons
                 style={{}}
                 name={iconName}
-                size={25}
+                size={30}
                 color={isFocused ? 'white' : '#516696'}
               />
             </TouchableOpacity>
