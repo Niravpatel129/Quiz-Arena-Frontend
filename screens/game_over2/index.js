@@ -351,12 +351,12 @@ export default function GameOver2({ navigation, route }) {
             <EndGameChart
               chartData={{
                 playerOne: {
-                  name: fakeData.yourData.username,
-                  scores: fakeData.yourData.gameData.scores.map((score) => score.points),
+                  name: fakeData?.yourData?.username,
+                  scores: fakeData?.yourData?.gameData?.scores.map((score) => score.points),
                 },
                 playerTwo: {
-                  name: fakeData.opponentData.username,
-                  scores: fakeData.opponentData.gameData.scores.map((score) => score.points),
+                  name: fakeData?.opponentData?.username,
+                  scores: fakeData?.opponentData?.gameData.scores.map((score) => score.points),
                 },
               }}
             />
