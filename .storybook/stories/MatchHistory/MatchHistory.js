@@ -103,7 +103,7 @@ export default function MatchHistory() {
             renderItem={({ item, index }) => {
               const opponent = item.players.find((v) => v.id !== userId);
               const result = item.winnerId === userId ? 'Won' : 'Lost';
-              const opponentAvatar = opponent.playerInformation.avatar;
+              const opponentAvatar = opponent?.playerInformation?.avatar;
 
               return (
                 <Animated.View
@@ -111,8 +111,8 @@ export default function MatchHistory() {
                   style={[
                     styles.bubble,
                     {
-                      opacity: matchHistory[index].opacity,
-                      transform: [{ translateY: matchHistory[index].translateY }],
+                      opacity: matchHistory[index]?.opacity,
+                      transform: [{ translateY: matchHistory[index]?.translateY }],
                     },
                   ]}
                 >
