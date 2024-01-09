@@ -1,23 +1,39 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { newRequest } from '../../api/newRequest';
 
 export default function NotificationsScreen({ navigation }) {
   const [notifications, setNotifications] = React.useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const fetchNotifications = async () => {
+    setRefreshing(true);
+
     try {
       const response = await newRequest.get('/users/notifications');
       const data = response.data;
-      console.log('🚀  data:', data);
       setNotifications(data.notifications);
     } catch (err) {
       console.log(err);
     }
+
+    setRefreshing(false);
   };
 
   React.useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  const onRefresh = React.useCallback(() => {
     fetchNotifications();
   }, []);
 
@@ -160,8 +176,10 @@ export default function NotificationsScreen({ navigation }) {
           onPress={() => navigation.goBack()}
         />
         <ScrollView
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
           style={{
             padding: 10,
+            height: '100%',
           }}
         >
           <View
