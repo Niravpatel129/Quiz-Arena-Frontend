@@ -1,7 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Animated,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { newRequest } from '../../api/newRequest';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
@@ -18,7 +26,30 @@ export default function CategoryScreen({ route }) {
   useEffect(() => {
     const fetchTopPlayers = async () => {
       const response = await newRequest('/leaderboards/logos');
-      setTopPlayers(response.data);
+      const animatedPlayers = response.data.map((player) => ({
+        ...player,
+        opacity: new Animated.Value(0),
+        translateY: new Animated.Value(50),
+      }));
+      setTopPlayers(animatedPlayers);
+
+      animatedPlayers.forEach((_, index) => {
+        Animated.sequence([
+          Animated.delay(index * 100),
+          Animated.parallel([
+            Animated.timing(animatedPlayers[index].opacity, {
+              toValue: 1,
+              duration: 500,
+              useNativeDriver: true,
+            }),
+            Animated.timing(animatedPlayers[index].translateY, {
+              toValue: 0,
+              duration: 500,
+              useNativeDriver: true,
+            }),
+          ]),
+        ]).start();
+      });
     };
 
     fetchTopPlayers();
@@ -27,7 +58,7 @@ export default function CategoryScreen({ route }) {
   const renderLeaderboardsPlayers = ({ players }) => {
     return players.map((player, index) => {
       return (
-        <View
+        <Animated.View
           key={index}
           style={{
             backgroundColor: '#1c2141',
@@ -38,6 +69,8 @@ export default function CategoryScreen({ route }) {
             alignItems: 'center',
             justifyContent: 'space-between',
             marginBottom: 12,
+            opacity: player.opacity,
+            transform: [{ translateY: player.translateY }],
           }}
         >
           <View
@@ -114,7 +147,7 @@ export default function CategoryScreen({ route }) {
               {Math.floor(player.rating || 1200)}
             </Text>
           </Text>
-        </View>
+        </Animated.View>
       );
     });
   };
