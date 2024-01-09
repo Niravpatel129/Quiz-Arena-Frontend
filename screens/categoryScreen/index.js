@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
 import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -5,9 +6,14 @@ import CountryFlag from 'react-native-country-flag';
 import { newRequest } from '../../api/newRequest';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
-export default function CategoryScreen() {
+export default function CategoryScreen({ route }) {
   const [activeTab, setActiveTab] = React.useState('tab1');
+  const navgiation = useNavigation();
   const [topPlayers, setTopPlayers] = React.useState([]);
+
+  const categoryName = route.params?.categoryName;
+  const categoryImage = route.params?.categoryImage;
+  const categoryId = route.params?.categoryId;
 
   useEffect(() => {
     const fetchTopPlayers = async () => {
@@ -121,7 +127,6 @@ export default function CategoryScreen() {
       <SafeAreaView
         style={{
           width: '100%',
-          //   marginTop: 150,
         }}
       >
         <ScrollView
@@ -144,7 +149,7 @@ export default function CategoryScreen() {
                 marginBottom: 20,
               }}
             >
-              League of Legends
+              {capitalizeFirstLetter(categoryName) || 'League of Legends'}
             </Text>
             <View
               style={{
@@ -160,7 +165,9 @@ export default function CategoryScreen() {
                     borderRadius: 10,
                   }}
                   source={{
-                    uri: 'https://cdn.vox-cdn.com/thumbor/UehyoNzYoIR5ZJDrvHjDAZhmkaI=/0x0:1920x1080/1400x933/filters:focal(1030x331:1336x637):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/65632309/jbareham_191158_ply0958_decade_lolengends.0.jpg',
+                    uri:
+                      categoryImage ||
+                      'https://cdn.vox-cdn.com/thumbor/UehyoNzYoIR5ZJDrvHjDAZhmkaI=/0x0:1920x1080/1400x933/filters:focal(1030x331:1336x637):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/65632309/jbareham_191158_ply0958_decade_lolengends.0.jpg',
                   }}
                 />
               </View>
@@ -172,6 +179,12 @@ export default function CategoryScreen() {
                 }}
               >
                 <TouchableOpacity
+                  onPress={() =>
+                    navgiation.navigate('Queue', {
+                      categoryId: categoryId,
+                      categoryName: categoryName,
+                    })
+                  }
                   style={{
                     backgroundColor: 'white',
                     borderRadius: 10,
@@ -192,6 +205,9 @@ export default function CategoryScreen() {
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  onPress={() => {
+                    navgiation.navigate('Friends');
+                  }}
                   style={{
                     backgroundColor: 'white',
                     borderRadius: 10,
@@ -214,6 +230,9 @@ export default function CategoryScreen() {
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  onPress={() => {
+                    alert('Coming Soon!');
+                  }}
                   style={{
                     backgroundColor: 'white',
                     borderRadius: 10,
@@ -222,7 +241,6 @@ export default function CategoryScreen() {
                     fontWeight: 'bold',
                     fontFamily: 'Inter-Bold',
                     width: '100%',
-                    // flex: 1,
                     alignItems: 'center',
                   }}
                 >

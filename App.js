@@ -13,6 +13,7 @@ import { AuthProvider } from './context/auth/AuthContext';
 import { SocketProvider } from './context/socket/SocketContext';
 import ProfileEditScreen from './screens';
 import Categories2 from './screens/categories2';
+import CategoryScreen from './screens/categoryScreen';
 import ChallengeScreen from './screens/challenge';
 import Chat from './screens/chat';
 import CreateProfile from './screens/createProfile';
@@ -192,6 +193,14 @@ function App() {
           component={CreateProfile}
           options={{
             headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name='CategoryScreen'
+          component={CategoryScreen}
+          options={{
+            headerShown: true,
           }}
         />
 
