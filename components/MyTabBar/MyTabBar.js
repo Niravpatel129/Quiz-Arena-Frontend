@@ -31,7 +31,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
         style={{
           flexDirection: 'row',
           backgroundColor: theme.colors.background,
-          paddingBottom: 10,
+          // paddingBottom: 10,
           // paddingTop: 16,
           // paddingTop: 16,
         }}
@@ -71,7 +71,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
               testID={options.tabBarTestID}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={{ flex: 1, alignItems: 'center', paddingTop: 16 }}
+              style={{ flex: 1, alignItems: 'center', paddingTop: 16, paddingBottom: 10 }}
             >
               <Ionicons
                 style={{}}
