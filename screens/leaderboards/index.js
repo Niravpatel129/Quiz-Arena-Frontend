@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
+  Animated,
   Image,
   SafeAreaView,
   ScrollView,
@@ -20,21 +21,57 @@ export default function LeaderboardsScreen({ navigation }) {
   const fetchLeaderboards = async () => {
     const response = await newRequest.get('/leaderboards');
     const data = response.data;
-    //sort based on item.averageRating
     data.sort((a, b) => b.averageRating - a.averageRating);
-    setLeaderboards(data);
+    const animatedData = data.map((player) => ({
+      ...player,
+      opacity: new Animated.Value(0),
+      translateY: new Animated.Value(50),
+    }));
+    setLeaderboards(animatedData);
   };
 
   React.useEffect(() => {
     fetchLeaderboards();
   }, []);
 
+  React.useEffect(() => {
+    const animateLeaderboards = () => {
+      leaderboards.forEach((_, index) => {
+        Animated.sequence([
+          Animated.delay(index * 100),
+          Animated.parallel([
+            Animated.timing(leaderboards[index].opacity, {
+              toValue: 1,
+              duration: 500,
+              useNativeDriver: true,
+            }),
+            Animated.timing(leaderboards[index].translateY, {
+              toValue: 0,
+              duration: 500,
+              useNativeDriver: true,
+            }),
+          ]),
+        ]).start();
+      });
+    };
+
+    if (leaderboards.length > 0) {
+      animateLeaderboards();
+    }
+  }, [leaderboards]);
+
   const renderTopThree = ({ players }) => {
     return players.map((player, index) => {
       const color = index === 0 ? 'gold' : index === 1 ? 'silver' : '#CD7F32';
 
       return (
-        <View key={index}>
+        <Animated.View
+          key={index}
+          style={{
+            opacity: player.opacity,
+            transform: [{ translateY: player.translateY }],
+          }}
+        >
           <TouchableOpacity
             onPress={() =>
               navigation.navigate('Profile', {
@@ -91,7 +128,7 @@ export default function LeaderboardsScreen({ navigation }) {
           >
             <Text style={{ color: color }}>{Math.floor(player.averageRating)}</Text>
           </Text>
-        </View>
+        </Animated.View>
       );
     });
   };
@@ -99,7 +136,7 @@ export default function LeaderboardsScreen({ navigation }) {
   const renderLeaderboardsPlayers = ({ players }) => {
     return players.map((player, index) => {
       return (
-        <View
+        <Animated.View
           key={index}
           style={{
             backgroundColor: '#1c2141',
@@ -110,6 +147,8 @@ export default function LeaderboardsScreen({ navigation }) {
             alignItems: 'center',
             justifyContent: 'space-between',
             marginBottom: 12,
+            opacity: player.opacity,
+            transform: [{ translateY: player.translateY }],
           }}
         >
           <View
@@ -186,7 +225,7 @@ export default function LeaderboardsScreen({ navigation }) {
               {Math.floor(player.averageRating)}
             </Text>
           </Text>
-        </View>
+        </Animated.View>
       );
     });
   };
