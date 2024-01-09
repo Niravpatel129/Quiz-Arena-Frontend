@@ -67,7 +67,7 @@ export default function ChallengeScreen({ route, navigation }) {
             textShadowRadius: 10,
           }}
         >
-          {isPlaceholder ? 'Searching...' : capitalizeFirstLetter(playerData.playerName)}{' '}
+          {isPlaceholder ? 'Waiting...' : capitalizeFirstLetter(playerData.playerName)}{' '}
           <CountryFlag isoCode={playerData.country || ''} size={14} />
         </Text>
         <Text
