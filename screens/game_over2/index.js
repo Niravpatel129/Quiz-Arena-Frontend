@@ -7,6 +7,7 @@ import EndGameChart from '../../components/EndGameChart';
 import QuestionsPostGame from '../../components/QuestionsPostGame/QuestionsPostGame';
 import RematchModal from '../../components/RematchModal/RematchModal';
 import Scoresheet from '../../components/Scoresheet/Scoresheet';
+import useInAppReview from '../../hooks/useInAppReview';
 import socketService from '../../services/socketService';
 
 const fakeData2 = {
@@ -41,8 +42,13 @@ const fakeData2 = {
 export default function GameOver2({ navigation, route }) {
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
   const fakeData = route.params?.results || fakeData2;
+  const requestReview = useInAppReview();
 
   if (!fakeData) return null;
+
+  useEffect(() => {
+    if (fakeData.yourData.result === 'winner') requestReview();
+  }, [fakeData.yourData.result]);
 
   const handleRematch = () => {
     socketService.socket.emit('triggerRematch', {

@@ -9,7 +9,6 @@ WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginWithFacebook() {
   const [user, setUser] = React.useState(null);
-  console.log('🚀  user:', user);
 
   const [request, response, promptAsync] = Facebook.useAuthRequest({
     clientId: FB_APP_ID,
