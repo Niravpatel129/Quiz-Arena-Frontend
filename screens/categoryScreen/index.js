@@ -25,7 +25,7 @@ export default function CategoryScreen({ route }) {
 
   useEffect(() => {
     const fetchTopPlayers = async () => {
-      const response = await newRequest('/leaderboards/logos');
+      const response = await newRequest(`/leaderboards/${categoryName}`);
       const animatedPlayers = response.data.map((player) => ({
         ...player,
         opacity: new Animated.Value(0),
