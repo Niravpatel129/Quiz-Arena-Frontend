@@ -60,7 +60,9 @@
     "expo-constants": "~14.4.2",
     "expo-image-picker": "~14.3.2",
     "expo-file-system": "~15.4.5",
-    "@react-native-picker/picker": "2.4.10"
+    "@react-native-picker/picker": "2.4.10",
+    "expo-store-review": "~6.4.0",
+    "expo-linking": "~5.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
