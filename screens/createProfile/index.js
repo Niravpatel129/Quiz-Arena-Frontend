@@ -45,7 +45,12 @@ export default function CreateProfile({ route, navigation }) {
 
   const handleLogin = () => {
     try {
-      console.log('🚀  avatar:', avatar);
+      // username in characters 3 letter and max 10
+
+      if (username.length < 3 || username.length > 10) {
+        alert('username must be between 3 and 10 characters');
+        return;
+      }
 
       newRequest.put('/users', {
         username: username,

@@ -83,6 +83,11 @@ export default function SignUpLogin({ navigation }) {
       return;
     }
 
+    if (showUsername && (username.length < 3 || username.length > 10)) {
+      alert('username must be between 3 and 10 characters');
+      return;
+    }
+
     newRequest
       .post('/auth/login', {
         email: email,
