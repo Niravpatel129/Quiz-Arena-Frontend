@@ -47,7 +47,9 @@ export default function GameOver2({ navigation, route }) {
   if (!fakeData) return null;
 
   useEffect(() => {
-    if (fakeData.yourData.result === 'winner') requestReview();
+    if (!fakeData) return;
+
+    if (fakeData?.yourData?.result === 'winner') requestReview();
   }, [fakeData.yourData.result]);
 
   const handleRematch = () => {
