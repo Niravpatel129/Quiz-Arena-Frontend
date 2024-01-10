@@ -101,7 +101,7 @@ export default function MatchHistory() {
             }
             data={matchHistory}
             renderItem={({ item, index }) => {
-              const opponent = item.players.find((v) => v.id !== userId);
+              const opponent = item?.players?.find((v) => v?.id !== userId);
               const result = item.winnerId === userId ? 'Won' : 'Lost';
               const opponentAvatar = opponent?.playerInformation?.avatar;
               if (!opponent) return null;
