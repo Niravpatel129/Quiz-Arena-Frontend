@@ -104,6 +104,7 @@ export default function MatchHistory() {
               const opponent = item.players.find((v) => v.id !== userId);
               const result = item.winnerId === userId ? 'Won' : 'Lost';
               const opponentAvatar = opponent?.playerInformation?.avatar;
+              if (!opponent) return null;
 
               return (
                 <Animated.View
@@ -117,14 +118,6 @@ export default function MatchHistory() {
                   ]}
                 >
                   <View style={styles.bubbleIcon}>
-                    {/* <Image
-                source={{
-                  uri: 'https://cdn-icons-png.flaticon.com/512/1170/1170688.png',
-                }}
-                alt='Alternate Text'
-                size='xs'
-                style={{ width: 40, height: 40 }}
-              /> */}
                     <Ionicons
                       style={{
                         marginTop: 13,
@@ -135,7 +128,7 @@ export default function MatchHistory() {
                     />
                   </View>
                   <View style={styles.bubbleInnerContainer}>
-                    <Text style={styles.bubbleTitle}>{capitalizeFirstLetter(item.category)}</Text>
+                    <Text style={styles.bubbleTitle}>{capitalizeFirstLetter(item?.category)}</Text>
                     <Pressable
                       onPress={() => {
                         navigation.navigate('MatchHistoryDetails', {
@@ -145,8 +138,8 @@ export default function MatchHistory() {
                     >
                       <Text style={styles.bubbleSubtitle}>
                         {parseSubtitle({
-                          opponentName: opponent.name,
-                          date: item.startTime,
+                          opponentName: opponent?.name,
+                          date: item?.startTime,
                         })}
                       </Text>
                     </Pressable>
@@ -154,7 +147,7 @@ export default function MatchHistory() {
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate('Profile', {
-                        userId: opponent.id,
+                        userId: opponent?.id,
                       });
                     }}
                   >
