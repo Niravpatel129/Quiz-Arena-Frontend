@@ -12,6 +12,15 @@ import {
 } from 'react-native';
 
 export default function Contribute() {
+  const [question, setQuestion] = useState('');
+  const [imageUrl, setImageUrl] = useState(
+    'https://static.vecteezy.com/system/resources/previews/004/968/473/original/upload-or-add-a-picture-jpg-file-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-etc-vector.jpg',
+  );
+  const [option1, setOption1] = useState('');
+  const [option2, setOption2] = useState('');
+  const [option3, setOption3] = useState('');
+  const [correctOption, setCorrectOption] = useState('');
+
   return (
     <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
       <SafeAreaView style={{}}>
@@ -60,7 +69,12 @@ export default function Contribute() {
                   0/100
                 </Text>
               </View>
-              <TextArea placeholder='Enter your question here' style={{}} />
+              <TextArea
+                placeholder='Enter your question here'
+                style={{}}
+                value={question}
+                onChangeText={(text) => setQuestion(text)}
+              />
             </View>
 
             <View>
@@ -105,7 +119,7 @@ export default function Contribute() {
                     height: 250,
                   }}
                   source={{
-                    uri: 'https://static.vecteezy.com/system/resources/previews/004/968/473/original/upload-or-add-a-picture-jpg-file-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-etc-vector.jpg',
+                    uri: imageUrl,
                   }}
                 />
               </View>
@@ -146,8 +160,10 @@ export default function Contribute() {
                   borderColor: 'lightgray',
                   borderRadius: 10,
                 }}
-                placeholder='useless placeholder'
-                keyboardType='numeric'
+                placeholder='Enter option 1'
+                value={option1}
+                onChangeText={(text) => setOption1(text)}
+                keyboardType='default'
               />
             </View>
             <View>
@@ -184,8 +200,10 @@ export default function Contribute() {
                   borderColor: 'lightgray',
                   borderRadius: 10,
                 }}
-                placeholder='useless placeholder'
-                keyboardType='numeric'
+                placeholder='Enter option 2'
+                value={option2}
+                onChangeText={(text) => setOption2(text)}
+                keyboardType='default'
               />
             </View>
             <View>
@@ -222,8 +240,10 @@ export default function Contribute() {
                   borderColor: 'lightgray',
                   borderRadius: 10,
                 }}
-                placeholder='useless placeholder'
-                keyboardType='numeric'
+                placeholder='Enter option 3'
+                value={option3}
+                onChangeText={(text) => setOption3(text)}
+                keyboardType='default'
               />
             </View>
             <View>
@@ -260,8 +280,10 @@ export default function Contribute() {
                   borderColor: 'lightgray',
                   borderRadius: 10,
                 }}
-                placeholder='useless placeholder'
-                keyboardType='numeric'
+                placeholder='Enter option 4'
+                value={correctOption}
+                onChangeText={(text) => setCorrectOption(text)}
+                keyboardType='default'
               />
             </View>
           </View>
