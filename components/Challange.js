@@ -118,6 +118,7 @@ export default function Challange({ myData, opponentData, category }) {
                 fontSize: FontSize.xl,
                 fontWeight: 'bold',
                 fontFamily: 'poppins-regular',
+                maxWidth: 200,
               }}
             >
               {playerName || 'Alex'}
