@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "357445537871",
+    "project_id": "quizarena-8ba1b",
+    "storage_bucket": "quizarena-8ba1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357445537871:android:f3c441970ed36d94da9a3a",
+        "android_client_info": {
+          "package_name": "com.niravpatelp129.QuizArenaFrontendScaffold"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ7dH-E_37TXBugvSqG7O3aSZQphF3KF4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

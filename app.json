@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Quiz-Arena",
+    "name": "Quiz Arena",
     "slug": "Quiz-Arena-Frontend-Scaffold",
     "version": "1.0.1",
     "orientation": "portrait",
@@ -8,7 +8,7 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#1d284b"
     },
     "assetBundlePatterns": ["**/*"],
