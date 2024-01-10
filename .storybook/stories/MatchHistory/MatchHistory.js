@@ -159,7 +159,7 @@ export default function MatchHistory() {
                           opponentAvatar ||
                           'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
                       }}
-                      alt='Alternate Text'
+                      alt=''
                       size='xs'
                       style={{
                         width: 50,
