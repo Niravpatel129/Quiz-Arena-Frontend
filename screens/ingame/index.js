@@ -4,6 +4,7 @@ import { Animated, Image, SafeAreaView, ScrollView, Text, View } from 'react-nat
 import CountryFlag from 'react-native-country-flag';
 import AnimatedButton from '../../components/AnimatedButton/AnimatedButton';
 import Scorebar from '../../components/Scorebar/Scorebar';
+import { useSound } from '../../context/sound/SoundContext';
 import shuffle from '../../helpers/shuffle';
 import socketService from '../../services/socketService';
 
@@ -102,6 +103,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
   const [selectedForRound, setSelectedForRound] = useState(false);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { playSound } = useSound();
 
   useEffect(() => {
     // Shuffle the answers
@@ -118,36 +120,6 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
     setSelectedAnswer(answer);
     handleAnswer(answer);
     setSelectedForRound(true);
-
-    // fade out the other answers
-    // fadeAnim.setValue(0);
-  };
-
-  const renderCachedAnswerBubble = (answer) => {
-    return (
-      <AnimatedButton
-        key={answer.optionText}
-        style={{
-          width: '100%',
-          height: 55,
-          borderRadius: 10,
-          backgroundColor: answer.isCorrect ? 'rgb(110, 246, 46)' : 'rgb(246, 46, 46)',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Text
-          style={{
-            fontFamily: 'Inter-Bold',
-            fontWeight: '600',
-            color: '#fff',
-            fontSize: 18,
-          }}
-        >
-          {answer.optionText}
-        </Text>
-      </AnimatedButton>
-    );
   };
 
   const renderAnswerBubble = (answer) => {
@@ -254,6 +226,16 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
       answer: answer,
       timeRemaining: timer,
     };
+
+    // check if answer is correct or not
+    const correctAnswer = InGameData.RoundData.answers.find((a) => a.isCorrect);
+    console.log('🚀  correctAnswer:', correctAnswer);
+
+    if (answer.toLowerCase() === correctAnswer?.optionText?.toLowerCase()) {
+      playSound('correct_answer');
+    } else {
+      playSound('button_press');
+    }
 
     // Emit the event with the data
     socketService.emit('submit_answer', resData);

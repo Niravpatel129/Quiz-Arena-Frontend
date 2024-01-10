@@ -11,6 +11,7 @@ import TabBar from './components/MyTabBar/MyTabBar';
 import fonts from './config/fonts';
 import { AuthProvider } from './context/auth/AuthContext';
 import { SocketProvider } from './context/socket/SocketContext';
+import { SoundProvider } from './context/sound/SoundContext';
 import ProfileEditScreen from './screens';
 import Categories2 from './screens/categories2';
 import CategoryScreen from './screens/categoryScreen';
@@ -261,9 +262,11 @@ function App() {
         <SocketProvider>
           <NavigationContainer theme={MyTheme}>
             <AuthProvider>
-              <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
-                <StackNavigator />
-              </LinearGradient>
+              <SoundProvider>
+                <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
+                  <StackNavigator />
+                </LinearGradient>
+              </SoundProvider>
             </AuthProvider>
           </NavigationContainer>
         </SocketProvider>
