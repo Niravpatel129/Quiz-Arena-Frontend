@@ -62,7 +62,8 @@
     "expo-file-system": "~15.4.5",
     "@react-native-picker/picker": "2.4.10",
     "expo-store-review": "~6.4.0",
-    "expo-linking": "~5.0.2"
+    "expo-linking": "~5.0.2",
+    "expo-system-ui": "~2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
