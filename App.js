@@ -17,6 +17,7 @@ import Categories2 from './screens/categories2';
 import CategoryScreen from './screens/categoryScreen';
 import ChallengeScreen from './screens/challenge';
 import Chat from './screens/chat';
+import Contribute from './screens/contribute';
 import CreateProfile from './screens/createProfile';
 import FriendsScreen from './screens/friends';
 import GameScreen from './screens/game';
@@ -166,11 +167,7 @@ function App() {
           },
         })}
       >
-        {/* <Stack.Screen
-          name='Dev'
-          component={CreateProfile}
-          options={{ headerShown: false, headerTransparent: true }}
-        /> */}
+        {/* <Stack.Screen name='Dev' component={Contribute} options={{ headerShown: true }} /> */}
 
         <Stack.Screen
           name='Home'
@@ -204,6 +201,8 @@ function App() {
             headerShown: true,
           }}
         />
+
+        <Stack.Screen name='Contribute' component={Contribute} options={{ headerShown: true }} />
 
         <Stack.Screen name='Chat' component={Chat} options={{ headerShown: false }} />
         {/* <Stack.Screen name='Drawer' component={DrawerNavigator} options={{ headerShown: false }} /> */}
