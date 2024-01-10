@@ -63,7 +63,6 @@ export default function Challange({ myData, opponentData, category }) {
     { tag, playerName, country, elo, experience, avatar, isSecond },
     index,
   ) => {
-    console.log('🚀  isSecond:', isSecond);
     const cardAnim = index === 1 ? topCardAnim : bottomCardAnim;
 
     const translateX = cardAnim;
@@ -266,7 +265,6 @@ export default function Challange({ myData, opponentData, category }) {
             style={{
               justifyContent: 'center',
               alignItems: 'center',
-
               margin: Spacing.margin.xl,
             }}
           >

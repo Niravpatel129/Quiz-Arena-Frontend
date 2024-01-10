@@ -237,22 +237,6 @@ const GameScreen = ({ navigation, route }) => {
           }}
         />
       )}
-      {/* <View style={styles.container}>
-        <Header yourData={myData} opponentData={opponentData} countdown={timer} />
-        <Question text={data?.question} />
-
-        <Animated.View style={{ opacity: fadeInOpacity }}>
-          <AnswerOptions
-            helperImage={data?.helperImage}
-            answersOptions={data?.options}
-            handleAnswer={handleAnswer}
-            scores={{
-              yourScore: myData?.score,
-              opponentScore: opponentData?.score,
-            }}
-          />
-        </Animated.View>
-      </View> */}
     </>
   );
 };
