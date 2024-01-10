@@ -91,7 +91,7 @@ export default function CategoryScreen({ route }) {
             </Text>
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('Profile', {
+                navgiation.navigate('Profile', {
                   userId: player._id,
                 })
               }
