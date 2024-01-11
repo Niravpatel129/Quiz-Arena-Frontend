@@ -229,7 +229,6 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
 
     // check if answer is correct or not
     const correctAnswer = InGameData.RoundData.answers.find((a) => a.isCorrect);
-    console.log('🚀  correctAnswer:', correctAnswer);
 
     if (answer.toLowerCase() === correctAnswer?.optionText?.toLowerCase()) {
       playSound('correct_answer');
