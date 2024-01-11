@@ -142,6 +142,7 @@ export default function QuestionsPostGame({ questions }) {
           {question.Answers.map((answer) => {
             return (
               <View
+                key={answer.optionText}
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
