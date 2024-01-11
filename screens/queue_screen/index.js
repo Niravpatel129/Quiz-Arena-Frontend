@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
@@ -83,6 +84,8 @@ export default function QueueScreen({ route, navigation }) {
     });
 
     socketService.on('game_start', (data) => {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
       navigation.navigate('Game', { game: data.game });
       clearInterval(intervalRef.current);
     });
