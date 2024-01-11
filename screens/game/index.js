@@ -113,39 +113,47 @@ const GameScreen = ({ navigation, route }) => {
       );
 
       // toggle game off for debugging
-      navigation.navigate('GameOver', {
-        results: {
-          rounds: results.gameSession.rounds,
-          playersRoundData: results.gameSession.players,
-          category: results.gameSession.category,
-          gameSessionId: results.gameSession._id,
-          yourData: {
-            username: myData.name,
-            rating: myData.playerInformation.elo.rating,
-            ratingChange: myData.playerInformation?.elo?.ratingChange || -5,
-            result: myData.score > opponentData.score ? 'winner' : 'loser',
-            avatar: myData.playerInformation.avatar,
-            country: myData.playerInformation?.country,
-            gameData: {
-              scores: myData.answers,
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'GameOver',
+            params: {
+              results: {
+                rounds: results.gameSession.rounds,
+                playersRoundData: results.gameSession.players,
+                category: results.gameSession.category,
+                gameSessionId: results.gameSession._id,
+                yourData: {
+                  username: myData.name,
+                  rating: myData.playerInformation.elo.rating,
+                  ratingChange: myData.playerInformation?.elo?.ratingChange || -5,
+                  result: myData.score > opponentData.score ? 'winner' : 'loser',
+                  avatar: myData.playerInformation.avatar,
+                  country: myData.playerInformation?.country,
+                  gameData: {
+                    scores: myData.answers,
+                  },
+                  socketId: myData.socketId,
+                  userId: myData._id,
+                },
+                opponentData: {
+                  username: opponentData.name,
+                  rating: opponentData.playerInformation.elo.rating,
+                  ratingChange: opponentData?.playerInformation?.elo?.ratingChange || 5,
+                  result: opponentData.score > myData.score ? 'winner' : 'loser',
+                  avatar: opponentData.playerInformation.avatar,
+                  country: opponentData.playerInformation?.country,
+                  gameData: {
+                    scores: opponentData.answers,
+                  },
+                  socketId: opponentData.socketId,
+                  userId: opponentData._id,
+                },
+              },
             },
-            socketId: myData.socketId,
-            userId: myData._id,
           },
-          opponentData: {
-            username: opponentData.name,
-            rating: opponentData.playerInformation.elo.rating,
-            ratingChange: opponentData?.playerInformation?.elo?.ratingChange || 5,
-            result: opponentData.score > myData.score ? 'winner' : 'loser',
-            avatar: opponentData.playerInformation.avatar,
-            country: opponentData.playerInformation?.country,
-            gameData: {
-              scores: opponentData.answers,
-            },
-            socketId: opponentData.socketId,
-            userId: opponentData._id,
-          },
-        },
+        ],
       });
     });
 
