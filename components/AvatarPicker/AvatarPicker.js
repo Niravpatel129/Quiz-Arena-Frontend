@@ -1,6 +1,6 @@
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
-import { Alert, Animated, TouchableOpacity } from 'react-native';
+import { Animated, TouchableOpacity } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 import upload from '../../helpers/upload';
 
@@ -51,7 +51,7 @@ const AvatarPicker = ({ defaultImage, disablePress }) => {
       });
     } catch (error) {
       console.error('Error uploading image:', error);
-      Alert.alert('Upload Failed', 'Please try again.');
+      alert('Upload Failed', 'Please try again.');
     }
   };
 

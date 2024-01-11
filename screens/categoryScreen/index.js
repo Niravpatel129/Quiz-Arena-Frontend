@@ -20,6 +20,7 @@ export default function CategoryScreen({ route }) {
   const [topPlayers, setTopPlayers] = React.useState([]);
 
   const categoryName = route.params?.categoryName;
+  const parentCategory = route.params?.parentCategory;
   const categoryImage = route.params?.categoryImage;
   const categoryId = route.params?.categoryId;
 
@@ -266,6 +267,7 @@ export default function CategoryScreen({ route }) {
                   onPress={() => {
                     navgiation.navigate('Contribute', {
                       category: categoryName,
+                      parentCategory: parentCategory,
                     });
                   }}
                   style={{

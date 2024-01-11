@@ -45,7 +45,7 @@ const categories2 = [
   },
 ];
 
-function CategoryBox({ categoryTitle, navigation, fadeAnim }) {
+function CategoryBox({ categoryTitle, parentCategory, navigation, fadeAnim }) {
   const scaleAnim = useState(new Animated.Value(0.5))[0]; // Initial scale value
 
   const onImageLoad = () => {
@@ -69,6 +69,7 @@ function CategoryBox({ categoryTitle, navigation, fadeAnim }) {
           navigation.navigate('CategoryScreen', {
             categoryId: categoryTitle.name.split(' ').join('-'),
             categoryName: categoryTitle.name,
+            parentCategory: parentCategory,
             categoryImage: categoryTitle.image,
           })
         }
@@ -227,7 +228,12 @@ export default function Categories2({ navigation }) {
             ItemSeparatorComponent={() => <View style={{ width: 10 }}></View>}
             data={category.subCategories}
             renderItem={({ item }) => (
-              <CategoryBox categoryTitle={item} navigation={navigation} fadeAnim={fadeAnim} />
+              <CategoryBox
+                categoryTitle={item}
+                parentCategory={category.parentCategory}
+                navigation={navigation}
+                fadeAnim={fadeAnim}
+              />
             )}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}

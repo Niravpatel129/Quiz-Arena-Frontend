@@ -1,3 +1,4 @@
+import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TextArea } from 'native-base';
 import React, { useState } from 'react';
@@ -10,8 +11,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { newRequest } from '../../api/newRequest';
+import upload from '../../helpers/upload';
 
-export default function Contribute() {
+export default function Contribute({ route }) {
+  const parentCategory = route.params?.parentCategory;
+  const category = route.params?.category;
   const [question, setQuestion] = useState('');
   const [imageUrl, setImageUrl] = useState(
     'https://static.vecteezy.com/system/resources/previews/004/968/473/original/upload-or-add-a-picture-jpg-file-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-etc-vector.jpg',
@@ -20,6 +25,85 @@ export default function Contribute() {
   const [option2, setOption2] = useState('');
   const [option3, setOption3] = useState('');
   const [correctOption, setCorrectOption] = useState('');
+  const [uploadedImageUrl, setUploadedImageUrl] = useState('');
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    const newUri = result.assets[0].uri;
+
+    if (!result.canceled) {
+      setImageUrl(newUri);
+      uploadImage(newUri);
+    }
+  };
+
+  const uploadImage = async (uri) => {
+    try {
+      const url = await upload(uri);
+      console.log('🚀  url:', url);
+      setUploadedImageUrl(url);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Upload Failed', 'Please try again.');
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!question) return alert('Please enter a question');
+    if (!option1) return alert('Please enter option 1');
+    if (!option2) return alert('Please enter option 2');
+    if (!option3) return alert('Please enter option 3');
+    if (!correctOption) return alert('Please enter correct option');
+
+    const questionFormat = {
+      category: category,
+      parentCategory: parentCategory,
+      question: question,
+      answers: [
+        {
+          optionText: option1,
+          isCorrect: false,
+        },
+        {
+          optionText: option2,
+          isCorrect: false,
+        },
+        {
+          optionText: option3,
+          isCorrect: false,
+        },
+        {
+          optionText: correctOption,
+          isCorrect: true,
+        },
+      ],
+      correctAnswer: correctOption,
+      helperImage: uploadedImageUrl,
+    };
+
+    try {
+      await newRequest.post('/question', [questionFormat]);
+
+      alert('Question submitted successfully');
+      setQuestion('');
+      setOption1('');
+      setOption2('');
+      setOption3('');
+      setCorrectOption('');
+      setImageUrl(
+        'https://static.vecteezy.com/system/resources/previews/004/968/473/original/upload-or-add-a-picture-jpg-file-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-etc-vector.jpg',
+      );
+      setUploadedImageUrl('');
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
@@ -96,20 +180,11 @@ export default function Contribute() {
                 >
                   Question Image (optional)
                 </Text>
-                <TouchableOpacity>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 14,
-                      fontWeight: 'bold',
-                      marginTop: 10,
-                    }}
-                  >
-                    Clear Image
-                  </Text>
-                </TouchableOpacity>
               </View>
-              <View
+              <TouchableOpacity
+                onPress={() => {
+                  pickImage();
+                }}
                 style={{
                   backgroundColor: 'white',
                 }}
@@ -124,7 +199,7 @@ export default function Contribute() {
                     uri: imageUrl,
                   }}
                 />
-              </View>
+              </TouchableOpacity>
             </View>
 
             {/* Options */}
@@ -290,6 +365,9 @@ export default function Contribute() {
             </View>
           </View>
           <TouchableOpacity
+            onPress={() => {
+              handleSubmit();
+            }}
             style={{
               margin: 20,
               backgroundColor: 'white',
