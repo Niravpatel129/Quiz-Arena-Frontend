@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { TextArea } from 'native-base';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   SafeAreaView,
@@ -71,7 +71,9 @@ export default function Contribute() {
               </View>
               <TextArea
                 placeholder='Enter your question here'
-                style={{}}
+                style={{
+                  color: 'white',
+                }}
                 value={question}
                 onChangeText={(text) => setQuestion(text)}
               />

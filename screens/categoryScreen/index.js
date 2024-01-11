@@ -264,7 +264,9 @@ export default function CategoryScreen({ route }) {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    alert('Coming Soon!');
+                    navgiation.navigate('Contribute', {
+                      category: categoryName,
+                    });
                   }}
                   style={{
                     backgroundColor: 'white',
