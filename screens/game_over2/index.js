@@ -58,6 +58,8 @@ export default function GameOver2({ navigation, route }) {
       otherPlayerSocketId: fakeData.opponentData.socketId,
       otherPlayerUserId: fakeData.opponentData.id,
     });
+
+    alert('Rematch requested');
   };
 
   const handleRematchAccept = () => {
