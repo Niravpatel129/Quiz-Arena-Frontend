@@ -13,6 +13,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "associatedDomains": ["applinks:quizarena.gg"],
       "supportsTablet": true,
       "bundleIdentifier": "com.niravpatelp129.QuizArenaFrontendScaffold",
       "usesAppleSignIn": true
@@ -28,7 +29,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": ["facebookLogin", "fb1015444866200816"],
+    "scheme": ["facebookLogin", "fb1015444866200816", "quizarena"],
     "extra": {
       "eas": {
         "projectId": "8c111cf0-8ea7-4e8d-a8c6-a92bb5e06340"

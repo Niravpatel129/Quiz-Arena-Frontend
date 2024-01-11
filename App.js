@@ -4,6 +4,7 @@ import { DefaultTheme, NavigationContainer, useNavigation } from '@react-navigat
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Linking from 'expo-linking';
 import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
 import { LogBox, TouchableOpacity, View } from 'react-native';
@@ -31,11 +32,17 @@ import ProfileScreen from './screens/profile';
 import QueueScreen from './screens/queue_screen';
 import SignUpLogin from './screens/signuplogin';
 
+const prefix = Linking.createURL('/');
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function App() {
   const [fontsLoaded] = useFonts(fonts);
+
+  const linking = {
+    prefixes: [prefix],
+  };
 
   useEffect(() => {
     LogBox.ignoreLogs([
@@ -259,7 +266,7 @@ function App() {
     >
       <NativeBaseProvider>
         <SocketProvider>
-          <NavigationContainer theme={MyTheme}>
+          <NavigationContainer theme={MyTheme} linking={linking}>
             <AuthProvider>
               <SoundProvider>
                 <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>

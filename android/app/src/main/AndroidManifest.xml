@@ -31,6 +31,7 @@
         <data android:scheme="fb1015444866200816"/>
         <data android:scheme="com.niravpatelp129.QuizArenaFrontendScaffold"/>
         <data android:scheme="exp+quiz-arena-frontend-scaffold"/>
+        <data android:scheme="quizarena"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>
