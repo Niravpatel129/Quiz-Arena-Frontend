@@ -16,35 +16,6 @@ import { newRequest } from '../../api/newRequest';
 import { NotificationsProvider } from '../../context/notifications/notificationsContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
-const categories2 = [
-  {
-    main: 'Tv Shows',
-    subCategories: ['logos', 'logos', 'logos', 'logos', 'logos'],
-  },
-  {
-    main: 'Movies',
-    subCategories: [
-      'general knowledge',
-      'general knowledge',
-      'general knowledge',
-      'general knowledge',
-      'general knowledge',
-    ],
-  },
-  {
-    main: 'General',
-    subCategories: ['Friends', 'The Office', 'The Simpsons', 'The Office', 'The Simpsons'],
-  },
-  {
-    main: 'Music',
-    subCategories: ['Friends', 'The Office', 'The Simpsons', 'The Office', 'The Simpsons'],
-  },
-  {
-    main: 'Tv Shows',
-    subCategories: ['Friends', 'The Office', 'The Simpsons', 'The Office', 'The Simpsons'],
-  },
-];
-
 function CategoryBox({ categoryTitle, parentCategory, navigation, fadeAnim }) {
   const scaleAnim = useState(new Animated.Value(0.5))[0]; // Initial scale value
 
@@ -142,57 +113,6 @@ export default function Categories2({ navigation }) {
   const onChangeText = (text) => {
     setSearchInput(text);
   };
-
-  // const renderCategoryBox = ({ categoryTitle }) => {
-  //   return (
-  //     <Animated.View
-  //       style={{
-  //         opacity: fadeAnim,
-  //         marginLeft: 10,
-  //         transform: [{ scale: scaleAnim }],
-  //       }}
-  //     >
-  //       <TouchableOpacity
-  //         onPress={() =>
-  //           navigation.navigate('CategoryScreen', {
-  //             categoryId: categoryTitle.name.split(' ').join('-'),
-  //             categoryName: categoryTitle.name,
-  //             categoryImage: categoryTitle.image,
-  //           })
-  //         }
-  //       >
-  //         <Image
-  //           style={{
-  //             width: 100,
-  //             height: 100,
-  //             borderWidth: 2,
-  //             borderColor: '#516696',
-  //             borderRadius: 20,
-  //           }}
-  //           blurRadius={0.5}
-  //           source={{
-  //             uri:
-  //               categoryTitle.image ||
-  //               'https://cdn.dribbble.com/userupload/9424324/file/original-6e071eda3550f1a2c8fe70792dc31d7e.png?resize=400x0',
-  //           }}
-  //         />
-  //         <Text
-  //           style={{
-  //             color: 'white',
-  //             fontSize: 14,
-  //             textAlign: 'center',
-  //             marginTop: 5,
-  //             maxWidth: 100,
-  //             fontWeight: 'bold',
-  //             fontFamily: 'Inter-Bold',
-  //           }}
-  //         >
-  //           {capitalizeFirstLetter(categoryTitle.name)}
-  //         </Text>
-  //       </TouchableOpacity>
-  //     </Animated.View>
-  //   );
-  // };
 
   const renderCategories = () => {
     const filteredCategories = categories.filter((category) => {
