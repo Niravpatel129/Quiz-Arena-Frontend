@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EndGameChart from '../../components/EndGameChart';
 import QuestionsPostGame from '../../components/QuestionsPostGame/QuestionsPostGame';
@@ -42,6 +42,8 @@ const fakeData2 = {
 export default function GameOver2({ navigation, route }) {
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
   const fakeData = route.params?.results || fakeData2;
+  const [scaleAnimation] = React.useState(new Animated.Value(0)); // Add this line
+
   const requestReview = useInAppReview();
 
   if (!fakeData) return null;
@@ -50,6 +52,16 @@ export default function GameOver2({ navigation, route }) {
     if (!fakeData) return;
 
     if (fakeData?.yourData?.result === 'winner') requestReview();
+  }, [fakeData.yourData.result]);
+
+  useEffect(() => {
+    if (!fakeData) return;
+
+    Animated.timing(scaleAnimation, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true, // Use native driver for better performance
+    }).start();
   }, [fakeData.yourData.result]);
 
   const handleRematch = () => {
@@ -196,7 +208,7 @@ export default function GameOver2({ navigation, route }) {
             <Ionicons name='ios-close' size={40} color='#fff' />
           </TouchableOpacity>
           <View>
-            <Text
+            <Animated.Text
               style={{
                 fontSize: 40,
                 color: fakeData.yourData.result === 'winner' ? '#00c03d' : '#ff0000',
@@ -204,10 +216,11 @@ export default function GameOver2({ navigation, route }) {
                 fontWeight: 'bold',
                 marginTop: 20,
                 fontFamily: 'Inter-Black',
+                transform: [{ scale: scaleAnimation }],
               }}
             >
               {fakeData.yourData.result === 'winner' ? 'You Win!' : 'You Lose!'}
-            </Text>
+            </Animated.Text>
           </View>
 
           <View
