@@ -115,10 +115,11 @@ export default function GameOver2({ navigation, route }) {
   }, []);
 
   const playerCard = (playerInfo) => {
-    console.log('🚀  playerInfo:', playerInfo);
     return (
       <TouchableOpacity
         onPress={() => {
+          if (!playerInfo.userId) return;
+
           navigation.navigate('Profile', { userId: playerInfo.userId });
         }}
       >

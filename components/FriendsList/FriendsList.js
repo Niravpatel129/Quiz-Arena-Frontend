@@ -44,7 +44,6 @@ export default function FriendsList() {
 
     try {
       const response = await newRequest.get('/users/notifications');
-      console.log('🚀  response:', response);
       const data = response.data.notifications.map((notification) => {
         return notification.type === 'friendRequest' ? notification : null;
       });
