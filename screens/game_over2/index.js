@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
 import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import CountryFlag from 'react-native-country-flag';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EndGameChart from '../../components/EndGameChart';
 import QuestionsPostGame from '../../components/QuestionsPostGame/QuestionsPostGame';
@@ -42,6 +43,7 @@ const fakeData2 = {
 export default function GameOver2({ navigation, route }) {
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
   const fakeData = route.params?.results || fakeData2;
+  console.log('🚀  fakeData:', fakeData);
   const [scaleAnimation] = React.useState(new Animated.Value(0)); // Add this line
 
   const requestReview = useInAppReview();
@@ -115,7 +117,11 @@ export default function GameOver2({ navigation, route }) {
   const playerCard = (playerInfo) => {
     console.log('🚀  playerInfo:', playerInfo);
     return (
-      <View>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Profile', { userId: playerInfo.userId });
+        }}
+      >
         <Image
           style={{
             width: 100,
@@ -138,9 +144,17 @@ export default function GameOver2({ navigation, route }) {
             fontFamily: 'Inter-Black',
             fontWeight: 'bold',
             fontSize: 16,
+            alignItems: 'center',
           }}
         >
           {playerInfo.username}
+          <Text
+            style={{
+              marginHorizontal: 5,
+            }}
+          >
+            <CountryFlag isoCode={playerInfo.country} size={16} />
+          </Text>
         </Text>
         <Text
           style={{
@@ -166,7 +180,7 @@ export default function GameOver2({ navigation, route }) {
             {playerInfo.ratingChange > 0 ? '+' : ''}({playerInfo.ratingChange})
           </Text>
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 

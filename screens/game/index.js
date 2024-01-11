@@ -125,6 +125,7 @@ const GameScreen = ({ navigation, route }) => {
             ratingChange: myData.playerInformation?.elo?.ratingChange || -5,
             result: myData.score > opponentData.score ? 'winner' : 'loser',
             avatar: myData.playerInformation.avatar,
+            country: myData.playerInformation?.country,
             gameData: {
               scores: myData.answers,
             },
@@ -137,6 +138,7 @@ const GameScreen = ({ navigation, route }) => {
             ratingChange: opponentData?.playerInformation?.elo?.ratingChange || 5,
             result: opponentData.score > myData.score ? 'winner' : 'loser',
             avatar: opponentData.playerInformation.avatar,
+            country: opponentData.playerInformation?.country,
             gameData: {
               scores: opponentData.answers,
             },
