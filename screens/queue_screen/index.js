@@ -21,8 +21,7 @@ export default function QueueScreen({ route, navigation }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await newRequest('/homepage/config');
-      console.log('🚀  res:', res);
+      const res = await newRequest.get('/homepage/config/1');
       setDefaultQueueTime(res.data.queueTime);
     };
 
