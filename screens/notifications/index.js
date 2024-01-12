@@ -48,6 +48,10 @@ export default function NotificationsScreen({ navigation }) {
     if (type === 'gameInvite') {
       navigation.navigate('Challenge', { gameId: gameId, category: category });
     }
+
+    if (type === 'friendRequest') {
+      alert('Friend request accepted!');
+    }
   };
 
   const renderNotification = (notificationInfo) => {
