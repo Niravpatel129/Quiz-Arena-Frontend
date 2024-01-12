@@ -48,7 +48,9 @@ export default function SocialButton({ variation }) {
         .then((res) => {
           socket.ConnectSocket();
 
-          if (!res.data.user?.username || !res.data.user?.profile?.avatar) {
+          const newSignIn = res.data?.newSignIn;
+
+          if (!res.data.user?.username || !res.data.user?.profile?.avatar || newSignIn) {
             console.log('🚀  navigating to create profile:', res.data?.user?.username);
             console.log('🚀  navigating to create profile:', res.data.user?.profile?.avatar);
 
