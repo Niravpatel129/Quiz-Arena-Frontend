@@ -96,35 +96,47 @@ export default function ChatHistory() {
               style={{
                 flex: 1,
                 marginLeft: 10,
+                justifyContent: 'center',
+                // alignItems: 'center',
               }}
             >
-              <Text
+              <View
                 style={{
-                  fontWeight: 'bold',
-                  fontSize: 16,
-                  color: 'white',
-                  maxWidth: 200,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 5,
                 }}
               >
-                {capitalizeFirstLetter(otherParticipant.username) || 'Player Name'}
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: 16,
+                    color: 'white',
+                    maxWidth: 200,
+                  }}
+                >
+                  {capitalizeFirstLetter(otherParticipant.username) || 'Player Name'}
+                </Text>
                 {otherParticipant.lastActive && (
                   <Text
                     style={{
-                      color: 'gray',
-                      fontSize: 12,
+                      color: 'lightgray',
+                      fontSize: 14,
                     }}
                   >
-                    {' '}
-                    Last Active {formatLastActive(otherParticipant.lastActive)}
+                    {formatLastActive(otherParticipant.lastActive, {
+                      type: 'short',
+                    })}
                   </Text>
                 )}
-              </Text>
+              </View>
 
               <Text
                 style={{
                   color: 'gray',
                   fontSize: 14,
                   maxWidth: 200,
+                  marginTop: 5,
                 }}
               >
                 {chat.messages.length > 0
