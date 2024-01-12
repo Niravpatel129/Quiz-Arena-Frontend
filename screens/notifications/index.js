@@ -45,7 +45,7 @@ export default function NotificationsScreen({ navigation }) {
   const acceptNotification = async (id, gameId, category, type) => {
     await newRequest.delete(`/users/notifications/${id}`);
 
-    if (type === 'challenge') {
+    if (type === 'gameInvite') {
       navigation.navigate('Challenge', { gameId: gameId, category: category });
     }
   };

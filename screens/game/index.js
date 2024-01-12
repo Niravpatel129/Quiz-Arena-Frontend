@@ -14,7 +14,7 @@ const preloadImages = (imageUrls) => {
 
 const defaultCountdown = 13;
 
-const GameScreen = ({ navigation, route }) => {
+const GameScreen = ({ navigation }) => {
   const [highlightTrigger, setHighlightTrigger] = React.useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = React.useState(false);
   const [timer, setTimer] = React.useState(defaultCountdown);

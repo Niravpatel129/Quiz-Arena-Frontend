@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { newRequest } from '../../api/newRequest';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
-export default function ChallangeModal({ isModalVisible, hideModal }) {
+export default function ChallangeModal({ opponentUserId, isModalVisible, hideModal }) {
   const navigation = useNavigation();
   const [pickerItems, setPickerItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -111,10 +111,25 @@ export default function ChallangeModal({ isModalVisible, hideModal }) {
               marginVertical: 10,
               marginHorizontal: 20,
             }}
-            onPress={() => {
+            onPress={async () => {
+              if (!opponentUserId) {
+                return alert('failed to challenge');
+              }
+
+              const generatedGameId = Math.floor(Math.random() * 100000);
+
+              await newRequest.post('/users/notifications', {
+                type: 'gameInvite',
+                receiverId: opponentUserId,
+                options: {
+                  gameId: generatedGameId,
+                  category: selectedCategory,
+                },
+              });
+
               hideModal();
               navigation.navigate('Challenge', {
-                gameId: Math.floor(Math.random() * 100000),
+                gameId: generatedGameId,
                 categoryName: selectedCategory,
               });
             }}

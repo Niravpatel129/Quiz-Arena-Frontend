@@ -27,6 +27,16 @@ export default function ChallengeScreen({ route, navigation }) {
     });
 
     socketService.on('game_start', (data) => {
+      if (!data) {
+        alert('Game failed to start due to an error.');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Categories' }],
+        });
+
+        return null;
+      }
+
       navigation.navigate('Game', { game: data.game });
     });
 

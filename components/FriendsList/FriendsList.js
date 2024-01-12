@@ -21,6 +21,7 @@ export default function FriendsList() {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedFriendId, setSelectedFriendId] = useState(null);
 
   const showModal = () => setIsModalVisible(true);
   const hideModal = () => setIsModalVisible(false);
@@ -221,6 +222,7 @@ export default function FriendsList() {
   const handleChallenge = async (id) => {
     try {
       showModal();
+      setSelectedFriendId(id);
       return;
 
       const gameId = Math.floor(Math.random() * 1000000);
@@ -348,7 +350,11 @@ export default function FriendsList() {
         height: '100%',
       }}
     >
-      <ChallangeModal isModalVisible={isModalVisible} hideModal={hideModal} />
+      <ChallangeModal
+        opponentUserId={selectedFriendId}
+        isModalVisible={isModalVisible}
+        hideModal={hideModal}
+      />
       <View
         style={{
           gap: 12,
