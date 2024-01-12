@@ -20,8 +20,20 @@ export const NotificationsProvider = ({ children }) => {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const [userNotifications, setUserNotifications] = useState([]);
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await newRequest.get('/users/notifications');
+      setUserNotifications(response.data.notifications);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
+    fetchNotifications();
+
     registerForPushNotificationsAsync().then((token) => {
       setExpoPushToken(token);
 
@@ -44,7 +56,15 @@ export const NotificationsProvider = ({ children }) => {
     };
   }, []);
 
-  return <NotificationsContext.Provider value={{}}>{children}</NotificationsContext.Provider>;
+  return (
+    <NotificationsContext.Provider
+      value={{
+        userNotifications,
+      }}
+    >
+      {children}
+    </NotificationsContext.Provider>
+  );
 };
 
 export const useNotifications = () => {
