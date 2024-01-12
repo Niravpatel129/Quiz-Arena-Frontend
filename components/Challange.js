@@ -8,7 +8,7 @@ import Spacing from '../constants/Spacing';
 import { calculateExp } from '../helpers/calculateExp';
 import capitalizeFirstLetter from '../helpers/capitalizeFirstLetter';
 
-export default function Challange({ category }) {
+export default function Challange({ myData, opponentData, category }) {
   const [width, setWidth] = React.useState(Dimensions.get('window').width);
   const topCardAnim = useState(new Animated.Value(-800))[0];
   const bottomCardAnim = useState(new Animated.Value(800))[0];
@@ -231,12 +231,12 @@ export default function Challange({ category }) {
         >
           {renderOpponentCard(
             {
-              tag: myData.playerInformation.tag,
-              playerName: myData.name,
-              country: myData.playerInformation.country,
-              elo: myData.playerInformation.elo.rating,
-              experience: myData.playerInformation.experience,
-              avatar: myData.playerInformation?.avatar,
+              tag: myData?.playerInformation?.tag,
+              playerName: myData?.name,
+              country: myData?.playerInformation?.country,
+              elo: myData?.playerInformation?.elo.rating,
+              experience: myData?.playerInformation?.experience,
+              avatar: myData?.playerInformation?.avatar,
               isSecond: false,
             },
             1,

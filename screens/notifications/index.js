@@ -46,6 +46,16 @@ export default function NotificationsScreen({ navigation }) {
     await newRequest.delete(`/users/notifications/${id}`);
 
     if (type === 'gameInvite') {
+      if (!gameId || !category) {
+        alert('Game failed to start due to an error.');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Categories' }],
+        });
+
+        return null;
+      }
+
       navigation.navigate('Challenge', { gameId: gameId, category: category });
     }
 
@@ -119,8 +129,8 @@ export default function NotificationsScreen({ navigation }) {
                   onPress={() =>
                     acceptNotification(
                       notificationInfo._id,
-                      notificationInfo.gameId,
-                      notificationInfo.category,
+                      notificationInfo?.options?.gameId,
+                      notificationInfo?.options?.category,
                       notificationInfo.type,
                     )
                   }
