@@ -7,7 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Linking from 'expo-linking';
 import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
-import { LogBox, TouchableOpacity, View } from 'react-native';
+import { LogBox, Text, TouchableOpacity, View } from 'react-native';
 import TabBar from './components/MyTabBar/MyTabBar';
 import fonts from './config/fonts';
 import { AuthProvider } from './context/auth/AuthContext';
@@ -84,16 +84,18 @@ function App() {
           headerLeft: () => {
             // return <Ionicons name='menu' size={24} color='white' style={{ marginLeft: 20 }} />;
           },
-          headerRight: () => (
-            <TouchableOpacity onPress={() => {}}>
-              <FontAwesome5
-                name='user-friends'
-                size={22}
-                color='white'
-                style={{ marginRight: 20 }}
-              />
-            </TouchableOpacity>
-          ),
+          headerRight: () => {
+            return (
+              <TouchableOpacity onPress={() => {}}>
+                <FontAwesome5
+                  name='user-friends'
+                  size={22}
+                  color='white'
+                  style={{ marginRight: 20 }}
+                />
+              </TouchableOpacity>
+            );
+          },
         }}
       >
         <Tab.Screen
@@ -143,9 +145,7 @@ function App() {
         screenOptions={(route) => ({
           headerTitle: 'Quiz Arena',
           cardStyle: { backgroundColor: '#1d284b' },
-          tabBarStyle: {
-            // borderTopWidth: 0,
-          },
+          tabBarStyle: {},
           headerStyle: {
             backgroundColor: '#1d284b',
             borderBottomWidth: 0,
@@ -161,14 +161,35 @@ function App() {
 
           headerRight: () => {
             if (route.name === 'SignUpLogin') return null;
+            const notificationCount = 0;
 
             return (
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('Notifications');
                 }}
+                style={{ flexDirection: 'row', alignItems: 'center' }}
               >
                 <FontAwesome5 name='bell' size={22} color='white' style={{ marginRight: 10 }} />
+                {notificationCount > 0 && (
+                  <View
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      top: -3,
+                      backgroundColor: 'red',
+                      borderRadius: 8,
+                      width: 16,
+                      height: 16,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
+                      {notificationCount}
+                    </Text>
+                  </View>
+                )}
               </TouchableOpacity>
             );
           },
