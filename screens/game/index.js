@@ -86,7 +86,7 @@ const GameScreen = ({ navigation }) => {
       }
 
       setCountdown(0);
-      setTimer(10);
+      setTimer(defaultCountdown);
       setRound((prevRound) => prevRound + 1);
       if (roundData) setData(roundData);
 
