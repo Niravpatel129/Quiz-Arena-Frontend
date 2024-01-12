@@ -50,11 +50,11 @@ export default function ChatHistory() {
 
     return (
       <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('Profile', {
-            userId: otherParticipant._id,
-          });
-        }}
+        onPress={() =>
+          navigation.navigate('Chat', {
+            chattingWithId: otherParticipant._id,
+          })
+        }
       >
         <Animated.View
           style={[

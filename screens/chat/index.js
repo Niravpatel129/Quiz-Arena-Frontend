@@ -132,10 +132,17 @@ export default function Chat({
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image
-              style={{ width: 50, height: 50, borderRadius: 25 }}
-              source={{ uri: chat.chatingWith?.avatar }}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                console.log('🚀  chat:', chat);
+                navigation.navigate('Profile', { userId: chattingWithId });
+              }}
+            >
+              <Image
+                style={{ width: 50, height: 50, borderRadius: 25 }}
+                source={{ uri: chat.chatingWith?.avatar }}
+              />
+            </TouchableOpacity>
             <View style={{ flexDirection: 'column', marginHorizontal: 20 }}>
               <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
                 {chat.chatingWith?.name}
@@ -177,17 +184,20 @@ export default function Chat({
           style={{
             height: 70,
             backgroundColor: 'transparent',
-            justifyContent: 'center',
-            alignItems: 'center',
+            flexDirection: 'row', // Set the direction of children to be in a row
+            alignItems: 'center', // Align children vertically in the center
+            justifyContent: 'space-between', // This will place the TextInput and TouchableOpacity at opposite ends
+            paddingHorizontal: 10, // Add some horizontal padding
           }}
         >
           <TextInput
             style={{
               backgroundColor: '#ffffff',
               height: 50,
-              width: '90%',
+              flex: 1,
+              marginRight: 10,
               padding: 10,
-              borderRadius: 8,
+              borderRadius: 5,
               fontSize: 16,
             }}
             onChangeText={(text) => setTextInput(text)}
@@ -197,14 +207,14 @@ export default function Chat({
           <TouchableOpacity
             onPress={() => sendMessage(chat._id)}
             style={{
-              position: 'absolute',
-              right: 55,
-              backgroundColor: '#1c2141',
-              padding: 10,
+              padding: 5,
               borderRadius: 5,
+              height: 52,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Send</Text>
+            <Ionicons name='send' size={30} color='white' />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

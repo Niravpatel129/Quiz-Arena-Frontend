@@ -86,7 +86,6 @@ export default function FriendsList() {
           <View
             style={{
               flexDirection: 'row',
-              // alignItems: 'center',
               justifyContent: 'space-around',
             }}
           >
@@ -116,7 +115,6 @@ export default function FriendsList() {
                   fontSize: 14,
                   maxWidth: 250,
                   marginLeft: 10,
-                  // marginTop: 10,
                   maxWidth: 300,
                   fontFamily: 'Inter-Bold',
                 }}
@@ -135,8 +133,6 @@ export default function FriendsList() {
                   onPress={() => acceptFriendRequest(friend.from, friend._id)}
                   style={{
                     backgroundColor: '',
-                    // padding: 8,
-                    // paddingHorizontal: 18,
                     height: 40,
                     width: 40,
                     alignItems: 'center',
@@ -145,23 +141,11 @@ export default function FriendsList() {
                   }}
                 >
                   <Ionicons name='checkmark' size={40} color='#5aff60' />
-                  {/* <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                    }}
-                    onPress={() => acceptFriendRequest()}
-                  >
-                    Accept
-                  </Text> */}
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => deleteFriendRequest(friend._id)}
                   style={{
                     backgroundColor: '',
-                    // padding: 8,
-                    // paddingHorizontal: 18,
                     height: 40,
                     width: 40,
                     alignItems: 'center',
@@ -170,15 +154,6 @@ export default function FriendsList() {
                   }}
                 >
                   <Ionicons name='close' size={40} color='#ff7878' />
-                  {/* <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    Decline
-                  </Text> */}
                 </TouchableOpacity>
               </View>
             </View>
@@ -224,33 +199,24 @@ export default function FriendsList() {
       showModal();
       setSelectedFriendId(id);
       return;
-
-      const gameId = Math.floor(Math.random() * 1000000);
-
-      await newRequest.post('/users/notifications', {
-        type: 'gameInvite',
-        receiverId: id,
-        options: {
-          gameId: gameId,
-          category: 'Valorant',
-        },
-      });
-
-      navigation.navigate('Challenge', { gameId: gameId, category: 'logos' });
     } catch (err) {
       console.log(err);
     }
   };
 
   const renderFriendsBubble = (friend) => {
+    console.log('🚀  friend:', friend);
     return (
-      <View
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('Chat', {
+            chattingWithId: friend._id,
+          })
+        }
         style={{
           backgroundColor: '#1d284b',
           flexDirection: 'row',
-          // justifyContent: 'space-between',
           alignItems: 'center',
-          // width: '100%',
           padding: 10,
           borderRadius: 52,
         }}
@@ -339,7 +305,7 @@ export default function FriendsList() {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
