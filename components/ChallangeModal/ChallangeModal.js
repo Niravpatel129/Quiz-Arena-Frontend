@@ -114,8 +114,8 @@ export default function ChallangeModal({ isModalVisible, hideModal }) {
             onPress={() => {
               hideModal();
               navigation.navigate('Challenge', {
-                gameId: Math.floor(Math.random() * 1000000),
-                category: selectedCategory,
+                gameId: Math.floor(Math.random() * 100000),
+                categoryName: selectedCategory,
               });
             }}
           >

@@ -8,7 +8,7 @@ import Spacing from '../constants/Spacing';
 import { calculateExp } from '../helpers/calculateExp';
 import capitalizeFirstLetter from '../helpers/capitalizeFirstLetter';
 
-export default function Challange({ myData, opponentData, category }) {
+export default function Challange({ category }) {
   const [width, setWidth] = React.useState(Dimensions.get('window').width);
   const topCardAnim = useState(new Animated.Value(-800))[0];
   const bottomCardAnim = useState(new Animated.Value(800))[0];

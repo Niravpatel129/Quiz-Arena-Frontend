@@ -15,6 +15,8 @@ export const AuthProvider = ({ children }) => {
     const userRes = await newRequest.get(`/users/undefined`);
 
     setUserData(userRes.data);
+
+    return userRes.data;
   };
 
   useEffect(() => {

@@ -11,14 +11,19 @@ export default function ChallengeScreen({ route, navigation }) {
   const routeParam = route.params;
   const intervalRef = useRef(null);
   const categoryName = routeParam?.categoryName || 'Logos';
-  const { userData } = useAuth();
+  const gameId = routeParam?.gameId || '123';
+  const { userData, fetchUser } = useAuth();
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     startTimer();
 
     socketService.emit('joinChallengeQueue', {
-      gameId: route.params.gameId,
-      category: route.params.category,
+      gameId: gameId,
+      category: categoryName,
     });
 
     socketService.on('game_start', (data) => {
@@ -27,8 +32,8 @@ export default function ChallengeScreen({ route, navigation }) {
 
     return () => {
       socketService.emit('leaveChallengeQueue', {
-        gameId: route.params.gameId,
-        category: route.params.category,
+        gameId: gameId,
+        category: categoryName,
       });
     };
   }, []);
@@ -96,7 +101,7 @@ export default function ChallengeScreen({ route, navigation }) {
       style={{ height: '100%', padding: 5 }}
     >
       <View>
-        <Text>ChallengeScreen {route.params.category}</Text>
+        <Text>ChallengeScreen {categoryName}</Text>
 
         <View
           style={{
