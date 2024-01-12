@@ -13,24 +13,9 @@ import { newRequest } from '../../api/newRequest';
 import { useAuth } from '../../context/auth/AuthContext';
 
 export default function NotificationsScreen({ navigation }) {
-  // const [notifications, setNotifications] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const { fetchNotifications, userNotifications } = useAuth();
   const notifications = userNotifications;
-
-  // const fetchNotifications = async () => {
-  //   setRefreshing(true);
-
-  //   try {
-  //     const response = await newRequest.get('/users/notifications');
-  //     const data = response.data;
-  //     setNotifications(data.notifications);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-
-  //   setRefreshing(false);
-  // };
 
   React.useEffect(() => {
     fetchNotifications();
