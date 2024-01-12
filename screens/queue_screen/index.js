@@ -9,6 +9,8 @@ import { useAuth } from '../../context/auth/AuthContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import socketService from '../../services/socketService';
 
+const appVersion = '3';
+
 export default function QueueScreen({ route, navigation }) {
   const [queueTime, setQueueTime] = useState(1);
   const [playerImageIndex, setPlayerImageIndex] = useState(0);
@@ -22,7 +24,7 @@ export default function QueueScreen({ route, navigation }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await newRequest.get('/homepage/config/1');
+      const res = await newRequest.get(`/homepage/config/${appVersion}`);
       setDefaultQueueTime(res.data.queueTime);
     };
 
