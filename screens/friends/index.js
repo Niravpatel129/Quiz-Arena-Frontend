@@ -98,6 +98,20 @@ export default function FriendsScreen({ navigation }) {
           {activeTab === 'tab1' && <FriendsList />}
 
           {activeTab === 'tab2' && <ChatHistory />}
+
+          {activeTab === 'tab3' && (
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 20,
+                fontWeight: 'bold',
+                textAlign: 'center',
+                marginTop: 100,
+              }}
+            >
+              Coming soon...
+            </Text>
+          )}
         </View>
       </View>
     </SafeAreaView>
