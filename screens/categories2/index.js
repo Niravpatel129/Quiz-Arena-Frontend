@@ -117,8 +117,10 @@ export default function Categories2({ navigation }) {
   const renderCategories = () => {
     const filteredCategories = categories.filter((category) => {
       return (
-        category.parentCategory.toLowerCase().includes(searchInput) ||
-        category.subCategories.some((sub) => sub.name.toLowerCase().includes(searchInput))
+        category.parentCategory.toLowerCase().includes(searchInput.toLowerCase()) ||
+        category.subCategories.some((sub) =>
+          sub.name.toLowerCase().includes(searchInput.toLowerCase()),
+        )
       );
     });
 
@@ -217,7 +219,7 @@ export default function Categories2({ navigation }) {
                   style={{
                     position: 'absolute',
                     right: 22,
-                    top: 27,
+                    top: 34,
                   }}
                   name='search'
                   size={24}
