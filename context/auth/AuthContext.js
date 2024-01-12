@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { newRequest } from '../../api/newRequest';
+import socketService from '../../services/socketService';
 
 const AuthContext = createContext();
 
@@ -10,6 +11,25 @@ export const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [userData, setUserData] = useState(null);
   const navigation = useNavigation();
+  const [userNotifications, setUserNotifications] = useState([]);
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await newRequest.get('/users/notifications');
+      setUserNotifications(response.data.notifications);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotifications();
+
+    // not hooked up yet
+    socketService.on('new-notification', () => {
+      fetchNotifications();
+    });
+  }, [userId]);
 
   const fetchUser = async () => {
     const userRes = await newRequest.get(`/users/undefined`);
@@ -78,7 +98,17 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ userToken, fetchUser, signIn, signOut, userId, userData, signOut }}
+      value={{
+        userToken,
+        fetchUser,
+        signIn,
+        signOut,
+        userId,
+        userData,
+        signOut,
+        userNotifications,
+        fetchNotifications,
+      }}
     >
       {children}
     </AuthContext.Provider>
