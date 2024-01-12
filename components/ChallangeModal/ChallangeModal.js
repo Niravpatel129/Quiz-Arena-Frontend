@@ -90,14 +90,18 @@ export default function ChallangeModal({ opponentUserId, isModalVisible, hideMod
             }}
             onValueChange={handleCategoryChange}
           >
-            {pickerItems.map((item, index) => (
-              <Picker.Item
-                key={index}
-                label={capitalizeFirstLetter(item.label)}
-                value={item.value}
-                enabled={!item.isDivider}
-              />
-            ))}
+            {pickerItems.map((item, index) => {
+              if (item.isDivider) return null;
+
+              return (
+                <Picker.Item
+                  key={index}
+                  label={capitalizeFirstLetter(item.label)}
+                  value={item.value}
+                  enabled={!item.isDivider}
+                />
+              );
+            })}
           </Picker>
           <TouchableOpacity
             style={{
