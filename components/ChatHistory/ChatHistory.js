@@ -11,6 +11,7 @@ export default function ChatHistory() {
   const [animations, setAnimations] = useState([]);
   const navigation = useNavigation();
   const { userId } = useAuth();
+
   const [loading, setLoading] = useState(true);
 
   const fetchChats = async () => {
@@ -44,6 +45,8 @@ export default function ChatHistory() {
 
   const renderChatBubble = (chat, index) => {
     const otherParticipant = chat.participants.find((p) => p._id !== userId);
+    if (!otherParticipant) return null;
+
     const slideAnimation = {
       opacity: animations[index],
     };

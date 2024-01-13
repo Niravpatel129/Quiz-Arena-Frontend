@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         // validate token with backend
         try {
           const tokenRes = await newRequest.get('/auth/validate-token');
-          setUserId(tokenRes.data.userId);
+          setUserId(tokenRes.data?.userId);
           setUserToken(token);
 
           // dont allow back
