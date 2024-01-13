@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import io from 'socket.io-client';
 
 const IS_PRODUCTION = process.env.EXPO_PUBLIC_PROD_BACKEND || process.env.NODE_ENV === 'production';
@@ -35,7 +36,11 @@ class SocketService {
 
   emit(event, data) {
     if (this.socket) {
-      this.socket.emit(event, data);
+      const throttledEmit = _.throttle((event, ...args) => {
+        this.socket.emit(event, data);
+      }, 100);
+
+      throttledEmit(event, data);
     }
   }
 }
