@@ -97,12 +97,11 @@ export default function SignUpLogin({ navigation }) {
         profile: {
           avatar: avatar || null,
         },
-        isNewUser: true,
       })
       .then((response) => {
         console.log('🚀  response:', response);
 
-        if (response.data.isNewUser) {
+        if (response.data?.isNewUser) {
           setShowUsername(true);
           return;
         }
