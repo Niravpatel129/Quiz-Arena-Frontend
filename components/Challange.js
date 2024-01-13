@@ -98,7 +98,7 @@ export default function Challange({ myData, opponentData, category }) {
             <Text
               style={{
                 color: Colors.primary,
-                fontSize: FontSize.xl,
+                fontSize: 20,
                 fontWeight: 'bold',
                 fontFamily: 'poppins-regular',
                 maxWidth: 200,
