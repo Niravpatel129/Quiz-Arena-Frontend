@@ -18,6 +18,7 @@ export default function CategoryScreen({ route }) {
   const [activeTab, setActiveTab] = React.useState('tab1');
   const navgiation = useNavigation();
   const [topPlayers, setTopPlayers] = React.useState([]);
+  const [topContributors, setTopContributors] = React.useState([]);
 
   const categoryName = route.params?.categoryName;
   const parentCategory = route.params?.parentCategory;
@@ -151,6 +152,94 @@ export default function CategoryScreen({ route }) {
         </Animated.View>
       );
     });
+  };
+
+  const renderTopContributors = ({ contributors }) => {
+    return (
+      <Animated.View
+        style={{
+          backgroundColor: '#1c2141',
+          marginHorizontal: 16,
+          borderRadius: 22,
+          padding: 10,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: 12,
+          // opacity: player.opacity,
+          // transform: [{ translateY: player.translateY }],
+        }}
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: 'bold',
+              marginRight: 12,
+              color: 'white',
+            }}
+          >
+            1.
+          </Text>
+          <TouchableOpacity
+          // onPress={() =>
+          //   navgiation.navigate('Profile', {
+          //     userId: player._id,
+          //   })
+          // }
+          >
+            <Image
+              style={{ width: 40, height: 40, borderRadius: 25 }}
+              source={{
+                uri: 'https://upload.wikimedia.org/wikipedia/en/e/e0/Felicette%2C_spacecat.jpg',
+              }}
+            />
+          </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+                color: 'white',
+                paddingLeft: 7,
+                maxWidth: 150,
+              }}
+            >
+              {capitalizeFirstLetter('Admin')}
+            </Text>
+            <CountryFlag isoCode={'us'} size={16} style={{ marginHorizontal: 5 }} />
+          </View>
+        </View>
+
+        <Text
+          style={{
+            paddingRight: 12,
+          }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 13,
+              flex: 1,
+              width: '100%',
+              fontWeight: 'bold',
+            }}
+          >
+            31,544 Questions
+          </Text>
+        </Text>
+      </Animated.View>
+    );
   };
 
   return (
@@ -353,11 +442,20 @@ export default function CategoryScreen({ route }) {
               </View>
 
               {/* Players */}
-              <View style={{}}>
-                {renderLeaderboardsPlayers({
-                  players: topPlayers,
-                })}
-              </View>
+              {activeTab === 'tab1' && (
+                <View>
+                  {renderLeaderboardsPlayers({
+                    players: topPlayers,
+                  })}
+                </View>
+              )}
+              {activeTab === 'tab2' && (
+                <View>
+                  {renderTopContributors({
+                    contributors: topContributors,
+                  })}
+                </View>
+              )}
             </View>
           </View>
         </ScrollView>
