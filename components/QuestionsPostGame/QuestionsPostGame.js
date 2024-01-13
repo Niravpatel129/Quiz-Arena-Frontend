@@ -173,19 +173,20 @@ export default function QuestionsPostGame({ questions }) {
                     </>
                   )}
                 </View>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    fontSize: 20,
-                    fontfamily: 'Inter-SemiBold',
-                    marginRight: 10,
-                    fontWeight: question.CorrectAnswer === answer.optionText && 'bold',
-                    color: question.CorrectAnswer === answer.optionText ? '#adf2bc' : '#f2adad',
-                    maxWidth: '80%',
-                  }}
-                >
-                  {answer.optionText}
-                </Text>
+                {answer.optionText && (
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      fontSize: 20,
+                      marginRight: 10,
+                      fontWeight: question.CorrectAnswer === answer.optionText ? 'bold' : 'normal',
+                      color: question.CorrectAnswer === answer.optionText ? '#adf2bc' : '#f2adad',
+                      maxWidth: '80%',
+                    }}
+                  >
+                    {answer.optionText}
+                  </Text>
+                )}
                 <View
                   style={{
                     width: 25,
