@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { formatDistanceToNow } from 'date-fns';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Image, Text, View } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import {
@@ -68,135 +69,139 @@ export default function MatchHistory() {
   };
 
   return (
-    <SafeAreaView>
-      <View style={styles.container}>
-        {isLoading && (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size='large' color='#516696' />
-          </View>
-        )}
+    <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ height: '100%' }}>
+      <SafeAreaView>
+        <View style={styles.container}>
+          {isLoading && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size='large' color='#516696' />
+            </View>
+          )}
 
-        {matchHistory.length > 0 && (
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            ListHeaderComponent={() => (
+          {matchHistory.length > 0 && (
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              ListHeaderComponent={() => (
+                <Text
+                  style={{
+                    fontFamily: 'Inter-Black',
+                    color: '#fff',
+                    fontSize: 30,
+                    marginBottom: 25,
+                    textAlign: 'center',
+                    paddingTop: 28,
+                  }}
+                >
+                  Match History
+                </Text>
+              )}
+              ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
+              style={
+                {
+                  // backgroundColor: '#1c2141',
+                }
+              }
+              data={matchHistory}
+              renderItem={({ item, index }) => {
+                if (!item) return null;
+
+                const opponent = item?.players?.find((v) => v?.id !== userId);
+                const result = item.winnerId === userId ? 'Won' : 'Lost';
+                const opponentAvatar = opponent?.playerInformation?.avatar;
+                if (!opponent) return null;
+
+                return (
+                  <Animated.View
+                    key={item.id}
+                    style={[
+                      styles.bubble,
+                      {
+                        opacity: matchHistory[index]?.opacity,
+                        transform: [{ translateY: matchHistory[index]?.translateY }],
+                      },
+                    ]}
+                  >
+                    <View style={styles.bubbleIcon}>
+                      <Ionicons
+                        style={{
+                          marginTop: 13,
+                        }}
+                        name='ios-trophy'
+                        size={40}
+                        color={result === 'Won' ? '#53d769' : '#fc3158'}
+                      />
+                    </View>
+                    <View style={styles.bubbleInnerContainer}>
+                      <Text style={styles.bubbleTitle}>
+                        {capitalizeFirstLetter(item?.category)}
+                      </Text>
+                      <Pressable
+                        onPress={() => {
+                          navigation.navigate('MatchHistoryDetails', {
+                            matchId: item.id,
+                          });
+                        }}
+                      >
+                        <Text style={styles.bubbleSubtitle}>
+                          {parseSubtitle({
+                            opponentName: opponent?.name,
+                            date: item?.startTime,
+                          })}
+                        </Text>
+                      </Pressable>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate('Profile', {
+                          userId: opponent?.id,
+                        });
+                      }}
+                    >
+                      <Image
+                        source={{
+                          uri:
+                            opponentAvatar ||
+                            'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
+                        }}
+                        alt=''
+                        size='xs'
+                        style={{
+                          width: 50,
+                          height: 50,
+                          borderRadius: 10,
+                          marginRight: 15,
+                          marginTop: 5,
+                          borderWidth: 2,
+                          borderColor: '#516696',
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </Animated.View>
+                );
+              }}
+              keyExtractor={(item) => item._id}
+            />
+          )}
+
+          {matchHistory.length === 0 && !isLoading && (
+            <View>
               <Text
                 style={{
                   fontFamily: 'Inter-Black',
                   color: '#fff',
-                  fontSize: 30,
-                  marginBottom: 25,
+                  fontSize: 25,
+                  marginTop: 25,
                   textAlign: 'center',
                   paddingTop: 28,
                 }}
               >
-                Match History
+                No match history yet!
               </Text>
-            )}
-            ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
-            style={
-              {
-                // backgroundColor: '#1c2141',
-              }
-            }
-            data={matchHistory}
-            renderItem={({ item, index }) => {
-              if (!item) return null;
-
-              const opponent = item?.players?.find((v) => v?.id !== userId);
-              const result = item.winnerId === userId ? 'Won' : 'Lost';
-              const opponentAvatar = opponent?.playerInformation?.avatar;
-              if (!opponent) return null;
-
-              return (
-                <Animated.View
-                  key={item.id}
-                  style={[
-                    styles.bubble,
-                    {
-                      opacity: matchHistory[index]?.opacity,
-                      transform: [{ translateY: matchHistory[index]?.translateY }],
-                    },
-                  ]}
-                >
-                  <View style={styles.bubbleIcon}>
-                    <Ionicons
-                      style={{
-                        marginTop: 13,
-                      }}
-                      name='ios-trophy'
-                      size={40}
-                      color={result === 'Won' ? '#53d769' : '#fc3158'}
-                    />
-                  </View>
-                  <View style={styles.bubbleInnerContainer}>
-                    <Text style={styles.bubbleTitle}>{capitalizeFirstLetter(item?.category)}</Text>
-                    <Pressable
-                      onPress={() => {
-                        navigation.navigate('MatchHistoryDetails', {
-                          matchId: item.id,
-                        });
-                      }}
-                    >
-                      <Text style={styles.bubbleSubtitle}>
-                        {parseSubtitle({
-                          opponentName: opponent?.name,
-                          date: item?.startTime,
-                        })}
-                      </Text>
-                    </Pressable>
-                  </View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate('Profile', {
-                        userId: opponent?.id,
-                      });
-                    }}
-                  >
-                    <Image
-                      source={{
-                        uri:
-                          opponentAvatar ||
-                          'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
-                      }}
-                      alt=''
-                      size='xs'
-                      style={{
-                        width: 50,
-                        height: 50,
-                        borderRadius: 10,
-                        marginRight: 15,
-                        marginTop: 5,
-                        borderWidth: 2,
-                        borderColor: '#516696',
-                      }}
-                    />
-                  </TouchableOpacity>
-                </Animated.View>
-              );
-            }}
-            keyExtractor={(item) => item._id}
-          />
-        )}
-
-        {matchHistory.length === 0 && !isLoading && (
-          <View>
-            <Text
-              style={{
-                fontFamily: 'Inter-Black',
-                color: '#fff',
-                fontSize: 25,
-                marginTop: 25,
-                textAlign: 'center',
-                paddingTop: 28,
-              }}
-            >
-              No match history yet!
-            </Text>
-          </View>
-        )}
-      </View>
-    </SafeAreaView>
+            </View>
+          )}
+        </View>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
 

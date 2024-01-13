@@ -1,13 +1,12 @@
-import { FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Linking from 'expo-linking';
 import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
-import { LogBox, TouchableOpacity, View } from 'react-native';
+import { LogBox, View } from 'react-native';
 import TabBar from './components/MyTabBar/MyTabBar';
 import NotificationBell from './components/NotificationBell/NotificationBell';
 import fonts from './config/fonts';
@@ -33,6 +32,11 @@ import ProfileScreen from './screens/profile';
 import QueueScreen from './screens/queue_screen';
 import SignUpLogin from './screens/signuplogin';
 
+// if (Settings) {
+//   Settings?.setAppID('1015444866200816');
+//   Settings?.initializeSDK();
+// }
+
 const prefix = Linking.createURL('/');
 
 const Stack = createNativeStackNavigator();
@@ -40,10 +44,25 @@ const Tab = createBottomTabNavigator();
 
 function App() {
   const [fontsLoaded] = useFonts(fonts);
+  console.log('App.js');
 
   const linking = {
     prefixes: [prefix],
   };
+
+  // useEffect(() => {
+  //   // Log standard event. e.g. completed registration
+  //   AppEventsLogger.logEvent(AppEventsLogger.AppEvents.ViewedContent);
+  //   AppEventsLogger.logEvent('App Launch');
+
+  //   // add event and send it to facebook
+  //   AppEventsLogger.logEvent('added_to_cart', {
+  //     content_type: 'product',
+  //     content_id: 'HDFU-8452',
+  //     currency: 'USD',
+  //     value: 142.57,
+  //   });
+  // }, []);
 
   useEffect(() => {
     LogBox.ignoreLogs([
@@ -65,39 +84,39 @@ function App() {
     return (
       <Tab.Navigator
         tabBar={(props) => <TabBar {...props} />}
-        screenOptions={{
-          tabBarStyle: {
-            borderTopWidth: 0,
-          },
-          tabBarHideOnKeyboard: true,
-          headerStyle: {
-            borderBottomWidth: 0,
+        // screenOptions={{
+        //   tabBarStyle: {
+        //     borderTopWidth: 0,
+        //   },
+        //   tabBarHideOnKeyboard: true,
+        //   headerStyle: {
+        //     borderBottomWidth: 0,
 
-            backgroundColor: '#1d284b',
-          },
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            color: 'white',
-            fontWeight: 'bold',
-          },
-          cardStyle: { backgroundColor: '#1d284b' },
+        //     backgroundColor: '#1d284b',
+        //   },
+        //   headerTitleAlign: 'center',
+        //   headerTitleStyle: {
+        //     color: 'white',
+        //     fontWeight: 'bold',
+        //   },
+        //   cardStyle: { backgroundColor: '#1d284b' },
 
-          headerLeft: () => {
-            // return <Ionicons name='menu' size={24} color='white' style={{ marginLeft: 20 }} />;
-          },
-          headerRight: () => {
-            return (
-              <TouchableOpacity onPress={() => {}}>
-                <FontAwesome5
-                  name='user-friends'
-                  size={22}
-                  color='white'
-                  style={{ marginRight: 20 }}
-                />
-              </TouchableOpacity>
-            );
-          },
-        }}
+        //   headerLeft: () => {
+        //     // return <Ionicons name='menu' size={24} color='white' style={{ marginLeft: 20 }} />;
+        //   },
+        //   headerRight: () => {
+        //     return (
+        //       <TouchableOpacity onPress={() => {}}>
+        //         <FontAwesome5
+        //           name='user-friends'
+        //           size={22}
+        //           color='white'
+        //           style={{ marginRight: 20 }}
+        //         />
+        //       </TouchableOpacity>
+        //     );
+        //   },
+        // }}
       >
         <Tab.Screen
           name='CategoriesHome'
@@ -139,12 +158,14 @@ function App() {
   }
 
   function StackNavigator() {
-    const navigation = useNavigation();
-
     return (
       <Stack.Navigator
+        options={{
+          headerShadowVisible: false,
+        }}
         screenOptions={(route) => ({
           headerTitle: 'Quiz Arena',
+
           cardStyle: { backgroundColor: '#1d284b' },
           tabBarStyle: {},
           headerStyle: {
@@ -182,7 +203,6 @@ function App() {
             title: 'SignUpLogin',
             headerShown: true,
             headerTransparent: true,
-            headerTranslucent: true,
           }}
         />
 
@@ -199,6 +219,7 @@ function App() {
           component={CategoryScreen}
           options={{
             headerShown: true,
+            headerShadowVisible: false,
           }}
         />
 
@@ -245,7 +266,7 @@ function App() {
         <Stack.Screen
           name='Categories'
           component={HomeTabNavigator}
-          options={{ headerShown: true, headerTransparent: true }}
+          options={{ headerShown: true }}
         />
       </Stack.Navigator>
     );

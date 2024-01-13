@@ -4,4 +4,7 @@
   <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
   <string name="ExpoLocalization_supportsRTL" translatable="false">undefined</string>
   <string name="expo_system_ui_user_interface_style" translatable="false">light</string>
+  <string name="facebook_app_id">1015444866200816</string>
+  <string name="facebook_client_token">53626e4efbb9cb935ffc8786e5865c75</string>
+  <string name="fb_login_protocol_scheme">fb1015444866200816</string>
 </resources>

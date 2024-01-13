@@ -43,6 +43,19 @@
         {
           "photosPermission": "The app accesses your photos to let you set your profile picture."
         }
+      ],
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "1015444866200816",
+          "clientToken": "53626e4efbb9cb935ffc8786e5865c75",
+          "displayName": "Quiz Arena",
+          "scheme": "fb1015444866200816",
+          "advertiserIDCollectionEnabled": false,
+          "autoLogAppEventsEnabled": false,
+          "isAutoInitEnabled": true,
+          "iosUserTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        }
       ]
     ]
   }
