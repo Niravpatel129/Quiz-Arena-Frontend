@@ -61,20 +61,25 @@ const GameScreen = ({ navigation }) => {
   }, [appState]);
 
   const giveBotAnswer = (botPlayer, sessionId, correctAnswer) => {
-    const giveCorrectAnswer = Math.floor(Math.random() * 4) + 1 > 1;
-    // only send 1 bot answer per round
     if (sendBotAnswer) return;
 
-    socketService.emit('bot_answer', {
-      sessionId: sessionId,
-      botPlayer: botPlayer,
-      correctAnswer: giveCorrectAnswer ? correctAnswer : 'wrong answer',
-      timeRemaining: Math.floor(Math.random() * 10) + 1,
-      currentRound: round,
-    });
+    // random between 0.5 and 2 seconds
+    const randomTime = Math.floor(Math.random() * 1500) + 500;
+
+    setTimeout(() => {
+      const giveCorrectAnswer = Math.floor(Math.random() * 4) + 1 > 1;
+      // only send 1 bot answer per round
+
+      socketService.emit('bot_answer', {
+        sessionId: sessionId,
+        botPlayer: botPlayer,
+        correctAnswer: giveCorrectAnswer ? correctAnswer : 'wrong answer',
+        timeRemaining: Math.floor(Math.random() * 10) + 1,
+        currentRound: round,
+      });
+    }, randomTime);
 
     setSendBotAnswer(true);
-    //
   };
 
   useEffect(() => {
@@ -102,7 +107,9 @@ const GameScreen = ({ navigation }) => {
       const isBot = checkIfBot(opponentData.socketId);
       const correctAnswer = roundData.options.find((option) => option.isCorrect);
 
-      if (isBot) giveBotAnswer(opponentData, roundData.sessionId, correctAnswer.optionText);
+      if (isBot) {
+        giveBotAnswer(opponentData, roundData.sessionId, correctAnswer.optionText);
+      }
 
       setHighlightTrigger(false);
     });
