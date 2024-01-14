@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { newRequest } from '../../api/newRequest';
 import { useAuth } from '../../context/auth/AuthContext';
@@ -10,6 +10,7 @@ import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import socketService from '../../services/socketService';
 
 const appVersion = '3';
+const IS_PRODUCTION = process.env.EXPO_PUBLIC_PROD_BACKEND || process.env.NODE_ENV === 'production';
 
 export default function QueueScreen({ route, navigation }) {
   const [queueTime, setQueueTime] = useState(1);
@@ -24,8 +25,12 @@ export default function QueueScreen({ route, navigation }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await newRequest.get(`/homepage/config/${appVersion}`);
-      setDefaultQueueTime(res.data.queueTime);
+      try {
+        const res = await newRequest.get(`/homepage/config/${appVersion}`);
+        setDefaultQueueTime(!IS_PRODUCTION ? 3 : res.data.queueTime);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     fetchData();
@@ -86,7 +91,9 @@ export default function QueueScreen({ route, navigation }) {
     });
 
     socketService.on('game_start', (data) => {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      if (Platform.OS !== 'web') {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      }
 
       navigation.navigate('Game', { game: data.game });
       clearInterval(intervalRef.current);
