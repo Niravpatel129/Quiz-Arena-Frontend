@@ -122,7 +122,7 @@ export default function QuestionsPostGame({ questions }) {
         >
           {question.Question}
         </Text>
-        {question.QuestionImage && (
+        {question.QuestionImage ? (
           <View>
             <Image
               resizeMode='contain'
@@ -137,6 +137,8 @@ export default function QuestionsPostGame({ questions }) {
               }}
             />
           </View>
+        ) : (
+          <></>
         )}
         <View style={{}}>
           {question.Answers.map((answer) => {
@@ -167,7 +169,7 @@ export default function QuestionsPostGame({ questions }) {
                           borderColor: '#fff',
                         }}
                         source={{
-                          uri: question.PlayerAnswers.you.playerAvatar,
+                          uri: question?.PlayerAnswers?.you?.playerAvatar,
                         }}
                       />
                     </>
@@ -197,7 +199,7 @@ export default function QuestionsPostGame({ questions }) {
                       <Image
                         style={{ width: 25, height: 25, borderRadius: 50 }}
                         source={{
-                          uri: question.PlayerAnswers.opponent.playerAvatar,
+                          uri: question?.PlayerAnswers?.opponent?.playerAvatar,
                         }}
                       />
                     </>
