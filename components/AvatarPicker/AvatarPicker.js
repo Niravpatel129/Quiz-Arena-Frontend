@@ -7,7 +7,7 @@ import upload from '../../helpers/upload';
 const AvatarPicker = ({ defaultImage, disablePress }) => {
   const [avatar, setAvatar] = useState(null);
   const scaleAnim = new Animated.Value(0.5);
-  const opacityAnim = new Animated.Value(0); // Initial opacity value for fade-in animation
+  const opacityAnim = new Animated.Value(0);
 
   const onImageLoad = () => {
     Animated.spring(scaleAnim, {

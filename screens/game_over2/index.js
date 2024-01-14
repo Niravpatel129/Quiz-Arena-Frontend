@@ -124,7 +124,7 @@ export default function GameOver2({ route }) {
         onPress={() => {
           if (!playerInfo.userId) return;
 
-          navigation.navigate('Profile', { userId: playerInfo.userId });
+          navigation.navigate('PublicProfile', { userId: playerInfo.userId });
         }}
       >
         <Image

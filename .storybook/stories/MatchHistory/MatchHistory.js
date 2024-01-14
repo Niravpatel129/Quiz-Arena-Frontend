@@ -152,7 +152,7 @@ export default function MatchHistory() {
                     </View>
                     <TouchableOpacity
                       onPress={() => {
-                        navigation.navigate('Profile', {
+                        navigation.navigate('PublicProfile', {
                           userId: opponent?.id,
                         });
                       }}

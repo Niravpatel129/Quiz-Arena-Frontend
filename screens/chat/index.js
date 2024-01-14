@@ -142,7 +142,7 @@ export default function Chat({
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('Profile', { userId: chattingWithId });
+                navigation.navigate('PublicProfile', { userId: chattingWithId });
               }}
             >
               <Image

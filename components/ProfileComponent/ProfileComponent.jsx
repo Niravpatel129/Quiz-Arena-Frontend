@@ -1,40 +1,51 @@
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import React, { useEffect } from 'react';
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { newRequest } from '../../api/newRequest';
-import AvatarPicker from '../../components/AvatarPicker/AvatarPicker';
 import Trophies from '../../components/Trophies/Trophies';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import formatLastActive from '../../helpers/formatLastActive';
 
-export default function ProfileScreen({ navigation, route }) {
+export default function ProfileComponent({ userId }) {
   const [userData, setUserData] = React.useState({});
+  const scaleAnim = new Animated.Value(0.5);
+  const opacityAnim = new Animated.Value(0);
+
+  console.log(userData);
+
+  const onImageLoad = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      friction: 5,
+      useNativeDriver: true,
+    }).start();
+
+    Animated.timing(opacityAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
 
   const fetchUser = async () => {
-    const userRes = await newRequest.get(`/users/${route?.params?.userId}`);
+    const userRes = await newRequest.get(`/users/${userId}`);
 
     setUserData(userRes.data);
   };
   useEffect(() => {
     fetchUser();
-  }, [route.params?.userId]);
+  }, [userId]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#1c2141' }}>
       <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
-        {!route?.params?.userId && (
+        {!userId && (
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('ProfileEdit');
             }}
           >
-            {/* <Ionicons
-              name='gear'
-              size={24}
-              color='white'
-              style={{ marginTop: 20, marginLeft: 20 }}
-            /> */}
             <FontAwesome
               name='gear'
               size={24}
@@ -51,10 +62,33 @@ export default function ProfileScreen({ navigation, route }) {
             position: 'relative',
             marginTop: 20,
             paddingTop: 20,
+            minHeight: 500,
           }}
         >
-          <View>
-            <AvatarPicker defaultImage={userData?.avatar} disablePress={route?.params?.userId} />
+          <View
+            style={{
+              minHeight: 200,
+            }}
+          >
+            <Animated.Image
+              source={{
+                uri: userData?.avatar,
+                headers: {
+                  Accept: '*/*',
+                },
+              }}
+              style={{
+                borderRadius: 100,
+                width: 200,
+                height: 200,
+                transform: [{ scale: scaleAnim }],
+                opacity: opacityAnim,
+              }}
+              onLoad={onImageLoad}
+              onError={(error) => {
+                console.log('🚀 Error loading image:', error);
+              }}
+            />
           </View>
           <View
             style={{
@@ -76,7 +110,6 @@ export default function ProfileScreen({ navigation, route }) {
             <Ionicons name='location' size={18} color='lightgray' />
             Last Active {formatLastActive(userData?.lastActive)}
           </Text>
-
           <View
             style={{
               backgroundColor: '#1d284b',
@@ -92,61 +125,58 @@ export default function ProfileScreen({ navigation, route }) {
               Average Rating: {userData?.averageRating}
             </Text>
           </View>
-          {route.params?.userId && (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>
-              <TouchableOpacity
-                style={{
-                  borderRadius: 10,
-                  padding: 10,
-                  borderWidth: 1,
-                  borderColor: 'gray',
-                  paddingHorizontal: 20,
-                  backgroundColor: '#c73dce',
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Text style={{ color: 'white', fontSize: 18 }}>Challenge</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  borderRadius: 10,
-                  padding: 10,
-                  borderWidth: 1,
-                  borderColor: 'gray',
-                  paddingHorizontal: 20,
-                  backgroundColor: '#ce3d3d',
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Text style={{ color: 'white', fontSize: 18 }}>Add</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('Chat', {
-                    chattingWithId: route?.params?.userId,
-                  })
-                }
-                style={{
-                  borderRadius: 10,
-                  padding: 10,
-                  borderWidth: 1,
-                  borderColor: 'gray',
-                  paddingHorizontal: 20,
-                  backgroundColor: '#ce753d',
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Text style={{ color: 'white', fontSize: 18 }}>Chat</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>
+            <TouchableOpacity
+              style={{
+                borderRadius: 10,
+                padding: 10,
+                borderWidth: 1,
+                borderColor: 'gray',
+                paddingHorizontal: 20,
+                backgroundColor: '#c73dce',
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text style={{ color: 'white', fontSize: 18 }}>Challenge</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                borderRadius: 10,
+                padding: 10,
+                borderWidth: 1,
+                borderColor: 'gray',
+                paddingHorizontal: 20,
+                backgroundColor: '#ce3d3d',
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text style={{ color: 'white', fontSize: 18 }}>Add</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Chat', {
+                  chattingWithId: userId,
+                })
+              }
+              style={{
+                borderRadius: 10,
+                padding: 10,
+                borderWidth: 1,
+                borderColor: 'gray',
+                paddingHorizontal: 20,
+                backgroundColor: '#3dce6d',
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text style={{ color: 'white', fontSize: 18 }}>Chat</Text>
+            </TouchableOpacity>
+          </View>
           <View style={{ marginTop: 30, width: '100%' }}>
             <View
               style={{ justifyContent: 'center', gap: 20, flexDirection: 'row', marginTop: 20 }}
@@ -256,39 +286,6 @@ export default function ProfileScreen({ navigation, route }) {
               <Trophies />
             </View>
           </View>
-          {/* {route?.params?.userId && (
-            <View style={{ marginTop: 30, alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={{ color: 'white', fontSize: 44, fontWeight: 'bold', marginBottom: 10 }}>
-                You vs
-              </Text>
-              <View style={{ flexDirection: 'row' }}>
-                <View
-                  style={{
-                    backgroundColor: 'lightgray',
-                    borderRadius: 10,
-                    width: 150,
-                    height: 150,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#1d284b' }}>1 W</Text>
-                </View>
-                <View
-                  style={{
-                    backgroundColor: 'lightgray',
-                    borderRadius: 10,
-                    width: 150,
-                    height: 150,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#1d284b' }}>11 L</Text>
-                </View>
-              </View>
-            </View>
-          )} */}
         </View>
       </ScrollView>
     </SafeAreaView>

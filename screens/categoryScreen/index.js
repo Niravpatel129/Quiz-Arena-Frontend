@@ -93,7 +93,7 @@ export default function CategoryScreen({ route }) {
             </Text>
             <TouchableOpacity
               onPress={() =>
-                navgiation.navigate('Profile', {
+                navgiation.navigate('PublicProfile', {
                   userId: player._id,
                 })
               }
@@ -187,11 +187,11 @@ export default function CategoryScreen({ route }) {
             1.
           </Text>
           <TouchableOpacity
-          // onPress={() =>
-          //   navgiation.navigate('Profile', {
-          //     userId: player._id,
-          //   })
-          // }
+            onPress={() =>
+              navgiation.navigate('PublicProfile', {
+                userId: player._id,
+              })
+            }
           >
             <Image
               style={{ width: 40, height: 40, borderRadius: 25 }}

@@ -226,7 +226,7 @@ export default function FriendsList() {
       >
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Profile', {
+            navigation.navigate('PublicProfile', {
               userId: friend._id,
             });
           }}

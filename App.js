@@ -29,6 +29,7 @@ import MatchHistoryScreen from './screens/match_history';
 import NotificationsScreen from './screens/notifications';
 import PlayersScreen from './screens/players';
 import ProfileScreen from './screens/profile';
+import PublicProfile from './screens/publicProfile';
 import QueueScreen from './screens/queue_screen';
 import SignUpLogin from './screens/signuplogin';
 
@@ -224,6 +225,11 @@ function App() {
         />
 
         <Stack.Screen name='Contribute' component={Contribute} options={{ headerShown: true }} />
+        <Stack.Screen
+          name='PublicProfile'
+          component={PublicProfile}
+          options={{ headerShown: true }}
+        />
 
         <Stack.Screen name='Chat' component={Chat} options={{ headerShown: false }} />
         {/* <Stack.Screen name='Drawer' component={DrawerNavigator} options={{ headerShown: false }} /> */}

@@ -74,7 +74,7 @@ export default function LeaderboardsScreen({ navigation }) {
         >
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('Profile', {
+              navigation.navigate('PublicProfile', {
                 userId: player._id,
               })
             }
@@ -169,7 +169,7 @@ export default function LeaderboardsScreen({ navigation }) {
             </Text>
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('Profile', {
+                navigation.navigate('PublicProfile', {
                   userId: player._id,
                 })
               }
