@@ -287,7 +287,6 @@ export default function FriendsList() {
             <TouchableOpacity
               style={{
                 backgroundColor: '#1c2141',
-                textweight: 'bold',
                 fontFamily: 'Inter-Bold',
                 borderRadius: 12,
                 padding: 10,
@@ -299,7 +298,6 @@ export default function FriendsList() {
                 style={{
                   // color: '#1c2141',
                   color: 'white',
-                  textweight: 'bold',
                   fontFamily: 'Inter-Bold',
                 }}
               >

@@ -87,6 +87,9 @@ const AvatarPicker = ({ defaultImage, disablePress }) => {
             opacity: opacityAnim,
           }}
           onLoad={onImageLoad}
+          onError={(error) => {
+            console.log('🚀 Error loading image:', error);
+          }}
         />
       ) : (
         <Animated.Image
@@ -101,6 +104,9 @@ const AvatarPicker = ({ defaultImage, disablePress }) => {
             height: 200,
             transform: [{ scale: scaleAnim }],
             opacity: opacityAnim,
+          }}
+          onError={(error) => {
+            console.log('🚀 Error loading image:', error);
           }}
           onLoad={onImageLoad}
         />
