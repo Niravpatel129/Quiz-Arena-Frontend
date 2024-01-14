@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { AppState } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 import socketService from '../../services/socketService';
 
@@ -12,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const navigation = useNavigation();
   const [userNotifications, setUserNotifications] = useState([]);
+  const [appState, setAppState] = useState(AppState.currentState);
 
   const fetchNotifications = async () => {
     try {
@@ -21,6 +23,23 @@ export const AuthProvider = ({ children }) => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (appState.match(/inactive|background/) && nextAppState === 'active') {
+        console.log('App has come to the foreground!');
+        fetchNotifications();
+      } else {
+        console.log('App has gone to the background!');
+      }
+
+      setAppState(nextAppState);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [appState]);
 
   useEffect(() => {
     fetchNotifications();
