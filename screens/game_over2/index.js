@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
 import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -40,7 +41,8 @@ const fakeData2 = {
   },
 };
 
-export default function GameOver2({ navigation, route }) {
+export default function GameOver2({ route }) {
+  const navigation = useNavigation();
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
   const fakeData = route.params?.results || fakeData2;
   console.log('🚀  fakeData:', fakeData);
