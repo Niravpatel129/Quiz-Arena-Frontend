@@ -57,7 +57,12 @@ export default function GameOverScreen({ navigation, route }) {
       <VStack space={2} alignItems='center'>
         <Avatar
           size='xl'
-          source={{ uri: 'https://bit.ly/2Z4KKcF' }}
+          source={{
+            uri: 'https://bit.ly/2Z4KKcF',
+            headers: {
+              Accept: '*/*',
+            },
+          }}
           borderColor={result === 'winner' ? 'green.400' : 'red.400'}
           borderWidth={4}
         />

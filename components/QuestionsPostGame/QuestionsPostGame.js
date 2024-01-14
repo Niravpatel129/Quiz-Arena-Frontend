@@ -128,6 +128,9 @@ export default function QuestionsPostGame({ questions }) {
               resizeMode='contain'
               source={{
                 uri: question.QuestionImage,
+                headers: {
+                  Accept: '*/*',
+                },
               }}
               style={{
                 width: 200,
@@ -170,6 +173,9 @@ export default function QuestionsPostGame({ questions }) {
                         }}
                         source={{
                           uri: question?.PlayerAnswers?.you?.playerAvatar,
+                          headers: {
+                            Accept: '*/*',
+                          },
                         }}
                       />
                     </>
@@ -200,6 +206,9 @@ export default function QuestionsPostGame({ questions }) {
                         style={{ width: 25, height: 25, borderRadius: 50 }}
                         source={{
                           uri: question?.PlayerAnswers?.opponent?.playerAvatar,
+                          headers: {
+                            Accept: '*/*',
+                          },
                         }}
                       />
                     </>

@@ -74,7 +74,12 @@ const AvatarPicker = ({ defaultImage, disablePress }) => {
     >
       {avatar ? (
         <Animated.Image
-          source={{ uri: avatar }}
+          source={{
+            uri: avatar,
+            headers: {
+              Accept: '*/*',
+            },
+          }}
           style={{
             width: 200,
             height: 200,
@@ -87,6 +92,9 @@ const AvatarPicker = ({ defaultImage, disablePress }) => {
         <Animated.Image
           source={{
             uri: defaultImage,
+            headers: {
+              Accept: '*/*',
+            },
           }}
           style={{
             width: 200,

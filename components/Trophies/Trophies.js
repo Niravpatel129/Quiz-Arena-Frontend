@@ -13,7 +13,15 @@ export default function Trophies() {
   // Rendering each item in the flat list
   const renderItem = ({ item }) => (
     <View style={styles.trophyItem}>
-      <Image source={{ uri: item.icon }} style={styles.trophyIcon} />
+      <Image
+        source={{
+          uri: item.icon,
+          headers: {
+            Accept: '*/*',
+          },
+        }}
+        style={styles.trophyIcon}
+      />
       <Text style={styles.trophyTitle}>{item.title}</Text>
     </View>
   );

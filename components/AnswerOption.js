@@ -92,6 +92,9 @@ const AnswerOptions = ({ helperImage, answersOptions, handleAnswer, scores }) =>
             style={styles.image}
             source={{
               uri: helperImage,
+              headers: {
+                Accept: '*/*',
+              },
             }}
           />
         </View>

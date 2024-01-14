@@ -101,6 +101,9 @@ export default function FriendsList() {
                 }}
                 source={{
                   uri: 'https://png.pngtree.com/png-vector/20230120/ourlarge/pngtree-social-media-friend-add-icon-png-image_6564195.png',
+                  headers: {
+                    Accept: '*/*',
+                  },
                 }}
               />
             </View>

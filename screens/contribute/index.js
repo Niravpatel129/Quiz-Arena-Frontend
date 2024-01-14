@@ -206,6 +206,9 @@ export default function Contribute({ route }) {
                     }}
                     source={{
                       uri: imageUrl,
+                      headers: {
+                        Accept: '*/*',
+                      },
                     }}
                   />
                 </TouchableOpacity>

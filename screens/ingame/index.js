@@ -34,7 +34,12 @@ const PlayerCard = ({ player, flipped }) => {
           borderWidth: 1,
           borderColor: '#516696',
         }}
-        source={{ uri: player.avatar }}
+        source={{
+          uri: player.avatar,
+          headers: {
+            Accept: '*/*',
+          },
+        }}
       />
       <View
         style={{
@@ -223,7 +228,12 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
             marginVertical: 20,
           }}
           onLoad={() => setImageLoaded(true)}
-          source={{ uri: InGameData?.RoundData?.image }}
+          source={{
+            uri: InGameData?.RoundData?.image,
+            headers: {
+              Accept: '*/*',
+            },
+          }}
         />
       </View>
     );

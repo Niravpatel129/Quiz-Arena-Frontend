@@ -125,6 +125,9 @@ export default function QueueScreen({ route, navigation }) {
           }}
           source={{
             uri: isPlaceholder ? playerImages[playerImageIndex] : playerData.avatar,
+            headers: {
+              Accept: '*/*',
+            },
           }}
         />
         <Text

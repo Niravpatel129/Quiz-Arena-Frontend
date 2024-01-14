@@ -142,7 +142,12 @@ export default function Chat({
             >
               <Image
                 style={{ width: 50, height: 50, borderRadius: 25 }}
-                source={{ uri: chat.chatingWith?.avatar }}
+                source={{
+                  uri: chat.chatingWith?.avatar,
+                  headers: {
+                    Accept: '*/*',
+                  },
+                }}
               />
             </TouchableOpacity>
             <View style={{ flexDirection: 'column', marginHorizontal: 20 }}>

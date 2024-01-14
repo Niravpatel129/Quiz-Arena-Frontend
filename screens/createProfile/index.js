@@ -137,7 +137,15 @@ export default function CreateProfile({ route, navigation }) {
                     }}
                   >
                     {avatarUri ? (
-                      <Image source={{ uri: avatarUri }} style={{ width: 200, height: 200 }} />
+                      <Image
+                        source={{
+                          uri: avatarUri,
+                          headers: {
+                            Accept: '*/*',
+                          },
+                        }}
+                        style={{ width: 200, height: 200 }}
+                      />
                     ) : (
                       <Image
                         source={{

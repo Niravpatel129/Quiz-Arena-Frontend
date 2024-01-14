@@ -197,6 +197,9 @@ export default function CategoryScreen({ route }) {
               style={{ width: 40, height: 40, borderRadius: 25 }}
               source={{
                 uri: 'https://upload.wikimedia.org/wikipedia/en/e/e0/Felicette%2C_spacecat.jpg',
+                headers: {
+                  Accept: '*/*',
+                },
               }}
             />
           </TouchableOpacity>
