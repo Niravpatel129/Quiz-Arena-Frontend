@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef } from 'react';
 import {
@@ -17,7 +18,6 @@ import formatLastActive from '../../helpers/formatLastActive';
 import socketService from '../../services/socketService';
 
 export default function Chat({
-  navigation,
   route: {
     params: { chattingWithId },
   },
@@ -25,6 +25,7 @@ export default function Chat({
   const [chat, setChat] = React.useState([]);
   const [textInput, setTextInput] = React.useState('');
   const scrollViewRef = useRef();
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (!chat._id) return;
@@ -37,6 +38,11 @@ export default function Chat({
   }, [chat]);
 
   const fetchChat = async () => {
+    if (!chattingWithId) {
+      navigation.navigate('Categories');
+      return alert('No user to chat with');
+    }
+
     const chatRes = await newRequest.post('/chat/create', {
       friendId: chattingWithId,
     });
@@ -96,7 +102,7 @@ export default function Chat({
     );
   };
 
-  if (!chat.chatingWith)
+  if (!chat?.chatingWith)
     return (
       <View
         style={{
@@ -136,7 +142,6 @@ export default function Chat({
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity
               onPress={() => {
-                console.log('🚀  chat:', chat);
                 navigation.navigate('Profile', { userId: chattingWithId });
               }}
             >

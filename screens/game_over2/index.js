@@ -10,6 +10,7 @@ import QuestionsPostGame from '../../components/QuestionsPostGame/QuestionsPostG
 import RematchModal from '../../components/RematchModal/RematchModal';
 import Scoresheet from '../../components/Scoresheet/Scoresheet';
 import useInAppReview from '../../hooks/useInAppReview';
+import useShareMessage from '../../hooks/useShareMessage';
 import socketService from '../../services/socketService';
 
 const fakeData2 = {
@@ -47,6 +48,7 @@ export default function GameOver2({ route }) {
   const fakeData = route.params?.results || fakeData2;
   console.log('🚀  fakeData:', fakeData);
   const [scaleAnimation] = React.useState(new Animated.Value(0)); // Add this line
+  const share = useShareMessage();
 
   const requestReview = useInAppReview();
 
@@ -273,6 +275,14 @@ export default function GameOver2({ route }) {
             }}
           >
             <TouchableOpacity
+              onPress={async () => {
+                // useShareMessage
+                share(
+                  `I just played a game of Trivia with ${
+                    fakeData?.opponentData?.username || 'Alex'
+                  } on QuizArena!`,
+                );
+              }}
               style={{
                 backgroundColor: '#32547A6B',
                 borderWidth: 2,
@@ -324,6 +334,9 @@ export default function GameOver2({ route }) {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
+              onPress={() => {
+                alert('feature coming soon');
+              }}
               style={{
                 backgroundColor: '#32547A6B',
                 borderWidth: 2,

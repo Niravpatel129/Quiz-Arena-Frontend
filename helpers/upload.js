@@ -12,8 +12,15 @@ try {
 const convertToJPEG = async (fileUri) => {
   const manipResult = await ImageManipulator.manipulateAsync(
     fileUri,
-    [], // no actions
-    { format: ImageManipulator.SaveFormat.JPEG },
+    [
+      {
+        resize: {
+          width: 250,
+          height: 250,
+        },
+      },
+    ],
+    { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG },
   );
   return manipResult.uri;
 };

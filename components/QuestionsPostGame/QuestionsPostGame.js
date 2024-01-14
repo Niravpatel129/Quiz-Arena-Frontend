@@ -96,8 +96,6 @@ export default function QuestionsPostGame({ questions }) {
   };
 
   const renderQuestionBubble = (question, index) => {
-    console.log('🚀  question:', question);
-
     return (
       <View
         key={index}
