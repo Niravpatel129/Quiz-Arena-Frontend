@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Platform } from 'react-native';
+import * as ImageManipulator from 'expo-image-manipulator';
 import { keys } from '../keys';
 
 let FileSystem;
@@ -9,6 +9,15 @@ try {
   FileSystem = null;
 }
 
+const convertToJPEG = async (fileUri) => {
+  const manipResult = await ImageManipulator.manipulateAsync(
+    fileUri,
+    [], // no actions
+    { format: ImageManipulator.SaveFormat.JPEG },
+  );
+  return manipResult.uri;
+};
+
 const fileToDataURL = async (fileUri) => {
   if (!FileSystem) {
     throw new Error('FileSystem is not available');
@@ -17,35 +26,31 @@ const fileToDataURL = async (fileUri) => {
   const base64 = await FileSystem.readAsStringAsync(fileUri, {
     encoding: FileSystem.EncodingType.Base64,
   });
-  const mimeType = 'image/png'; // Change this according to your file's MIME type
-  return `data:${mimeType};base64,${base64}`;
+  return `data:image/png;base64,${base64}`;
 };
 
-const upload = async (file) => {
+const upload = async (fileUri) => {
   const uploadUrl = `https://api.cloudinary.com/v1_1/gamercoach/image/upload?api_key=${keys.cloudinary}`;
 
-  let dataURL;
-  if ((Platform.OS === 'ios' || Platform.OS === 'android') && FileSystem) {
-    // Use fileToDataURL if FileSystem is available (React Native)
-    dataURL = await fileToDataURL(file);
-  } else {
-    // In web environment, assume 'file' is already a Blob or File object
-    dataURL = file;
-  }
+  const JPEG_URI = await convertToJPEG(fileUri);
+  const dataURL = await fileToDataURL(JPEG_URI);
 
   const data = new FormData();
   data.append('file', dataURL);
   data.append('upload_preset', 'gamercoach');
 
   try {
-    const response = await axios.post(uploadUrl, data);
-
+    const response = await axios.post(uploadUrl, data, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    });
     const { url } = response.data;
     console.log('🚀  url:', url);
-
     return url;
   } catch (error) {
-    console.error('🚀  error:', error);
+    console.log('🚀  error:', error);
+    console.error('Error uploading image:', error.message);
   }
 };
 
