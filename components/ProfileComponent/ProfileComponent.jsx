@@ -6,11 +6,17 @@ import { newRequest } from '../../api/newRequest';
 import Trophies from '../../components/Trophies/Trophies';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import formatLastActive from '../../helpers/formatLastActive';
+import ChallangeModal from '../ChallangeModal/ChallangeModal';
 
 export default function ProfileComponent({ userId }) {
   const [userData, setUserData] = React.useState({});
   const scaleAnim = new Animated.Value(0.5);
   const opacityAnim = new Animated.Value(0);
+  const [selectedFriendId, setSelectedFriendId] = React.useState(null);
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
+
+  const showModal = () => setIsModalVisible(true);
+  const hideModal = () => setIsModalVisible(false);
 
   console.log(userData);
 
@@ -37,9 +43,24 @@ export default function ProfileComponent({ userId }) {
     fetchUser();
   }, [userId]);
 
+  const handleChallange = async () => {
+    try {
+      showModal();
+      setSelectedFriendId(userId);
+      return;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#1c2141' }}>
       <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+        <ChallangeModal
+          opponentUserId={selectedFriendId}
+          isModalVisible={isModalVisible}
+          hideModal={hideModal}
+        />
         {!userId && (
           <TouchableOpacity
             onPress={() => {
@@ -127,6 +148,9 @@ export default function ProfileComponent({ userId }) {
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>
             <TouchableOpacity
+              onPress={() => {
+                handleChallange();
+              }}
               style={{
                 borderRadius: 10,
                 padding: 10,
