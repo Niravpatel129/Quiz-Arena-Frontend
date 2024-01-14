@@ -83,42 +83,7 @@ function App() {
 
   function HomeTabNavigator() {
     return (
-      <Tab.Navigator
-        tabBar={(props) => <TabBar {...props} />}
-        // screenOptions={{
-        //   tabBarStyle: {
-        //     borderTopWidth: 0,
-        //   },
-        //   tabBarHideOnKeyboard: true,
-        //   headerStyle: {
-        //     borderBottomWidth: 0,
-
-        //     backgroundColor: '#1d284b',
-        //   },
-        //   headerTitleAlign: 'center',
-        //   headerTitleStyle: {
-        //     color: 'white',
-        //     fontWeight: 'bold',
-        //   },
-        //   cardStyle: { backgroundColor: '#1d284b' },
-
-        //   headerLeft: () => {
-        //     // return <Ionicons name='menu' size={24} color='white' style={{ marginLeft: 20 }} />;
-        //   },
-        //   headerRight: () => {
-        //     return (
-        //       <TouchableOpacity onPress={() => {}}>
-        //         <FontAwesome5
-        //           name='user-friends'
-        //           size={22}
-        //           color='white'
-        //           style={{ marginRight: 20 }}
-        //         />
-        //       </TouchableOpacity>
-        //     );
-        //   },
-        // }}
-      >
+      <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
         <Tab.Screen
           name='CategoriesHome'
           component={Categories2}
