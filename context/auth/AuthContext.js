@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
       if (appState.match(/inactive|background/) && nextAppState === 'active') {
         console.log('App has come to the foreground!');
         fetchNotifications();
+        validateLogin();
       } else {
         console.log('App has gone to the background!');
       }
@@ -64,11 +65,26 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  const validateLogin = async () => {
+    try {
+      const tokenRes = await newRequest.get('/auth/validate-token');
+      setUserId(tokenRes.data?.userId);
+      setUserToken(tokenRes.data?.token);
+
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Categories' }],
+      });
+    } catch (error) {
+      console.log('🚀  token is not valid', token);
+      await AsyncStorage.removeItem('userToken');
+    }
+  };
+
   useEffect(() => {
     const loadStoredToken = async () => {
       const token = await AsyncStorage.getItem('userToken');
       if (token) {
-        console.log('🚀  useEffect AuthContext');
         // validate token with backend
         try {
           const tokenRes = await newRequest.get('/auth/validate-token');
