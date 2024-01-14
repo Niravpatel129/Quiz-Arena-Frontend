@@ -22,6 +22,7 @@ const GameScreen = ({ navigation }) => {
   const [appState, setAppState] = React.useState(AppState.currentState);
   const [round, setRound] = React.useState(1);
   const [data, setData] = React.useState(null);
+  const [sendBotAnswer, setSendBotAnswer] = React.useState(false);
 
   const myData = data?.gameSession?.players?.find(
     (player) => player.socketId === socketService?.socket?.id,
@@ -61,6 +62,8 @@ const GameScreen = ({ navigation }) => {
 
   const giveBotAnswer = (botPlayer, sessionId, correctAnswer) => {
     const giveCorrectAnswer = Math.floor(Math.random() * 4) + 1 > 1;
+    // only send 1 bot answer per round
+    if (sendBotAnswer) return;
 
     socketService.emit('bot_answer', {
       sessionId: sessionId,
@@ -70,6 +73,7 @@ const GameScreen = ({ navigation }) => {
       currentRound: round,
     });
 
+    setSendBotAnswer(true);
     //
   };
 
@@ -88,6 +92,7 @@ const GameScreen = ({ navigation }) => {
       setCountdown(0);
       setTimer(defaultCountdown);
       setRound((prevRound) => prevRound + 1);
+      setSendBotAnswer(false);
       if (roundData) setData(roundData);
 
       const opponentData = roundData.gameSession.players.find(
