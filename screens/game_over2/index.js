@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import EndGameChart from '../../components/EndGameChart';
 import QuestionsPostGame from '../../components/QuestionsPostGame/QuestionsPostGame';
 import RematchModal from '../../components/RematchModal/RematchModal';
@@ -77,7 +78,16 @@ export default function GameOver2({ route }) {
       otherPlayerUserId: fakeData.opponentData.id,
     });
 
-    alert('Rematch requested');
+    Toast.show({
+      type: 'info',
+      position: 'bottom',
+      text1: 'Rematch requested',
+      text2: 'Waiting for opponent to accept',
+      visibilityTime: 2000,
+      autoHide: true,
+      topOffset: 30,
+      bottomOffset: 40,
+    });
   };
 
   const handleRematchAccept = () => {
@@ -335,7 +345,16 @@ export default function GameOver2({ route }) {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                alert('feature coming soon');
+                Toast.show({
+                  type: 'info',
+                  position: 'bottom',
+                  text1: 'Oh oh!',
+                  text2: 'User needs to be your friend!',
+                  visibilityTime: 2000,
+                  autoHide: true,
+                  topOffset: 30,
+                  bottomOffset: 40,
+                });
               }}
               style={{
                 backgroundColor: '#32547A6B',
