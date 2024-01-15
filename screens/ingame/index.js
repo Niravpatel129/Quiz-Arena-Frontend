@@ -18,7 +18,7 @@ function clockBorderColor(clock) {
   return borderColor;
 }
 
-const baseTime = 13;
+const baseTime = 12;
 const calculateTimeBasedScore = (timeRemaining) => {
   return Math.floor(20 - Math.floor(baseTime - timeRemaining));
 };

@@ -12,7 +12,7 @@ const preloadImages = (imageUrls) => {
   });
 };
 
-const defaultCountdown = 13;
+const defaultCountdown = 12;
 
 const GameScreen = ({ navigation }) => {
   const [highlightTrigger, setHighlightTrigger] = React.useState(false);
