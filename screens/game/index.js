@@ -38,11 +38,6 @@ const GameScreen = ({ navigation }) => {
     setInterval(() => {
       setTimer((prevTime) => prevTime - 1);
     }, 1000);
-
-    // this is for the animation
-    // setInterval(() => {
-    //   setCountdown((prevTime) => prevTime + 1);
-    // }, 1000);
   };
 
   useEffect(() => {
@@ -144,7 +139,7 @@ const GameScreen = ({ navigation }) => {
                     scores: myData.answers,
                   },
                   socketId: myData.socketId,
-                  userId: myData._id,
+                  userId: myData.id,
                 },
                 opponentData: {
                   username: opponentData.name,
@@ -157,7 +152,7 @@ const GameScreen = ({ navigation }) => {
                     scores: opponentData.answers,
                   },
                   socketId: opponentData.socketId,
-                  userId: opponentData._id,
+                  userId: opponentData.id,
                 },
               },
             },

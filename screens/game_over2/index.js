@@ -344,18 +344,7 @@ export default function GameOver2({ route }) {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => {
-                Toast.show({
-                  type: 'info',
-                  position: 'bottom',
-                  text1: 'Oh oh!',
-                  text2: 'User needs to be your friend!',
-                  visibilityTime: 2000,
-                  autoHide: true,
-                  topOffset: 30,
-                  bottomOffset: 40,
-                });
-              }}
+              onPress={() => {}}
               style={{
                 backgroundColor: '#32547A6B',
                 borderWidth: 2,
