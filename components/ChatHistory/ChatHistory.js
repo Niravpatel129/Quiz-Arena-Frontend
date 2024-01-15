@@ -18,8 +18,12 @@ export default function ChatHistory() {
     try {
       const response = await newRequest.get('/chat');
       const data = response.data;
-      setChats(data);
-      setAnimations(data.map(() => new Animated.Value(0))); // Initialize animations for each chat
+      // remove all chat with no messages
+      const filteredData = data.filter((chat) => chat.messages.length > 0);
+
+      setChats(filteredData);
+
+      setAnimations(filteredData.map(() => new Animated.Value(0))); // Initialize animations for each chat
       setLoading(false);
     } catch (err) {
       console.log(err);
