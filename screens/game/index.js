@@ -18,7 +18,7 @@ const GameScreen = ({ navigation }) => {
   const [highlightTrigger, setHighlightTrigger] = React.useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = React.useState(false);
   const [timer, setTimer] = React.useState(defaultCountdown);
-  const [countdown, setCountdown] = React.useState(0);
+  // const [countdown, setCountdown] = React.useState(0);
   const [appState, setAppState] = React.useState(AppState.currentState);
   const [round, setRound] = React.useState(1);
   const [data, setData] = React.useState(null);
@@ -40,9 +40,9 @@ const GameScreen = ({ navigation }) => {
     }, 1000);
 
     // this is for the animation
-    setInterval(() => {
-      setCountdown((prevTime) => prevTime + 1);
-    }, 1000);
+    // setInterval(() => {
+    //   setCountdown((prevTime) => prevTime + 1);
+    // }, 1000);
   };
 
   useEffect(() => {
@@ -94,7 +94,7 @@ const GameScreen = ({ navigation }) => {
         }
       }
 
-      setCountdown(0);
+      // setCountdown(0);
       setTimer(defaultCountdown);
       setRound((prevRound) => prevRound + 1);
       setSendBotAnswer(false);
