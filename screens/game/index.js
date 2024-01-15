@@ -64,7 +64,7 @@ const GameScreen = ({ navigation }) => {
     if (sendBotAnswer) return;
 
     // random between 0.5 and 2 seconds
-    const randomTime = Math.floor(Math.random() * 1500) + 500;
+    const randomTime = Math.floor(Math.random() * 1000) + 500;
 
     setTimeout(() => {
       const giveCorrectAnswer = Math.floor(Math.random() * 4) + 1 > 1;

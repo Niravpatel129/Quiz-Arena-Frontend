@@ -18,6 +18,11 @@ function clockBorderColor(clock) {
   return borderColor;
 }
 
+const baseTime = 13;
+const calculateTimeBasedScore = (timeRemaining) => {
+  return Math.floor(20 - Math.floor(baseTime - timeRemaining));
+};
+
 const PlayerCard = ({ player, flipped }) => {
   return (
     <View
@@ -148,6 +153,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
         onPress={() => {
           if (!selectedForRound) handleAnswerSelection(answer.optionText);
         }}
+        number={selectedForRound && answer.isCorrect ? calculateTimeBasedScore(timer) : 0}
       >
         <Text
           style={{
@@ -208,10 +214,10 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
             justifyContent: 'center',
             letterSpacing: 0.5,
             fontSize: !InGameData.RoundData?.image
-              ? 30
-              : InGameData.RoundData?.question?.split(' ').length > 10
+              ? 25
+              : InGameData.RoundData?.question?.split(' ').length > 6
               ? 20
-              : 24,
+              : 22,
             width: '80%',
             color: '#fff',
             minHeight: 100,
