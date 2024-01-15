@@ -64,20 +64,17 @@ const GameScreen = ({ navigation }) => {
     if (sendBotAnswer) return;
 
     // random between 0.5 and 2 seconds
-    const randomTime = Math.floor(Math.random() * 1000) + 500;
 
-    setTimeout(() => {
-      const giveCorrectAnswer = Math.floor(Math.random() * 4) + 1 > 1;
-      // only send 1 bot answer per round
+    const giveCorrectAnswer = Math.floor(Math.random() * 4) + 1 > 1;
+    // only send 1 bot answer per round
 
-      socketService.emit('bot_answer', {
-        sessionId: sessionId,
-        botPlayer: botPlayer,
-        correctAnswer: giveCorrectAnswer ? correctAnswer : 'wrong answer',
-        timeRemaining: Math.floor(Math.random() * 10) + 1,
-        currentRound: round,
-      });
-    }, randomTime);
+    socketService.emit('bot_answer', {
+      sessionId: sessionId,
+      botPlayer: botPlayer,
+      correctAnswer: giveCorrectAnswer ? correctAnswer : 'wrong answer',
+      timeRemaining: Math.floor(Math.random() * 10) + 1,
+      currentRound: round,
+    });
 
     setSendBotAnswer(true);
   };

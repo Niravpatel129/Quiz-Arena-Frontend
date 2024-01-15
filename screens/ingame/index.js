@@ -185,19 +185,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
 
   const renderQuestion = () => {
     if (!InGameData.RoundData?.question) return null;
-    // return (
-    //   <View
-    //     style={{
-    //       alignItems: 'center',
-    //       justifyContent: 'center',
-    //       margin: 10,
-    //       marginBottom: 0,
-    //       height: 350,
-    //     }}
-    //   >
-    //     <Text>Test</Text>
-    //   </View>
-    // );
+
     return (
       <View
         style={{
@@ -221,6 +209,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
             width: '80%',
             color: '#fff',
             minHeight: 100,
+            marginTop: 20,
           }}
         >
           {InGameData.RoundData.question}
@@ -231,7 +220,8 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
             width: 200,
             height: 200,
             borderRadius: 20,
-            marginVertical: 20,
+            marginTop: 1,
+            marginBottom: 20,
           }}
           onLoad={() => setImageLoaded(true)}
           source={{
@@ -331,11 +321,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
               </View>
             </View>
 
-            <View
-              style={{
-                justifyContent: 'space-between',
-              }}
-            >
+            <View>
               <View>{renderQuestion()}</View>
               <View
                 style={{
