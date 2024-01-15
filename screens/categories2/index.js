@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
 import {
@@ -12,12 +13,63 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
 import { NotificationsProvider } from '../../context/notifications/notificationsContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
 function CategoryBox({ categoryTitle, parentCategory, navigation, fadeAnim }) {
   const scaleAnim = useState(new Animated.Value(0.5))[0]; // Initial scale value
+
+  useEffect(() => {
+    const getStreak = async () => {
+      try {
+        const streakData = await AsyncStorage.getItem('streak');
+        let streak = streakData
+          ? JSON.parse(streakData)
+          : { streak: 0, date: new Date().toISOString(), toastShown: false };
+
+        const currentDate = new Date();
+        const lastStreakDate = new Date(streak.date);
+
+        // Check if the current day is different from the last streak date
+        if (currentDate.toDateString() !== lastStreakDate.toDateString()) {
+          // Reset toastShown flag if it's a different day
+          streak.toastShown = false;
+
+          // Reset streak if more than one day has passed
+          if (currentDate - lastStreakDate > 24 * 60 * 60 * 1000) {
+            streak.streak = 0;
+          }
+
+          // Increment streak and update date
+          streak.streak++;
+          streak.date = currentDate.toISOString();
+          await AsyncStorage.setItem('streak', JSON.stringify(streak));
+        }
+
+        // Show toast only if it hasn't been shown today
+        if (!streak.toastShown) {
+          const wittyText = ['You are on a roll!', 'You are on fire!', 'You are a beast!'];
+          console.log('showing toast');
+          Toast.show({
+            position: 'bottom',
+            type: 'success',
+            text1: 'You have a streak of ' + (streak.streak + 1) + ' days!',
+            text2: wittyText[Math.floor(Math.random() * wittyText.length)],
+          });
+
+          // Update the flag to indicate that the toast has been shown
+          streak.toastShown = true;
+          await AsyncStorage.setItem('streak', JSON.stringify(streak));
+        }
+      } catch (error) {
+        console.error('Error managing streak:', error);
+      }
+    };
+
+    getStreak();
+  }, []);
 
   const onImageLoad = () => {
     Animated.spring(scaleAnim, {

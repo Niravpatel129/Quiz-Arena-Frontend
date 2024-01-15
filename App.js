@@ -7,6 +7,7 @@ import * as Linking from 'expo-linking';
 import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
 import { LogBox, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import TabBar from './components/MyTabBar/MyTabBar';
 import NotificationBell from './components/NotificationBell/NotificationBell';
 import fonts from './config/fonts';
@@ -259,6 +260,7 @@ function App() {
                 </LinearGradient>
               </SoundProvider>
             </AuthProvider>
+            <Toast />
           </NavigationContainer>
         </SocketProvider>
       </NativeBaseProvider>
