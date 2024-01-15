@@ -12,9 +12,13 @@ export default function ProfileScreen({ navigation, route }) {
   const [userData, setUserData] = React.useState({});
 
   const fetchUser = async () => {
-    const userRes = await newRequest.get(`/users/${route?.params?.userId}`);
+    try {
+      const userRes = await newRequest.get(`/users/${route?.params?.userId}`);
 
-    setUserData(userRes.data);
+      setUserData(userRes.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     fetchUser();
@@ -29,12 +33,6 @@ export default function ProfileScreen({ navigation, route }) {
               navigation.navigate('ProfileEdit');
             }}
           >
-            {/* <Ionicons
-              name='gear'
-              size={24}
-              color='white'
-              style={{ marginTop: 20, marginLeft: 20 }}
-            /> */}
             <FontAwesome
               name='gear'
               size={24}
@@ -92,60 +90,6 @@ export default function ProfileScreen({ navigation, route }) {
               Average Rating: {userData?.averageRating}
             </Text>
           </View>
-          {route.params?.userId && (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>
-              <TouchableOpacity
-                style={{
-                  borderRadius: 10,
-                  padding: 10,
-                  borderWidth: 1,
-                  borderColor: 'gray',
-                  paddingHorizontal: 20,
-                  backgroundColor: '#c73dce',
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Text style={{ color: 'white', fontSize: 18 }}>Challenge</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  borderRadius: 10,
-                  padding: 10,
-                  borderWidth: 1,
-                  borderColor: 'gray',
-                  paddingHorizontal: 20,
-                  backgroundColor: '#ce3d3d',
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Text style={{ color: 'white', fontSize: 18 }}>Add</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('Chat', {
-                    chattingWithId: route?.params?.userId,
-                  })
-                }
-                style={{
-                  borderRadius: 10,
-                  padding: 10,
-                  borderWidth: 1,
-                  borderColor: 'gray',
-                  paddingHorizontal: 20,
-                  backgroundColor: '#ce753d',
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Text style={{ color: 'white', fontSize: 18 }}>Chat</Text>
-              </TouchableOpacity>
-            </View>
-          )}
 
           <View style={{ marginTop: 30, width: '100%' }}>
             <View

@@ -55,6 +55,12 @@
           "autoLogAppEventsEnabled": false,
           "isAutoInitEnabled": true
         }
+      ],
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "Allow $(PRODUCT_NAME) to access your contacts."
+        }
       ]
     ]
   }

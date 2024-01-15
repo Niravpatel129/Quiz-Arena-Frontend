@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import ChatHistory from '../../components/ChatHistory/ChatHistory';
 import FriendsList from '../../components/FriendsList/FriendsList';
+import SocialsList from '../../components/SocialsList/SocialsList';
 
 export default function FriendsScreen({ navigation }) {
   const [activeTab, setActiveTab] = React.useState('tab1');
@@ -89,7 +90,7 @@ export default function FriendsScreen({ navigation }) {
                 fontWeight: 'bold',
               }}
             >
-              Social
+              External
             </Text>
           </TouchableOpacity>
         </View>
@@ -99,19 +100,7 @@ export default function FriendsScreen({ navigation }) {
 
           {activeTab === 'tab2' && <ChatHistory />}
 
-          {activeTab === 'tab3' && (
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 20,
-                fontWeight: 'bold',
-                textAlign: 'center',
-                marginTop: 100,
-              }}
-            >
-              Coming soon...
-            </Text>
-          )}
+          {activeTab === 'tab3' && <SocialsList />}
         </View>
       </View>
     </SafeAreaView>

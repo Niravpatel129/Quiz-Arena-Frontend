@@ -95,6 +95,29 @@ export default function ProfileEditScreen() {
         <TouchableOpacity
           style={{
             marginTop: 20,
+            backgroundColor: '#e96f6f',
+            padding: 10,
+            width: 200,
+            borderRadius: 5,
+          }}
+          onPress={() => {
+            auth.signOut();
+          }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              fontSize: 20,
+              fontWeight: 'bold',
+            }}
+          >
+            Logout
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            marginTop: 20,
             backgroundColor: '#f96363',
             padding: 10,
             width: 200,

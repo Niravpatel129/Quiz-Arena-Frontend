@@ -17,7 +17,6 @@ export default function ChallangeModal({ opponentUserId, isModalVisible, hideMod
 
       let items = [];
       res.data.forEach((category) => {
-        console.log('🚀  category:', category);
         items.push({
           label: category.parentCategory,
           value: category.parentCategory,
@@ -33,8 +32,6 @@ export default function ChallangeModal({ opponentUserId, isModalVisible, hideMod
       if (firstSelectable) {
         setSelectedCategory(firstSelectable.value);
       }
-
-      console.log('🚀  res.data:', res.data);
     };
 
     fetchData();
