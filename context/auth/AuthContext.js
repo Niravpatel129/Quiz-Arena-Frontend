@@ -85,9 +85,12 @@ export const AuthProvider = ({ children }) => {
     const loadStoredToken = async () => {
       const token = await AsyncStorage.getItem('userToken');
       if (token) {
-        // validate token with backend
         try {
-          const tokenRes = await newRequest.get('/auth/validate-token');
+          const tokenRes = await newRequest.get('/auth/validate-token', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
           setUserId(tokenRes.data?.userId);
           setUserToken(token);
 
