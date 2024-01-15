@@ -24,7 +24,7 @@ const AnimatedButton = ({ children, onPress, style, number }) => {
       opacity: opacity.value,
       transform: [{ translateY: translateY.value }],
       position: 'absolute',
-      bottom: 30, // Adjust as needed for positioning
+      bottom: 30,
     };
   });
 
