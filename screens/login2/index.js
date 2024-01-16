@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Animated,
   Easing,
@@ -11,12 +12,39 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { newRequest } from '../../api/newRequest';
 import SocialButton from '../../components/SocialButton/SocialButton';
 
 export default function Login({ navigation }) {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [scaleAnim] = useState(new Animated.Value(0.8));
   const [buttonAnim] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    const loadStoredToken = async () => {
+      const token = await AsyncStorage.getItem('userToken');
+      if (token) {
+        try {
+          await newRequest.get('/auth/validate-token', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Categories' }],
+          });
+        } catch (error) {
+          console.log('🚀  error:', error);
+          console.log('🚀  token is not valid', token);
+          await AsyncStorage.removeItem('userToken');
+        }
+      }
+    };
+
+    loadStoredToken();
+  }, []);
 
   const onImageLoad = () => {
     Animated.parallel([

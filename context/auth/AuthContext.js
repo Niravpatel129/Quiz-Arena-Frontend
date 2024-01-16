@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   const fetchNotifications = async () => {
     try {
       const response = await newRequest.get('/users/notifications');
-      setUserNotifications(response.data.notifications);
+      setUserNotifications(response.data?.notifications);
     } catch (err) {
       console.log(err);
     }
@@ -78,6 +78,7 @@ export const AuthProvider = ({ children }) => {
         routes: [{ name: 'Categories' }],
       });
     } catch (error) {
+      console.log('🚀  error:', error);
       console.log('🚀  token is not valid', token);
       await AsyncStorage.removeItem('userToken');
     }
@@ -95,13 +96,8 @@ export const AuthProvider = ({ children }) => {
           });
           setUserId(tokenRes.data?.userId);
           setUserToken(token);
-
-          // dont allow back
-          // navigation.reset({
-          //   index: 0,
-          //   routes: [{ name: 'Categories' }],
-          // });
         } catch (error) {
+          console.log('🚀  error:', error);
           console.log('🚀  token is not valid', token);
           await AsyncStorage.removeItem('userToken');
         }
