@@ -59,6 +59,8 @@ export default function CategoryScreen({ route }) {
 
   const renderLeaderboardsPlayers = ({ players }) => {
     return players.map((player, index) => {
+      console.log('player', player);
+
       return (
         <Animated.View
           key={index}
@@ -94,7 +96,7 @@ export default function CategoryScreen({ route }) {
             <TouchableOpacity
               onPress={() =>
                 navgiation.navigate('PublicProfile', {
-                  userId: player._id,
+                  userId: player.userId,
                 })
               }
             >
@@ -187,11 +189,13 @@ export default function CategoryScreen({ route }) {
             1.
           </Text>
           <TouchableOpacity
-            onPress={() =>
+            onPress={() => {
+              if (!player._id) return;
+
               navgiation.navigate('PublicProfile', {
                 userId: player._id,
-              })
-            }
+              });
+            }}
           >
             <Image
               style={{ width: 40, height: 40, borderRadius: 25 }}
