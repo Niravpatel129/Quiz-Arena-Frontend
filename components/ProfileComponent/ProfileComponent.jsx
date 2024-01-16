@@ -1,4 +1,5 @@
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { Animated, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
@@ -14,6 +15,7 @@ export default function ProfileComponent({ userId }) {
   const opacityAnim = new Animated.Value(0);
   const [selectedFriendId, setSelectedFriendId] = React.useState(null);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
+  const navigation = useNavigation();
 
   const showModal = () => setIsModalVisible(true);
   const hideModal = () => setIsModalVisible(false);
@@ -181,11 +183,13 @@ export default function ProfileComponent({ userId }) {
               <Text style={{ color: 'white', fontSize: 18 }}>Add</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() =>
+              onPress={() => {
+                if (!userId) return;
+
                 navigation.navigate('Chat', {
                   chattingWithId: userId,
-                })
-              }
+                });
+              }}
               style={{
                 borderRadius: 10,
                 padding: 10,
