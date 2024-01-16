@@ -192,8 +192,7 @@ export default function ChallengeScreen({ route, navigation }) {
               marginTop: 10,
             }}
           >
-            Time in Queue: {queueTime % 60 < 10 ? '0' + (queueTime % 60) : queueTime % 60}{' '}
-            {queueTime % 60 === 1 ? 'second' : 'seconds'}
+            Time in Queue: {Math.floor(queueTime)} {queueTime % 60 === 1 ? 'second' : 'seconds'}
           </Text>
         </View>
       </View>
