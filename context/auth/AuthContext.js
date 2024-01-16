@@ -71,6 +71,8 @@ export const AuthProvider = ({ children }) => {
       setUserId(tokenRes.data?.userId);
       setUserToken(tokenRes.data?.token);
 
+      // dont navigate if already on categories screen
+
       navigation.reset({
         index: 0,
         routes: [{ name: 'Categories' }],
@@ -95,10 +97,10 @@ export const AuthProvider = ({ children }) => {
           setUserToken(token);
 
           // dont allow back
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Categories' }],
-          });
+          // navigation.reset({
+          //   index: 0,
+          //   routes: [{ name: 'Categories' }],
+          // });
         } catch (error) {
           console.log('🚀  token is not valid', token);
           await AsyncStorage.removeItem('userToken');
