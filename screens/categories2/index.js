@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
 import {
@@ -87,7 +86,6 @@ export default function Categories2({ navigation }) {
   const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity value
   const [categories, setCategories] = useState([]);
   const scaleAnim = useState(new Animated.Value(0.5))[0]; // Initial scale value
-  const route = useRoute();
 
   useEffect(() => {
     const getStreak = async () => {
