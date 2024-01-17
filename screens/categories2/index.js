@@ -83,9 +83,9 @@ function CategoryBox({ categoryTitle, parentCategory, navigation, fadeAnim }) {
 
 export default function Categories2({ navigation }) {
   const [searchInput, setSearchInput] = React.useState('');
-  const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity value
+  const [fadeAnim] = useState(new Animated.Value(0));
   const [categories, setCategories] = useState([]);
-  const scaleAnim = useState(new Animated.Value(0.5))[0]; // Initial scale value
+  const scaleAnim = useState(new Animated.Value(0.5))[0];
 
   useEffect(() => {
     const getStreak = async () => {
