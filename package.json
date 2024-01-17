@@ -75,7 +75,8 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-web": "~0.19.6",
     "socket.io-client": "^4.7.2",
-    "expo-contacts": "~12.2.0"
+    "expo-contacts": "~12.2.0",
+    "expo-clipboard": "~4.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

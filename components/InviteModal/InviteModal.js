@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
 import { Image, Modal, Text, TouchableOpacity, View } from 'react-native';
@@ -9,6 +10,14 @@ import socketService from '../../services/socketService';
 
 export default function InviteModal({ category, isModalVisible, hideModal }) {
   const [gameRoomId, setGameRoomId] = useState('');
+  const [showCopied, setShowCopied] = useState(false);
+
+  useEffect(() => {
+    if (!showCopied) return;
+    setTimeout(() => {
+      setShowCopied(false);
+    }, 2000);
+  }, [showCopied]);
 
   useEffect(() => {
     const generateGameRoomId = async () => {
@@ -190,7 +199,11 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
                 marginTop: 60,
                 paddingVertical: 20,
               }}
-              onPress={() => {}}
+              onPress={async () => {
+                // Clipboard.setString(`https://quizarena.gg/invite/${gameRoomId}`);
+                await Clipboard.setStringAsync(`https://quizarena.gg/invite/${gameRoomId}`);
+                setShowCopied(true);
+              }}
             >
               <Text
                 style={{
@@ -216,6 +229,21 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
                 />
               </Text>
             </TouchableOpacity>
+            <Text>
+              {showCopied ? (
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontSize: RFValue(10),
+                    fontFamily: 'Inter-Bold',
+                    textAlign: 'center',
+                    marginTop: 10,
+                  }}
+                >
+                  Copied to clipboard!
+                </Text>
+              ) : null}
+            </Text>
           </View>
         </View>
       </SafeAreaView>
