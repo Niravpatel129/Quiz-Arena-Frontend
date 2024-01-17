@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
+import { useAuth } from '../../context/auth/AuthContext';
 import { NotificationsProvider } from '../../context/notifications/notificationsContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
@@ -86,6 +87,11 @@ export default function Categories2({ navigation }) {
   const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity value
   const [categories, setCategories] = useState([]);
   const scaleAnim = useState(new Animated.Value(0.5))[0]; // Initial scale value
+  const { checkGameInvite } = useAuth();
+
+  useEffect(() => {
+    checkGameInvite();
+  }, []);
 
   useEffect(() => {
     const getStreak = async () => {

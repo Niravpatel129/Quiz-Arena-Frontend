@@ -24,6 +24,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const checkGameInvite = async () => {
+    try {
+      AsyncStorage.getItem('inviteId').then((value) => {
+        if (value) {
+          navigation.navigate('Challenge', { gameId: value });
+
+          AsyncStorage.removeItem('gameInvite');
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (appState.match(/inactive|background/) && nextAppState === 'active') {
@@ -137,6 +151,7 @@ export const AuthProvider = ({ children }) => {
         signOut,
         userNotifications,
         fetchNotifications,
+        checkGameInvite,
       }}
     >
       {children}

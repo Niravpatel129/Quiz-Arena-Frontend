@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -49,7 +50,7 @@ function App() {
   console.log('App.js');
 
   const linking = {
-    prefixes: ['quizarena.gg', 'https://quizarena.gg'],
+    prefixes: [prefix, 'quizarena.gg', 'https://quizarena.gg'],
     getInitialURL: async () => {
       // Get the initial URL if the app is opened via a deep link
       const url = await Linking.getInitialURL();
@@ -62,31 +63,22 @@ function App() {
         if (path === 'invite') {
           const id = queryParams.id;
 
+          // store into local storage
+          if (id) {
+            AsyncStorage.setItem('inviteId', id);
+          }
+
           console.log('🚀  id:', id);
         }
       };
       Linking?.addEventListener('url', onReceiveURL);
 
-      // Return a function to unsubscribe
       return () => {
-        if (Linking) Linking?.removeEventListener('url', onReceiveURL);
+        if (typeof Linking?.removeEventListener !== 'function') return;
+        Linking?.removeEventListener('url', onReceiveURL);
       };
     },
   };
-
-  // useEffect(() => {
-  //   // Log standard event. e.g. completed registration
-  //   AppEventsLogger.logEvent(AppEventsLogger.AppEvents.ViewedContent);
-  //   AppEventsLogger.logEvent('App Launch');
-
-  //   // add event and send it to facebook
-  //   AppEventsLogger.logEvent('added_to_cart', {
-  //     content_type: 'product',
-  //     content_id: 'HDFU-8452',
-  //     currency: 'USD',
-  //     value: 142.57,
-  //   });
-  // }, []);
 
   useEffect(() => {
     LogBox.ignoreLogs([

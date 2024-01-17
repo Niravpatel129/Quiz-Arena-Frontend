@@ -10,7 +10,7 @@ export default function ChallengeScreen({ route, navigation }) {
   const [queueTime, setQueueTime] = useState(1);
   const routeParam = route.params;
   const intervalRef = useRef(null);
-  const categoryName = routeParam?.categoryName || 'Logos';
+  const categoryName = routeParam?.categoryName;
   const gameId = routeParam?.gameId || '123';
   const { userData, fetchUser } = useAuth();
 
@@ -24,6 +24,15 @@ export default function ChallengeScreen({ route, navigation }) {
     socketService.emit('joinChallengeQueue', {
       gameId: gameId,
       category: categoryName,
+    });
+
+    socketService.on('challengeExpired', () => {
+      alert('Your challenge has expired.');
+
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Categories' }],
+      });
     });
 
     socketService.on('game_start', (data) => {
