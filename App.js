@@ -72,11 +72,6 @@ function App() {
         }
       };
       Linking?.addEventListener('url', onReceiveURL);
-
-      return () => {
-        if (typeof Linking?.removeEventListener !== 'function') return;
-        Linking?.removeEventListener('url', onReceiveURL);
-      };
     },
   };
 
