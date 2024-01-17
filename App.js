@@ -49,7 +49,7 @@ function App() {
   console.log('App.js');
 
   const linking = {
-    prefixes: [prefix],
+    prefixes: [prefix, 'https://quizarena.gg'],
   };
 
   // useEffect(() => {
