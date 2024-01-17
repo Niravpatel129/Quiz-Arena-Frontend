@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { newRequest } from '../../api/newRequest';
+import InviteModal from '../../components/InviteModal/InviteModal';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
 export default function CategoryScreen({ route }) {
@@ -24,7 +25,7 @@ export default function CategoryScreen({ route }) {
   const parentCategory = route.params?.parentCategory;
   const categoryImage = route.params?.categoryImage;
   const categoryId = route.params?.categoryId;
-
+  const [isModalVisible, setModalVisible] = React.useState(false);
   useEffect(() => {
     const fetchTopPlayers = async () => {
       const response = await newRequest(`/leaderboards/${categoryName}`);
@@ -249,11 +250,16 @@ export default function CategoryScreen({ route }) {
     );
   };
 
+  const hideModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <LinearGradient
       colors={['#0f0c29', '#302b63', '#24243e']}
       style={{ height: '100%', width: '100%' }}
     >
+      <InviteModal category={categoryName} isModalVisible={isModalVisible} hideModal={hideModal} />
       <SafeAreaView
         style={{
           width: '100%',
@@ -336,7 +342,8 @@ export default function CategoryScreen({ route }) {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    navgiation.navigate('Friends');
+                    setModalVisible(true);
+                    // navgiation.navigate('Friends');
                   }}
                   style={{
                     backgroundColor: 'white',
