@@ -86,7 +86,7 @@ export default function CategoryScreen({ route }) {
             <Text
               style={{
                 fontSize: 22,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 marginRight: 12,
                 color: 'white',
               }}
@@ -118,7 +118,7 @@ export default function CategoryScreen({ route }) {
               <Text
                 style={{
                   fontSize: 18,
-                  fontWeight: 'bold',
+                  fontWeight: 700,
                   color: 'white',
                   paddingLeft: 7,
                   maxWidth: 150,
@@ -145,7 +145,7 @@ export default function CategoryScreen({ route }) {
                 fontSize: 20,
                 flex: 1,
                 width: '100%',
-                fontWeight: 'bold',
+                fontWeight: 700,
               }}
             >
               {Math.floor(player.rating || 1200)}
@@ -181,7 +181,7 @@ export default function CategoryScreen({ route }) {
           <Text
             style={{
               fontSize: 22,
-              fontWeight: 'bold',
+              fontWeight: 700,
               marginRight: 12,
               color: 'white',
             }}
@@ -216,7 +216,7 @@ export default function CategoryScreen({ route }) {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 color: 'white',
                 paddingLeft: 7,
                 maxWidth: 150,
@@ -239,7 +239,7 @@ export default function CategoryScreen({ route }) {
               fontSize: 13,
               flex: 1,
               width: '100%',
-              fontWeight: 'bold',
+              fontWeight: 700,
             }}
           >
             31,544 Questions
@@ -274,7 +274,7 @@ export default function CategoryScreen({ route }) {
               style={{
                 marginTop: 50,
                 fontSize: 30,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 color: 'white',
                 marginBottom: 20,
               }}
@@ -327,7 +327,7 @@ export default function CategoryScreen({ route }) {
                   <Text
                     style={{
                       fontSize: 16,
-                      fontWeight: 'bold',
+                      fontWeight: 700,
                       fontFamily: 'Inter-Bold',
                     }}
                   >
@@ -343,7 +343,7 @@ export default function CategoryScreen({ route }) {
                     borderRadius: 10,
                     padding: 10,
                     margin: 10,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                     fontFamily: 'Inter-Bold',
                     width: '100%',
                     alignItems: 'center',
@@ -352,7 +352,7 @@ export default function CategoryScreen({ route }) {
                   <Text
                     style={{
                       fontSize: 16,
-                      fontWeight: 'bold',
+                      fontWeight: 700,
                       fontFamily: 'Inter-Bold',
                     }}
                   >
@@ -371,7 +371,7 @@ export default function CategoryScreen({ route }) {
                     borderRadius: 10,
                     padding: 10,
                     margin: 10,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                     fontFamily: 'Inter-Bold',
                     width: '100%',
                     alignItems: 'center',
@@ -380,7 +380,7 @@ export default function CategoryScreen({ route }) {
                   <Text
                     style={{
                       fontSize: 16,
-                      fontWeight: 'bold',
+                      fontWeight: 700,
                       fontFamily: 'Inter-Bold',
                     }}
                   >
@@ -419,7 +419,7 @@ export default function CategoryScreen({ route }) {
                     style={{
                       color: activeTab === 'tab1' ? '#1c2141' : '#ffffff',
                       fontSize: 16,
-                      fontWeight: 'bold',
+                      fontWeight: 700,
                     }}
                   >
                     Top Players
@@ -440,7 +440,7 @@ export default function CategoryScreen({ route }) {
                     style={{
                       color: activeTab === 'tab2' ? '#1c2141' : '#ffffff',
                       fontSize: 16,
-                      fontWeight: 'bold',
+                      fontWeight: 700,
                     }}
                   >
                     Top Contributors

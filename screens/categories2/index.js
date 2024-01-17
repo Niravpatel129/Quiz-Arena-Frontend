@@ -70,7 +70,7 @@ function CategoryBox({ categoryTitle, parentCategory, navigation, fadeAnim }) {
             textAlign: 'center',
             marginTop: 5,
             maxWidth: 100,
-            fontWeight: 'bold',
+            fontWeight: 700,
             fontFamily: 'Inter-Bold',
           }}
         >
@@ -192,7 +192,7 @@ export default function Categories2({ navigation }) {
             style={{
               color: 'white',
               fontSize: 20,
-              fontWeight: 'bold',
+              fontWeight: 700,
               marginBottom: 10,
               marginLeft: 10,
               textAlign: 'left',

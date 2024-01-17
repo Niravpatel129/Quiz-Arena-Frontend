@@ -60,7 +60,7 @@ export default function PlayersScreen({ navigation }) {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <Box borderBottomWidth='1' borderColor='coolGray.200' pl='4' pr='5' py='2'>
-              <Text fontSize='lg' fontWeight='bold' color='black'>
+              <Text fontSize='lg' fontWeight={700} color='black'>
                 {index + 1}. {item.username}
               </Text>
               <Text fontSize='md' color='coolGray.500'>
@@ -83,7 +83,7 @@ export default function PlayersScreen({ navigation }) {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <Box borderBottomWidth='1' borderColor='coolGray.200' pl='4' pr='5' py='2'>
-              <Text fontSize='lg' fontWeight='bold' color='black'>
+              <Text fontSize='lg' fontWeight={700} color='black'>
                 {index + 1}. {item.username}
               </Text>
               <Text fontSize='md' color='coolGray.500'>

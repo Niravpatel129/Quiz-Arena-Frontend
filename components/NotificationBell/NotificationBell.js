@@ -30,7 +30,7 @@ export default function NotificationBell() {
             alignItems: 'center',
           }}
         >
-          <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
+          <Text style={{ color: 'white', fontSize: 10, fontWeight: 700 }}>
             {userNotifications.length}
           </Text>
         </View>

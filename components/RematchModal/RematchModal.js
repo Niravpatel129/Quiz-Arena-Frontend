@@ -54,7 +54,7 @@ const RematchModal = ({
             <Text
               style={{
                 fontSize: 20,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 fontFamily: 'Inter-Black',
                 color: 'white',
               }}
@@ -118,7 +118,7 @@ const RematchModal = ({
               <Text
                 style={{
                   color: 'white',
-                  fontWeight: 'bold',
+                  fontWeight: 700,
                   textAlign: 'center',
                   fontSize: 16,
                   fontFamily: 'Inter-Black',
@@ -146,7 +146,7 @@ const RematchModal = ({
               <Text
                 style={{
                   color: 'white',
-                  fontWeight: 'bold',
+                  fontWeight: 700,
                   textAlign: 'center',
                   fontSize: 16,
                   fontFamily: 'Inter-Black',

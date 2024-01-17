@@ -79,7 +79,7 @@ export default function SocialButton({ variation }) {
             marginLeft: 6,
             color: color,
             fontSize: 20,
-            fontWeight: 'bold',
+            fontWeight: 700,
           }}
         >
           {text}

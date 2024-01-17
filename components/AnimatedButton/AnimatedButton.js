@@ -76,7 +76,7 @@ const AnimatedButton = ({ children, onPress, style, number }) => {
               color: generateColorBasedOnNumber(number),
               fontSize: 24,
               fontFamily: 'Inter-SemiBold',
-              fontWeight: 'SemiBold',
+              fontWeight: 'semibold',
             },
           ]}
         >

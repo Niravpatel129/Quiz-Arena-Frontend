@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   playerName: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: 700,
     textTransform: 'capitalize',
   },
 });

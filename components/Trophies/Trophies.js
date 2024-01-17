@@ -32,7 +32,7 @@ export default function Trophies() {
         style={{
           color: 'white',
           fontSize: 30,
-          fontWeight: 'bold',
+          fontWeight: 700,
           marginBottom: 30,
           fontFamily: 'Inter-Black',
         }}
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   trophyTitle: {
     color: 'white', // Text color for dark theme
     marginTop: 20,
-    fontWeight: 'bold',
+    fontWeight: 700,
     fontSize: 20,
     fontFamily: 'Inter-Bold',
   },

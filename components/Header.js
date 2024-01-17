@@ -72,15 +72,15 @@ const styles = StyleSheet.create({
   },
   playerName: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: 700,
   },
   playerTag: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: 700,
   },
   playerScore: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: 700,
   },
   tinyLogo: {
     width: 50,

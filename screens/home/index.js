@@ -52,7 +52,7 @@ export default function HomeScreen({ navigation }) {
           styles.title,
           {
             fontFamily: 'Inter-Bold',
-            fontWeight: 'bold',
+            fontWeight: 700,
           },
         ]}
       >
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontWeight: 'bold',
+    fontWeight: 700,
     fontSize: 32,
     margin: 10,
   },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontWeight: 'bold',
+    fontWeight: 700,
     userSelect: 'none',
   },
 });

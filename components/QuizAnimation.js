@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   playerText: {
     fontSize: 80,
     color: 'white',
-    fontWeight: 'bold',
+    fontWeight: 700,
   },
 });
 

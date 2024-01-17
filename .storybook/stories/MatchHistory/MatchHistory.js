@@ -230,14 +230,14 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   bubbleTitle: {
-    fontWeight: '600',
+    fontWeight: 600,
     color: '#fff',
     fontSize: 16,
     maxWidth: 200,
   },
   bubbleSubtitle: {
     fontSize: 13,
-    fontWeight: '400',
+    fontWeight: 400,
     color: '#fff',
     maxWidth: 200,
   },

@@ -57,7 +57,7 @@ export default function ProfileEditScreen() {
         style={{
           color: 'white',
           fontSize: 20,
-          fontWeight: 'bold',
+          fontWeight: 700,
           marginTop: 20,
           width: '100%',
           textAlign: 'center',
@@ -86,7 +86,7 @@ export default function ProfileEditScreen() {
               color: 'white',
               textAlign: 'center',
               fontSize: 20,
-              fontWeight: 'bold',
+              fontWeight: 700,
             }}
           >
             Delete Account
@@ -109,7 +109,7 @@ export default function ProfileEditScreen() {
               color: 'white',
               textAlign: 'center',
               fontSize: 20,
-              fontWeight: 'bold',
+              fontWeight: 700,
             }}
           >
             Logout
@@ -132,7 +132,7 @@ export default function ProfileEditScreen() {
               color: 'white',
               textAlign: 'center',
               fontSize: 20,
-              fontWeight: 'bold',
+              fontWeight: 700,
             }}
           >
             Terms of Use

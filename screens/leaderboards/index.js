@@ -101,7 +101,7 @@ export default function LeaderboardsScreen({ navigation }) {
               marginTop: 3,
               fontSize: 13,
               color: 'white',
-              fontWeight: 'bold',
+              fontWeight: 700,
             }}
           >
             <View
@@ -122,7 +122,7 @@ export default function LeaderboardsScreen({ navigation }) {
             style={{
               color: 'white',
               fontSize: 13,
-              fontWeight: 'bold',
+              fontWeight: 700,
               textAlign: 'center',
             }}
           >
@@ -160,7 +160,7 @@ export default function LeaderboardsScreen({ navigation }) {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 marginRight: 10,
                 color: 'white',
               }}
@@ -192,7 +192,7 @@ export default function LeaderboardsScreen({ navigation }) {
               <Text
                 style={{
                   fontSize: 18,
-                  fontWeight: 'bold',
+                  fontWeight: 700,
                   color: 'white',
                   paddingLeft: 10,
                   maxWidth: 150,
@@ -219,7 +219,7 @@ export default function LeaderboardsScreen({ navigation }) {
                 fontSize: 20,
                 flex: 1,
                 width: '100%',
-                fontWeight: 'bold',
+                fontWeight: 700,
               }}
             >
               {Math.floor(player.averageRating)}
@@ -265,7 +265,7 @@ export default function LeaderboardsScreen({ navigation }) {
                   style={{
                     color: activeTab === 'tab1' ? '#1c2141' : '#ffffff',
                     fontSize: 22,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                   }}
                 >
                   Global
@@ -286,7 +286,7 @@ export default function LeaderboardsScreen({ navigation }) {
                   style={{
                     color: activeTab === 'tab2' ? '#1c2141' : '#ffffff',
                     fontSize: 22,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                   }}
                 >
                   Friends

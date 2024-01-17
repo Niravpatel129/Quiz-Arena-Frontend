@@ -72,7 +72,7 @@ export default function Challange({ myData, opponentData, category }) {
             style={{
               color: '#69829c',
               fontSize: FontSize.md,
-              fontWeight: 'bold',
+              fontWeight: 700,
               fontFamily: 'poppins-regular',
               marginBottom: 10,
             }}
@@ -99,7 +99,7 @@ export default function Challange({ myData, opponentData, category }) {
               style={{
                 color: Colors.primary,
                 fontSize: 20,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 fontFamily: 'poppins-regular',
                 maxWidth: 200,
               }}
@@ -121,7 +121,7 @@ export default function Challange({ myData, opponentData, category }) {
             style={{
               color: '#c6c082',
               fontSize: FontSize.md,
-              fontWeight: 'bold',
+              fontWeight: 700,
               fontFamily: 'poppins-regular',
               maxWidth: 200,
             }}
@@ -132,7 +132,7 @@ export default function Challange({ myData, opponentData, category }) {
             style={{
               color: '#c6c082',
               fontSize: FontSize.md,
-              fontWeight: 'bold',
+              fontWeight: 700,
               fontFamily: 'poppins-regular',
             }}
           >
@@ -186,7 +186,7 @@ export default function Challange({ myData, opponentData, category }) {
             <Text
               style={{
                 color: 'white',
-                fontWeight: 'bold',
+                fontWeight: 700,
                 fontSize: FontSize.sm,
                 fontFamily: 'poppins-regular',
               }}
@@ -197,7 +197,7 @@ export default function Challange({ myData, opponentData, category }) {
               style={{
                 color: '#fff',
                 fontSize: FontSize.base,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 fontFamily: 'poppins-regular',
               }}
             >
@@ -253,7 +253,7 @@ export default function Challange({ myData, opponentData, category }) {
               style={{
                 color: '#f4a42d',
                 fontSize: 62,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 fontFamily: 'poppins-regular',
               }}
             >
@@ -262,7 +262,7 @@ export default function Challange({ myData, opponentData, category }) {
             <Text
               style={{
                 color: Colors.primary,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 fontFamily: 'poppins-regular',
               }}
             >

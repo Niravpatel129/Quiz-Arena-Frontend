@@ -48,21 +48,21 @@ export default function QueueScreen({ route, navigation }) {
         <Heading color='#fff' fontSize='4xl' fontWeight='semibold'>
           Queue
         </Heading>
-        <Text color='#fff' fontSize='md' fontWeight='bold'>
+        <Text color='#fff' fontSize='md' fontWeight={700}>
           Category:{' '}
-          <Text color='#322a55' fontSize='md' fontWeight='bold'>
+          <Text color='#322a55' fontSize='md' fontWeight={700}>
             {categoryName}
           </Text>
         </Text>
-        <Text color='#fff' fontSize='md' fontWeight='bold'>
+        <Text color='#fff' fontSize='md' fontWeight={700}>
           Waiting Time:{' '}
-          <Text color='#322a55' fontSize='md' fontWeight='bold'>
+          <Text color='#322a55' fontSize='md' fontWeight={700}>
             {queueTime} seconds ⏳
           </Text>
         </Text>
-        <Text color='#fff' fontSize='md' fontWeight='bold'>
+        <Text color='#fff' fontSize='md' fontWeight={700}>
           Players in Queue:{' '}
-          <Text color='#322a55' fontSize='md' fontWeight='bold'>
+          <Text color='#322a55' fontSize='md' fontWeight={700}>
             {playersInQueue}
           </Text>
         </Text>

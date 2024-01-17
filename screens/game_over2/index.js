@@ -157,7 +157,7 @@ export default function GameOver2({ route }) {
             marginTop: 3,
             color: '#fff',
             fontFamily: 'Inter-Black',
-            fontWeight: 'bold',
+            fontWeight: 700,
             fontSize: 16,
             alignItems: 'center',
           }}
@@ -177,22 +177,25 @@ export default function GameOver2({ route }) {
             marginTop: 3,
             color: '#fff',
             fontFamily: 'Inter-Black',
-            fontWeight: 'bold',
+            fontWeight: 700,
             fontSize: 12,
             flexDirection: 'row',
             gap: 2,
           }}
         >
-          {playerInfo.rating || 1200}
+          {playerInfo.ratingChange >= 0
+            ? playerInfo.rating + playerInfo.ratingChange
+            : playerInfo.rating - playerInfo.ratingChange || 1200}
 
           <Text
             style={{
               color: playerInfo.ratingChange > 0 ? '#00c03d' : '#ff0000',
-              fontWeight: 'bold',
+              fontWeight: 700,
               fontFamily: 'Inter-Black',
             }}
           >
-            {playerInfo.ratingChange > 0 ? '+' : ''}({playerInfo.ratingChange})
+            {playerInfo.ratingChange > 0 ? '' : ''}(
+            {(playerInfo.ratingChange > 0 ? '+' : '') + playerInfo.ratingChange.toString()})
           </Text>
         </Text>
       </TouchableOpacity>
@@ -242,7 +245,7 @@ export default function GameOver2({ route }) {
                 fontSize: 40,
                 color: fakeData.yourData.result === 'winner' ? '#00c03d' : '#ff0000',
                 textAlign: 'center',
-                fontWeight: 'bold',
+                fontWeight: 700,
                 marginTop: 20,
                 fontFamily: 'Inter-Black',
                 transform: [{ scale: scaleAnimation }],

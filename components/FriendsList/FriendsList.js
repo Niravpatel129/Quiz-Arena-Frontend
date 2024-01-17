@@ -260,7 +260,7 @@ export default function FriendsList() {
           >
             <Text
               style={{
-                fontWeight: 'bold',
+                fontWeight: 700,
                 fontSize: 16,
                 color: 'white',
               }}
@@ -366,7 +366,7 @@ export default function FriendsList() {
               style={{
                 color: 'white',
                 fontSize: 16,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 fontFamily: 'Inter-Bold',
               }}
             >

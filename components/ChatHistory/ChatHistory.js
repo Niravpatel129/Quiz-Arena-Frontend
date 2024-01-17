@@ -116,7 +116,7 @@ export default function ChatHistory() {
               >
                 <Text
                   style={{
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                     fontSize: 16,
                     color: 'white',
                     maxWidth: 200,

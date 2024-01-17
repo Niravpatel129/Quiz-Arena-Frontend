@@ -170,11 +170,11 @@ export default function SignUpLogin({ navigation }) {
                 <Text
                   style={{
                     fontSize: 30,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                     marginBottom: 20,
                     color: 'white',
                     fontFamily: 'Inter-Bold',
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                   }}
                 >
                   {showUsername ? 'Create your profile' : 'Sign up or login'}
@@ -351,7 +351,7 @@ export default function SignUpLogin({ navigation }) {
                         marginLeft: 6,
                         color: '#516696',
                         fontSize: 20,
-                        fontWeight: 'bold',
+                        fontWeight: 700,
                       }}
                     >
                       Continue

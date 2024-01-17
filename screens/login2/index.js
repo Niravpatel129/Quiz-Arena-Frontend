@@ -102,11 +102,11 @@ export default function Login({ navigation }) {
             <Text
               style={{
                 fontSize: 50,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 color: 'white',
                 textAlign: 'center',
                 fontFamily: 'Inter-Black',
-                fontWeight: 'bold',
+                fontWeight: 700,
                 flexDirection: 'row',
               }}
             >
@@ -147,11 +147,11 @@ export default function Login({ navigation }) {
               style={{
                 fontSize: 18,
                 width: 400,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 color: 'white',
                 textAlign: 'center',
                 fontFamily: 'Inter-Black',
-                fontWeight: 'bold',
+                fontWeight: 700,
               }}
             >
               Where knowledge meets challenge

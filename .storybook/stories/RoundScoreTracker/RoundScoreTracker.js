@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   playerName: {
     color: 'black',
-    fontWeight: 'bold',
+    fontWeight: 700,
   },
   roundsContainer: {
     flexDirection: 'row',

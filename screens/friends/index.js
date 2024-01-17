@@ -45,7 +45,7 @@ export default function FriendsScreen({ navigation }) {
               style={{
                 color: activeTab === 'tab1' ? '#1c2141' : '#ffffff',
                 fontSize: 22,
-                fontWeight: 'bold',
+                fontWeight: 700,
               }}
             >
               Friends
@@ -66,7 +66,7 @@ export default function FriendsScreen({ navigation }) {
               style={{
                 color: activeTab === 'tab2' ? '#1c2141' : '#ffffff',
                 fontSize: 22,
-                fontWeight: 'bold',
+                fontWeight: 700,
               }}
             >
               Chats
@@ -87,7 +87,7 @@ export default function FriendsScreen({ navigation }) {
               style={{
                 color: activeTab === 'tab3' ? '#1c2141' : '#ffffff',
                 fontSize: 22,
-                fontWeight: 'bold',
+                fontWeight: 700,
               }}
             >
               External

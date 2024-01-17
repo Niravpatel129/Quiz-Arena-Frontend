@@ -117,7 +117,7 @@ export default function SocialsList() {
           >
             <Text
               style={{
-                fontWeight: 'bold',
+                fontWeight: 700,
                 fontSize: 16,
                 color: 'white',
                 marginTop: 5,

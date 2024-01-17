@@ -144,7 +144,7 @@ function App() {
           headerTintColor: 'white',
           headerTitleStyle: {
             color: 'white',
-            fontWeight: 'bold',
+            fontWeight: 700,
             display: 'none',
           },
 

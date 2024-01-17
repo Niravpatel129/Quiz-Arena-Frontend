@@ -115,7 +115,7 @@ export default function Chat({
           style={{
             color: 'white',
             fontSize: 20,
-            fontWeight: 'bold',
+            fontWeight: 700,
           }}
         >
           Loading...
@@ -156,7 +156,7 @@ export default function Chat({
               />
             </TouchableOpacity>
             <View style={{ flexDirection: 'column', marginHorizontal: 20 }}>
-              <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
+              <Text style={{ color: 'white', fontSize: 20, fontWeight: 700 }}>
                 {chat.chatingWith?.name}
               </Text>
               <Text style={{ color: '#d2d2d2', fontSize: 14 }}>

@@ -115,7 +115,7 @@ export default function NotificationsScreen({ navigation }) {
                   style={{
                     color: 'white',
                     fontSize: 18,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                   }}
                   onPress={() =>
                     acceptNotification(
@@ -141,7 +141,7 @@ export default function NotificationsScreen({ navigation }) {
                   style={{
                     color: 'white',
                     fontSize: 18,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                   }}
                 >
                   Decline
@@ -153,7 +153,7 @@ export default function NotificationsScreen({ navigation }) {
             style={{
               color: 'lightgray',
               fontSize: 18,
-              fontWeight: 'bold',
+              fontWeight: 700,
               marginLeft: 20,
               marginBottom: 50,
             }}

@@ -70,7 +70,7 @@ export default function ChallangeModal({ opponentUserId, isModalVisible, hideMod
           <Text
             style={{
               fontSize: 20,
-              fontWeight: 'bold',
+              fontWeight: 700,
               marginBottom: 10,
               marginLeft: 10,
               marginTop: 100,
@@ -139,7 +139,7 @@ export default function ChallangeModal({ opponentUserId, isModalVisible, hideMod
               style={{
                 color: 'white',
                 fontSize: 20,
-                fontWeight: 'bold',
+                fontWeight: 700,
               }}
             >
               Next

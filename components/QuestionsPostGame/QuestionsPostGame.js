@@ -110,7 +110,7 @@ export default function QuestionsPostGame({ questions }) {
           style={{
             fontSize: 20,
             textAlign: 'center',
-            fontWeight: 'bold',
+            fontWeight: 700,
             color: '#fff',
             marginVertical: 10,
             width: 300,
@@ -185,7 +185,7 @@ export default function QuestionsPostGame({ questions }) {
                       textAlign: 'center',
                       fontSize: 20,
                       marginRight: 10,
-                      fontWeight: question.CorrectAnswer === answer.optionText ? 'bold' : 'normal',
+                      fontWeight: question.CorrectAnswer === answer.optionText ? 700 : 300,
                       color: question.CorrectAnswer === answer.optionText ? '#adf2bc' : '#f2adad',
                       maxWidth: '80%',
                     }}
@@ -270,7 +270,7 @@ export default function QuestionsPostGame({ questions }) {
         <Text
           style={{
             fontSize: 30,
-            fontWeight: 'bold',
+            fontWeight: 700,
             color: '#fff',
             textAlign: 'center',
           }}

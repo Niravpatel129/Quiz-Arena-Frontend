@@ -35,7 +35,7 @@ const Scoresheet = ({ playerOneData, playerTwoData }) => {
             color: 'lightgray',
             marginHorizontal: 6,
             fontFamily: 'Inter-Black',
-            fontWeight: 'bold',
+            fontWeight: 700,
             fontSize: 18,
           }}
         >
@@ -67,7 +67,7 @@ const Scoresheet = ({ playerOneData, playerTwoData }) => {
           color: '#fff',
           marginVertical: 6,
           fontFamily: 'Inter-Black',
-          fontWeight: 'bold',
+          fontWeight: 700,
           fontSize: 22,
         }}
       >
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#303E5F',
     color: '#fff',
     fontFamily: 'Inter-Black',
-    fontWeight: 'bold',
+    fontWeight: 700,
   },
   cellTotal: {
     borderWidth: 1,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     color: '#fff',
     fontFamily: 'Inter-Black',
-    fontWeight: 'bold',
+    fontWeight: 700,
   },
   between: {
     // marginVertical: 4,

@@ -144,7 +144,7 @@ export default function ProfileComponent({ userId }) {
               borderRadius: 22,
             }}
           >
-            <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+            <Text style={{ color: 'white', fontSize: 18, fontWeight: 700 }}>
               Average Rating: {userData?.averageRating}
             </Text>
           </View>
@@ -216,7 +216,7 @@ export default function ProfileComponent({ userId }) {
                     fontSize: 18,
                     textAlign: 'center',
                     marginBottom: 10,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                   }}
                 >
                   Total Games
@@ -243,7 +243,7 @@ export default function ProfileComponent({ userId }) {
                     fontSize: 18,
                     textAlign: 'center',
                     marginBottom: 10,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                   }}
                 >
                   Win Rate
@@ -276,7 +276,7 @@ export default function ProfileComponent({ userId }) {
                     fontSize: 18,
                     textAlign: 'center',
                     marginBottom: 10,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                   }}
                 >
                   Avg Score

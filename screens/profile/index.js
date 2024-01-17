@@ -86,7 +86,7 @@ export default function ProfileScreen({ navigation, route }) {
               borderRadius: 22,
             }}
           >
-            <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+            <Text style={{ color: 'white', fontSize: 18, fontWeight: 700 }}>
               Average Rating: {userData?.averageRating}
             </Text>
           </View>
@@ -102,7 +102,7 @@ export default function ProfileScreen({ navigation, route }) {
                     fontSize: 18,
                     textAlign: 'center',
                     marginBottom: 10,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                   }}
                 >
                   Total Games
@@ -129,7 +129,7 @@ export default function ProfileScreen({ navigation, route }) {
                     fontSize: 18,
                     textAlign: 'center',
                     marginBottom: 10,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                   }}
                 >
                   Win Rate
@@ -162,7 +162,7 @@ export default function ProfileScreen({ navigation, route }) {
                     fontSize: 18,
                     textAlign: 'center',
                     marginBottom: 10,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                   }}
                 >
                   Avg Score
@@ -202,7 +202,7 @@ export default function ProfileScreen({ navigation, route }) {
           </View>
           {/* {route?.params?.userId && (
             <View style={{ marginTop: 30, alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={{ color: 'white', fontSize: 44, fontWeight: 'bold', marginBottom: 10 }}>
+              <Text style={{ color: 'white', fontSize: 44, fontWeight: 700, marginBottom: 10 }}>
                 You vs
               </Text>
               <View style={{ flexDirection: 'row' }}>
@@ -216,7 +216,7 @@ export default function ProfileScreen({ navigation, route }) {
                     justifyContent: 'center',
                   }}
                 >
-                  <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#1d284b' }}>1 W</Text>
+                  <Text style={{ fontSize: 48, fontWeight: 700, color: '#1d284b' }}>1 W</Text>
                 </View>
                 <View
                   style={{
@@ -228,7 +228,7 @@ export default function ProfileScreen({ navigation, route }) {
                     justifyContent: 'center',
                   }}
                 >
-                  <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#1d284b' }}>11 L</Text>
+                  <Text style={{ fontSize: 48, fontWeight: 700, color: '#1d284b' }}>11 L</Text>
                 </View>
               </View>
             </View>

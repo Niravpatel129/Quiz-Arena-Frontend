@@ -68,8 +68,8 @@ const PlayerCard = ({ player, flipped }) => {
 
           <Text
             style={{
-              fontFamily: 'Inter-Black',
-              fontSize: 14,
+              fontFamily: 'Inter-SemiBold',
+              fontSize: 13,
               color: '#fff',
               maxWidth: 100,
             }}
@@ -219,23 +219,25 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
         >
           {InGameData.RoundData.question}
         </Text>
-        <Image
-          resizeMode='contain'
-          style={{
-            width: 200,
-            height: 200,
-            borderRadius: 20,
-            marginTop: 1,
-            marginBottom: 20,
-          }}
-          onLoad={() => setImageLoaded(true)}
-          source={{
-            uri: InGameData?.RoundData?.image,
-            headers: {
-              Accept: '*/*',
-            },
-          }}
-        />
+        {InGameData?.RoundData?.image && (
+          <Image
+            resizeMode='contain'
+            style={{
+              width: 200,
+              height: 200,
+              borderRadius: 20,
+              marginTop: 1,
+              marginBottom: 20,
+            }}
+            onLoad={() => setImageLoaded(true)}
+            source={{
+              uri: InGameData?.RoundData?.image,
+              headers: {
+                Accept: '*/*',
+              },
+            }}
+          />
+        )}
       </View>
     );
   };

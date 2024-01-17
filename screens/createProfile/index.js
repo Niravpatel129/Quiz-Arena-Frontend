@@ -111,11 +111,11 @@ export default function CreateProfile({ route, navigation }) {
                 <Text
                   style={{
                     fontSize: 30,
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                     marginBottom: 20,
                     color: 'white',
                     fontFamily: 'Inter-Bold',
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                   }}
                 >
                   Create your profile
@@ -215,7 +215,7 @@ export default function CreateProfile({ route, navigation }) {
                         marginLeft: 6,
                         color: '#516696',
                         fontSize: 20,
-                        fontWeight: 'bold',
+                        fontWeight: 700,
                       }}
                     >
                       Continue

@@ -122,7 +122,7 @@ export default function Contribute({ route }) {
               style={{
                 color: 'white',
                 fontSize: 30,
-                fontWeight: 'bold',
+                fontWeight: 700,
                 textAlign: 'center',
                 marginTop: 50,
               }}
@@ -148,7 +148,7 @@ export default function Contribute({ route }) {
                     style={{
                       color: 'white',
                       fontSize: 14,
-                      fontWeight: 'bold',
+                      fontWeight: 700,
                     }}
                   >
                     Question:
@@ -183,7 +183,7 @@ export default function Contribute({ route }) {
                     style={{
                       color: 'white',
                       fontSize: 14,
-                      fontWeight: 'bold',
+                      fontWeight: 700,
                       marginTop: 10,
                     }}
                   >
@@ -226,7 +226,7 @@ export default function Contribute({ route }) {
                     style={{
                       color: 'white',
                       fontSize: 14,
-                      fontWeight: 'bold',
+                      fontWeight: 700,
                     }}
                   >
                     Incorrect Option 1:
@@ -266,7 +266,7 @@ export default function Contribute({ route }) {
                     style={{
                       color: 'white',
                       fontSize: 14,
-                      fontWeight: 'bold',
+                      fontWeight: 700,
                     }}
                   >
                     Incorrect Option 2:
@@ -306,7 +306,7 @@ export default function Contribute({ route }) {
                     style={{
                       color: 'white',
                       fontSize: 14,
-                      fontWeight: 'bold',
+                      fontWeight: 700,
                     }}
                   >
                     Incorrect Option 3:
@@ -346,7 +346,7 @@ export default function Contribute({ route }) {
                     style={{
                       color: 'white',
                       fontSize: 14,
-                      fontWeight: 'bold',
+                      fontWeight: 700,
                     }}
                   >
                     Correct Option:
@@ -392,7 +392,7 @@ export default function Contribute({ route }) {
                 style={{
                   textAlign: 'center',
                   color: 'black',
-                  fontWeight: 'bold',
+                  fontWeight: 700,
                 }}
               >
                 Submit
