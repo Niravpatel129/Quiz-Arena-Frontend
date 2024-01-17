@@ -49,7 +49,29 @@ function App() {
   console.log('App.js');
 
   const linking = {
-    prefixes: [prefix, 'https://quizarena.gg'],
+    prefixes: ['quizarena.gg', 'https://quizarena.gg'],
+    getInitialURL: async () => {
+      // Get the initial URL if the app is opened via a deep link
+      const url = await Linking.getInitialURL();
+      return url;
+    },
+    subscribe(listener) {
+      const onReceiveURL = ({ url }) => {
+        // Parse the URL and extract the path and query
+        const { path, queryParams } = Linking.parse(url);
+        if (path === 'invite') {
+          const id = queryParams.id;
+
+          console.log('🚀  id:', id);
+        }
+      };
+      Linking?.addEventListener('url', onReceiveURL);
+
+      // Return a function to unsubscribe
+      return () => {
+        if (Linking) Linking?.removeEventListener('url', onReceiveURL);
+      };
+    },
   };
 
   // useEffect(() => {
@@ -144,7 +166,7 @@ function App() {
           headerTintColor: 'white',
           headerTitleStyle: {
             color: 'white',
-            fontWeight: 700,
+            fontWeight: 'bold',
             display: 'none',
           },
 

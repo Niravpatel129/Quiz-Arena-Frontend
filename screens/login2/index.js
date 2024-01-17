@@ -41,7 +41,6 @@ export default function Login({ navigation }) {
           });
         } catch (error) {
           console.log('🚀  error:', error);
-          console.log('🚀  token is not valid', token);
           await AsyncStorage.removeItem('userToken');
         }
       }

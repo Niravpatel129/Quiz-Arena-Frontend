@@ -67,12 +67,12 @@ export const AuthProvider = ({ children }) => {
 
   const validateLogin = async () => {
     try {
+      // Fix me
       const tokenRes = await newRequest.get('/auth/validate-token');
       setUserId(tokenRes.data?.userId);
       setUserToken(tokenRes.data?.token);
     } catch (error) {
       console.log('🚀  error:', error);
-      console.log('🚀  token is not valid', token);
       await AsyncStorage.removeItem('userToken');
     }
   };
