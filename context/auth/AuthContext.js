@@ -26,11 +26,16 @@ export const AuthProvider = ({ children }) => {
 
   const checkGameInvite = async () => {
     try {
+      console.log('checking for game invite');
       AsyncStorage.getItem('inviteId').then((value) => {
         if (value) {
+          if (!navigation) return;
+          if (!socketService) return;
+
           navigation.navigate('Challenge', { gameId: value });
 
-          AsyncStorage.removeItem('gameInvite');
+          AsyncStorage.removeItem('inviteId');
+          return;
         }
       });
     } catch (err) {
@@ -43,6 +48,7 @@ export const AuthProvider = ({ children }) => {
       if (appState.match(/inactive|background/) && nextAppState === 'active') {
         console.log('App has come to the foreground!');
         fetchNotifications();
+        checkGameInvite();
         validateLogin();
       } else {
         console.log('App has gone to the background!');

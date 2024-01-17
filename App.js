@@ -51,6 +51,7 @@ function App() {
 
   const linking = {
     prefixes: [prefix, 'quizarena.gg', 'https://quizarena.gg'],
+    config: {},
     getInitialURL: async () => {
       // Get the initial URL if the app is opened via a deep link
       const url = await Linking.getInitialURL();
@@ -69,6 +70,9 @@ function App() {
           }
 
           console.log('🚀  id:', id);
+
+          // set it inside params
+          listener(id);
         }
       };
       Linking?.addEventListener('url', onReceiveURL);

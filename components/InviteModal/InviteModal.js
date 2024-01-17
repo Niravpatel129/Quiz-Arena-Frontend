@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';
-import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
 import { Image, Modal, Text, TouchableOpacity, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -9,8 +9,13 @@ import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import socketService from '../../services/socketService';
 
 export default function InviteModal({ category, isModalVisible, hideModal }) {
-  const [gameRoomId, setGameRoomId] = useState('');
+  const [gameRoomId, setGameRoomId] = useState(null);
   const [showCopied, setShowCopied] = useState(false);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    setGameRoomId(Math.floor(Math.random() * 100000));
+  }, [isModalVisible]);
 
   useEffect(() => {
     if (!showCopied) return;
@@ -20,38 +25,31 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
   }, [showCopied]);
 
   useEffect(() => {
+    if (!gameRoomId) return;
+
     const generateGameRoomId = async () => {
-      const roomId = Math.floor(Math.random() * 100000);
+      console.log('joining challenge queue');
+      console.log('🚀  gameRoomId:', gameRoomId);
 
       socketService.emit('joinChallengeQueue', {
-        gameId: roomId,
+        gameId: gameRoomId,
         category: category,
         newGame: true,
       });
-
-      setGameRoomId(roomId);
     };
 
     generateGameRoomId();
 
     // On
     socketService.on('game_start', (data) => {
-      if (!data) {
-        alert('Game failed to start due to an error.');
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Categories' }],
-        });
-
-        return null;
-      }
-
+      console.log('game_start for invite modal');
       // vibrate phone
-      if (Platform.OS !== 'web') {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      }
+      // if (Platform.OS !== 'web') {
+      //   Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      // }
 
       navigation.navigate('Game', { game: data.game });
+      hideModal();
     });
 
     return () => {
@@ -60,7 +58,7 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
         category: category,
       });
     };
-  }, []);
+  }, [gameRoomId]);
 
   return (
     <Modal

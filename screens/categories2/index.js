@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
 import {
@@ -15,7 +16,6 @@ import {
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
-import { useAuth } from '../../context/auth/AuthContext';
 import { NotificationsProvider } from '../../context/notifications/notificationsContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 
@@ -87,11 +87,7 @@ export default function Categories2({ navigation }) {
   const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity value
   const [categories, setCategories] = useState([]);
   const scaleAnim = useState(new Animated.Value(0.5))[0]; // Initial scale value
-  const { checkGameInvite } = useAuth();
-
-  useEffect(() => {
-    checkGameInvite();
-  }, []);
+  const route = useRoute();
 
   useEffect(() => {
     const getStreak = async () => {
