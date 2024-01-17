@@ -139,6 +139,11 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
       backgroundColor = answer.isCorrect ? 'rgb(110, 246, 46)' : 'rgb(246, 46, 46)';
     }
 
+    // show the correct answer if selectedForRound is true
+    if (selectedForRound && answer.isCorrect) {
+      backgroundColor = 'rgb(110, 246, 46)';
+    }
+
     return (
       <AnimatedButton
         key={answer.optionText}

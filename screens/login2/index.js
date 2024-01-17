@@ -14,11 +14,13 @@ import {
 } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 import SocialButton from '../../components/SocialButton/SocialButton';
+import { useSocket } from '../../context/socket/SocketContext';
 
 export default function Login({ navigation }) {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [scaleAnim] = useState(new Animated.Value(0.8));
   const [buttonAnim] = useState(new Animated.Value(0));
+  const socket = useSocket();
 
   useEffect(() => {
     const loadStoredToken = async () => {
@@ -30,6 +32,8 @@ export default function Login({ navigation }) {
               Authorization: `Bearer ${token}`,
             },
           });
+
+          socket.ConnectSocket();
 
           navigation.reset({
             index: 0,
