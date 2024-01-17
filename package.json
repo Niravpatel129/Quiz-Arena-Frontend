@@ -17,7 +17,9 @@
     "submit-ios": "eas submit --platform ios",
     "submit-android": "eas submit --platform android",
     "deploy-ios-paid": "eas build --platform ios && eas submit --platform ios",
-    "deploy-android-paid": "eas build --platform android && eas submit --platform android"
+    "deploy-android-paid": "eas build --platform android && eas submit --platform android",
+    "local-build-submit-ios": "npm run build-ios-local && npm run submit-ios",
+    "local-build-submit-android": "npm run build-android-local && npm run submit-android"
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
