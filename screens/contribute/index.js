@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
   ScrollView,
   Text,
@@ -17,7 +18,7 @@ import upload from '../../helpers/upload';
 
 export default function Contribute({ route }) {
   const parentCategory = route.params?.parentCategory;
-  const category = route.params?.category;
+  const category = route?.params?.category;
   const [question, setQuestion] = useState('');
   const [imageUrl, setImageUrl] = useState(
     'https://static.vecteezy.com/system/resources/previews/004/968/473/original/upload-or-add-a-picture-jpg-file-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-etc-vector.jpg',
@@ -375,6 +376,28 @@ export default function Contribute({ route }) {
                   keyboardType='default'
                 />
               </View>
+            </View>
+            <View
+              style={{
+                alignItems: 'center',
+                marginHorizontal: 20,
+              }}
+            >
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  textAlign: 'center',
+                  marginBottom: 10,
+                }}
+              >
+                By submitting, you acknowledge and agree to our End User License Agreement (EULA).
+                Our EULA clearly states our zero-tolerance policy towards objectionable content and
+                abusive behavior. Any violations may lead to the removal of your content and
+                suspension of your account. Please review the EULA for detailed terms and conditions
+                governing your contributions and conduct within our app.
+              </Text>
             </View>
             <TouchableOpacity
               onPress={() => {
