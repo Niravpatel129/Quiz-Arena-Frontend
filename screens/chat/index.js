@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
 import formatLastActive from '../../helpers/formatLastActive';
 import socketService from '../../services/socketService';
@@ -38,16 +39,30 @@ export default function Chat({
   }, [chat]);
 
   const fetchChat = async () => {
-    if (!chattingWithId) {
-      navigation.navigate('Categories');
-      return alert('No user to chat with');
+    try {
+      if (!chattingWithId) {
+        navigation.navigate('Categories');
+        return alert('No user to chat with');
+      }
+
+      const chatRes = await newRequest.post('/chat/create', {
+        friendId: chattingWithId,
+      });
+
+      setChat(chatRes.data);
+    } catch (err) {
+      navigation.goBack();
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Chat not available, right now',
+        text2: 'Sorry about that',
+        visibilityTime: 3000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
     }
-
-    const chatRes = await newRequest.post('/chat/create', {
-      friendId: chattingWithId,
-    });
-
-    setChat(chatRes.data);
   };
 
   useEffect(() => {
