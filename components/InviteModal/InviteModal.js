@@ -172,7 +172,7 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
                   marginBottom: 10,
                 }}
               >
-                https://quizarena.gg/invite/{gameRoomId}
+                https://quizarena.gg/invite?id={gameRoomId}
               </Text>
               <Text
                 style={{
