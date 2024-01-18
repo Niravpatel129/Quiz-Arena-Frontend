@@ -55,6 +55,30 @@ const Tab = createBottomTabNavigator();
 
 function App() {
   const [fontsLoaded] = useFonts(fonts);
+  const url = Linking.useURL();
+
+  useEffect(() => {
+    if (url) {
+      const { hostname, path, queryParams } = Linking.parse(url);
+      console.log(
+        `Linked to app with hostname: ${hostname}, path: ${path} and data: ${JSON.stringify(
+          queryParams,
+        )}`,
+      );
+
+      // quizarena://invite/id=123
+      if (path === 'invite') {
+        const id = queryParams?.id;
+        console.log('🚀  id:', id);
+
+        // store into local storage
+        if (id) {
+          AsyncStorage.setItem('inviteId', id);
+        }
+      }
+    }
+  }, [url]);
+
   console.log('App.js');
 
   const linking = {
