@@ -1,7 +1,16 @@
 import * as Contacts from 'expo-contacts';
 import { ScrollView } from 'native-base';
 import React, { useEffect } from 'react';
-import { Image, SafeAreaView, Share, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Image,
+  SafeAreaView,
+  Share,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { newRequest } from '../../api/newRequest';
 
 export default function SocialsList() {
@@ -10,8 +19,10 @@ export default function SocialsList() {
   const [textInput, setTextInput] = React.useState('');
 
   useEffect(() => {
-    (async () => {
+    const getContacts = async () => {
       try {
+        // Ask for permission to query contacts.
+
         const { status } = await Contacts.requestPermissionsAsync();
         if (status === 'granted') {
           const { data } = await Contacts.getContactsAsync({
@@ -35,7 +46,28 @@ export default function SocialsList() {
       } catch (error) {
         console.error('Error accessing contacts', error);
       }
-    })();
+    };
+
+    Alert.alert(
+      'Sync Contacts',
+      'We will sync your contacts to find your friends on Quiz Arena. We will not store your contacts.',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Sync',
+          onPress: () => {
+            getContacts();
+
+            console.log('OK Pressed');
+          },
+        },
+      ],
+      { cancelable: false },
+    );
   }, []);
 
   useEffect(() => {
@@ -113,6 +145,7 @@ export default function SocialsList() {
             style={{
               flex: 1,
               marginLeft: 10,
+              marginTop: 5,
             }}
           >
             <Text
@@ -167,9 +200,11 @@ export default function SocialsList() {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      style={{
-        marginHorizontal: 20,
-      }}
+      style={
+        {
+          // marginHorizontal: 10,
+        }
+      }
     >
       <SafeAreaView>
         <TextInput
