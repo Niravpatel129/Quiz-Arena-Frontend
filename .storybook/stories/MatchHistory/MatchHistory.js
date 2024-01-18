@@ -14,18 +14,19 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
-import { useAuth } from '../../../context/auth/AuthContext';
 import capitalizeFirstLetter from '../../../helpers/capitalizeFirstLetter';
 
 export default function MatchHistory() {
   const navigation = useNavigation();
   const [matchHistory, setMatchHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { userId } = useAuth();
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const getMatchHistory = async () => {
       const res = await newRequest.get('/matchHistory');
+      setUserId(res.data.userId);
+
       const animatedMatchHistory = res.data.matchHistory.map((item) => ({
         ...item,
         opacity: new Animated.Value(0),
@@ -105,7 +106,12 @@ export default function MatchHistory() {
               renderItem={({ item, index }) => {
                 if (!item) return null;
 
-                const opponent = item?.players?.find((v) => v?.id !== userId);
+                const opponent = item?.players?.find((v) => {
+                  console.log('🚀  v:', v);
+                  console.log('🚀  userId:', userId);
+
+                  return v?.id !== userId;
+                });
                 const result = item.winnerId === userId ? 'Won' : 'Lost';
                 const opponentAvatar = opponent?.playerInformation?.avatar;
                 if (!opponent) return null;
