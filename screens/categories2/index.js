@@ -91,11 +91,25 @@ export default function Categories2({ navigation }) {
     const getStreak = async () => {
       try {
         const streakData = await AsyncStorage.getItem('streak');
-        let streak = streakData
-          ? JSON.parse(streakData)
-          : { streak: 0, date: new Date().toISOString(), toastShown: false };
+        // check if streakData is a valid json
+        if (!streakData) {
+          return;
+        }
 
-        console.log('🚀  streak:', streak);
+        let streak;
+
+        try {
+          streak = streakData
+            ? JSON.parse(streakData)
+            : { streak: 0, date: new Date().toISOString(), toastShown: false };
+        } catch (err) {
+          streak = { streak: 0, date: new Date().toISOString(), toastShown: false };
+        }
+
+        if (!streak) {
+          return;
+        }
+
         const currentDate = new Date();
         const lastStreakDate = new Date(streak.date);
 
@@ -113,7 +127,11 @@ export default function Categories2({ navigation }) {
           streak.streak++;
           streak.date = currentDate.toISOString();
           console.log('🚀  streak:', streak);
-          await AsyncStorage.setItem('streak', JSON.stringify(streak));
+          // check if its a valid streak
+
+          if (streak.streak > 0) {
+            await AsyncStorage.setItem('streak', JSON.stringify(streak));
+          }
         }
 
         // Show toast only if it hasn't been shown today
