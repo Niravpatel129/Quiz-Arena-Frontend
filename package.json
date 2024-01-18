@@ -30,13 +30,16 @@
     "@react-navigation/drawer": "^6.6.6",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
+    "@sentry/react-native": "^5.16.0",
     "axios": "^1.6.2",
     "date-fns": "^3.0.6",
     "expo": "~49.0.15",
     "expo-apple-authentication": "~6.1.0",
     "expo-auth-session": "~5.0.2",
     "expo-av": "~13.4.1",
+    "expo-clipboard": "~4.3.1",
     "expo-constants": "~14.4.2",
+    "expo-contacts": "~12.2.0",
     "expo-crypto": "~12.4.1",
     "expo-dev-client": "~2.4.12",
     "expo-device": "~5.4.0",
@@ -74,9 +77,7 @@
     "react-native-svg": "13.9.0",
     "react-native-toast-message": "^2.2.0",
     "react-native-web": "~0.19.6",
-    "socket.io-client": "^4.7.2",
-    "expo-contacts": "~12.2.0",
-    "expo-clipboard": "~4.3.1"
+    "socket.io-client": "^4.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

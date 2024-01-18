@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as Sentry from '@sentry/react-native';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Linking from 'expo-linking';
@@ -39,6 +40,13 @@ import SignUpLogin from './screens/signuplogin';
 //   Settings?.setAppID('1015444866200816');
 //   Settings?.initializeSDK();
 // }
+
+Sentry.init({
+  dsn: 'https://ebea8a70fc3ccc5fe921ee897bf9f2a3@o1363835.ingest.sentry.io/4506592682246144',
+  // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+  // We recommend adjusting this value in production.
+  tracesSampleRate: 1.0,
+});
 
 const prefix = Linking.createURL('/');
 
@@ -82,6 +90,10 @@ function App() {
   useEffect(() => {
     LogBox.ignoreLogs([
       'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
+    ]);
+
+    LogBox.ignoreLogs([
+      "export 'TurboModuleRegistry' (imported as 'TurboModuleRegistry') was not found",
     ]);
   }, []);
 
@@ -281,4 +293,4 @@ function App() {
   );
 }
 
-export default App;
+export default Sentry.wrap(App);
