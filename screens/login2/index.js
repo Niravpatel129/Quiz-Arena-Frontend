@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
 import {
@@ -14,13 +15,13 @@ import {
 } from 'react-native';
 import { newRequest } from '../../api/newRequest';
 import SocialButton from '../../components/SocialButton/SocialButton';
-import { useSocket } from '../../context/socket/SocketContext';
+import socketService from '../../services/socketService';
 
-export default function Login({ navigation }) {
+export default function Login() {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [scaleAnim] = useState(new Animated.Value(0.8));
   const [buttonAnim] = useState(new Animated.Value(0));
-  const socket = useSocket();
+  const navigation = useNavigation();
 
   useEffect(() => {
     const loadStoredToken = async () => {
@@ -33,7 +34,7 @@ export default function Login({ navigation }) {
             },
           });
 
-          socket.ConnectSocket();
+          socketService.connect();
 
           navigation.reset({
             index: 0,
