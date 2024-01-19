@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { AppState, Image, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import Challange from '../../components/Challange';
 import HighlightEffect from '../../components/HighlightEffect';
 import checkIfBot from '../../helpers/checkIfBot';
@@ -77,6 +78,22 @@ const GameScreen = ({ navigation }) => {
   useEffect(() => {
     startTimer();
 
+    // check if you have disconnected
+    socketService.on('disconnect', (reason) => {
+      console.log('Disconnected from server', reason);
+
+      Toast.show({
+        type: 'error',
+        text1: 'Connection lost',
+        text2: 'You have been disconnected from the server',
+        position: 'bottom',
+        visibilityTime: 4000,
+        autoHide: true,
+        bottomOffset: 40,
+      });
+
+      navigation.navigate('Categories');
+    });
     socketService.on('new_round', (roundData) => {
       if (round === 1) {
         console.log('preload data');
