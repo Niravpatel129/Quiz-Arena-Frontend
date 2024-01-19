@@ -31,12 +31,13 @@ const AvatarPicker = ({ defaultImage, disablePress }) => {
       quality: 1,
     });
 
+    if (!result.assets || result.assets.length <= 0) return;
+
     const newUri = result.assets[0].uri;
-    console.log('🚀  newUri:', newUri);
 
     if (!result.canceled) {
-      setAvatar(newUri);
-      uploadImage(newUri); // Simulate API call
+      setAvatar(result.assets[0].uri);
+      uploadImage(result.assets[0].uri);
     }
   };
 
@@ -44,7 +45,7 @@ const AvatarPicker = ({ defaultImage, disablePress }) => {
     try {
       const url = await upload(uri);
 
-      const res = await newRequest.put(`/users`, {
+      await newRequest.put(`/users`, {
         profile: {
           avatar: url,
         },
