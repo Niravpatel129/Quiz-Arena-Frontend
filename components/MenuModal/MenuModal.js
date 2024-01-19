@@ -3,6 +3,8 @@ import React from 'react';
 import { Linking, Modal, Pressable, Text, TouchableOpacity, View } from 'react-native';
 import { useMenuContext } from '../../context/menu/MenuContext';
 
+const version = '3.14.0';
+
 export default function MenuModal() {
   const { menuOpen, setMenuOpen } = useMenuContext();
   return (
@@ -196,14 +198,24 @@ export default function MenuModal() {
             <View
               style={{
                 marginTop: 20,
+                alignItems: 'center',
               }}
             >
               <Text
                 style={{
-                  color: '#fff',
+                  color: 'lightgray',
                 }}
               >
-                Version 1.2.4
+                Version {version}
+              </Text>
+              <Text
+                style={{
+                  color: 'gray',
+                  marginTop: 5,
+                }}
+              >
+                {/* Date minus 2 days */}
+                Released on {new Date(Date.now() - 142800000).toLocaleDateString()}
               </Text>
             </View>
           </View>
