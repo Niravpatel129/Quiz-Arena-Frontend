@@ -145,6 +145,32 @@ export default function MenuModal() {
                   marginVertical: 10,
                 }}
                 onPress={() => {
+                  Linking.openURL('https://forms.gle/BzCBfyzUw2K6DVUm9');
+                }}
+              >
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: 700,
+                    textAlign: 'center',
+                    fontSize: 16,
+                    letterSpacing: 1,
+                    fontFamily: 'Inter-Black',
+                  }}
+                >
+                  FEEDBACK
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#fff',
+                  borderRadius: 8,
+                  padding: 10,
+                  width: '100%',
+                  alignItems: 'center',
+                  marginVertical: 10,
+                }}
+                onPress={() => {
                   Linking.openURL('https://quizarena.gg/privacy');
                 }}
               >
