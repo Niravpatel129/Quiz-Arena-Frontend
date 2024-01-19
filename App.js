@@ -9,6 +9,7 @@ import * as Linking from 'expo-linking';
 import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
 import { LogBox, View } from 'react-native';
+import appsFlyer from 'react-native-appsflyer';
 import Toast from 'react-native-toast-message';
 import TabBar from './components/MyTabBar/MyTabBar';
 import NotificationBell from './components/NotificationBell/NotificationBell';
@@ -41,13 +42,6 @@ import SignUpLogin from './screens/signuplogin';
 //   Settings?.initializeSDK();
 // }
 
-Sentry.init({
-  dsn: 'https://ebea8a70fc3ccc5fe921ee897bf9f2a3@o1363835.ingest.sentry.io/4506592682246144',
-  // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-  // We recommend adjusting this value in production.
-  tracesSampleRate: 1.0,
-});
-
 const prefix = Linking.createURL('/');
 
 const Stack = createNativeStackNavigator();
@@ -56,6 +50,32 @@ const Tab = createBottomTabNavigator();
 function App() {
   const [fontsLoaded] = useFonts(fonts);
   const url = Linking.useURL();
+
+  useEffect(() => {
+    Sentry.init({
+      dsn: 'https://ebea8a70fc3ccc5fe921ee897bf9f2a3@o1363835.ingest.sentry.io/4506592682246144',
+      tracesSampleRate: 1.0,
+    });
+  }, []);
+
+  useEffect(() => {
+    appsFlyer.initSdk(
+      {
+        devKey: 'fpg8Qxro3LWTbpdamF9s77',
+        isDebug: false,
+        appId: '6474947179',
+        onInstallConversionDataListener: true,
+        onDeepLinkListener: true,
+        timeToWaitForATTUserAuthorization: 10,
+      },
+      (result) => {
+        console.log(result);
+      },
+      (error) => {
+        console.error(error);
+      },
+    );
+  }, []);
 
   useEffect(() => {
     if (url) {
