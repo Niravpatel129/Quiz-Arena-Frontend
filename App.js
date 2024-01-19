@@ -8,7 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Linking from 'expo-linking';
 import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
-import { LogBox, View } from 'react-native';
+import { LogBox, Platform, View } from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
 import Toast from 'react-native-toast-message';
 import TabBar from './components/MyTabBar/MyTabBar';
@@ -37,10 +37,29 @@ import PublicProfile from './screens/publicProfile';
 import QueueScreen from './screens/queue_screen';
 import SignUpLogin from './screens/signuplogin';
 
-// if (Settings) {
-//   Settings?.setAppID('1015444866200816');
-//   Settings?.initializeSDK();
-// }
+Sentry.init({
+  dsn: 'https://ebea8a70fc3ccc5fe921ee897bf9f2a3@o1363835.ingest.sentry.io/4506592682246144',
+  tracesSampleRate: 1.0,
+});
+
+if (Platform.OS === 'android' || Platform.OS === 'ios') {
+  appsFlyer.initSdk(
+    {
+      devKey: 'fpg8Qxro3LWTbpdamF9s77',
+      isDebug: false,
+      appId: '6474947179',
+      onInstallConversionDataListener: true,
+      onDeepLinkListener: true,
+      timeToWaitForATTUserAuthorization: 10,
+    },
+    (result) => {
+      console.log('🚀  appsFlyer result:', result);
+    },
+    (error) => {
+      console.log('🚀  appsFlyer error:', error);
+    },
+  );
+}
 
 const prefix = Linking.createURL('/');
 
@@ -52,29 +71,7 @@ function App() {
   const url = Linking.useURL();
 
   useEffect(() => {
-    Sentry.init({
-      dsn: 'https://ebea8a70fc3ccc5fe921ee897bf9f2a3@o1363835.ingest.sentry.io/4506592682246144',
-      tracesSampleRate: 1.0,
-    });
-  }, []);
-
-  useEffect(() => {
-    appsFlyer.initSdk(
-      {
-        devKey: 'fpg8Qxro3LWTbpdamF9s77',
-        isDebug: false,
-        appId: '6474947179',
-        onInstallConversionDataListener: true,
-        onDeepLinkListener: true,
-        timeToWaitForATTUserAuthorization: 10,
-      },
-      (result) => {
-        console.log(result);
-      },
-      (error) => {
-        console.error(error);
-      },
-    );
+    if (!appsFlyer) return;
   }, []);
 
   useEffect(() => {
