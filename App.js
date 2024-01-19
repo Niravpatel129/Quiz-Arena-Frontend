@@ -11,10 +11,13 @@ import { useEffect } from 'react';
 import { LogBox, Platform, View } from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
 import Toast from 'react-native-toast-message';
+import MenuButton from './components/MenuButton/MenuButton';
+import MenuModal from './components/MenuModal/MenuModal';
 import TabBar from './components/MyTabBar/MyTabBar';
 import NotificationBell from './components/NotificationBell/NotificationBell';
 import fonts from './config/fonts';
 import { AuthProvider } from './context/auth/AuthContext';
+import { MenuProvider } from './context/menu/MenuContext';
 import { SocketProvider } from './context/socket/SocketContext';
 import { SoundProvider } from './context/sound/SoundContext';
 import ProfileEditScreen from './screens';
@@ -219,6 +222,10 @@ function App() {
 
             return <NotificationBell />;
           },
+          headerLeft: () => {
+            if (route.name === 'SignUpLogin') return null;
+            return <MenuButton />;
+          },
         })}
       >
         {/* <Stack.Screen name='Dev' component={Contribute} options={{ headerShown: true }} /> */}
@@ -320,11 +327,14 @@ function App() {
         <SocketProvider>
           <NavigationContainer theme={MyTheme} linking={linking}>
             <AuthProvider>
-              <SoundProvider>
-                <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
-                  <StackNavigator />
-                </LinearGradient>
-              </SoundProvider>
+              <MenuProvider>
+                <SoundProvider>
+                  <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
+                    <MenuModal />
+                    <StackNavigator />
+                  </LinearGradient>
+                </SoundProvider>
+              </MenuProvider>
             </AuthProvider>
             <Toast />
           </NavigationContainer>
