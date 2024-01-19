@@ -96,12 +96,7 @@ export default function MatchHistory() {
                   Match History
                 </Text>
               )}
-              ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
-              style={
-                {
-                  // backgroundColor: '#1c2141',
-                }
-              }
+              // ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
               data={matchHistory}
               renderItem={({ item, index }) => {
                 if (!item) return null;
@@ -122,6 +117,7 @@ export default function MatchHistory() {
                     style={[
                       styles.bubble,
                       {
+                        marginBottom: 10,
                         opacity: matchHistory[index]?.opacity,
                         transform: [{ translateY: matchHistory[index]?.translateY }],
                       },
