@@ -199,7 +199,7 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
               }}
               onPress={async () => {
                 // Clipboard.setString(`https://quizarena.gg/invite/${gameRoomId}`);
-                await Clipboard.setStringAsync(`https://quizarena.gg/invite/${gameRoomId}`);
+                await Clipboard.setStringAsync(`https://quizarena.gg/invite?id=${gameRoomId}`);
                 setShowCopied(true);
               }}
             >
