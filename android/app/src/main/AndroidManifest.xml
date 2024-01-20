@@ -41,7 +41,7 @@
         <data android:scheme="exp+quiz-arena-frontend-scaffold"/>
         <data android:scheme="quizarena"/>
       </intent-filter>
-      <intent-filter data-generated="true">
+      <intent-filter android:autoVerify="true" data-generated="true">
         <action android:name="android.intent.action.VIEW"/>
         <data android:scheme="https" android:host="quizarena.gg" android:pathPrefix="*"/>
         <category android:name="android.intent.category.BROWSABLE"/>
