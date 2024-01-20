@@ -13,7 +13,6 @@ export default function MenuModal() {
       transparent={true}
       visible={menuOpen}
       onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
         setMenuOpen(!menuOpen);
       }}
     >
