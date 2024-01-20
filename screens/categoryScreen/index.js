@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
+import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
 import InviteModal from '../../components/InviteModal/InviteModal';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
@@ -26,6 +27,28 @@ export default function CategoryScreen({ route }) {
   const categoryImage = route.params?.categoryImage;
   const categoryId = route.params?.categoryId;
   const [isModalVisible, setModalVisible] = React.useState(false);
+
+  useEffect(() => {
+    Toast.show({
+      type: 'info',
+      position: 'bottom',
+      text1: 'Invite Anyone To a Battle!',
+      text2: '2x EXP for all challenge games!',
+      visibilityTime: 3000,
+      text1Style: {
+        fontSize: 16,
+        fontWeight: '700',
+      },
+      text2Style: {
+        fontSize: 14,
+        fontWeight: '500',
+      },
+      autoHide: true,
+      topOffset: 30,
+      bottomOffset: 40,
+    });
+  }, []);
+
   useEffect(() => {
     const fetchTopPlayers = async () => {
       const response = await newRequest(`/leaderboards/${categoryName}`);
