@@ -29,24 +29,28 @@ export default function CategoryScreen({ route }) {
   const [isModalVisible, setModalVisible] = React.useState(false);
 
   useEffect(() => {
-    Toast.show({
-      type: 'info',
-      position: 'bottom',
-      text1: 'Invite Anyone To a Battle!',
-      text2: '2x EXP for all challenge games!',
-      visibilityTime: 3000,
-      text1Style: {
-        fontSize: 16,
-        fontWeight: '700',
-      },
-      text2Style: {
-        fontSize: 14,
-        fontWeight: '500',
-      },
-      autoHide: true,
-      topOffset: 30,
-      bottomOffset: 40,
-    });
+    const myTimeout = setTimeout(() => {
+      Toast.show({
+        type: 'info',
+        position: 'bottom',
+        text1: 'Challenge Anyone to a Duel!',
+        text2: 'Earn Double XP in Invite Matches!',
+        visibilityTime: 3000,
+        text1Style: {
+          fontSize: 16,
+          fontWeight: '700',
+        },
+        text2Style: {
+          fontSize: 14,
+          fontWeight: '500',
+        },
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
+    }, 2000);
+
+    return () => clearTimeout(myTimeout);
   }, []);
 
   useEffect(() => {
@@ -301,7 +305,7 @@ export default function CategoryScreen({ route }) {
           >
             <Text
               style={{
-                marginTop: 50,
+                marginTop: 20,
                 fontSize: 30,
                 fontWeight: 700,
                 color: 'white',

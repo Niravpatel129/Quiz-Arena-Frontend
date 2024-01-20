@@ -245,7 +245,7 @@ function App() {
           name='CategoryScreen'
           component={CategoryScreen}
           options={{
-            headerShown: true,
+            headerShown: false,
             headerShadowVisible: false,
           }}
         />
@@ -254,7 +254,7 @@ function App() {
         <Stack.Screen
           name='PublicProfile'
           component={PublicProfile}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen name='Chat' component={Chat} options={{ headerShown: false }} />

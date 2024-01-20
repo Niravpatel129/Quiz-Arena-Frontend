@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';
 import React, { useEffect, useState } from 'react';
-import { Image, Modal, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Image, Modal, Text, TouchableOpacity, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
@@ -12,6 +12,25 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
   const [gameRoomId, setGameRoomId] = useState(null);
   const [showCopied, setShowCopied] = useState(false);
   const navigation = useNavigation();
+  const [loadingText, setLoadingText] = useState('Waiting for opponent to join');
+  const animation = new Animated.Value(0);
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(animation, {
+        toValue: 5,
+        duration: 7800,
+        useNativeDriver: true, // 'useNativeDriver' set to false as we are animating non-numeric style
+      }),
+    ).start();
+
+    animation.addListener(({ value }) => {
+      const dots = '.'.repeat(Math.floor(value));
+      setLoadingText(`Waiting for opponent to join${dots}`);
+    });
+
+    return () => animation.removeAllListeners();
+  }, []);
 
   useEffect(() => {
     setGameRoomId(Math.floor(Math.random() * 100000));
@@ -131,7 +150,7 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
               // letterSpacing: 2.5,
             }}
           >
-            Waiting for opponent to join...
+            {loadingText}
           </Text>
           {/* <Text
             style={{

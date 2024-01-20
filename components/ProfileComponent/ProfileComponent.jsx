@@ -58,6 +58,14 @@ export default function ProfileComponent({ userId }) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#1c2141' }}>
       <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+        <Ionicons
+          name='arrow-back'
+          size={24}
+          color='white'
+          style={{ marginTop: 20, marginLeft: 20 }}
+          onPress={() => navigation.goBack()}
+        />
+
         <ChallangeModal
           opponentUserId={selectedFriendId}
           isModalVisible={isModalVisible}
@@ -83,7 +91,7 @@ export default function ProfileComponent({ userId }) {
             justifyContent: 'center',
             marginBottom: 30,
             position: 'relative',
-            marginTop: 20,
+            // marginTop: 20,
             paddingTop: 20,
             minHeight: 500,
           }}

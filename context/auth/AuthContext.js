@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { AppState } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
 import socketService from '../../services/socketService';
 
@@ -31,6 +32,14 @@ export const AuthProvider = ({ children }) => {
         if (value) {
           if (!navigation) return;
           if (!socketService) return;
+
+          Toast.show({
+            text1: 'Game Invite',
+            text2: `Redirecting to lobby: ${value}!`,
+            type: 'info',
+            visibilityTime: 3000,
+            position: 'bottom',
+          });
 
           navigation.navigate('Challenge', { gameId: value });
 
