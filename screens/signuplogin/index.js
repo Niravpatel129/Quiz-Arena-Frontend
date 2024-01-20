@@ -66,13 +66,13 @@ export default function SignUpLogin({ navigation }) {
 
     const newUri = result.assets[0].uri;
     console.log('🚀  newUri:', newUri);
-
-    if (!result.canceled) {
-      setAvatarUri(newUri);
-      const url = await upload(newUri);
-      console.log('🚀  url:', url);
-      setAvatar(url);
-    }
+    if (!newUri) return;
+    // if (!result.canceled) {
+    setAvatarUri(newUri);
+    const url = await upload(newUri);
+    console.log('🚀  url:', url);
+    setAvatar(url);
+    // }
   };
 
   const handleLogin = () => {
