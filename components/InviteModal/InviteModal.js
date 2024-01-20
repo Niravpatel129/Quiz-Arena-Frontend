@@ -80,13 +80,13 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
     // On
     socketService.on('game_start', (data) => {
       console.log('game_start for invite modal');
+      hideModal();
       // vibrate phone
       // if (Platform.OS !== 'web') {
       //   Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       // }
 
       navigation.navigate('Game', { game: data.game });
-      hideModal();
     });
 
     return () => {
