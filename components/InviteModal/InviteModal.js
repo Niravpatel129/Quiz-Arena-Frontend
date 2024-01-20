@@ -2,7 +2,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';
 import React, { useEffect, useState } from 'react';
-import { Animated, Image, Modal, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, Text, TouchableOpacity, View } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
@@ -13,24 +19,36 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
   const [showCopied, setShowCopied] = useState(false);
   const navigation = useNavigation();
   const [loadingText, setLoadingText] = useState('Waiting for opponent to join');
-  const animation = new Animated.Value(0);
+  // const animation = new Animated.Value(0);
+  const rotation = useSharedValue(0);
+
+  const spin = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${rotation.value}deg` }],
+    };
+  });
 
   useEffect(() => {
-    Animated.loop(
-      Animated.timing(animation, {
-        toValue: 5,
-        duration: 7800,
-        useNativeDriver: true, // 'useNativeDriver' set to false as we are animating non-numeric style
-      }),
-    ).start();
-
-    animation.addListener(({ value }) => {
-      const dots = '.'.repeat(Math.floor(value));
-      setLoadingText(`Waiting for opponent to join${dots}`);
-    });
-
-    return () => animation.removeAllListeners();
+    // Start the spinning animation
+    rotation.value = withRepeat(withTiming(360, { duration: 2000 }), -1, false);
   }, []);
+
+  // useEffect(() => {
+  //   Animated.loop(
+  //     Animated.timing(animation, {
+  //       toValue: 5,
+  //       duration: 7800,
+  //       useNativeDriver: true, // 'useNativeDriver' set to false as we are animating non-numeric style
+  //     }),
+  //   ).start();
+
+  //   animation.addListener(({ value }) => {
+  //     const dots = '.'.repeat(Math.floor(value));
+  //     setLoadingText(`Waiting for opponent to join${dots}`);
+  //   });
+
+  //   return () => animation.removeAllListeners();
+  // }, []);
 
   useEffect(() => {
     setGameRoomId(Math.floor(Math.random() * 100000));
@@ -129,14 +147,17 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
           >
             {capitalizeFirstLetter(category)}
           </Text>
-          <Image
-            style={{
-              width: 200,
-              height: 200,
-              borderRadius: 100,
-              marginTop: 20,
-              marginBottom: 20,
-            }}
+          <Animated.Image
+            style={[
+              {
+                width: 200,
+                height: 200,
+                borderRadius: 100,
+                marginTop: 20,
+                marginBottom: 20,
+              },
+              spin,
+            ]}
             source={{
               uri: 'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
             }}
