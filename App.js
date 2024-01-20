@@ -8,7 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Linking from 'expo-linking';
 import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
-import { LogBox, Platform, View } from 'react-native';
+import { LogBox, View } from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
 import Toast from 'react-native-toast-message';
 import MenuButton from './components/MenuButton/MenuButton';
@@ -39,30 +39,14 @@ import ProfileScreen from './screens/profile';
 import PublicProfile from './screens/publicProfile';
 import QueueScreen from './screens/queue_screen';
 import SignUpLogin from './screens/signuplogin';
+import startAppFlyer from './services/appsFlyer';
 
 Sentry.init({
   dsn: 'https://ebea8a70fc3ccc5fe921ee897bf9f2a3@o1363835.ingest.sentry.io/4506592682246144',
   tracesSampleRate: 1.0,
 });
 
-if (Platform.OS === 'android' || Platform.OS === 'ios') {
-  appsFlyer.initSdk(
-    {
-      devKey: 'fpg8Qxro3LWTbpdamF9s77',
-      isDebug: false,
-      appId: '6474947179',
-      onInstallConversionDataListener: true,
-      onDeepLinkListener: true,
-      timeToWaitForATTUserAuthorization: 10,
-    },
-    (result) => {
-      console.log('🚀  appsFlyer result:', result);
-    },
-    (error) => {
-      console.log('🚀  appsFlyer error:', error);
-    },
-  );
-}
+startAppFlyer();
 
 const prefix = Linking.createURL('/');
 
