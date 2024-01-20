@@ -33,7 +33,7 @@
             {
               "scheme": "https",
               "host": "quizarena.gg",
-              "pathPrefix": "*"
+              "pathPrefix": "/"
             }
           ],
           "category": ["BROWSABLE", "DEFAULT"]
