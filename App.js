@@ -48,6 +48,17 @@ Sentry.init({
 
 startAppFlyer();
 
+if (true) {
+  import('./services/appsFlyer')
+    .then((module) => {
+      const startAppFlyer = module.default;
+      startAppFlyer();
+    })
+    .catch((err) => {
+      console.error('Failed to load startAppFlyer', err);
+    });
+}
+
 const prefix = Linking.createURL('/');
 
 const Stack = createNativeStackNavigator();
