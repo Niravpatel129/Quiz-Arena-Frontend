@@ -193,27 +193,35 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
             }}
           >
             <View>
-              <Text
-                style={{
-                  fontSize: RFValue(13),
-                  fontWeight: 700,
-                  marginBottom: 10,
-                  // marginLeft: 10,
-                  marginTop: 60,
-                  textAlign: 'left',
-                  backgroundColor: '#1c2141',
-                  paddingHorizontal: 15,
-                  paddingVertical: 15,
-                  // width: '100%',
-                  // width: 200,
-                  textAlign: 'center',
-                  color: 'gray',
-                  opacity: 0.9,
-                  marginBottom: 10,
+              <TouchableOpacity
+                onPress={async () => {
+                  await Clipboard.setStringAsync(`https://quizarena.gg/invite?id=${gameRoomId}`);
+                  setShowCopied(true);
                 }}
               >
-                https://quizarena.gg/invite?id={gameRoomId}
-              </Text>
+                <Text
+                  style={{
+                    fontSize: RFValue(13),
+                    fontWeight: 700,
+                    marginBottom: 10,
+                    // marginLeft: 10,
+                    marginTop: 60,
+                    textAlign: 'left',
+                    backgroundColor: '#1c2141',
+                    paddingHorizontal: 15,
+                    paddingVertical: 15,
+                    // width: '100%',
+                    // width: 200,
+                    textAlign: 'center',
+                    color: 'gray',
+                    opacity: 0.9,
+                    marginBottom: 10,
+                  }}
+                >
+                  https://quizarena.gg/invite?id={gameRoomId}
+                </Text>
+              </TouchableOpacity>
+
               <Text
                 style={{
                   color: '#fff',
