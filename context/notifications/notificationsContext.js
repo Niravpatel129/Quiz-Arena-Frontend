@@ -1,9 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import { newRequest } from '../../api/newRequest';
+import { useAuth } from '../auth/AuthContext';
 
 const NotificationsContext = createContext();
 
@@ -20,6 +22,8 @@ export const NotificationsProvider = ({ children }) => {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const navigator = useNavigation();
+  const { fetchNotifications } = useAuth();
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => {
@@ -35,7 +39,11 @@ export const NotificationsProvider = ({ children }) => {
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-      console.log(response);
+      console.log('🚀  response:', JSON.stringify(response));
+      if (response.actionIdentifier === 'expo.modules.notifications.actions.DEFAULT') {
+        fetchNotifications();
+        navigator.navigate('Notifications');
+      }
     });
 
     return () => {
