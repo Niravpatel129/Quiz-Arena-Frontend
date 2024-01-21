@@ -26,8 +26,8 @@ export default function CategoryScreen({ route }) {
       Toast.show({
         type: 'info',
         position: 'bottom',
-        text1: 'Challenge Anyone to a Duel!',
-        text2: 'Earn Double XP in Invite Matches!',
+        text1: 'Invite someone to a Duel!',
+        text2: 'Earn Double XP!',
         visibilityTime: 3000,
         text1Style: {
           fontSize: 16,
