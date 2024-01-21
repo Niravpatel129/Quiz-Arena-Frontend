@@ -15,46 +15,13 @@ import useInAppReview from '../../hooks/useInAppReview';
 import useShareMessage from '../../hooks/useShareMessage';
 import socketService from '../../services/socketService';
 
-const fakeData2 = {
-  gameSessionId: '1',
-  yourData: {
-    id: '1',
-    username: 'Bob',
-    rating: 1400,
-    ratingChange: 30,
-    result: 'winner',
-
-    avatar:
-      'https://t4.ftcdn.net/jpg/01/62/72/29/360_F_162722972_3SlhxozZGdL3rGuWgKyVP2NTs8POtX2n.jpg',
-    gameData: {
-      scores: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
-    },
-  },
-  opponentData: {
-    id: '2',
-    username: 'Zezima',
-    result: 'loser',
-    rating: 1400,
-    ratingChange: -30,
-    avatar:
-      'https://t4.ftcdn.net/jpg/01/62/72/29/360_F_162722972_3SlhxozZGdL3rGuWgKyVP2NTs8POtX2n.jpg',
-    gameData: {
-      scores: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
-    },
-  },
-};
-
 export default function GameOver2({ route }) {
   const navigation = useNavigation();
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
-  const fakeData = route.params?.results || fakeData2;
-  console.log('🚀  fakeData:', fakeData);
-  const [scaleAnimation] = React.useState(new Animated.Value(0)); // Add this line
+  const fakeData = route.params?.results;
+  const [scaleAnimation] = React.useState(new Animated.Value(0));
   const share = useShareMessage();
-
   const requestReview = useInAppReview();
-
-  if (!fakeData) return null;
 
   useEffect(() => {
     if (!fakeData) return;
@@ -68,7 +35,7 @@ export default function GameOver2({ route }) {
     Animated.timing(scaleAnimation, {
       toValue: 1,
       duration: 500,
-      useNativeDriver: true, // Use native driver for better performance
+      useNativeDriver: true,
     }).start();
   }, [fakeData.yourData.result]);
 

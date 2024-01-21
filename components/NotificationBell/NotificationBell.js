@@ -15,7 +15,7 @@ export default function NotificationBell() {
       }}
       style={{ flexDirection: 'row', alignItems: 'center' }}
     >
-      <FontAwesome5 name='bell' size={22} color='white' style={{ marginRight: 10 }} />
+      <FontAwesome5 name='bell' size={22} color='white' />
       {userNotifications.length > 0 && (
         <View
           style={{
