@@ -9,6 +9,7 @@ const SOCKET_URL = IS_PRODUCTION
 console.log('🚀  SOCKET_URL:', SOCKET_URL);
 class SocketService {
   socket;
+  connected = false;
 
   connect() {
     this.socket = io(SOCKET_URL, {
@@ -19,6 +20,7 @@ class SocketService {
 
     this.socket.on('connection', () => {
       console.log('Connected to socket server');
+      this.connected = true;
     });
   }
 

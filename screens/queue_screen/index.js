@@ -1,9 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
-import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Platform, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
+import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
 import { useAuth } from '../../context/auth/AuthContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
@@ -12,16 +15,17 @@ import socketService from '../../services/socketService';
 const appVersion = '23';
 const IS_PRODUCTION = process.env.EXPO_PUBLIC_PROD_BACKEND || process.env.NODE_ENV === 'production';
 
-export default function QueueScreen({ route, navigation }) {
+export default function QueueScreen({ route }) {
   const [queueTime, setQueueTime] = useState(1);
   const [playerImageIndex, setPlayerImageIndex] = useState(0);
   const routeParam = route.params;
   const intervalRef = useRef(null);
-  const [playersInQueue, setPlayersInQueue] = useState(0);
+  const [_, setPlayersInQueue] = useState(0);
   const categoryName = routeParam?.categoryName || 'Logos';
   const [estimatedWaitTime, setEstimatedWaitTime] = useState(0);
   const { userData, fetchUser } = useAuth();
   const [defaultQueueTime, setDefaultQueueTime] = useState(100);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +33,20 @@ export default function QueueScreen({ route, navigation }) {
         const res = await newRequest.get(`/homepage/config/${appVersion}`);
         setDefaultQueueTime(!IS_PRODUCTION ? 3 : res.data.queueTime);
       } catch (err) {
+        // connection error
+
+        Toast.show({
+          type: 'error',
+          text1: 'Connection Error',
+          text2: 'Please check your internet connection.',
+          visibilityTime: 3000,
+          autoHide: true,
+          topOffset: 30,
+          bottomOffset: 40,
+        });
+
+        navigation.navigate('Categories');
+
         console.log(err);
       }
     };
@@ -37,6 +55,10 @@ export default function QueueScreen({ route, navigation }) {
   }, []);
 
   useEffect(() => {
+    if (!socketService.connected) {
+      socketService.connect();
+    }
+
     fetchUser();
   }, []);
 
