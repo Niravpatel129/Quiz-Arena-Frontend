@@ -3,12 +3,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { lazy, Suspense, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Animated, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import EndGameChart from '../../components/EndGameChart';
+import QuestionsPostGameLazy from '../../components/QuestionsPostGame/QuestionsPostGame';
 import RematchModal from '../../components/RematchModal/RematchModal';
 import Scoresheet from '../../components/Scoresheet/Scoresheet';
 import useInAppReview from '../../hooks/useInAppReview';
@@ -16,9 +17,6 @@ import useShareMessage from '../../hooks/useShareMessage';
 import { useTransitionalInterstitialAd } from '../../hooks/useTransitionalInterstitialAd';
 import socketService from '../../services/socketService';
 
-const QuestionsPostGameLazy = lazy(() =>
-  import('../../components/QuestionsPostGame/QuestionsPostGame'),
-);
 export default function GameOver2({ route }) {
   const navigation = useNavigation();
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
@@ -425,41 +423,41 @@ export default function GameOver2({ route }) {
               marginVertical: 10,
             }}
           >
-            <Suspense fallback={<Text>Loading Questions...</Text>}>
-              <QuestionsPostGameLazy
-                questions={fakeData.rounds.map((roundData, index) => {
-                  // fakeData.playersRoundData
+            {/* <Suspense fallback={<Text>Loading Questions...</Text>}> */}
+            <QuestionsPostGameLazy
+              questions={fakeData.rounds.map((roundData, index) => {
+                // fakeData.playersRoundData
 
-                  const yourAnswers = fakeData.playersRoundData.find(
-                    (player) => player.name === fakeData.yourData.username,
-                  );
+                const yourAnswers = fakeData.playersRoundData.find(
+                  (player) => player.name === fakeData.yourData.username,
+                );
 
-                  const opponentAnswers = fakeData.playersRoundData.find(
-                    (player) => player.name === fakeData.opponentData.username,
-                  );
+                const opponentAnswers = fakeData.playersRoundData.find(
+                  (player) => player.name === fakeData.opponentData.username,
+                );
 
-                  return {
-                    Question: roundData.questionText,
-                    QuestionId: roundData.questionId,
-                    Answers: roundData.options,
-                    CorrectAnswer: roundData.correctAnswer,
-                    QuestionImage: roundData.helperImage,
-                    PlayerAnswers: {
-                      you: {
-                        playerName: fakeData.yourData.username,
-                        answer: yourAnswers.answers[index].answer,
-                        playerAvatar: fakeData.yourData.avatar,
-                      },
-                      opponent: {
-                        playerName: fakeData.opponentData.username,
-                        answer: opponentAnswers.answers[index].answer,
-                        playerAvatar: fakeData.opponentData.avatar,
-                      },
+                return {
+                  Question: roundData.questionText,
+                  QuestionId: roundData.questionId,
+                  Answers: roundData.options,
+                  CorrectAnswer: roundData.correctAnswer,
+                  QuestionImage: roundData.helperImage,
+                  PlayerAnswers: {
+                    you: {
+                      playerName: fakeData.yourData.username,
+                      answer: yourAnswers.answers[index].answer,
+                      playerAvatar: fakeData.yourData.avatar,
                     },
-                  };
-                })}
-              />
-            </Suspense>
+                    opponent: {
+                      playerName: fakeData.opponentData.username,
+                      answer: opponentAnswers.answers[index].answer,
+                      playerAvatar: fakeData.opponentData.avatar,
+                    },
+                  },
+                };
+              })}
+            />
+            {/* </Suspense> */}
           </View>
         </ScrollView>
       </SafeAreaView>
