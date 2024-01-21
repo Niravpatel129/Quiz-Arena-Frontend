@@ -1,6 +1,7 @@
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Animated, Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Animated, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import AnimatedButton from '../../components/AnimatedButton/AnimatedButton';
 import Scorebar from '../../components/Scorebar/Scorebar';
