@@ -19,11 +19,11 @@ const GameScreen = ({ navigation }) => {
   const [highlightTrigger, setHighlightTrigger] = React.useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = React.useState(false);
   const [timer, setTimer] = React.useState(defaultCountdown);
-  // const [countdown, setCountdown] = React.useState(0);
   const [appState, setAppState] = React.useState(AppState.currentState);
   const [round, setRound] = React.useState(1);
   const [data, setData] = React.useState(null);
   const [sendBotAnswer, setSendBotAnswer] = React.useState(false);
+  const [gameInProgress, setGameInProgress] = React.useState(false);
 
   const myData = data?.gameSession?.players?.find(
     (player) => player.socketId === socketService?.socket?.id,
@@ -82,15 +82,17 @@ const GameScreen = ({ navigation }) => {
     socketService.on('disconnect', (reason) => {
       console.log('Disconnected from server', reason);
 
-      Toast.show({
-        type: 'error',
-        text1: 'Connection lost',
-        text2: 'You have been disconnected from the server',
-        position: 'bottom',
-        visibilityTime: 4000,
-        autoHide: true,
-        bottomOffset: 40,
-      });
+      if (gameInProgress) {
+        Toast.show({
+          type: 'error',
+          text1: 'Connection lost',
+          text2: 'You have been disconnected from the server',
+          position: 'bottom',
+          visibilityTime: 4000,
+          autoHide: true,
+          bottomOffset: 40,
+        });
+      }
 
       navigation.navigate('Categories');
     });
@@ -124,7 +126,8 @@ const GameScreen = ({ navigation }) => {
     });
 
     socketService.on('game_over', (results) => {
-      // my socket id =
+      setGameInProgress(false);
+
       const mySocketId = socketService?.socket?.id;
 
       // find my data
@@ -211,6 +214,8 @@ const GameScreen = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
+    setGameInProgress(true);
+
     setTimeout(() => setShowAnimation(false), 2000);
   }, []);
 
