@@ -8,10 +8,7 @@ const useShareMessage = () => {
         title: `Quiz Arena - where knowledge is power 🤓!!`,
       },
       {
-        // Android only:
         dialogTitle: 'Share BAM goodness',
-        // iOS only:
-        excludedActivityTypes: ['com.apple.UIKit.activity.PostToTwitter'],
       },
     );
   };

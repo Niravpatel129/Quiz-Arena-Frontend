@@ -154,6 +154,47 @@ PODS:
     - FBSDKCoreKit (= 16.1.3)
   - fmt (6.2.1)
   - glog (0.3.5)
+  - Google-Mobile-Ads-SDK (10.14.0):
+    - GoogleAppMeasurement (< 11.0, >= 7.0)
+    - GoogleUserMessagingPlatform (>= 1.1)
+  - GoogleAppMeasurement (10.20.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.20.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/AdIdSupport (10.20.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.20.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.20.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleUserMessagingPlatform (2.1.0)
+  - GoogleUtilities/AppDelegateSwizzler (7.12.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (7.12.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.12.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (7.12.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (7.12.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.12.0)"
+  - GoogleUtilities/Reachability (7.12.0):
+    - GoogleUtilities/Logger
   - hermes-engine (0.72.6):
     - hermes-engine/Pre-built (= 0.72.6)
   - hermes-engine/Pre-built (0.72.6)
@@ -179,6 +220,12 @@ PODS:
   - libwebp/sharpyuv (1.3.2)
   - libwebp/webp (1.3.2):
     - libwebp/sharpyuv
+  - nanopb (2.30909.1):
+    - nanopb/decode (= 2.30909.1)
+    - nanopb/encode (= 2.30909.1)
+  - nanopb/decode (2.30909.1)
+  - nanopb/encode (2.30909.1)
+  - PromisesObjC (2.3.1)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -625,6 +672,11 @@ PODS:
     - React-Core
   - RNDateTimePicker (7.2.0):
     - React-Core
+  - RNGoogleMobileAds (12.10.0):
+    - Google-Mobile-Ads-SDK (= 10.14.0)
+    - GoogleUserMessagingPlatform (= 2.1.0)
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
   - RNLocalize (3.0.4):
     - React-Core
   - RNReanimated (3.3.0):
@@ -765,6 +817,7 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
+  - RNGoogleMobileAds (from `../node_modules/react-native-google-mobile-ads`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -782,11 +835,17 @@ SPEC REPOS:
     - FBSDKLoginKit
     - FBSDKShareKit
     - fmt
+    - Google-Mobile-Ads-SDK
+    - GoogleAppMeasurement
+    - GoogleUserMessagingPlatform
+    - GoogleUtilities
     - libaom
     - libavif
     - libevent
     - libvmaf
     - libwebp
+    - nanopb
+    - PromisesObjC
     - SDWebImage
     - SDWebImageAVIFCoder
     - SDWebImageSVGCoder
@@ -955,6 +1014,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-picker/picker"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
+  RNGoogleMobileAds:
+    :path: "../node_modules/react-native-google-mobile-ads"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
   RNReanimated:
@@ -1015,12 +1076,18 @@ SPEC CHECKSUMS:
   FBSDKShareKit: de5c291ad414ec07048ab09bae1b1b74b3ed92fe
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
+  Google-Mobile-Ads-SDK: 8f67a72f88d057335b1ac3f501e2b68ad054116e
+  GoogleAppMeasurement: bb3c564c3efb933136af0e94899e0a46167466a8
+  GoogleUserMessagingPlatform: dce302b8f1b84d6e945812ee7a15c3f65a102cbf
+  GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   hermes-engine: 8057e75cfc1437b178ac86c8654b24e7fead7f60
   libaom: 144606b1da4b5915a1054383c3a4459ccdb3c661
   libavif: 84bbb62fb232c3018d6f1bab79beea87e35de7b7
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   libvmaf: 27f523f1e63c694d14d534cd0fddd2fab0ae8711
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
+  nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
+  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 28469809442eb4eb5528462705f7d852948c8a74
   RCTTypeSafety: e9c6c409fca2cc584e5b086862d562540cb38d29
@@ -1061,6 +1128,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: ddc4ee162bfd41b0d2c68bf2d95acd81dd7f1f93
   RNCPicker: 0bc2f0a29abcca7b7ed44a2d036aac9ab6d25700
   RNDateTimePicker: 3942382593f104af226ad9c56e16166960c7ae30
+  RNGoogleMobileAds: cd80fc880467a086d9b32f8b9aaabef36c200930
   RNLocalize: 1ce4263770515f53d3de442ce7657b3661b16a37
   RNReanimated: 9f7068e43b9358a46a688d94a5a3adb258139457
   RNScreens: 50ffe2fa2342eabb2d0afbe19f7c1af286bc7fb3

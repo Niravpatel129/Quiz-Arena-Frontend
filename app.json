@@ -78,5 +78,9 @@
       ],
       ["react-native-appsflyer", {}]
     ]
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-7342852291876571~2182954368",
+    "ios_app_id": "ca-app-pub-7342852291876571~5172349281"
   }
 }
