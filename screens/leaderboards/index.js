@@ -253,7 +253,7 @@ export default function LeaderboardsScreen({ navigation }) {
               <TouchableOpacity
                 onPress={() => setActiveTab('tab1')}
                 style={{
-                  backgroundColor: activeTab === 'tab1' ? 'lightgray' : '#1c2141',
+                  backgroundColor: activeTab === 'tab1' ? '#fff' : '#1c2141',
                   borderRadius: 22,
                   flex: 1,
                   height: 40,
@@ -274,7 +274,7 @@ export default function LeaderboardsScreen({ navigation }) {
               <TouchableOpacity
                 onPress={() => setActiveTab('tab2')}
                 style={{
-                  backgroundColor: activeTab === 'tab2' ? 'lightgray' : '#1c2141',
+                  backgroundColor: activeTab === 'tab2' ? '#fff' : '#1c2141',
                   borderRadius: 22,
                   flex: 1,
                   height: 40,
