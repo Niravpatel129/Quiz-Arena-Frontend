@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
-import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';

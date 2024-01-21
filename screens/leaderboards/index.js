@@ -1,8 +1,8 @@
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
   Animated,
-  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,

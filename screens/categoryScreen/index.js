@@ -1,15 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
-import {
-  Animated,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Animated, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
