@@ -2,18 +2,7 @@ import React from 'react';
 import { Dimensions, View } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
-// const fakePlayerData = {
-//   playerOne: {
-//     name: 'Alex',
-//     scores: [10, 10, 40, 33, 65, 12, 43],
-//   },
-//   playerTwo: {
-//     name: 'Zezima',
-//     scores: [20, 20, 50, 43, 75, 22, 53],
-//   },
-// };
-
-export default function EndGameChart({ chartData }) {
+function EndGameChart({ chartData }) {
   const chartWidth = Dimensions.get('window').width - 36;
   const paddingRight = 20;
 
@@ -71,3 +60,5 @@ export default function EndGameChart({ chartData }) {
     </View>
   );
 }
+
+export default React.memo(EndGameChart);

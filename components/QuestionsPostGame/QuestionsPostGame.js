@@ -63,7 +63,7 @@ const fakeQuestionsData = [
   },
 ];
 
-export default function QuestionsPostGame({ questions }) {
+function QuestionsPostGame({ questions }) {
   const QuestionsData = questions || fakeQuestionsData;
 
   const [thumbsStatus, setThumbsStatus] = useState(
@@ -282,3 +282,5 @@ export default function QuestionsPostGame({ questions }) {
     </View>
   );
 }
+
+export default React.memo(QuestionsPostGame);

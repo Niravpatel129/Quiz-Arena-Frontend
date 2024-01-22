@@ -27,24 +27,6 @@ export default function GameOver2({ route }) {
   const [showAd] = useTransitionalInterstitialAd();
 
   useEffect(() => {
-    const increaseGameCount = async () => {
-      const gameCount = await AsyncStorage.getItem('gameCount');
-
-      if (!gameCount) {
-        await AsyncStorage.setItem('gameCount', '1');
-      } else {
-        await AsyncStorage.setItem('gameCount', (parseInt(gameCount) + 1).toString());
-      }
-
-      if (parseInt(gameCount) % 6 === 0) {
-        showAd();
-      }
-    };
-
-    increaseGameCount();
-  }, []);
-
-  useEffect(() => {
     if (!fakeData) return;
 
     if (fakeData?.yourData?.result === 'winner') requestReview();
@@ -361,6 +343,25 @@ export default function GameOver2({ route }) {
 
           <TouchableOpacity
             onPress={() => {
+              const increaseGameCount = async () => {
+                const gameCount = await AsyncStorage.getItem('gameCount');
+
+                if (!gameCount) {
+                  await AsyncStorage.setItem('gameCount', '1');
+                } else {
+                  await AsyncStorage.setItem('gameCount', (parseInt(gameCount) + 1).toString());
+                }
+
+                if (parseInt(gameCount) % 5 === 0) {
+                  setTimeout(() => {
+                    console.log('showing ad');
+                    showAd();
+                  }, 1000);
+                }
+              };
+
+              increaseGameCount();
+
               navigation.reset({
                 index: 0,
                 routes: [{ name: 'Categories' }],
