@@ -9,10 +9,11 @@ import CountryFlag from 'react-native-country-flag';
 import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
 import { useAuth } from '../../context/auth/AuthContext';
+import { useUpdateContext } from '../../context/update/UpdateContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import socketService from '../../services/socketService';
 
-const appVersion = '23';
+const appVersion = '24';
 const IS_PRODUCTION = process.env.EXPO_PUBLIC_PROD_BACKEND || process.env.NODE_ENV === 'production';
 
 export default function QueueScreen({ route }) {
@@ -26,15 +27,20 @@ export default function QueueScreen({ route }) {
   const { userData, fetchUser } = useAuth();
   const [defaultQueueTime, setDefaultQueueTime] = useState(100);
   const navigation = useNavigation();
+  const { setUpdateRequired } = useUpdateContext();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await newRequest.get(`/homepage/config/${appVersion}`);
         setDefaultQueueTime(!IS_PRODUCTION ? 3 : res.data.queueTime);
-      } catch (err) {
-        // connection error
 
+        if (res.data?.updatedRequired) {
+          navigation.navigate('Categories');
+
+          setUpdateRequired(true);
+        }
+      } catch (err) {
         Toast.show({
           type: 'error',
           text1: 'Connection Error',
@@ -120,7 +126,12 @@ export default function QueueScreen({ route }) {
 
       navigation.reset({
         index: 0,
-        routes: [{ name: 'Game', params: { game: data.game } }],
+        routes: [
+          {
+            name: 'Game',
+            params: { game: data.game, gameSessionId: data.gameSessionId, players: data.players },
+          },
+        ],
       });
     });
 
@@ -149,7 +160,7 @@ export default function QueueScreen({ route }) {
             borderColor: '#69829c',
           }}
           source={{
-            uri: isPlaceholder ? playerImages[playerImageIndex] : playerData.avatar,
+            uri: isPlaceholder ? playerImages[Math.floor(playerImageIndex)] : playerData.avatar,
             headers: {
               Accept: '*/*',
             },

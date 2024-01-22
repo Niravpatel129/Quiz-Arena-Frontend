@@ -15,7 +15,7 @@ const preloadImages = (imageUrls) => {
 
 const defaultCountdown = 12;
 
-const GameScreen = ({ navigation }) => {
+const GameScreen = ({ navigation, route }) => {
   const [highlightTrigger, setHighlightTrigger] = React.useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = React.useState(false);
   const [timer, setTimer] = React.useState(defaultCountdown);
@@ -24,6 +24,13 @@ const GameScreen = ({ navigation }) => {
   const [data, setData] = React.useState(null);
   const [sendBotAnswer, setSendBotAnswer] = React.useState(false);
   const [gameInProgress, setGameInProgress] = React.useState(false);
+
+  useEffect(() => {
+    socketService.emit('ready', {
+      gameSessionId: route.params?.gameSessionId,
+      players: route.params?.players,
+    });
+  }, []);
 
   const myData = data?.gameSession?.players?.find(
     (player) => player.socketId === socketService?.socket?.id,

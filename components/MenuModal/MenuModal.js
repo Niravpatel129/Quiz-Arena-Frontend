@@ -3,10 +3,21 @@ import React from 'react';
 import { Linking, Modal, Pressable, Text, TouchableOpacity, View } from 'react-native';
 import { useMenuContext } from '../../context/menu/MenuContext';
 
-const version = '3.14.0';
+const appVersion = '24';
 
 export default function MenuModal() {
   const { menuOpen, setMenuOpen } = useMenuContext();
+
+  // useEffect(() => {
+  //   // get version from backend
+  //   const fetchData = async () => {
+  //     const res = await newRequest.get(`/homepage/config/${appVersion}`);
+  //     console.log('🚀  res:', res);
+  //   };
+
+  //   fetchData();
+  // }, []);
+
   return (
     <Modal
       animationType='fade'
@@ -231,7 +242,7 @@ export default function MenuModal() {
                   color: 'lightgray',
                 }}
               >
-                Version {version}
+                Version 1.3.{appVersion}
               </Text>
               <Text
                 style={{
