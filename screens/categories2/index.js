@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Animated,
   FlatList,
@@ -80,6 +80,8 @@ function CategoryBox({ categoryTitle, parentCategory, navigation, fadeAnim }) {
     </Animated.View>
   );
 }
+
+const MemoizedCategoryBox = React.memo(CategoryBox);
 
 export default function Categories2({ navigation }) {
   const [searchInput, setSearchInput] = React.useState('');
@@ -186,6 +188,18 @@ export default function Categories2({ navigation }) {
     setSearchInput(text);
   };
 
+  const renderFlatListItem = useCallback(
+    ({ item, category }) => (
+      <MemoizedCategoryBox
+        categoryTitle={item}
+        parentCategory={category.parentCategory}
+        navigation={navigation}
+        fadeAnim={fadeAnim}
+      />
+    ),
+    [fadeAnim, navigation],
+  );
+
   const renderCategories = () => {
     const filteredCategories = categories.filter((category) => {
       return (
@@ -221,20 +235,12 @@ export default function Categories2({ navigation }) {
           <FlatList
             ItemSeparatorComponent={() => <View style={{ width: 10 }}></View>}
             data={category.subCategories}
-            renderItem={({ item }) => (
-              <CategoryBox
-                categoryTitle={item}
-                parentCategory={category.parentCategory}
-                navigation={navigation}
-                fadeAnim={fadeAnim}
-              />
-            )}
+            renderItem={({ item }) => renderFlatListItem({ item, category })}
             keyExtractor={(item, index) => index.toString()}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             style={{
               flexDirection: 'row',
-              // margin: 10,
             }}
           />
         </View>

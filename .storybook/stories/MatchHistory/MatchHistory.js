@@ -2,12 +2,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { formatDistanceToNow } from 'date-fns';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Image, Text, View } from 'native-base';
+import { Text, View } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Animated,
   FlatList,
+  Image,
   Pressable,
   SafeAreaView,
   StyleSheet,
@@ -69,6 +70,85 @@ export default function MatchHistory() {
     );
   };
 
+  const FlatListRender = ({ item, index }) => {
+    if (!item) return null;
+
+    const opponent = item?.players?.find((v) => {
+      return v?.id !== userId;
+    });
+    const result = item.winnerId === userId ? 'Won' : 'Lost';
+    const opponentAvatar = opponent?.playerInformation?.avatar;
+    if (!opponent) return null;
+
+    return (
+      <Animated.View
+        key={item.id}
+        style={[
+          styles.bubble,
+          {
+            marginBottom: 10,
+            opacity: matchHistory[index]?.opacity,
+            transform: [{ translateY: matchHistory[index]?.translateY }],
+          },
+        ]}
+      >
+        <View style={styles.bubbleIcon}>
+          <Ionicons
+            style={{
+              marginTop: 13,
+            }}
+            name='ios-trophy'
+            size={40}
+            color={result === 'Won' ? '#53d769' : '#fc3158'}
+          />
+        </View>
+        <View style={styles.bubbleInnerContainer}>
+          <Text style={styles.bubbleTitle}>{capitalizeFirstLetter(item?.category)}</Text>
+          <Pressable
+            onPress={() => {
+              navigation.navigate('MatchHistoryDetails', {
+                matchId: item.id,
+              });
+            }}
+          >
+            <Text style={styles.bubbleSubtitle}>
+              {parseSubtitle({
+                opponentName: opponent?.name,
+                date: item?.startTime,
+              })}
+            </Text>
+          </Pressable>
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('PublicProfile', {
+              userId: opponent?.id,
+            });
+          }}
+        >
+          <Image
+            source={{
+              uri:
+                opponentAvatar ||
+                'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
+            }}
+            alt=''
+            size='xs'
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 10,
+              marginRight: 15,
+              marginTop: 5,
+              borderWidth: 2,
+              borderColor: '#516696',
+            }}
+          />
+        </TouchableOpacity>
+      </Animated.View>
+    );
+  };
+
   return (
     <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ height: '100%' }}>
       <SafeAreaView>
@@ -98,89 +178,7 @@ export default function MatchHistory() {
               )}
               // ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
               data={matchHistory}
-              renderItem={({ item, index }) => {
-                if (!item) return null;
-
-                const opponent = item?.players?.find((v) => {
-                  console.log('🚀  v:', v);
-                  console.log('🚀  userId:', userId);
-
-                  return v?.id !== userId;
-                });
-                const result = item.winnerId === userId ? 'Won' : 'Lost';
-                const opponentAvatar = opponent?.playerInformation?.avatar;
-                if (!opponent) return null;
-
-                return (
-                  <Animated.View
-                    key={item.id}
-                    style={[
-                      styles.bubble,
-                      {
-                        marginBottom: 10,
-                        opacity: matchHistory[index]?.opacity,
-                        transform: [{ translateY: matchHistory[index]?.translateY }],
-                      },
-                    ]}
-                  >
-                    <View style={styles.bubbleIcon}>
-                      <Ionicons
-                        style={{
-                          marginTop: 13,
-                        }}
-                        name='ios-trophy'
-                        size={40}
-                        color={result === 'Won' ? '#53d769' : '#fc3158'}
-                      />
-                    </View>
-                    <View style={styles.bubbleInnerContainer}>
-                      <Text style={styles.bubbleTitle}>
-                        {capitalizeFirstLetter(item?.category)}
-                      </Text>
-                      <Pressable
-                        onPress={() => {
-                          navigation.navigate('MatchHistoryDetails', {
-                            matchId: item.id,
-                          });
-                        }}
-                      >
-                        <Text style={styles.bubbleSubtitle}>
-                          {parseSubtitle({
-                            opponentName: opponent?.name,
-                            date: item?.startTime,
-                          })}
-                        </Text>
-                      </Pressable>
-                    </View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigation.navigate('PublicProfile', {
-                          userId: opponent?.id,
-                        });
-                      }}
-                    >
-                      <Image
-                        source={{
-                          uri:
-                            opponentAvatar ||
-                            'https://cdn.dribbble.com/users/113499/screenshots/7146093/space-cat.png',
-                        }}
-                        alt=''
-                        size='xs'
-                        style={{
-                          width: 50,
-                          height: 50,
-                          borderRadius: 10,
-                          marginRight: 15,
-                          marginTop: 5,
-                          borderWidth: 2,
-                          borderColor: '#516696',
-                        }}
-                      />
-                    </TouchableOpacity>
-                  </Animated.View>
-                );
-              }}
+              renderItem={FlatListRender}
               keyExtractor={(item) => item._id}
             />
           )}
