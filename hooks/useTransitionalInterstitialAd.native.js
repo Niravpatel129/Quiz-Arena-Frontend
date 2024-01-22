@@ -1,14 +1,20 @@
 // Import necessary modules
+import Constants, { ExecutionEnvironment } from 'expo-constants';
 import { useEffect, useState } from 'react';
 import { AdEventType, InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-7342852291876571/2789459022';
+const isExpoGo = Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
 
 export const useTransitionalInterstitialAd = () => {
   const [ad, setAd] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    if (isExpoGo) {
+      return;
+    }
+
     // Create a new Interstitial Ad
     const newAd = InterstitialAd.createForAdRequest(adUnitId);
 
