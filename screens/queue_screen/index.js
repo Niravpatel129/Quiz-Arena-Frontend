@@ -13,7 +13,7 @@ import { useUpdateContext } from '../../context/update/UpdateContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import socketService from '../../services/socketService';
 
-const appVersion = '24';
+const appVersion = '25';
 const IS_PRODUCTION = process.env.EXPO_PUBLIC_PROD_BACKEND || process.env.NODE_ENV === 'production';
 
 export default function QueueScreen({ route }) {
