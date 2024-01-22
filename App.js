@@ -6,6 +6,7 @@ import * as Sentry from '@sentry/react-native';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Linking from 'expo-linking';
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
 import { LogBox, View } from 'react-native';
@@ -55,7 +56,6 @@ if (true) {
       console.error('Failed to load startAppFlyer', err);
     });
 }
-
 const prefix = Linking.createURL('/');
 
 const Stack = createNativeStackNavigator();
@@ -63,31 +63,6 @@ const Tab = createBottomTabNavigator();
 
 function App() {
   const [fontsLoaded] = useFonts(fonts);
-  // const url = Linking.useURL();
-
-  // useEffect(() => {
-  //   if (url) {
-  //     const { hostname, path, queryParams } = Linking.parse(url);
-  //     console.log(
-  //       `Linked to app with hostname: ${hostname}, path: ${path} and data: ${JSON.stringify(
-  //         queryParams,
-  //       )}`,
-  //     );
-
-  //     // quizarena://invite/id=123
-  //     if (path === 'invite') {
-  //       const id = queryParams?.id;
-  //       console.log('🚀  id:', id);
-
-  //       // store into local storage
-  //       if (id) {
-  //         AsyncStorage.setItem('inviteId', id);
-  //       }
-  //     }
-  //   }
-  // }, [url]);
-
-  console.log('App.js');
 
   const linking = {
     prefixes: [prefix, 'quizarena.gg', 'https://quizarena.gg'],
@@ -118,6 +93,15 @@ function App() {
       Linking?.addEventListener('url', onReceiveURL);
     },
   };
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await requestTrackingPermissionsAsync();
+      if (status === 'granted') {
+        console.log('Yay! I have user permission to track data');
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     LogBox.ignoreLogs([

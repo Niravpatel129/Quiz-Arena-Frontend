@@ -76,7 +76,13 @@
           "contactsPermission": "Allow $(PRODUCT_NAME) to sync friends with your contacts."
         }
       ],
-      ["react-native-appsflyer", {}]
+      ["react-native-appsflyer", {}],
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        }
+      ]
     ]
   },
   "react-native-google-mobile-ads": {
