@@ -4,44 +4,65 @@ import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-na
 
 export default function Leaderboards2() {
   const [selectedTab, setSelectedTab] = React.useState('Friends');
-  console.log('🚀  selectedTab:', selectedTab);
 
   const renderButtons = () => {
     const renderSingleButton = (text, selected) => {
-      const backgroundColor = selected
-        ? 'linear-gradient(266deg, #84BDFA 19.11%, #3F95F2 89.55%)'
-        : 'transparent';
-      const bordercolor = selected ? 'none' : '#DCEDFD';
-      const borderWidth = selected ? 0 : 1;
-      const boxShadow = selected ? `0px 2px 0px 0px #206DD8` : 'none';
       const textColor = selected ? '#FFFFFF' : '#5E6064';
+      const buttonStyle = {
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        borderRadius: 12,
+        flex: 1, // Equal space distribution
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: selected ? 0 : 1,
+        borderColor: selected ? 'none' : '#DCEDFD',
+        shadowColor: selected ? '#206DD8' : 'transparent',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: selected ? 1.0 : 0,
+        shadowRadius: selected ? 3 : 0,
+        elevation: selected ? 4 : 0, // for Android shadow effect
+      };
 
       return (
         <TouchableOpacity
           onPress={() => setSelectedTab(text)}
           style={{
-            paddingVertical: 12,
-            paddingHorizontal: 16,
-            background: backgroundColor,
-            borderRadius: 12,
-            maxWidth: 150,
-            width: '45%',
-            boxShadow: boxShadow,
-            borderColor: bordercolor,
-            borderWidth: borderWidth,
+            flex: 1,
           }}
         >
-          <Text
-            style={{
-              color: textColor,
-              fontSize: 16,
-              textAlign: 'center',
-              fontWeight: 600,
-              fontFamily: 'Poppins-Regular',
-            }}
-          >
-            {text}
-          </Text>
+          {selected ? (
+            <LinearGradient
+              colors={['#84BDFA', '#3F95F2']}
+              start={[0.0, 0.0]}
+              end={[1.0, 1.0]}
+              style={buttonStyle}
+            >
+              <Text
+                style={{
+                  color: textColor,
+                  fontSize: 16,
+                  fontWeight: '600',
+                  fontFamily: 'poppins-regular',
+                }}
+              >
+                {text}
+              </Text>
+            </LinearGradient>
+          ) : (
+            <View style={buttonStyle}>
+              <Text
+                style={{
+                  color: textColor,
+                  fontSize: 16,
+                  fontWeight: '600',
+                  fontFamily: 'poppins-regular',
+                }}
+              >
+                {text}
+              </Text>
+            </View>
+          )}
         </TouchableOpacity>
       );
     };
@@ -50,9 +71,10 @@ export default function Leaderboards2() {
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'space-evenly',
+          gap: 8,
+          justifyContent: 'space-between',
           width: '100%',
-          marginTop: 30,
+          marginTop: 10,
         }}
       >
         {renderSingleButton('Friends', selectedTab === 'Friends')}
@@ -66,6 +88,7 @@ export default function Leaderboards2() {
       colors={['#FFFFFF', '#DCEDFD', '#FFFFFF']}
       style={{
         flex: 1,
+        paddingHorizontal: 12,
       }}
     >
       <SafeAreaView>
@@ -83,7 +106,7 @@ export default function Leaderboards2() {
                 color: '#FFFFFF',
                 fontSize: 30,
                 textAlign: 'center',
-                marginTop: 50,
+                marginTop: 10,
               }}
             >
               Leaderboards2

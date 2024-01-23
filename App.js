@@ -11,10 +11,9 @@ import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
 import { LogBox, View } from 'react-native';
 import Toast from 'react-native-toast-message';
-import MenuButton from './components/MenuButton/MenuButton';
+import CustomHeader from './components/CustomHeader/CustomHeader';
 import MenuModal from './components/MenuModal/MenuModal';
 import TabBar from './components/MyTabBar/MyTabBar';
-import NotificationBell from './components/NotificationBell/NotificationBell';
 import fonts from './config/fonts';
 import { AuthProvider } from './context/auth/AuthContext';
 import { MenuProvider } from './context/menu/MenuContext';
@@ -61,38 +60,38 @@ const prefix = Linking.createURL('/');
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const linking = {
+  prefixes: [prefix, 'quizarena.gg', 'https://quizarena.gg'],
+  config: {},
+  getInitialURL: async () => {
+    // Get the initial URL if the app is opened via a deep link
+    const url = await Linking.getInitialURL();
+    return url;
+  },
+  subscribe(listener) {
+    const onReceiveURL = ({ url }) => {
+      // Parse the URL and extract the path and query
+      const { path, queryParams } = Linking.parse(url);
+      if (path === 'invite') {
+        const id = queryParams.id;
+
+        // store into local storage
+        if (id) {
+          AsyncStorage.setItem('inviteId', id);
+        }
+
+        console.log('🚀  id:', id);
+
+        // set it inside params
+        listener(id);
+      }
+    };
+    Linking?.addEventListener('url', onReceiveURL);
+  },
+};
+
 function App() {
   const [fontsLoaded] = useFonts(fonts);
-
-  const linking = {
-    prefixes: [prefix, 'quizarena.gg', 'https://quizarena.gg'],
-    config: {},
-    getInitialURL: async () => {
-      // Get the initial URL if the app is opened via a deep link
-      const url = await Linking.getInitialURL();
-      return url;
-    },
-    subscribe(listener) {
-      const onReceiveURL = ({ url }) => {
-        // Parse the URL and extract the path and query
-        const { path, queryParams } = Linking.parse(url);
-        if (path === 'invite') {
-          const id = queryParams.id;
-
-          // store into local storage
-          if (id) {
-            AsyncStorage.setItem('inviteId', id);
-          }
-
-          console.log('🚀  id:', id);
-
-          // set it inside params
-          listener(id);
-        }
-      };
-      Linking?.addEventListener('url', onReceiveURL);
-    },
-  };
 
   useEffect(() => {
     (async () => {
@@ -168,37 +167,13 @@ function App() {
   function StackNavigator() {
     return (
       <Stack.Navigator
+        // screenOptions={{
+        //   header: (props) => <CustomHeader2 {...props} />,
+        // }}
+        screenOptions={({ route }) => CustomHeader(route)}
         options={{
           headerShadowVisible: false,
         }}
-        screenOptions={(route) => ({
-          headerTitle: 'Quiz Arena',
-
-          cardStyle: { backgroundColor: '#1d284b' },
-          tabBarStyle: {},
-          headerStyle: {
-            backgroundColor: '#1d284b',
-            borderBottomWidth: 0,
-          },
-          headerTitleAlign: 'center',
-          headerBackButtonMenuEnabled: false,
-          headerTintColor: 'white',
-          headerTitleStyle: {
-            color: 'white',
-            fontWeight: 'bold',
-            display: 'none',
-          },
-
-          headerRight: () => {
-            if (route.name === 'SignUpLogin') return null;
-
-            return <NotificationBell />;
-          },
-          headerLeft: () => {
-            if (route.name === 'SignUpLogin') return null;
-            return <MenuButton />;
-          },
-        })}
       >
         {/* <Stack.Screen name='Dev' component={Leaderboards2} options={{ headerShown: true }} /> */}
 
