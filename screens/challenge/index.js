@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { useAuth } from '../../context/auth/AuthContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
@@ -34,22 +35,28 @@ export default function ChallengeScreen({ route }) {
 
       setGameExpired(true);
       clearInterval(intervalRef.current);
-
-      // alert('Your challenge has expired, return back to homepage');
     });
 
     socketService.on('game_start', (data) => {
-      if (!data) {
-        // alert('Game failed to start due to an error.');
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'CategoriesHome' }],
-        });
+      clearInterval(intervalRef.current);
 
-        return null;
+      if (Platform.OS !== 'web') {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       }
 
-      navigation.navigate('Game', { game: data.game });
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'Game',
+            params: {
+              game: data.game,
+              gameSessionId: data.gameSessionId,
+              players: data.players,
+            },
+          },
+        ],
+      });
     });
 
     return () => {

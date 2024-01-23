@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';
+import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
@@ -12,6 +13,7 @@ import Animated, {
 import { RFValue } from 'react-native-responsive-fontsize';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
+
 import socketService from '../../services/socketService';
 
 export default function InviteModal({ category, isModalVisible, hideModal }) {
@@ -78,15 +80,23 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
     generateGameRoomId();
 
     // On
-    socketService.on('game_start', (data) => {
-      console.log('game_start for invite modal');
-      hideModal();
-      // vibrate phone
-      // if (Platform.OS !== 'web') {
-      //   Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      // }
 
-      navigation.navigate('Game', { game: data.game });
+    socketService.on('game_start', (data) => {
+      hideModal();
+
+      if (Platform.OS !== 'web') {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      }
+
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'Game',
+            params: { game: data.game, gameSessionId: data.gameSessionId, players: data.players },
+          },
+        ],
+      });
     });
 
     return () => {
