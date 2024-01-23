@@ -26,11 +26,14 @@ const GameScreen = ({ navigation, route }) => {
   const [gameInProgress, setGameInProgress] = React.useState(false);
 
   useEffect(() => {
+    if (!route.params?.gameSessionId) return;
+    if (!route.params?.players) return;
+
     socketService.emit('ready', {
       gameSessionId: route.params?.gameSessionId,
       players: route.params?.players,
     });
-  }, []);
+  }, [route]);
 
   const myData = data?.gameSession?.players?.find(
     (player) => player.socketId === socketService?.socket?.id,
