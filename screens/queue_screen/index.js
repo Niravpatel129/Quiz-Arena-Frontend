@@ -11,9 +11,10 @@ import { newRequest } from '../../api/newRequest';
 import { useAuth } from '../../context/auth/AuthContext';
 import { useUpdateContext } from '../../context/update/UpdateContext';
 import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
+import { keys } from '../../keys';
 import socketService from '../../services/socketService';
 
-const appVersion = '25';
+const appVersion = keys.version;
 const IS_PRODUCTION = process.env.EXPO_PUBLIC_PROD_BACKEND || process.env.NODE_ENV === 'production';
 
 export default function QueueScreen({ route }) {

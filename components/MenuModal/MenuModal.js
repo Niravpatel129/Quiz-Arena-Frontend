@@ -2,21 +2,12 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { Linking, Modal, Pressable, Text, TouchableOpacity, View } from 'react-native';
 import { useMenuContext } from '../../context/menu/MenuContext';
+import { keys } from '../../keys';
 
-const appVersion = '24';
+const appVersion = keys.version;
 
 export default function MenuModal() {
   const { menuOpen, setMenuOpen } = useMenuContext();
-
-  // useEffect(() => {
-  //   // get version from backend
-  //   const fetchData = async () => {
-  //     const res = await newRequest.get(`/homepage/config/${appVersion}`);
-  //     console.log('🚀  res:', res);
-  //   };
-
-  //   fetchData();
-  // }, []);
 
   return (
     <Modal
