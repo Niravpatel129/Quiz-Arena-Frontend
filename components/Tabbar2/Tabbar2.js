@@ -76,7 +76,7 @@ const TabBar2 = ({ state, descriptors, navigation }) => {
                 alignItems: 'center',
                 paddingTop: 18,
                 paddingBottom: 10,
-                background: 'red',
+                // background: 'red',
               }}
             >
               <Ionicons

@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import TopThree from './components/TopThree';
 
 export default function Leaderboards2() {
   const [selectedTab, setSelectedTab] = React.useState('Friends');
@@ -101,16 +102,25 @@ export default function Leaderboards2() {
             >
               {renderButtons()}
             </View>
-            <Text
+            <View
               style={{
-                color: '#FFFFFF',
-                fontSize: 30,
-                textAlign: 'center',
-                marginTop: 10,
+                marginTop: 50,
               }}
             >
-              Leaderboards2
-            </Text>
+              <TopThree />
+            </View>
+            <View>
+              <Text
+                style={{
+                  color: '#FFFFFF',
+                  fontSize: 30,
+                  textAlign: 'center',
+                  marginTop: 10,
+                }}
+              >
+                Leaderboards2
+              </Text>
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>

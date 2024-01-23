@@ -124,6 +124,7 @@ function App() {
 
   function HomeTabNavigator() {
     return (
+      // <Tab.Navigator tabBar={(props) => <TabBar2 {...props} />}>
       <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
         <Tab.Screen
           name='CategoriesHome'
@@ -167,10 +168,10 @@ function App() {
   function StackNavigator() {
     return (
       <Stack.Navigator
+        screenOptions={({ route }) => CustomHeader(route)}
         // screenOptions={{
         //   header: (props) => <CustomHeader2 {...props} />,
         // }}
-        screenOptions={({ route }) => CustomHeader(route)}
         options={{
           headerShadowVisible: false,
         }}
