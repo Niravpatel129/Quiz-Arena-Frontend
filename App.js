@@ -200,7 +200,7 @@ function App() {
           },
         })}
       >
-        {/* <Stack.Screen name='Dev' component={Contribute} options={{ headerShown: true }} /> */}
+        {/* <Stack.Screen name='Dev' component={Leaderboards2} options={{ headerShown: true }} /> */}
 
         <Stack.Screen
           name='Home'
@@ -302,7 +302,13 @@ function App() {
               <MenuProvider>
                 <SoundProvider>
                   <UpdateProvider>
-                    <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
+                    <LinearGradient
+                      colors={['#0f0c29', '#302b63', '#24243e']}
+                      style={{
+                        flex: 1,
+                        fontFeatureSettings: "'clig' off, 'liga' off",
+                      }}
+                    >
                       <MenuModal />
                       <StackNavigator />
                     </LinearGradient>

@@ -342,25 +342,24 @@ export default function GameOver2({ route }) {
           </View>
 
           <TouchableOpacity
-            onPress={() => {
+            onPress={async () => {
               const increaseGameCount = async () => {
                 const gameCount = await AsyncStorage.getItem('gameCount');
 
                 if (!gameCount) {
                   await AsyncStorage.setItem('gameCount', '1');
                 } else {
-                  await AsyncStorage.setItem('gameCount', (parseInt(gameCount) + 1).toString());
-                }
+                  const newGameCount = parseInt(gameCount) + 1;
+                  await AsyncStorage.setItem('gameCount', newGameCount.toString());
 
-                if (parseInt(gameCount) % 5 === 0) {
-                  setTimeout(() => {
+                  if (newGameCount % 3 === 0) {
                     console.log('showing ad');
-                    showAd();
-                  }, 1000);
+                    await showAd();
+                  }
                 }
               };
 
-              increaseGameCount();
+              await increaseGameCount();
 
               navigation.reset({
                 index: 0,

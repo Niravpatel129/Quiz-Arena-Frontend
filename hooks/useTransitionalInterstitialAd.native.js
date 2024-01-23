@@ -15,41 +15,33 @@ export const useTransitionalInterstitialAd = () => {
       return;
     }
 
-    // Create a new Interstitial Ad
     const newAd = InterstitialAd.createForAdRequest(adUnitId);
-
-    // Event Listener for Ad Loading
     const loadListener = newAd.addAdEventListener(AdEventType.LOADED, () => {
       setLoaded(true);
     });
 
-    // Event Listener for Ad Dismissal
-    newAd.addAdEventListener(AdEventType.CLOSED, () => {
-      setAd(null);
-      setLoaded(false);
-    });
-
     newAd.load();
-
     setAd(newAd);
 
-    // Cleanup
     return () => {
-      if (loadListener.remove) {
-        loadListener.remove();
-      }
-
-      if (newAd.remove) {
-        newAd.remove();
-      }
+      loadListener.remove?.();
+      newAd.remove?.();
     };
   }, []);
 
-  // Function to show the ad
   const showAd = () => {
-    if (loaded && ad) {
-      ad.show();
-    }
+    return new Promise((resolve) => {
+      if (loaded && ad) {
+        ad.addAdEventListener(AdEventType.CLOSED, () => {
+          setAd(null);
+          setLoaded(false);
+          resolve();
+        });
+        ad.show();
+      } else {
+        resolve();
+      }
+    });
   };
 
   return [showAd];
