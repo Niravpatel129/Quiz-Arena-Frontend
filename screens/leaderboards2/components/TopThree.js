@@ -1,45 +1,17 @@
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Animated, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 
-const topThree = [
-  {
-    name: 'First Doe',
-    score: 9010,
-    country: 'ca',
-    avatar:
-      'https://images.unsplash.com/photo-1608848461950-0fe51dfc41cb?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    placement: 1,
-  },
-  {
-    name: 'Second Doe',
-    score: 4200,
-    country: 'ca',
-    avatar:
-      'https://images.unsplash.com/photo-1608848461950-0fe51dfc41cb?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    placement: 2,
-  },
+export default function TopThree({ data }) {
+  const swapFirstAndSecond = [data[1], data[0], data[2]];
 
-  {
-    name: 'Third Doe',
-    score: 1030,
-    country: 'ca',
-    avatar:
-      'https://images.unsplash.com/photo-1608848461950-0fe51dfc41cb?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    placement: 3,
-  },
-];
-
-const arrangedAvatars = [topThree[1], topThree[0], topThree[2]]; // Silver, Gold, Bronze
-
-export default function TopThree() {
   const renderAvatar = ({ name, score, avatar, country, placement }) => {
     let borderColor = 'transparent';
 
-    if (placement === 1) borderColor = '#FFBC3A'; // Gold
-    if (placement === 2) borderColor = '#C0C0C0'; // Silver
+    if (placement === 2) borderColor = '#FFBC3A'; // Gold
+    if (placement === 1) borderColor = '#C0C0C0'; // Silver
     if (placement === 3) borderColor = '#AE854D'; // Bronze
 
     return (
@@ -47,12 +19,12 @@ export default function TopThree() {
         style={{
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginTop: placement === 1 ? -10 : 0, // Lift up the first place avatar
+          marginTop: placement === 2 ? -10 : 0, // Lift up the first place avatar
         }}
       >
         <View
           style={{
-            transform: placement === 1 ? [{ translateY: -10 }] : [], // Additional lift for the first place avatar
+            transform: placement === 2 ? [{ translateY: -10 }] : [], // Additional lift for the first place avatar
           }}
         >
           <Image
@@ -60,14 +32,14 @@ export default function TopThree() {
               uri: avatar,
             }}
             style={{
-              width: placement === 1 ? 90 : 80,
-              height: placement === 1 ? 90 : 80,
+              width: placement === 2 ? 90 : 80,
+              height: placement === 2 ? 90 : 80,
               borderRadius: 100,
               borderWidth: 2,
               borderColor,
             }}
           />
-          {placement === 1 && (
+          {placement === 2 && (
             <FontAwesome5
               style={{
                 position: 'absolute',
@@ -87,13 +59,13 @@ export default function TopThree() {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 5,
+            gap: 3,
           }}
         >
           <Text
             style={{
               color: '#444069',
-              fontFamily: 'Roboto',
+              fontFamily: 'Roboto-Bold',
               fontWeight: 500,
             }}
           >
@@ -105,7 +77,7 @@ export default function TopThree() {
           style={{
             marginTop: 5,
             flexDirection: 'row',
-            gap: 3,
+            gap: 2,
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: 100,
@@ -120,12 +92,11 @@ export default function TopThree() {
           <Text
             style={{
               fontSize: 12,
-              fontStyle: 'Roboto',
+              fontFamily: 'Roboto-Bold',
               color: '#fff',
-              fontWeight: 400,
             }}
           >
-            {score}
+            {Math.floor(score)}
           </Text>
         </View>
       </View>
@@ -141,8 +112,30 @@ export default function TopThree() {
         marginTop: 20,
       }}
     >
-      {arrangedAvatars.map((item, index) => {
-        return <>{renderAvatar(item, index + 1)}</>;
+      {swapFirstAndSecond.map((item, index) => {
+        console.log('🚀  item:', item);
+        if (!item) return null;
+
+        return (
+          <Animated.View
+            key={index}
+            style={{
+              opacity: item.opacity,
+              transform: [{ translateY: item.translateY }],
+            }}
+          >
+            {renderAvatar(
+              {
+                name: item.username,
+                score: item.averageRating,
+                avatar: item.profile.avatar,
+                country: item.profile.country,
+                placement: index + 1,
+              },
+              index + 1,
+            )}
+          </Animated.View>
+        );
       })}
     </View>
   );

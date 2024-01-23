@@ -1,10 +1,55 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Animated, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { newRequest } from '../../api/newRequest';
+import LeaderboardsList from './components/LeaderboardsList';
 import TopThree from './components/TopThree';
 
 export default function Leaderboards2() {
-  const [selectedTab, setSelectedTab] = React.useState('Friends');
+  const [selectedTab, setSelectedTab] = React.useState('Global');
+  const [leaderboardsData, setLeaderboardsData] = React.useState([]);
+
+  useEffect(() => {
+    const fetchLeaderboards = async () => {
+      const response = await newRequest.get('/leaderboards');
+      const data = response.data;
+      data.sort((a, b) => b.averageRating - a.averageRating);
+      const animatedData = data.map((player) => ({
+        ...player,
+        opacity: new Animated.Value(0),
+        translateY: new Animated.Value(50),
+      }));
+      setLeaderboardsData(animatedData);
+    };
+
+    fetchLeaderboards();
+  }, []);
+
+  React.useEffect(() => {
+    const animateLeaderboards = () => {
+      leaderboardsData.forEach((_, index) => {
+        Animated.sequence([
+          Animated.delay(index * 100),
+          Animated.parallel([
+            Animated.timing(leaderboardsData[index].opacity, {
+              toValue: 1,
+              duration: 500,
+              useNativeDriver: true,
+            }),
+            Animated.timing(leaderboardsData[index].translateY, {
+              toValue: 0,
+              duration: 500,
+              useNativeDriver: true,
+            }),
+          ]),
+        ]).start();
+      });
+    };
+
+    if (leaderboardsData.length > 0) {
+      animateLeaderboards();
+    }
+  }, [leaderboardsData]);
 
   const renderButtons = () => {
     const renderSingleButton = (text, selected) => {
@@ -78,8 +123,8 @@ export default function Leaderboards2() {
           marginTop: 10,
         }}
       >
-        {renderSingleButton('Friends', selectedTab === 'Friends')}
         {renderSingleButton('Global', selectedTab === 'Global')}
+        {renderSingleButton('Friends', selectedTab === 'Friends')}
       </View>
     );
   };
@@ -93,7 +138,7 @@ export default function Leaderboards2() {
       }}
     >
       <SafeAreaView>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View>
             <View
               style={{
@@ -107,19 +152,10 @@ export default function Leaderboards2() {
                 marginTop: 50,
               }}
             >
-              <TopThree />
+              <TopThree data={leaderboardsData} />
             </View>
             <View>
-              <Text
-                style={{
-                  color: '#FFFFFF',
-                  fontSize: 30,
-                  textAlign: 'center',
-                  marginTop: 10,
-                }}
-              >
-                Leaderboards2
-              </Text>
+              <LeaderboardsList data={leaderboardsData.slice(3)} />
             </View>
           </View>
         </ScrollView>
