@@ -22,6 +22,7 @@ export default function CustomHeader2(props) {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
+              marginBottom: -10,
             }}
           >
             <View
@@ -51,12 +52,13 @@ export default function CustomHeader2(props) {
           </View>
         </SafeAreaView>
       </LinearGradient>
+      {/* Custom bottom bar */}
       <View
         style={{
-          height: Platform.OS !== 'web' ? overlayHeight : 0,
+          height: Platform.OS !== 'web' ? 15 : 0,
           backgroundColor: '#fff',
-          borderBottomLeftRadius: 25,
-          borderBottomRightRadius: 25,
+          borderBottomLeftRadius: 100,
+          borderBottomRightRadius: 100,
           transform: [{ scaleY: -1 }],
           position: 'absolute',
           bottom: 0,
