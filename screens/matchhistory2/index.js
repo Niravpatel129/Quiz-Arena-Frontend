@@ -2,13 +2,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Animated, Image, Text, View } from 'react-native';
+import { Animated, Image, Text, TouchableOpacity, View } from 'react-native';
+import CountryFlag from 'react-native-country-flag';
 import { newRequest } from '../../api/newRequest';
 import formatLastActive from '../../helpers/formatLastActive';
 
 export default function MatchHistory2() {
   const [matchHistory, setMatchHistory] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -40,6 +42,8 @@ export default function MatchHistory2() {
           ]),
         ]).start();
       });
+
+      setLoading(false);
     };
 
     getMatchHistory();
@@ -127,21 +131,28 @@ export default function MatchHistory2() {
               flexDirection: 'row',
             }}
           >
-            <Image
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 50,
-                borderWidth: 1,
-                borderColor: 'white',
-                marginHorizontal: 4,
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('PublicProfile', { userId: UserData.id });
               }}
-              source={{
-                uri:
-                  UserData?.playerInformation?.avatar ||
-                  'https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=0.668xw:1.00xh;0.119xw,0&resize=1200:*',
-              }}
-            ></Image>
+            >
+              <Image
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 50,
+                  borderWidth: 1,
+                  borderColor: 'white',
+                  marginHorizontal: 4,
+                }}
+                source={{
+                  uri:
+                    UserData?.playerInformation?.avatar ||
+                    'https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=0.668xw:1.00xh;0.119xw,0&resize=1200:*',
+                }}
+              ></Image>
+            </TouchableOpacity>
+
             <View
               style={{
                 justifyContent: 'space-between',
@@ -149,16 +160,27 @@ export default function MatchHistory2() {
                 alignItems: 'flex-start',
               }}
             >
-              <Text
+              <View
                 style={{
-                  color: '#FFFFFF',
-                  fontFamily: 'poppins-semiBold',
-                  fontSize: 8,
-                  textTransform: 'capitalize',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 5,
                 }}
               >
-                {UserData?.name}
-              </Text>
+                <Text
+                  style={{
+                    color: '#FFFFFF',
+                    fontFamily: 'poppins-semiBold',
+                    fontSize: 8,
+                    textTransform: 'capitalize',
+                  }}
+                >
+                  {UserData?.name}
+                </Text>
+                {UserData.playerInformation?.country && (
+                  <CountryFlag isoCode={UserData?.playerInformation?.country} size={10} />
+                )}
+              </View>
               <Text
                 style={{
                   color: '#FFFFFF',
@@ -203,21 +225,27 @@ export default function MatchHistory2() {
               flexDirection: 'row-reverse',
             }}
           >
-            <Image
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 50,
-                borderWidth: 1,
-                borderColor: 'white',
-                marginHorizontal: 4,
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('PublicProfile', { userId: opponentData.id });
               }}
-              source={{
-                uri:
-                  opponentData.playerInformation.avatar ||
-                  'https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=0.668xw:1.00xh;0.119xw,0&resize=1200:*',
-              }}
-            ></Image>
+            >
+              <Image
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 50,
+                  borderWidth: 1,
+                  borderColor: 'white',
+                  marginHorizontal: 4,
+                }}
+                source={{
+                  uri:
+                    opponentData.playerInformation.avatar ||
+                    'https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg?crop=0.668xw:1.00xh;0.119xw,0&resize=1200:*',
+                }}
+              ></Image>
+            </TouchableOpacity>
             <View
               style={{
                 justifyContent: 'space-between',
@@ -225,16 +253,28 @@ export default function MatchHistory2() {
                 alignItems: 'flex-end',
               }}
             >
-              <Text
+              <View
                 style={{
-                  color: '#FFFFFF',
-                  fontFamily: 'poppins-semiBold',
-                  fontSize: 8,
-                  textTransform: 'capitalize',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 5,
                 }}
               >
-                {opponentData?.name}
-              </Text>
+                {opponentData.playerInformation?.country && (
+                  <CountryFlag isoCode={opponentData?.playerInformation?.country} size={10} />
+                )}
+                <Text
+                  style={{
+                    color: '#FFFFFF',
+                    fontFamily: 'poppins-semiBold',
+                    fontSize: 8,
+                    textTransform: 'capitalize',
+                  }}
+                >
+                  {opponentData?.name}
+                </Text>
+              </View>
+
               <Text
                 style={{
                   color: '#FFFFFF',
@@ -317,6 +357,23 @@ export default function MatchHistory2() {
               </Animated.View>
             );
           })}
+
+          {!loading && matchHistory.length === 0 && (
+            <View>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 20,
+                  marginTop: 10,
+                  marginBottom: 10,
+                  color: '#5E6064',
+                  fontFamily: 'poppins-semiBold',
+                }}
+              >
+                You have not played any matches. Play a match to see your match history
+              </Text>
+            </View>
+          )}
         </View>
       </View>
     </View>
