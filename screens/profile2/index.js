@@ -1,13 +1,28 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
+import { newRequest } from '../../api/newRequest';
+import formatLastActive from '../../helpers/formatLastActive';
 
-export default function Profile2() {
-  const renderTrophyCard = (title, value, variation) => {
+export default function Profile2({ userId }) {
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userRes = await newRequest.get(`/users/${userId}`);
+      console.log('🚀  userRes:', userRes.data);
+      setUserData(userRes.data);
+    };
+
+    fetchUser();
+  }, []);
+
+  const renderTrophyCard = ({ title, image }) => {
     return (
       <View
+        key={title}
         style={{
           alignItems: 'center',
           justifyContent: 'center',
@@ -15,7 +30,9 @@ export default function Profile2() {
       >
         <Image
           source={{
-            uri: 'https://cdn.discordapp.com/attachments/1110409819808079982/1199519044018114760/image__9_-removebg-preview.png?ex=65c2d62a&is=65b0612a&hm=118f84d71691ba493e41d37e99b1edc5beceeeadc90185f93a012dcb510d492a&',
+            uri:
+              image ||
+              'https://cdn.discordapp.com/attachments/1110409819808079982/1199519044018114760/image__9_-removebg-preview.png?ex=65c2d62a&is=65b0612a&hm=118f84d71691ba493e41d37e99b1edc5beceeeadc90185f93a012dcb510d492a&',
           }}
           style={{
             width: 100,
@@ -30,7 +47,7 @@ export default function Profile2() {
             color: '#181A17',
           }}
         >
-          Best Scorer
+          {title}
         </Text>
       </View>
     );
@@ -114,8 +131,9 @@ export default function Profile2() {
     >
       <SafeAreaView>
         <ScrollView
+          showsVerticalScrollIndicator={false}
           style={{
-            marginVertical: 20,
+            // marginVertical: 20,
             marginHorizontal: 10,
           }}
         >
@@ -153,10 +171,24 @@ export default function Profile2() {
                 fontFamily: 'poppins-regular',
               }}
             >
-              John Doe
+              {userData?.username}
             </Text>
-            <CountryFlag isoCode='us' size={20} />
+            {userData?.country && <CountryFlag isoCode={userData?.country} size={20} />}
           </View>
+          <Text
+            style={{
+              color: '#5E6064',
+              fontSize: 13,
+              fontFamily: 'poppins-regular',
+              textAlign: 'center',
+              marginBottom: 10,
+            }}
+          >
+            {/* Only show this if its last 5 days */}
+            {new Date().getTime() - new Date(userData?.lastActive).getTime() < 432000000 ? (
+              <>Last Active {formatLastActive(userData?.lastActive)}</>
+            ) : null}
+          </Text>
           <View
             style={{
               alignItems: 'center',
@@ -170,7 +202,7 @@ export default function Profile2() {
                 fontFamily: 'poppins-regular',
               }}
             >
-              Rookie | 0 XP
+              Rookie | {userData?.experience} XP
             </Text>
           </View>
           <View
@@ -200,7 +232,7 @@ export default function Profile2() {
                   fontWeight: 600,
                 }}
               >
-                Average Rating: 1200
+                Average Rating: {userData?.averageRating}
               </Text>
             </View>
           </View>
@@ -212,9 +244,9 @@ export default function Profile2() {
               marginTop: 20,
             }}
           >
-            {renderStatsCard('Total Games', 199, 1)}
-            {renderStatsCard('Win Rates', '95%', 2)}
-            {renderStatsCard('Avg Score', 10, 3)}
+            {renderStatsCard('Total Games', userData?.totalGames || 0, 1)}
+            {renderStatsCard('Win Rates', `${Math.floor(userData?.winRate || null)}%`, 2)}
+            {renderStatsCard('Avg Score', 85, 3)}
           </View>
           <View>
             <Text
@@ -244,12 +276,12 @@ export default function Profile2() {
                   gap: 5,
                 }}
               >
-                {renderTrophyCard('Trophy 1', 1, 1)}
-                {renderTrophyCard('Trophy 1', 1, 1)}
-                {renderTrophyCard('Trophy 1', 1, 1)}
-                {renderTrophyCard('Trophy 1', 1, 1)}
-                {renderTrophyCard('Trophy 1', 1, 1)}
-                {renderTrophyCard('Trophy 1', 1, 1)}
+                {userData?.awards?.map((trophy) => {
+                  return renderTrophyCard({
+                    title: trophy.name,
+                    image: trophy.image,
+                  });
+                })}
               </View>
             </View>
           </View>
