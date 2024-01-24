@@ -4,17 +4,36 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
 import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import { newRequest } from '../../api/newRequest';
 import formatLastActive from '../../helpers/formatLastActive';
 
 export default function Profile2({ userId }) {
   const [userData, setUserData] = useState(null);
   const navigation = useNavigation();
+  const opacity = useSharedValue(0);
+  const translateY = useSharedValue(30);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+      transform: [{ translateY: translateY.value }],
+    };
+  });
+
+  useEffect(() => {
+    opacity.value = withTiming(1, { duration: 1000 });
+    translateY.value = withTiming(0, { duration: 1000, easing: Easing.out(Easing.exp) });
+  }, [userData]);
 
   useEffect(() => {
     const fetchUser = async () => {
       const userRes = await newRequest.get(`/users/${userId}`);
-      console.log('🚀  userRes:', userRes.data);
       setUserData(userRes.data);
     };
 
@@ -25,10 +44,12 @@ export default function Profile2({ userId }) {
     return (
       <View
         key={title}
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+        style={[
+          {
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+        ]}
       >
         <Image
           source={{
@@ -150,11 +171,14 @@ export default function Profile2({ userId }) {
             marginHorizontal: 10,
           }}
         >
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+          <Animated.View
+            style={[
+              animatedStyle,
+              {
+                alignItems: 'center',
+                justifyContent: 'center',
+              },
+            ]}
           >
             <Image
               style={{
@@ -168,7 +192,7 @@ export default function Profile2({ userId }) {
                   'https://thumbs.dreamstime.com/b/astronaut-cat-wearing-space-suit-elements-image-furnished-nasa-first-trip-to-space-mixed-media-167670791.jpg',
               }}
             ></Image>
-          </View>
+          </Animated.View>
           <View
             style={{
               textAlign: 'center',
@@ -252,17 +276,20 @@ export default function Profile2({ userId }) {
             </View>
           </View>
           {/* Cards */}
-          <View
-            style={{
-              flexDirection: 'row',
-              gap: 5,
-              marginTop: 20,
-            }}
+          <Animated.View
+            style={[
+              animatedStyle,
+              {
+                flexDirection: 'row',
+                gap: 5,
+                marginTop: 20,
+              },
+            ]}
           >
             {renderStatsCard('Total Games', userData?.totalGames || 0, 1)}
             {renderStatsCard('Win Rates', `${Math.floor(userData?.winRate || null)}%`, 2)}
             {renderStatsCard('Avg Score', 85, 3)}
-          </View>
+          </Animated.View>
           <View>
             <Text
               style={{
@@ -275,21 +302,26 @@ export default function Profile2({ userId }) {
             >
               Trophies
             </Text>
-            <View
-              style={{
-                backgroundColor: '#DCEDFD',
-                padding: 20,
-                borderRadius: 12,
-              }}
+            <Animated.View
+              style={[
+                animatedStyle,
+                {
+                  backgroundColor: '#DCEDFD',
+                  padding: 20,
+                  borderRadius: 12,
+                },
+              ]}
             >
               <View
-                style={{
-                  flexWrap: 'wrap',
-                  alignItems: 'flex-start',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  gap: 5,
-                }}
+                style={[
+                  {
+                    flexWrap: 'wrap',
+                    alignItems: 'flex-start',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    gap: 5,
+                  },
+                ]}
               >
                 {userData?.awards?.map((trophy) => {
                   return renderTrophyCard({
@@ -298,7 +330,7 @@ export default function Profile2({ userId }) {
                   });
                 })}
               </View>
-            </View>
+            </Animated.View>
           </View>
         </ScrollView>
       </SafeAreaView>

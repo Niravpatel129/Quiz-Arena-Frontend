@@ -5,7 +5,6 @@ import React from 'react';
 import { Dimensions, Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 
 export default function CustomHeader2(props) {
-  console.log('🚀  props:', props);
   const screenHeight = Dimensions.get('window').height;
   const overlayHeight = screenHeight * 0.03; // 3% of the screen height
 
