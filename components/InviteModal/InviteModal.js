@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
-import { Modal, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, Platform, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
