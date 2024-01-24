@@ -1,12 +1,13 @@
 import React from 'react';
-import ProfileComponent from '../../components/ProfileComponent/ProfileComponent';
+import Profile2 from '../profile2';
 
 export default function PublicProfile({ route }) {
   const userId = route.params?.userId;
 
   return (
     <>
-      <ProfileComponent userId={userId} />
+      <Profile2 userId={userId} />
+      {/* <ProfileComponent userId={userId} /> */}
     </>
   );
 }

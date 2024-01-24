@@ -1,13 +1,15 @@
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import React from 'react';
-import { Animated, Text, View } from 'react-native';
+import { Animated, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 
 export default function TopThree({ data }) {
+  const navigator = useNavigation();
   const swapFirstAndSecond = [data[1], data[0], data[2]];
 
-  const renderAvatar = ({ name, score, avatar, country, placement }) => {
+  const renderAvatar = ({ name, score, avatar, country, placement, _id }) => {
     let borderColor = 'transparent';
 
     if (placement === 2) borderColor = '#FFBC3A'; // Gold
@@ -27,18 +29,25 @@ export default function TopThree({ data }) {
             transform: placement === 2 ? [{ translateY: -10 }] : [], // Additional lift for the first place avatar
           }}
         >
-          <Image
-            source={{
-              uri: avatar,
+          <TouchableOpacity
+            onPress={() => {
+              navigator.navigate('PublicProfile', { userId: _id });
             }}
-            style={{
-              width: placement === 2 ? 90 : 80,
-              height: placement === 2 ? 90 : 80,
-              borderRadius: 100,
-              borderWidth: 2,
-              borderColor,
-            }}
-          />
+          >
+            <Image
+              source={{
+                uri: avatar,
+              }}
+              style={{
+                width: placement === 2 ? 90 : 80,
+                height: placement === 2 ? 90 : 80,
+                borderRadius: 100,
+                borderWidth: 2,
+                borderColor,
+              }}
+            />
+          </TouchableOpacity>
+
           {placement === 2 && (
             <FontAwesome5
               style={{
@@ -129,6 +138,7 @@ export default function TopThree({ data }) {
                 name: item.username,
                 score: item.averageRating,
                 avatar: item.profile.avatar,
+                _id: item._id,
                 country: item.profile.country,
                 placement: index + 1,
               },

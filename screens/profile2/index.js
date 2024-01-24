@@ -1,13 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { newRequest } from '../../api/newRequest';
 import formatLastActive from '../../helpers/formatLastActive';
 
 export default function Profile2({ userId }) {
   const [userData, setUserData] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -130,6 +132,17 @@ export default function Profile2({ userId }) {
       }}
     >
       <SafeAreaView>
+        {userId && (
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{
+              padding: 20,
+            }}
+          >
+            <Ionicons name='ios-arrow-back' size={24} color='#262625' />
+          </TouchableOpacity>
+        )}
+
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{
@@ -150,7 +163,9 @@ export default function Profile2({ userId }) {
                 borderRadius: 150,
               }}
               source={{
-                uri: 'https://thumbs.dreamstime.com/b/astronaut-cat-wearing-space-suit-elements-image-furnished-nasa-first-trip-to-space-mixed-media-167670791.jpg',
+                uri:
+                  userData?.avatar ||
+                  'https://thumbs.dreamstime.com/b/astronaut-cat-wearing-space-suit-elements-image-furnished-nasa-first-trip-to-space-mixed-media-167670791.jpg',
               }}
             ></Image>
           </View>

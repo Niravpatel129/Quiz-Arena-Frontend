@@ -1,10 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Animated, Image, Text, View } from 'react-native';
+import { Animated, Image, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 
 export default function LeaderboardsList({ data }) {
-  const leaderboardItem = ({ placement, name, avatar, country, elo }) => {
+  const navigator = useNavigation();
+
+  const leaderboardItem = ({ placement, name, avatar, country, elo, id }) => {
     return (
       <View
         style={{
@@ -41,22 +44,27 @@ export default function LeaderboardsList({ data }) {
             >
               {placement}
             </Text>
-
-            <Image
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 50,
-                borderWidth: 1,
-                borderColor: '#FFBC3A',
-                overflow: 'hidden',
+            <TouchableOpacity
+              onPress={() => {
+                navigator.navigate('PublicProfile', { userId: id });
               }}
-              source={{
-                uri:
-                  avatar ||
-                  'https://img.freepik.com/free-photo/red-white-cat-i-white-studio_155003-13189.jpg',
-              }}
-            />
+            >
+              <Image
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 50,
+                  borderWidth: 1,
+                  borderColor: '#FFBC3A',
+                  overflow: 'hidden',
+                }}
+                source={{
+                  uri:
+                    avatar ||
+                    'https://img.freepik.com/free-photo/red-white-cat-i-white-studio_155003-13189.jpg',
+                }}
+              />
+            </TouchableOpacity>
           </View>
           <View
             style={{
