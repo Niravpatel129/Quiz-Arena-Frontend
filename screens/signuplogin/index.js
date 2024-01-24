@@ -114,6 +114,7 @@ export default function SignUpLogin({ navigation }) {
         });
       })
       .catch((error) => {
+        console.log('🚀  error:', error);
         console.log('login failed :(');
         if (username) {
           alert('Username already taken');
@@ -121,7 +122,7 @@ export default function SignUpLogin({ navigation }) {
         }
 
         console.log('error', error.message);
-        alert('please try again');
+        alert(error?.response?.data?.msg || 'Login failed, please try again later');
       });
   };
 
