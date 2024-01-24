@@ -145,6 +145,26 @@ export default function Profile2({ userId }) {
     );
   };
 
+  if (userId && !userData)
+    return (
+      <View
+        style={{
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'white',
+        }}
+      >
+        <Text
+          style={{
+            opacity: 0.5,
+          }}
+        >
+          Loading...
+        </Text>
+      </View>
+    );
+
   return (
     <View
       style={{
@@ -290,7 +310,11 @@ export default function Profile2({ userId }) {
             {renderStatsCard('Win Rates', `${Math.floor(userData?.winRate || null)}%`, 2)}
             {renderStatsCard('Avg Score', 85, 3)}
           </Animated.View>
-          <View>
+          <View
+            style={{
+              paddingBottom: 60,
+            }}
+          >
             <Text
               style={{
                 marginTop: 20,
@@ -302,6 +326,7 @@ export default function Profile2({ userId }) {
             >
               Trophies
             </Text>
+
             <Animated.View
               style={[
                 animatedStyle,
@@ -323,6 +348,11 @@ export default function Profile2({ userId }) {
                   },
                 ]}
               >
+                {renderTrophyCard({
+                  title: 'Early Bird',
+                  image:
+                    'https://cdn.discordapp.com/attachments/1110409819808079982/1199519044018114760/image__9_-removebg-preview.png?ex=65c2d62a&is=65b0612a&hm=118f84d71691ba493e41d37e99b1edc5beceeeadc90185f93a012dcb510d492a&',
+                })}
                 {userData?.awards?.map((trophy) => {
                   return renderTrophyCard({
                     title: trophy.name,
