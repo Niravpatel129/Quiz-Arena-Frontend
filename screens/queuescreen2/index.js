@@ -1,14 +1,137 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
+import { newRequest } from '../../api/newRequest';
+import { useAuth } from '../../context/auth/AuthContext';
+import { useUpdateContext } from '../../context/update/UpdateContext';
+import { keys } from '../../keys';
+import socketService from '../../services/socketService';
 
-export default function QueueScreen2() {
+const IS_PRODUCTION = process.env.EXPO_PUBLIC_PROD_BACKEND || process.env.NODE_ENV === 'production';
+
+export default function QueueScreen2({ route }) {
   const navigation = useNavigation();
+  const [queueTime, setQueueTime] = useState(1);
+  const categoryName = route.params?.categoryName || 'Logos';
+  const [estimatedWaitTime, setEstimatedWaitTime] = useState(0);
+  const { userData, fetchUser } = useAuth();
+  console.log('🚀  userData:', userData);
+  const { setUpdateRequired } = useUpdateContext();
+  const intervalRef = useRef(null);
+  const [defaultQueueTime, setDefaultQueueTime] = useState(100);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await newRequest.get(`/homepage/config/${keys.version}`);
+        setDefaultQueueTime(!IS_PRODUCTION ? 3 : res.data.queueTime);
+
+        if (res.data?.updatedRequired) {
+          navigation.navigate('Categories');
+
+          setUpdateRequired(true);
+        }
+      } catch (err) {
+        Toast.show({
+          type: 'error',
+          text1: 'Connection Error',
+          text2: 'Please check your internet connection.',
+          visibilityTime: 3000,
+          autoHide: true,
+          topOffset: 30,
+          bottomOffset: 40,
+        });
+
+        navigation.navigate('Categories');
+
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (!socketService.connected) {
+      socketService.connect();
+    }
+
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+    function getRandomWaitTime() {
+      const now = new Date();
+      const hour = now.getHours();
+      let waitTimeSeconds;
+
+      if (hour >= 8 && hour <= 18) {
+        // Shorter wait time during typical working hours (30 seconds to 1.5 minutes)
+        waitTimeSeconds = Math.floor(Math.random() * (90 - 30 + 1)) + 30;
+      } else {
+        // Slightly longer wait time during off-hours (1 to 2 minutes)
+        waitTimeSeconds = Math.floor(Math.random() * (120 - 60 + 1)) + 60;
+      }
+
+      // Formatting the wait time as minutes:seconds
+      const minutes = Math.floor(waitTimeSeconds / 60);
+      const seconds = waitTimeSeconds % 60;
+      return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    setEstimatedWaitTime(getRandomWaitTime());
+  }, []);
+
+  useEffect(() => {
+    if (queueTime === 100000) {
+      console.log('adding bot');
+      socketService.emit('add_bot', categoryName);
+    }
+  }, [queueTime]);
+
+  useEffect(() => {
+    socketService.emit('join_queue', categoryName);
+    startTimer();
+
+    // socketService.on('queue_update', (data) => {
+    //   setPlayersInQueue(data.queue.length);
+    // });
+
+    socketService.on('game_start', (data) => {
+      if (Platform.OS !== 'web') {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      }
+      clearInterval(intervalRef.current);
+
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'Game',
+            params: { game: data.game, gameSessionId: data.gameSessionId, players: data.players },
+          },
+        ],
+      });
+    });
+
+    return () => {
+      setQueueTime(0);
+      socketService.emit('leave_queue', categoryName);
+      clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  const startTimer = useCallback(() => {
+    intervalRef.current = setInterval(() => {
+      setQueueTime((prevTime) => prevTime + 1);
+    }, 1000);
+  }, []);
 
   const renderPlayerCard = () => {
     return (
@@ -37,9 +160,10 @@ export default function QueueScreen2() {
                 fontWeight: 'bold',
                 fontFamily: 'poppins-bold',
                 fontSize: RFValue(19),
+                textTransform: 'capitalize',
               }}
             >
-              Alex Smith
+              {userData?.username || 'Anonymous'}
             </Text>
             <CountryFlag isoCode='us' size={14} />
           </View>
@@ -52,7 +176,7 @@ export default function QueueScreen2() {
                 marginTop: 5,
               }}
             >
-              1179 Rating
+              {userData?.averageRating} Rating
             </Text>
           </View>
         </View>
@@ -193,9 +317,10 @@ export default function QueueScreen2() {
                 fontSize: RFValue(12),
                 marginVertical: 3,
                 fontFamily: 'poppins-bold',
+                textTransform: 'capitalize',
               }}
             >
-              League Of Legends
+              {categoryName}
             </Text>
           </View>
 
@@ -225,7 +350,8 @@ export default function QueueScreen2() {
                   color: '#3F95F2',
                 }}
               >
-                00:00:00
+                {/* 00:00:00 */}
+                {queueTime}
               </Text>
             </Text>
           </View>
