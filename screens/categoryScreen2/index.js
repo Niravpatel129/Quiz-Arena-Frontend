@@ -271,6 +271,7 @@ export default function CategoryScreen2({ route }) {
             </View>
             <View
               style={{
+                width: '100%',
                 marginTop: 40,
                 marginVertical: 15,
               }}
