@@ -36,6 +36,7 @@ export default function Ingame2() {
             showsVerticalScrollIndicator={false}
             style={{
               width: '100%',
+              height: '100%',
             }}
           >
             <View
@@ -56,19 +57,30 @@ export default function Ingame2() {
             </View>
             <View
               style={{
-                width: '100%',
-                marginTop: 10,
-                marginBottom: 30,
+                justifyContent: 'space-between',
+                flex: 1,
               }}
             >
-              <Question />
-            </View>
-            <View
-              style={{
-                width: '100%',
-              }}
-            >
-              <Answers />
+              <View
+                style={{
+                  flex: 1,
+                  width: '100%',
+                  marginTop: 10,
+                  marginBottom: 30,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Question />
+              </View>
+              <View
+                style={{
+                  width: '100%',
+                  flex: 1,
+                }}
+              >
+                <Answers />
+              </View>
             </View>
           </ScrollView>
         </View>

@@ -3,7 +3,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-export default function Question() {
+export default function Question({ question, questionImage }) {
   return (
     <View
       style={{
@@ -11,6 +11,7 @@ export default function Question() {
         justifyContent: 'center',
         backgroundColor: '#F8D2E6',
         padding: 20,
+        height: '100%',
         borderRadius: 20,
       }}
     >
@@ -22,19 +23,21 @@ export default function Question() {
           color: '#262625',
         }}
       >
-        Which country does this flag belong to?
+        {question || 'Which country does this flag belong to?'}
       </Text>
-      <Image
-        contentFit='contain'
-        source={{
-          uri: 'https://www.worldatlas.com/r/w1200/img/flag/ca-flag.jpg',
-        }}
-        style={{
-          marginTop: 10,
-          width: 150,
-          height: 100,
-        }}
-      />
+      {!questionImage && (
+        <Image
+          contentFit='contain'
+          source={{
+            uri: questionImage || 'https://www.worldatlas.com/r/w1200/img/flag/ca-flag.jpg',
+          }}
+          style={{
+            marginTop: 10,
+            width: 150,
+            height: 100,
+          }}
+        />
+      )}
     </View>
   );
 }

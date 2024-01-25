@@ -3,7 +3,7 @@ import { Image, Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import TubeFillComponent from './TubeFillComponent';
 
-export default function Header() {
+export default function Header({ timeRemaining, yourData, opponentData }) {
   const renderPlayCard = ({ isOpponent }) => {
     return (
       <View
