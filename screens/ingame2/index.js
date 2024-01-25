@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import Answers from './components/answers';
 import Header from './components/header';
 import Question from './components/question';
@@ -12,11 +12,13 @@ export default function Ingame2() {
       colors={['#EC80B4', '#3F95F2']}
       style={{
         flex: 1,
+        height: '100%',
       }}
     >
       <SafeAreaView
         style={{
           flex: 1,
+          height: '100%',
         }}
       >
         <View
@@ -24,37 +26,51 @@ export default function Ingame2() {
             flex: 1,
             backgroundColor: '#ffffff',
             height: '100%',
-
             margin: 10,
             borderRadius: 30,
             alignItems: 'center',
-            justifyContent: 'space-between',
             padding: 10,
           }}
         >
-          <View>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{
+              width: '100%',
+            }}
+          >
             <View
               style={{
                 width: '100%',
               }}
             >
-              <Header />
+              <View
+                style={{
+                  width: '100%',
+                }}
+              >
+                <Header />
+              </View>
+              <View>
+                <QuestionNoBar />
+              </View>
             </View>
-            <View>
-              <QuestionNoBar />
-            </View>
-            <View>
+            <View
+              style={{
+                width: '100%',
+                marginTop: 10,
+                marginBottom: 30,
+              }}
+            >
               <Question />
             </View>
-          </View>
-          <View
-            style={{
-              width: '100%',
-              marginBottom: 10,
-            }}
-          >
-            <Answers />
-          </View>
+            <View
+              style={{
+                width: '100%',
+              }}
+            >
+              <Answers />
+            </View>
+          </ScrollView>
         </View>
       </SafeAreaView>
     </LinearGradient>

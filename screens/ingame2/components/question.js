@@ -12,7 +12,6 @@ export default function Question() {
         backgroundColor: '#F8D2E6',
         padding: 20,
         borderRadius: 20,
-        marginTop: 10,
       }}
     >
       <Text

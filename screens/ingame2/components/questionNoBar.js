@@ -32,6 +32,7 @@ export default function QuestionNoBar() {
 
           return (
             <View
+              key={index}
               style={{
                 height: 5,
                 backgroundColor: filled ? '#3F95F2' : '#E8E8E8',
