@@ -118,7 +118,7 @@ export default function CategoryScreen2({ route }) {
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginTop: 20,
+          width: '100%',
           backgroundColor: '#ffffff',
           borderRadius: 25,
           paddingVertical: 10,
@@ -147,23 +147,23 @@ export default function CategoryScreen2({ route }) {
         flex: 1,
       }}
     >
-      <InviteModal
-        category={category}
-        isModalVisible={isModalVisible}
-        hideModal={() => setModalVisible(false)}
-      />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View
-          style={{
-            height: '100%',
-            // backgroundColor: '#ffffff',
-            padding: 10,
-            alignItems: 'center',
-          }}
-        >
-          <SafeAreaView>
+      <SafeAreaView>
+        <ScrollView>
+          <InviteModal
+            category={category}
+            isModalVisible={isModalVisible}
+            hideModal={() => setModalVisible(false)}
+          />
+          <View
+            style={{
+              height: '100%',
+              padding: 10,
+              alignItems: 'center',
+            }}
+          >
             <View
               style={{
+                width: '100%',
                 marginTop: 10,
                 paddingTop: 10,
                 flexDirection: 'row',
@@ -269,32 +269,45 @@ export default function CategoryScreen2({ route }) {
                 })}
               </View>
             </View>
-            <View>{renderTabs()}</View>
-            {leaderboardData && selectedTab === 'Top Players' && (
-              <View>
+            <View
+              style={{
+                marginTop: 40,
+                marginVertical: 15,
+              }}
+            >
+              {renderTabs()}
+            </View>
+            <View
+              style={{
+                width: '100%',
+              }}
+            >
+              {leaderboardData && selectedTab === 'Top Players' && (
                 <LeaderboardsList data={leaderboardData} />
-              </View>
-            )}
+              )}
+            </View>
 
             {selectedTab === 'Top Contributers' && (
-              <View>
-                <View>
-                  <LeaderboardsList
-                    data={[
-                      {
-                        placement: 1,
-                        username: 'Admin',
-                        country: 'us',
-                        rating: 1321,
-                      },
-                    ]}
-                  />
-                </View>
+              <View
+                style={{
+                  width: '100%',
+                }}
+              >
+                <LeaderboardsList
+                  data={[
+                    {
+                      placement: 1,
+                      username: 'Admin',
+                      country: 'us',
+                      rating: 1321,
+                    },
+                  ]}
+                />
               </View>
             )}
-          </SafeAreaView>
-        </View>
-      </ScrollView>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     </LinearGradient>
   );
 }

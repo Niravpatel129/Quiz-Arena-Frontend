@@ -110,7 +110,7 @@ export default function LeaderboardsList({ data }) {
     <View
       style={{
         gap: 8,
-        marginVertical: 30,
+        width: '100%',
       }}
     >
       {data.map((item, index) => {
@@ -118,8 +118,9 @@ export default function LeaderboardsList({ data }) {
           <Animated.View
             key={index}
             style={{
-              opacity: item.opacity,
-              transform: [{ translateY: item.translateY }],
+              width: '100%',
+              opacity: item.opacity || 1,
+              transform: [{ translateY: item.translateY || 0 }],
             }}
           >
             {leaderboardItem({
