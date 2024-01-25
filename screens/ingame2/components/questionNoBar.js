@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-export default function QuestionNoBar() {
+export default function QuestionNoBar({ roundNumber }) {
   return (
     <View
       style={{
@@ -17,7 +17,7 @@ export default function QuestionNoBar() {
           marginBottom: 5,
         }}
       >
-        Question No. 2
+        Question No. {roundNumber || 1}
       </Text>
       <View
         style={{
@@ -28,7 +28,7 @@ export default function QuestionNoBar() {
         }}
       >
         {Array.from({ length: 7 }).map((_, index) => {
-          const filled = index < 3;
+          const filled = index - 1 < roundNumber;
 
           return (
             <View

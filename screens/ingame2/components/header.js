@@ -5,6 +5,8 @@ import TubeFillComponent from './TubeFillComponent';
 
 export default function Header({ timeRemaining, yourData, opponentData }) {
   const renderPlayCard = ({ isOpponent }) => {
+    const progressBar = isOpponent ? opponentData?.score : yourData?.score;
+
     return (
       <View
         style={{
@@ -14,7 +16,7 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
       >
         <Image
           source={{
-            uri: 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/medieval-cute-cat-portrait-painting-milly-may.jpg',
+            uri: isOpponent ? opponentData?.avatar : yourData?.avatar,
           }}
           style={{
             width: 30,
@@ -36,7 +38,7 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
               fontSize: RFValue(12),
             }}
           >
-            William James
+            {isOpponent ? opponentData?.username : yourData?.username}
           </Text>
           <Text
             style={{
@@ -45,7 +47,7 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
               fontSize: RFValue(10),
             }}
           >
-            500 Points
+            {isOpponent ? opponentData?.elo : yourData?.elo} Rating
           </Text>
           <Text
             style={{
@@ -54,14 +56,17 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
               fontSize: RFValue(13),
             }}
           >
-            02
+            {isOpponent ? opponentData?.score : yourData?.score}
           </Text>
           <View
             style={{
               transform: [{ rotate: isOpponent ? '180deg' : '0deg' }],
             }}
           >
-            <TubeFillComponent fillPercentage={90} color={isOpponent ? '#FF5858' : '#2CC672'} />
+            <TubeFillComponent
+              fillPercentage={progressBar}
+              color={isOpponent ? '#FF5858' : '#2CC672'}
+            />
           </View>
         </View>
       </View>
@@ -117,7 +122,7 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
               color: 'white',
             }}
           >
-            04
+            {timeRemaining}
           </Text>
         </View>
         <View>

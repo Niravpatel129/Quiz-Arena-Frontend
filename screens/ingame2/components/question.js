@@ -7,6 +7,7 @@ export default function Question({ question, questionImage }) {
   return (
     <View
       style={{
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#F8D2E6',
@@ -25,7 +26,7 @@ export default function Question({ question, questionImage }) {
       >
         {question || 'Which country does this flag belong to?'}
       </Text>
-      {!questionImage && (
+      {questionImage && (
         <Image
           contentFit='contain'
           source={{

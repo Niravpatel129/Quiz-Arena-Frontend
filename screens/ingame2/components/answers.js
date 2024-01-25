@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-export default function Answers() {
-  const renderButton = () => {
-    let isCorrect = null;
+export default function Answers({ answers }) {
+  const [selectedAnswer, setSelectedAnswer] = React.useState(null);
+
+  useEffect(() => {
+    setSelectedAnswer(null);
+  }, [answers]);
+
+  const handleAnswer = (answer) => {
+    setSelectedAnswer(answer);
+  };
+
+  const renderButton = ({ text, answerCorrect }) => {
+    let isCorrect = selectedAnswer ? answerCorrect : null;
+
     let buttonColor = '#EFF8FF';
     let buttonShadowColor = '#CBD9F0';
     let textColor = '#262625';
@@ -23,6 +34,9 @@ export default function Answers() {
 
     return (
       <TouchableOpacity
+        onPress={() => {
+          handleAnswer(text);
+        }}
         style={{
           backgroundColor: buttonColor,
           width: '100%',
@@ -45,7 +59,7 @@ export default function Answers() {
             elevation: 5,
           }}
         >
-          USA
+          {text || 'USA'}
         </Text>
       </TouchableOpacity>
     );
@@ -69,10 +83,16 @@ export default function Answers() {
           gap: 10,
         }}
       >
-        {renderButton()}
-        {renderButton()}
-        {renderButton()}
-        {renderButton()}
+        {answers.map((answer, index) => {
+          return (
+            <React.Fragment key={index}>
+              {renderButton({
+                text: answer.optionText,
+                answerCorrect: answer.isCorrect,
+              })}
+            </React.Fragment>
+          );
+        })}
       </View>
     </View>
   );

@@ -5,7 +5,7 @@ import Challange from '../../components/Challange';
 import HighlightEffect from '../../components/HighlightEffect';
 import checkIfBot from '../../helpers/checkIfBot';
 import socketService from '../../services/socketService';
-import InGame from '../ingame';
+import Ingame2 from '../ingame2';
 
 const preloadImages = (imageUrls) => {
   imageUrls.forEach((url) => {
@@ -254,7 +254,7 @@ const GameScreen = ({ navigation, route }) => {
         <HighlightEffect isCorrect={isCorrectAnswer} trigger={highlightTrigger} />
       )}
       {data && (
-        <InGame
+        <Ingame2
           roundNumber={round}
           timer={timer}
           InGameData={{

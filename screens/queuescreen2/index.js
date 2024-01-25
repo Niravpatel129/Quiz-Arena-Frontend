@@ -89,7 +89,7 @@ export default function QueueScreen2({ route }) {
   }, []);
 
   useEffect(() => {
-    if (queueTime === 100000) {
+    if (queueTime === defaultQueueTime) {
       console.log('adding bot');
       socketService.emit('add_bot', categoryName);
     }

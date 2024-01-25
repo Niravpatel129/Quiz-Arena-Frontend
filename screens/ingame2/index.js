@@ -6,7 +6,7 @@ import Header from './components/header';
 import Question from './components/question';
 import QuestionNoBar from './components/questionNoBar';
 
-export default function Ingame2() {
+export default function Ingame2({ roundNumber, InGameData, timer }) {
   return (
     <LinearGradient
       colors={['#EC80B4', '#3F95F2']}
@@ -49,10 +49,14 @@ export default function Ingame2() {
                   width: '100%',
                 }}
               >
-                <Header />
+                <Header
+                  timeRemaining={timer}
+                  yourData={InGameData.PlayerOneInformation}
+                  opponentData={InGameData.PlayerTwoInformation}
+                />
               </View>
               <View>
-                <QuestionNoBar />
+                <QuestionNoBar roundNumber={roundNumber} />
               </View>
             </View>
             <View
@@ -71,7 +75,10 @@ export default function Ingame2() {
                   justifyContent: 'center',
                 }}
               >
-                <Question />
+                <Question
+                  question={InGameData.RoundData.question}
+                  questionImage={InGameData.RoundData.image}
+                />
               </View>
               <View
                 style={{
@@ -79,7 +86,7 @@ export default function Ingame2() {
                   flex: 1,
                 }}
               >
-                <Answers />
+                <Answers answers={InGameData.RoundData.answers} />
               </View>
             </View>
           </ScrollView>
