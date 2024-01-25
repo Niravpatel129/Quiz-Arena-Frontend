@@ -86,7 +86,11 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
                   flex: 1,
                 }}
               >
-                <Answers answers={InGameData.RoundData.answers} />
+                <Answers
+                  answers={InGameData.RoundData.answers}
+                  sessionId={InGameData.sessionId}
+                  timeRemaining={timer}
+                />
               </View>
             </View>
           </ScrollView>

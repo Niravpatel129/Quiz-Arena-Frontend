@@ -1,41 +1,76 @@
 import React, { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useSound } from '../../../context/sound/SoundContext';
+import socketService from '../../../services/socketService';
 
-export default function Answers({ answers }) {
+export default function Answers({ answers, sessionId, timeRemaining }) {
   const [selectedAnswer, setSelectedAnswer] = React.useState(null);
+  const [isAnswered, setIsAnswered] = React.useState(false);
+  const { playSound } = useSound();
 
   useEffect(() => {
     setSelectedAnswer(null);
+    setIsAnswered(false);
   }, [answers]);
 
-  const handleAnswer = (answer) => {
+  const handleAnswer = (answer, isCorrect) => {
     setSelectedAnswer(answer);
+    setIsAnswered(true);
+
+    // Backend
+    const resData = {
+      sessionId: sessionId,
+      answer: answer,
+      timeRemaining: timeRemaining,
+    };
+
+    // check if answer is correct or not
+    const correctAnswer = isCorrect;
+
+    if (isCorrect) {
+      playSound('correct_answer');
+    } else {
+      playSound('button_press');
+    }
+
+    // Emit the event with the data
+    socketService.emit('submit_answer', resData);
   };
 
-  const renderButton = ({ text, answerCorrect }) => {
-    let isCorrect = selectedAnswer ? answerCorrect : null;
-
+  const getButtonStyles = (text, answerCorrect) => {
     let buttonColor = '#EFF8FF';
     let buttonShadowColor = '#CBD9F0';
     let textColor = '#262625';
 
-    if (isCorrect === false) {
-      buttonColor = '#FF5858';
-      buttonShadowColor = '#F73535';
+    if (isAnswered) {
+      if (answerCorrect) {
+        buttonColor = '#00C48C';
+        buttonShadowColor = '#00C48C';
+        textColor = '#ffffff';
+      } else if (selectedAnswer === text) {
+        buttonColor = '#FF5858';
+        buttonShadowColor = '#F73535';
+        textColor = '#ffffff';
+      }
+    } else if (selectedAnswer === text) {
+      buttonColor = answerCorrect ? '#00C48C' : '#FF5858';
+      buttonShadowColor = answerCorrect ? '#00C48C' : '#F73535';
       textColor = '#ffffff';
     }
 
-    if (isCorrect === true) {
-      buttonColor = '#00C48C';
-      buttonShadowColor = '#00C48C';
-      textColor = '#ffffff';
-    }
+    return { buttonColor, buttonShadowColor, textColor };
+  };
+
+  const renderButton = ({ text, answerCorrect }) => {
+    const { buttonColor, buttonShadowColor, textColor } = getButtonStyles(text, answerCorrect);
 
     return (
       <TouchableOpacity
         onPress={() => {
-          handleAnswer(text);
+          if (!isAnswered) {
+            handleAnswer(text);
+          }
         }}
         style={{
           backgroundColor: buttonColor,
@@ -83,16 +118,14 @@ export default function Answers({ answers }) {
           gap: 10,
         }}
       >
-        {answers.map((answer, index) => {
-          return (
-            <React.Fragment key={index}>
-              {renderButton({
-                text: answer.optionText,
-                answerCorrect: answer.isCorrect,
-              })}
-            </React.Fragment>
-          );
-        })}
+        {answers.map((answer, index) => (
+          <React.Fragment key={index}>
+            {renderButton({
+              text: answer.optionText,
+              answerCorrect: answer.isCorrect,
+            })}
+          </React.Fragment>
+        ))}
       </View>
     </View>
   );

@@ -17,7 +17,7 @@ export default function QuestionNoBar({ roundNumber }) {
           marginBottom: 5,
         }}
       >
-        Question No. {roundNumber || 1}
+        Question No. {roundNumber - 1 || 1}
       </Text>
       <View
         style={{
@@ -28,14 +28,25 @@ export default function QuestionNoBar({ roundNumber }) {
         }}
       >
         {Array.from({ length: 7 }).map((_, index) => {
-          const filled = index - 1 < roundNumber;
+          const filled = index < roundNumber - 1;
+          let fillColor = '#E8E8E8';
+
+          if (filled) {
+            fillColor = '#3F95F2';
+          }
+
+          if (index == roundNumber - 2) {
+            fillColor = '#EC80B4';
+          }
+
+          // if its current make it orangeish, if its passed make it blueish
 
           return (
             <View
               key={index}
               style={{
                 height: 5,
-                backgroundColor: filled ? '#3F95F2' : '#E8E8E8',
+                backgroundColor: fillColor,
                 borderRadius: 10,
                 flex: 1,
               }}

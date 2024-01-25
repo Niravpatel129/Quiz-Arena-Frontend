@@ -122,7 +122,7 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
               color: 'white',
             }}
           >
-            {timeRemaining}
+            {timeRemaining > 0 ? timeRemaining : '⏰'}
           </Text>
         </View>
         <View>

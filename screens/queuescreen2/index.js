@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
@@ -21,7 +22,6 @@ export default function QueueScreen2({ route }) {
   const categoryName = route.params?.categoryName || 'Logos';
   const [estimatedWaitTime, setEstimatedWaitTime] = useState(0);
   const { userData, fetchUser } = useAuth();
-  console.log('🚀  userData:', userData);
   const { setUpdateRequired } = useUpdateContext();
   const intervalRef = useRef(null);
   const [defaultQueueTime, setDefaultQueueTime] = useState(100);
@@ -364,7 +364,7 @@ export default function QueueScreen2({ route }) {
               marginTop: 5,
             }}
           >
-            <Text>Estimated Wait Time: 00:02:03</Text>
+            <Text>Estimated Wait Time: {estimatedWaitTime}</Text>
           </View>
         </View>
       </SafeAreaView>
