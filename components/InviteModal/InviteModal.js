@@ -129,6 +129,17 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
             flexDirection: 'column',
           }}
         >
+          <TouchableOpacity
+            onPress={() => {
+              hideModal();
+            }}
+            style={{
+              position: 'absolute',
+              right: 10,
+            }}
+          >
+            <Ionicons name='ios-close' size={40} color='#fff' />
+          </TouchableOpacity>
           <Text
             style={{
               fontSize: 20,
@@ -146,6 +157,7 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
           >
             Quick Invite
           </Text>
+
           <Text
             style={{
               color: '#fff',

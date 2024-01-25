@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Animated, Image, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { newRequest } from '../../api/newRequest';
 import formatLastActive from '../../helpers/formatLastActive';
@@ -313,9 +313,11 @@ export default function MatchHistory2() {
   };
 
   return (
-    <View
+    <ScrollView
+      showsVerticalScrollIndicator={false}
       style={{
         height: '100%',
+        backgroundColor: '#ffffff',
       }}
     >
       <View
@@ -348,6 +350,7 @@ export default function MatchHistory2() {
             return (
               <Animated.View
                 style={{
+                  height: 180,
                   opacity: item.opacity,
                   transform: [{ translateY: item.translateY }],
                 }}
@@ -376,6 +379,6 @@ export default function MatchHistory2() {
           )}
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
