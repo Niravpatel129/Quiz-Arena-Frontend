@@ -141,7 +141,7 @@ export default function QueueScreen2({ route }) {
           alignItems: 'center',
           justifyContent: 'space-between',
           paddingVertical: 30,
-          paddingHorizontal: 10,
+          paddingHorizontal: 20,
           backgroundColor: '#3F95F2',
           borderRadius: 20,
         }}
@@ -163,7 +163,7 @@ export default function QueueScreen2({ route }) {
                 textTransform: 'capitalize',
               }}
             >
-              {userData?.username || 'Anonymous'}
+              {userData?.username || ''}
             </Text>
             <CountryFlag isoCode='us' size={14} />
           </View>
@@ -204,7 +204,7 @@ export default function QueueScreen2({ route }) {
           alignItems: 'center',
           justifyContent: 'space-between',
           paddingVertical: 30,
-          paddingHorizontal: 10,
+          paddingHorizontal: 20,
           backgroundColor: '#EC80B4',
           borderRadius: 20,
         }}
@@ -234,8 +234,8 @@ export default function QueueScreen2({ route }) {
                 color: 'white',
                 fontWeight: 'bold',
                 fontFamily: 'poppins-bold',
-                fontSize: RFValue(19),
-                maxWidth: 160,
+                fontSize: RFValue(18),
+                maxWidth: 180,
               }}
             >
               Searching Opponent ....

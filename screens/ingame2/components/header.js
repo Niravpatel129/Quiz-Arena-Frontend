@@ -64,6 +64,8 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
             }}
           >
             <TubeFillComponent
+              number={progressBar}
+              max={140}
               fillPercentage={progressBar}
               color={isOpponent ? '#FF5858' : '#2CC672'}
             />

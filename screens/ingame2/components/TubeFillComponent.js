@@ -1,8 +1,13 @@
 import React from 'react';
 import Svg, { Rect } from 'react-native-svg';
 
-const TubeFillComponent = ({ fillPercentage, color }) => {
-  const safeFillPercentage = Math.min(100, Math.max(0, fillPercentage));
+const TubeFillComponent = ({ number, max, color }) => {
+  // Ensure max is not zero to avoid division by zero
+  const safeMax = max === 0 ? 1 : max;
+
+  // Calculate fill percentage based on number and max
+  const calculatedFillPercentage = (number / safeMax) * 100;
+  const safeFillPercentage = Math.min(100, Math.max(0, calculatedFillPercentage));
   const filledWidth = 112 * (safeFillPercentage / 100);
 
   return (

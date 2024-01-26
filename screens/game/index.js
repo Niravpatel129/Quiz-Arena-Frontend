@@ -1,17 +1,22 @@
+import { Image } from 'expo-image';
 import React, { useEffect } from 'react';
-import { AppState, Image, View } from 'react-native';
+import { AppState, View } from 'react-native';
 import Toast from 'react-native-toast-message';
-import Challange from '../../components/Challange';
 import HighlightEffect from '../../components/HighlightEffect';
+import PreGame from '../../components/PreGame/PreGame';
 import checkIfBot from '../../helpers/checkIfBot';
 import socketService from '../../services/socketService';
 import Ingame2 from '../ingame2';
 
-const preloadImages = (imageUrls) => {
-  imageUrls.forEach((url) => {
-    Image.prefetch(url);
-  });
-};
+function PreloadImages({ imagesToPreload }) {
+  return (
+    <>
+      {imagesToPreload.map((url, index) => (
+        <Image key={index} source={{ uri: url }} style={{ width: 0, height: 0, opacity: 0 }} />
+      ))}
+    </>
+  );
+}
 
 const defaultCountdown = 12;
 
@@ -24,6 +29,7 @@ const GameScreen = ({ navigation, route }) => {
   const [data, setData] = React.useState(null);
   const [sendBotAnswer, setSendBotAnswer] = React.useState(false);
   const [gameInProgress, setGameInProgress] = React.useState(false);
+  const [imagesToPreload, setImagesToPreload] = React.useState([]);
 
   useEffect(() => {
     if (!route.params?.gameSessionId) return;
@@ -33,7 +39,7 @@ const GameScreen = ({ navigation, route }) => {
       gameSessionId: route.params?.gameSessionId,
       players: route.params?.players,
     });
-  }, [route]);
+  }, [route.params?.gameSessionId]);
 
   const myData = data?.gameSession?.players?.find(
     (player) => player.socketId === socketService?.socket?.id,
@@ -64,7 +70,7 @@ const GameScreen = ({ navigation, route }) => {
     return () => {
       subscription.remove();
     };
-  }, [appState]);
+  }, []);
 
   const giveBotAnswer = (botPlayer, sessionId, correctAnswer) => {
     if (sendBotAnswer) return;
@@ -107,12 +113,10 @@ const GameScreen = ({ navigation, route }) => {
       navigation.navigate('Categories');
     });
     socketService.on('new_round', (roundData) => {
-      if (round === 1) {
+      console.log('🚀  roundData:', roundData);
+      if (roundData.roundNumber === 1) {
         console.log('preload data');
-
-        if (roundData.helperImage) {
-          preloadImages([roundData.helperImage]);
-        }
+        setImagesToPreload(roundData.rounds.map((round) => round.helperImage));
       }
 
       // setCountdown(0);
@@ -217,7 +221,6 @@ const GameScreen = ({ navigation, route }) => {
     });
 
     socketService.on('opponent_guessed', (result) => {
-      console.log('opponent guessed', result);
       setIsCorrectAnswer(result.isCorrect);
       setHighlightTrigger(!highlightTrigger);
     });
@@ -229,7 +232,7 @@ const GameScreen = ({ navigation, route }) => {
     setTimeout(() => setShowAnimation(false), 2000);
   }, []);
 
-  if (showAnimation && data) {
+  if (showAnimation) {
     return (
       <View
         style={{
@@ -239,17 +242,14 @@ const GameScreen = ({ navigation, route }) => {
           zIndex: 100,
         }}
       >
-        <Challange
-          category={data.gameSession.category}
-          opponentData={opponentData}
-          myData={myData}
-        />
+        <PreGame opponentData={opponentData} myData={myData} />
       </View>
     );
   }
 
   return (
     <>
+      <PreloadImages imagesToPreload={imagesToPreload} />
       {!showAnimation && !opponentData?.socketId.includes('BOT') && (
         <HighlightEffect isCorrect={isCorrectAnswer} trigger={highlightTrigger} />
       )}
