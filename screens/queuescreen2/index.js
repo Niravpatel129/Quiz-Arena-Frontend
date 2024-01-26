@@ -5,6 +5,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSpring,
+} from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
@@ -25,6 +31,17 @@ export default function QueueScreen2({ route }) {
   const { setUpdateRequired } = useUpdateContext();
   const intervalRef = useRef(null);
   const [defaultQueueTime, setDefaultQueueTime] = useState(100);
+  const rotation = useSharedValue(0);
+
+  useEffect(() => {
+    rotation.value = withRepeat(withSpring(360), -1, true);
+  }, []);
+
+  const hourglassStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${rotation.value}deg` }],
+    };
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -185,11 +202,13 @@ export default function QueueScreen2({ route }) {
             source={{
               uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzM6A1erx9khLr3mjq5FxsfMqW6vf5b8lvlmcqG88p-w&s',
             }}
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: 20,
-            }}
+            style={[
+              {
+                width: 100,
+                height: 100,
+                borderRadius: 20,
+              },
+            ]}
           />
         </View>
       </View>
@@ -330,9 +349,9 @@ export default function QueueScreen2({ route }) {
               marginTop: 10,
             }}
           >
-            <Image
+            <Animated.Image
               source={require('../../assets/hour_glass.png')}
-              style={{ width: 50, height: 50 }}
+              style={[{ width: 50, height: 50 }, hourglassStyle]}
             />
             <Text
               style={{

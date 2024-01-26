@@ -113,7 +113,6 @@ const GameScreen = ({ navigation, route }) => {
       navigation.navigate('Categories');
     });
     socketService.on('new_round', (roundData) => {
-      console.log('🚀  roundData:', roundData);
       if (roundData.roundNumber === 1) {
         console.log('preload data');
         setImagesToPreload(roundData.rounds.map((round) => round.helperImage));

@@ -1,11 +1,59 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, SafeAreaView, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 export default function PreGame({ myData, opponentData }) {
+  const leftCardTranslateX = useSharedValue(-500);
+  const rightCardTranslateX = useSharedValue(500);
+  const vsScale = useSharedValue(0);
+
+  // Animated styles for player cards
+  const leftCardStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: leftCardTranslateX.value }],
+    };
+  });
+
+  const rightCardStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: rightCardTranslateX.value }],
+    };
+  });
+
+  // Animated style for VS image
+  const vsStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: vsScale.value }],
+    };
+  });
+
+  // Start animations when component mounts
+  useEffect(() => {
+    leftCardTranslateX.value = withTiming(0, {
+      duration: 800,
+      easing: Easing.out(Easing.exp),
+    });
+
+    rightCardTranslateX.value = withTiming(0, {
+      duration: 800,
+      easing: Easing.out(Easing.exp),
+    });
+
+    vsScale.value = withTiming(1, {
+      duration: 800,
+      easing: Easing.out(Easing.back(1.5)),
+    });
+  }, []);
+
   const renderPlayerCard = (userData, isOpponent) => {
     return (
       <View
@@ -113,12 +161,15 @@ export default function PreGame({ myData, opponentData }) {
             justifyContent: 'space-between',
           }}
         >
-          {renderPlayerCard(myData, false)}
-          <View
-            style={{
-              alignItems: 'center',
-              marginVertical: 20,
-            }}
+          <Animated.View style={[rightCardStyle]}>{renderPlayerCard(myData, false)}</Animated.View>
+          <Animated.View
+            style={[
+              {
+                alignItems: 'center',
+                marginVertical: 20,
+              },
+              vsStyle,
+            ]}
           >
             <Image
               source={require('../../assets/vs_icon.png')}
@@ -134,8 +185,10 @@ export default function PreGame({ myData, opponentData }) {
             >
               Preparing stage for battle...
             </Text>
-          </View>
-          <View>{renderPlayerCard(opponentData, true)}</View>
+          </Animated.View>
+          <Animated.View style={[leftCardStyle]}>
+            {renderPlayerCard(opponentData, true)}
+          </Animated.View>
         </View>
       </SafeAreaView>
     </LinearGradient>
