@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Exp from './components/Exp';
+import ScoreCard from './components/ScoreCard';
 import TryAgain from './components/TryAgain';
 
 export default function GameOver3() {
@@ -73,6 +74,7 @@ export default function GameOver3() {
             width: '100%',
             height: '100%',
             paddingVertical: 40,
+            paddingHorizontal: 10,
           }}
         >
           <View
@@ -91,6 +93,14 @@ export default function GameOver3() {
               }}
             >
               <Exp />
+            </View>
+            <View
+              style={{
+                marginTop: 50,
+                alignItems: 'center',
+              }}
+            >
+              <ScoreCard />
             </View>
           </View>
         </View>
