@@ -346,7 +346,6 @@ export default function MatchHistory2() {
           }}
         >
           {matchHistory?.map((item, index) => {
-            console.log('🚀  item:', item);
             return (
               <Animated.View
                 style={{

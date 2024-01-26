@@ -122,7 +122,6 @@ export default function TopThree({ data }) {
       }}
     >
       {swapFirstAndSecond.map((item, index) => {
-        console.log('🚀  item:', item);
         if (!item) return null;
 
         return (
