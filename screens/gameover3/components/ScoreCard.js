@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import AgainButtons from './AgainButtons';
 
 const fakeScores = ['15', '15', '15', '15', '15', '15', '15'];
 
@@ -120,6 +121,15 @@ export default function ScoreCard() {
       >
         John
       </Text>
+      <View
+        style={{
+          marginTop: 20,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <AgainButtons />
+      </View>
     </View>
   );
 }

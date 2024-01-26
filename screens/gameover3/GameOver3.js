@@ -20,6 +20,7 @@ export default function GameOver3() {
       }}
     >
       <ScrollView
+        showsVerticalScrollIndicator={false}
         style={{
           flex: 1,
           width: '100%',
@@ -33,7 +34,7 @@ export default function GameOver3() {
             justifyContent: 'space-between',
             alignItems: 'center',
             paddingHorizontal: 20,
-            marginTop: 100,
+            marginTop: 80,
           }}
         >
           <View
