@@ -2,8 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Exp from './components/Exp';
 import TryAgain from './components/TryAgain';
 
@@ -11,16 +10,19 @@ export default function GameOver3() {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView
+    <LinearGradient
+      colors={['#EC80B4', '#3F95F2']}
       style={{
+        height: '100%',
         flex: 1,
+        alignItems: 'center',
       }}
     >
-      <LinearGradient
-        colors={['#EC80B4', '#3F95F2']}
+      <ScrollView
         style={{
           flex: 1,
-          alignItems: 'center',
+          width: '100%',
+          height: '100%',
         }}
       >
         <View
@@ -29,8 +31,8 @@ export default function GameOver3() {
             width: '100%',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginHorizontal: 20,
             paddingHorizontal: 20,
+            marginTop: 100,
           }}
         >
           <View
@@ -45,8 +47,6 @@ export default function GameOver3() {
               fontSize: 30,
               textAlign: 'center',
               fontFamily: 'poppins-semiBold',
-              marginTop: 50,
-              marginBottom: 50,
             }}
           >
             Result
@@ -67,27 +67,34 @@ export default function GameOver3() {
           style={{
             backgroundColor: '#ffffff',
             flex: 1,
-            marginTop: 10,
+            marginTop: 20,
             borderTopLeftRadius: 25,
             borderTopRightRadius: 25,
             width: '100%',
-            alignItems: 'center',
+            height: '100%',
+            paddingVertical: 40,
           }}
         >
           <View
             style={{
-              marginVertical: 20,
+              height: '100%',
             }}
           >
-            <TryAgain />
+            <View>
+              <TryAgain />
+            </View>
+            <View>{/* <PlayerCards /> */}</View>
+            <View
+              style={{
+                marginTop: 50,
+                alignItems: 'center',
+              }}
+            >
+              <Exp />
+            </View>
           </View>
-          <View>{/* <PlayerCards /> */}</View>
-          <View>
-            <Exp />
-          </View>
-          <Text>Main Content</Text>
         </View>
-      </LinearGradient>
-    </SafeAreaView>
+      </ScrollView>
+    </LinearGradient>
   );
 }
