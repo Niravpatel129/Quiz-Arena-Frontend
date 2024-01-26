@@ -40,9 +40,9 @@ export default function ScoreCard() {
 
   const renderScoreRow = (includeNumbers, usePink) => {
     return (
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row', gap: 5 }}>
         {fakeScores.map((score, index) => (
-          <View style={{ flex: 1, alignItems: 'center', padding: 2 }} key={`score-${index}`}>
+          <View style={{ flex: 1, alignItems: 'center' }} key={`score-${index}`}>
             {renderScoreItem({
               isTotal: false,
               amount: score,
@@ -53,8 +53,7 @@ export default function ScoreCard() {
                 style={{
                   fontFamily: 'poppins-semiBold',
                   color: '#5E6064',
-                  marginTop: 20,
-                  marginBottom: 20,
+                  marginVertical: 10,
                 }}
               >
                 {index + 1}
@@ -62,7 +61,7 @@ export default function ScoreCard() {
             )}
           </View>
         ))}
-        <View style={{ flex: 1.2, alignItems: 'center', padding: 2 }} key='total'>
+        <View style={{ flex: 1.2, alignItems: 'center' }} key='total'>
           {renderScoreItem({
             isTotal: true,
             amount: 100,
@@ -73,8 +72,7 @@ export default function ScoreCard() {
               style={{
                 fontFamily: 'poppins-semiBold',
                 color: '#EC80B4',
-                marginTop: 20,
-                marginBottom: 20,
+                marginVertical: 10,
               }}
             >
               Total
@@ -88,6 +86,7 @@ export default function ScoreCard() {
   return (
     <View
       style={{
+        paddingHorizontal: 10,
         padding: 2,
         width: '100%',
         backgroundColor: '#F4F4F4',
