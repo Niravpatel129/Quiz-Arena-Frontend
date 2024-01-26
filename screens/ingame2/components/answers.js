@@ -6,12 +6,16 @@ import socketService from '../../../services/socketService';
 
 export default function Answers({ answers, sessionId, timeRemaining }) {
   const [selectedAnswer, setSelectedAnswer] = React.useState(null);
+  const [randomziedAnswers, setRandomizedAnswers] = React.useState([]);
   const [isAnswered, setIsAnswered] = React.useState(false);
   const { playSound } = useSound();
 
   useEffect(() => {
     setSelectedAnswer(null);
     setIsAnswered(false);
+
+    const randomizedAnswers = answers.sort(() => Math.random() - 0.5);
+    setRandomizedAnswers(randomizedAnswers);
   }, [answers]);
 
   const handleAnswer = (answer, isCorrect) => {
@@ -118,7 +122,7 @@ export default function Answers({ answers, sessionId, timeRemaining }) {
           gap: 10,
         }}
       >
-        {answers.map((answer, index) => (
+        {randomziedAnswers.map((answer, index) => (
           <React.Fragment key={index}>
             {renderButton({
               text: answer.optionText,
