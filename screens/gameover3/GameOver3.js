@@ -4,6 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Exp from './components/Exp';
+import TryAgain from './components/TryAgain';
 
 export default function GameOver3() {
   const navigation = useNavigation();
@@ -65,14 +67,24 @@ export default function GameOver3() {
           style={{
             backgroundColor: '#ffffff',
             flex: 1,
-            marginTop: 20,
+            marginTop: 10,
             borderTopLeftRadius: 25,
             borderTopRightRadius: 25,
             width: '100%',
             alignItems: 'center',
-            justifyContent: 'center',
           }}
         >
+          <View
+            style={{
+              marginVertical: 20,
+            }}
+          >
+            <TryAgain />
+          </View>
+          <View>{/* <PlayerCards /> */}</View>
+          <View>
+            <Exp />
+          </View>
           <Text>Main Content</Text>
         </View>
       </LinearGradient>
