@@ -29,18 +29,16 @@ export default function GameOver2({ route }) {
   useEffect(() => {
     if (!fakeData) return;
 
-    if (fakeData?.yourData?.result === 'winner') requestReview();
-  }, [fakeData.yourData.result]);
-
-  useEffect(() => {
-    if (!fakeData) return;
-
     Animated.timing(scaleAnimation, {
       toValue: 1,
       duration: 500,
       useNativeDriver: true,
     }).start();
-  }, [fakeData.yourData.result]);
+
+    if (!fakeData) return;
+
+    if (fakeData?.yourData?.result === 'winner') requestReview();
+  }, [route.params?.results]);
 
   const handleRematch = () => {
     socketService.socket.emit('triggerRematch', {

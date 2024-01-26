@@ -33,6 +33,7 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
           }}
         >
           <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}
             style={{
               width: '100%',
@@ -42,6 +43,7 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
             <View
               style={{
                 width: '100%',
+                flex: 1,
               }}
             >
               <View
@@ -84,6 +86,7 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
                 style={{
                   width: '100%',
                   flex: 1,
+                  justifyContent: 'flex-end',
                 }}
               >
                 <Answers
