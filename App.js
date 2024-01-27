@@ -203,8 +203,7 @@ function App() {
           component={SignUpLogin}
           options={{
             title: 'SignUpLogin',
-            headerShown: true,
-            headerTransparent: true,
+            headerShown: false,
           }}
         />
 

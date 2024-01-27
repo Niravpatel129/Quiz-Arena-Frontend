@@ -133,6 +133,17 @@ export default function SignUpLogin({ navigation }) {
           flex: 1,
         }}
       >
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons
+            style={{
+              marginTop: 20,
+              marginLeft: 20,
+            }}
+            name={'arrow-back'}
+            size={30}
+            color={'white'}
+          />
+        </TouchableOpacity>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={{ flex: 1 }}

@@ -26,6 +26,8 @@ export default function Login() {
   useEffect(() => {
     const loadStoredToken = async () => {
       const token = await AsyncStorage.getItem('userToken');
+      return;
+
       if (token) {
         try {
           await newRequest.get('/auth/validate-token', {
@@ -124,7 +126,7 @@ export default function Login() {
           </Animated.View>
           <View
             style={{
-              marginTop: 50,
+              // marginTop: 50,
               alignItems: 'center',
               justifyContent: 'center',
             }}
@@ -132,15 +134,11 @@ export default function Login() {
             <Image
               onLoad={onImageLoad}
               style={{
-                width: 280,
-                height: 280,
+                width: 200,
+                height: 200,
+                marginVertical: 20,
               }}
-              source={{
-                uri: 'https://cdn.discordapp.com/attachments/1085326974353952898/1190996477250646046/DALL_E_2023-12-31_07.31.43_-_A_logo_for__Quiz_Arena__depicted_from_a_straight__front-facing_angle__suitable_for_high-resolution_displays_and_branding_materials._The_logo_should_fe-removebg-preview.png?ex=65a3d4e7&is=65915fe7&hm=35760445baa19b994baaaa5bdc8737eb3f32849ac99d38e8b0c4db66c5484836&',
-                headers: {
-                  Accept: '*/*',
-                },
-              }}
+              source={require('../../assets/logo.png')}
             />
 
             <Text
