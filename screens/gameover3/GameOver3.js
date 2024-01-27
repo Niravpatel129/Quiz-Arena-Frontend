@@ -9,8 +9,11 @@ import Questions from './components/Questions';
 import ScoreCard from './components/ScoreCard';
 import TryAgain from './components/TryAgain';
 
-export default function GameOver3() {
+export default function GameOver3({ route }) {
+  const GameResults = route.params?.results;
   const navigation = useNavigation();
+
+  console.log('🚀  GameResults:', GameResults);
 
   return (
     <LinearGradient
@@ -86,7 +89,7 @@ export default function GameOver3() {
             }}
           >
             <View>
-              <TryAgain />
+              <TryAgain didWin={GameResults?.yourData?.didWin} />
             </View>
             <View
               style={{
@@ -94,7 +97,10 @@ export default function GameOver3() {
                 alignItems: 'center',
               }}
             >
-              <PlayerCards />
+              <PlayerCards
+                yourData={GameResults.yourData}
+                opponentData={GameResults.opponentData}
+              />
             </View>
             <View
               style={{

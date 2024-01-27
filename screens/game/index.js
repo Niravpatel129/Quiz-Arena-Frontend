@@ -162,6 +162,7 @@ const GameScreen = ({ navigation, route }) => {
                 category: results.gameSession.category,
                 gameSessionId: results.gameSession._id,
                 yourData: {
+                  didWin: myData.score > opponentData.score,
                   username: myData.name,
                   rating: myData.playerInformation.elo.rating,
                   ratingChange: myData.playerInformation?.elo?.ratingChange || -5,
@@ -175,6 +176,7 @@ const GameScreen = ({ navigation, route }) => {
                   userId: myData.id,
                 },
                 opponentData: {
+                  didWin: opponentData.score > myData.score,
                   username: opponentData.name,
                   rating: opponentData.playerInformation.elo.rating,
                   ratingChange: opponentData?.playerInformation?.elo?.ratingChange || 5,

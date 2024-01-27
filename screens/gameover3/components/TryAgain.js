@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 
-export default function TryAgain() {
+export default function TryAgain({ didWin }) {
   return (
     <View
       style={{
@@ -16,6 +16,7 @@ export default function TryAgain() {
             width: 100,
             height: 100,
             marginBottom: 10,
+            transform: [{ rotate: didWin ? '0deg' : '180deg' }],
           }}
         />
       </View>
@@ -26,7 +27,7 @@ export default function TryAgain() {
           color: '#181A17',
         }}
       >
-        Ops! You lost!
+        {didWin ? 'Yay! You won.' : 'Ops! You lost.'}
       </Text>
     </View>
   );

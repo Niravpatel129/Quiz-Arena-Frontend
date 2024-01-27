@@ -3,8 +3,10 @@ import React from 'react';
 import { Image, ImageBackground, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 
-export default function PlayerCards() {
-  const renderPlayerCard = () => {
+export default function PlayerCards({ yourData, opponentData }) {
+  const renderPlayerCard = ({ playerData }) => {
+    console.log('🚀  playerData:', playerData);
+
     return (
       <View
         style={{
@@ -15,7 +17,7 @@ export default function PlayerCards() {
       >
         <Image
           source={{
-            uri: 'https://i.ytimg.com/vi/V24RwC2o_KE/maxresdefault.jpg',
+            uri: playerData?.avatar || 'https://i.ytimg.com/vi/V24RwC2o_KE/maxresdefault.jpg',
           }}
           style={{
             borderWidth: 1,
@@ -37,11 +39,12 @@ export default function PlayerCards() {
               fontFamily: 'poppins-semiBold',
               color: '#fff',
               fontSize: 14,
+              textTransform: 'capitalize',
             }}
           >
-            Alex Smith
+            {playerData?.username}
           </Text>
-          <CountryFlag isoCode='us' size={12} />
+          {playerData?.country && <CountryFlag isoCode={playerData?.country} size={12} />}
         </View>
         <View
           style={{
@@ -63,17 +66,22 @@ export default function PlayerCards() {
               fontFamily: 'poppins-semiBold',
             }}
           >
-            1200
+            {playerData?.rating}
           </Text>
-          <Feather name='trending-up' size={12} color='red' />
+          <Feather
+            name={playerData?.didWin ? 'trending-up' : 'trending-down'}
+            size={12}
+            color={playerData?.didWin ? '#2CC672' : '#FF5858'}
+          />
           <Text
             style={{
               fontFamily: 'poppins-semiBold',
-              color: 'red',
+              color: playerData?.didWin ? '#2CC672' : '#FF5858',
               fontSize: 13,
             }}
           >
-            +40
+            {playerData?.didWin ? '+' : ''}
+            {playerData?.ratingChange}
           </Text>
         </View>
       </View>
@@ -105,8 +113,8 @@ export default function PlayerCards() {
             marginHorizontal: 10,
           }}
         >
-          {renderPlayerCard()}
-          {renderPlayerCard()}
+          {renderPlayerCard({ playerData: yourData })}
+          {renderPlayerCard({ playerData: opponentData })}
         </View>
       </ImageBackground>
     </View>
