@@ -46,7 +46,9 @@ export default function CategoriesList({ parentCategory, subCategories }) {
         >
           <Image
             source={{
-              uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Overwatch_circle_logo.svg/1200px-Overwatch_circle_logo.svg.png',
+              uri:
+                item.logo ||
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Overwatch_circle_logo.svg/1200px-Overwatch_circle_logo.svg.png',
             }}
             style={{
               width: 50,

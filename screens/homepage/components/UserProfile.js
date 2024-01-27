@@ -3,6 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
+import { calculateExp } from '../../../helpers/calculateExp';
 import DividerHeader from './DividerHeader';
 
 export default function UserProfile({ userData }) {
@@ -85,7 +86,7 @@ export default function UserProfile({ userData }) {
               marginBottom: 5,
             }}
           >
-            Level 11
+            Level {calculateExp(userData?.profile?.experience || 0)}
           </Text>
           <View
             style={{

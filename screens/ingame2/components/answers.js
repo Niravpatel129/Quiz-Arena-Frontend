@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import AnimatedButton from '../../../components/AnimatedButton/AnimatedButton';
 import { useSound } from '../../../context/sound/SoundContext';
 import socketService from '../../../services/socketService';
 
@@ -69,7 +70,8 @@ export default function Answers({ answers, sessionId, timeRemaining }) {
     const { buttonColor, buttonShadowColor, textColor } = getButtonStyles(text, answerCorrect);
 
     return (
-      <TouchableOpacity
+      <AnimatedButton
+        number={selectedAnswer && answerCorrect ? calculateTimeBasedScore(timeRemaining) : 0}
         onPress={() => {
           if (!isAnswered) {
             handleAnswer(text, answerCorrect);
@@ -99,7 +101,7 @@ export default function Answers({ answers, sessionId, timeRemaining }) {
         >
           {text || 'USA'}
         </Text>
-      </TouchableOpacity>
+      </AnimatedButton>
     );
   };
 
@@ -133,3 +135,9 @@ export default function Answers({ answers, sessionId, timeRemaining }) {
     </View>
   );
 }
+
+const calculateTimeBasedScore = (timeRemaining) => {
+  const baseTime = 12;
+
+  return Math.floor(20 - Math.floor(baseTime - timeRemaining));
+};

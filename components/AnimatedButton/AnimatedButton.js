@@ -48,19 +48,6 @@ const AnimatedButton = ({ children, onPress, style, number }) => {
     );
   };
 
-  const generateColorBasedOnNumber = (number) => {
-    if (number === 0) return 'gray'; // red
-
-    // green to red 20 is the max
-    let greenStart = 246;
-    let red = Math.floor(110 + 145 * (1 - number / 20)); // 110 is the starting red value, 255-110=145 is the range
-    let green = Math.floor(greenStart * (number / 20));
-
-    let color = `rgb(${red}, ${green}, 0)`;
-
-    return color;
-  };
-
   return (
     <TouchableOpacity
       onPressIn={handlePressIn}
@@ -73,10 +60,9 @@ const AnimatedButton = ({ children, onPress, style, number }) => {
           style={[
             floatingTextStyle,
             {
-              color: generateColorBasedOnNumber(number),
-              fontSize: 24,
-              fontFamily: 'Inter-SemiBold',
-              fontWeight: 'semibold',
+              color: '#EC80B4',
+              fontSize: 30,
+              fontFamily: 'Inter-Bold',
             },
           ]}
         >
