@@ -138,9 +138,15 @@ const GameScreen = ({ navigation, route }) => {
       setHighlightTrigger(false);
     });
 
+    let hasNavigated = false;
     socketService.on('game_over', (results) => {
       setGameInProgress(false);
 
+      if (hasNavigated) {
+        return;
+      }
+
+      hasNavigated = true;
       const mySocketId = socketService?.socket?.id;
 
       // find my data
@@ -149,6 +155,7 @@ const GameScreen = ({ navigation, route }) => {
         (player) => player.socketId !== mySocketId,
       );
 
+      // only do it once
       // toggle game off for debugging
       navigation.reset({
         index: 0,

@@ -5,9 +5,10 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 export default function Questions({ questions }) {
   console.log('🚀  questions:', questions);
 
-  const renderQuestion = (questionData) => {
+  const renderQuestion = (questionData, index) => {
     return (
       <View
+        key={index}
         style={{
           borderWidth: 1,
           borderColor: '#E3E3E3',
@@ -93,6 +94,7 @@ export default function Questions({ questions }) {
 
     return (
       <View
+        key={answerData.optionText}
         style={{
           width: '100%',
           flexDirection: 'row',
