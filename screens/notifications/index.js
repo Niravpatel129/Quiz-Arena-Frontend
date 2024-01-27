@@ -105,6 +105,14 @@ export default function NotificationsScreen({ navigation }) {
               }}
             >
               <TouchableOpacity
+                onPress={() =>
+                  acceptNotification(
+                    notificationInfo._id,
+                    notificationInfo?.options?.gameId,
+                    notificationInfo?.options?.category,
+                    notificationInfo.type,
+                  )
+                }
                 style={{
                   backgroundColor: '#2fdd10',
                   padding: 10,
@@ -117,14 +125,6 @@ export default function NotificationsScreen({ navigation }) {
                     fontSize: 18,
                     fontWeight: 700,
                   }}
-                  onPress={() =>
-                    acceptNotification(
-                      notificationInfo._id,
-                      notificationInfo?.options?.gameId,
-                      notificationInfo?.options?.category,
-                      notificationInfo.type,
-                    )
-                  }
                 >
                   Accept
                 </Text>
