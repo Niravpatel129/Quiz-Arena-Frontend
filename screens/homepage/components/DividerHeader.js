@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-export default function DividerHeader({ headerText }) {
+export default function DividerHeader({ headerText, shouldShowArrow }) {
   return (
     <View
       style={{
@@ -20,17 +20,19 @@ export default function DividerHeader({ headerText }) {
           color: '#262625',
         }}
       >
-        {headerText || 'User Profile'}
+        {headerText || ''}
       </Text>
-      <TouchableOpacity
-        style={{
-          backgroundColor: '#F2F2F2',
-          padding: 5,
-          borderRadius: 100,
-        }}
-      >
-        <Ionicons name='arrow-forward' size={24} color='#392F4D' />
-      </TouchableOpacity>
+      {shouldShowArrow && (
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#F2F2F2',
+            padding: 5,
+            borderRadius: 100,
+          }}
+        >
+          <Ionicons name='arrow-forward' size={24} color='#392F4D' />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }

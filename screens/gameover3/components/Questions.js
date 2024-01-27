@@ -156,7 +156,9 @@ export default function Questions({ questions }) {
           {showYourAvatar && (
             <Image
               source={{
-                uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U8rFMfG5yemq64zE-CvmXIXU6Iozboavd70aWDFtUw&s',
+                uri:
+                  questionData.PlayerAnswers.you.playerAvatar ||
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U8rFMfG5yemq64zE-CvmXIXU6Iozboavd70aWDFtUw&s',
               }}
               style={{
                 width: 30,
@@ -183,7 +185,9 @@ export default function Questions({ questions }) {
           {showOpponentAvatar && (
             <Image
               source={{
-                uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U8rFMfG5yemq64zE-CvmXIXU6Iozboavd70aWDFtUw&s',
+                uri:
+                  questionData.PlayerAnswers.opponent.playerAvatar ||
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U8rFMfG5yemq64zE-CvmXIXU6Iozboavd70aWDFtUw&s',
               }}
               style={{
                 width: 30,

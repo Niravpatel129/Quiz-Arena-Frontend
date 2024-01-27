@@ -200,7 +200,7 @@ export default function QueueScreen2({ route }) {
         <View>
           <Image
             source={{
-              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzM6A1erx9khLr3mjq5FxsfMqW6vf5b8lvlmcqG88p-w&s',
+              uri: userData?.avatar || '',
             }}
             style={[
               {

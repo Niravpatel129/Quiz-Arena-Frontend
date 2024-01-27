@@ -141,7 +141,7 @@ function App() {
       <Tab.Navigator tabBar={(props) => <TabBar2 {...props} />}>
         {/*  <Tab.Navigator tabBar={(props) => <TabBar {...props} />}> */}
         <Tab.Screen
-          name='CategoriesHome'
+          name='Home'
           component={Homepage}
           options={{
             headerShown: false,
@@ -162,7 +162,7 @@ function App() {
           }}
         />
         <Tab.Screen
-          name='Leaderboards'
+          name='Rankings'
           component={Leaderboards2}
           options={{
             headerShown: false,

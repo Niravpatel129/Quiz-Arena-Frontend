@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const theme = {
@@ -77,14 +77,25 @@ const TabBar2 = ({ state, descriptors, navigation }) => {
                 paddingTop: 18,
                 paddingBottom: 10,
                 // background: 'red',
+                justifyContent: 'center',
               }}
             >
               <Ionicons
                 style={{}}
                 name={iconName}
                 size={31}
-                color={isFocused ? '#93B8FF' : '#DEDEDE99'}
+                color={isFocused ? '#938dd7' : '#DEDEDE99'}
               />
+              <Text
+                style={{
+                  color: isFocused ? '#938dd7' : '#DEDEDE99',
+                  fontSize: 12,
+                  fontFamily: 'Inter-Medium',
+                  marginTop: 4,
+                }}
+              >
+                {route.name}
+              </Text>
             </TouchableOpacity>
           );
         })}

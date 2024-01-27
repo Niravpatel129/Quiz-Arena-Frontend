@@ -62,7 +62,6 @@ export default function MatchHistory2() {
     let shadowColor = 'rgba(169, 131, 255, 0.50)';
     let didUserWin = winnerId === userId;
     let UserData = players.find((player) => player.id === userId);
-    console.log('🚀  UserData:', UserData);
     let opponentData = players.find((player) => player.id !== userId);
 
     if (!didUserWin) {

@@ -8,7 +8,7 @@ import DividerHeader from './DividerHeader';
 export default function UserProfile() {
   return (
     <View>
-      <DividerHeader />
+      <DividerHeader headerText={'Your Profile'} />
       <LinearGradient
         colors={['#EC80B4', '#3F95F2']}
         style={{

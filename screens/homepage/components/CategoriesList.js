@@ -1,9 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import DividerHeader from './DividerHeader';
 
 export default function CategoriesList() {
+  const navigation = useNavigation();
+
   const renderCategoryCard = (index = 1) => {
     // color options for linear gradient
     const colorOptions = {
@@ -17,7 +20,16 @@ export default function CategoriesList() {
     const pickedRandomColor = Object.values(colorOptions)[index % 4];
 
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('CategoryScreen', {
+            categoryId: 'logos',
+            categoryName: 'logos',
+            parentCategory: 'general knowledge',
+            categoryImage: '',
+          });
+        }}
+      >
         <LinearGradient
           colors={pickedRandomColor}
           style={{
