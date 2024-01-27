@@ -1,15 +1,18 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import UserProfile from './components/UserProfile';
 
 export default function Homepage() {
   return (
     <View
       style={{
+        padding: 10,
         backgroundColor: '#fff',
         height: '100%',
       }}
     >
-      <Text>Homepage</Text>
+      <UserProfile />
+      {/* <Text>Homepage</Text> */}
     </View>
   );
 }
