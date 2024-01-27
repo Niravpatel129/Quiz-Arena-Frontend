@@ -26,8 +26,6 @@ export default function Login() {
   useEffect(() => {
     const loadStoredToken = async () => {
       const token = await AsyncStorage.getItem('userToken');
-      return;
-
       if (token) {
         try {
           await newRequest.get('/auth/validate-token', {
