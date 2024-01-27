@@ -2,9 +2,14 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import AgainButtons from './AgainButtons';
 
-const fakeScores = ['15', '15', '15', '15', '15', '15', '15'];
-
-export default function ScoreCard() {
+export default function ScoreCard({
+  player1,
+  player2,
+  scores1 = [],
+  scores2 = [],
+  categoryName,
+  handleRematch,
+}) {
   const renderScoreItem = ({ amount = 0, isTotal, usePink }) => {
     let backgroundColor = '#fff';
     let textColor = usePink ? '#EC80B4' : '#3F95F2';
@@ -19,7 +24,7 @@ export default function ScoreCard() {
         style={{
           borderRadius: 10,
           width: isTotal ? '105%' : '100%',
-          backgroundColor: backgroundColor,
+          backgroundColor,
           borderWidth: 1,
           borderColor: textColor,
           height: 45,
@@ -39,10 +44,10 @@ export default function ScoreCard() {
     );
   };
 
-  const renderScoreRow = (includeNumbers, usePink) => {
+  const renderScoreRow = (scores, includeNumbers, usePink) => {
     return (
       <View style={{ flexDirection: 'row', gap: 5 }}>
-        {fakeScores.map((score, index) => (
+        {scores.map((score, index) => (
           <View style={{ flex: 1, alignItems: 'center' }} key={`score-${index}`}>
             {renderScoreItem({
               isTotal: false,
@@ -65,14 +70,14 @@ export default function ScoreCard() {
         <View style={{ flex: 1.2, alignItems: 'center' }} key='total'>
           {renderScoreItem({
             isTotal: true,
-            amount: 100,
+            amount: scores?.reduce((a, b) => a + parseFloat(b), 0),
             usePink,
           })}
           {includeNumbers && (
             <Text
               style={{
                 fontFamily: 'poppins-semiBold',
-                color: '#EC80B4',
+                color: usePink ? '#EC80B4' : '#3F95F2',
                 marginVertical: 10,
               }}
             >
@@ -83,6 +88,10 @@ export default function ScoreCard() {
       </View>
     );
   };
+
+  const totalScore1 = scores1.reduce((a, b) => a + parseFloat(b), 0);
+  const totalScore2 = scores2.reduce((a, b) => a + parseFloat(b), 0);
+  const usePinkForTotal1 = totalScore1 >= totalScore2;
 
   return (
     <View
@@ -103,13 +112,14 @@ export default function ScoreCard() {
           color: '#EC80B4',
           marginBottom: 10,
           textAlign: 'center',
+          textTransform: 'capitalize',
         }}
       >
-        Alex
+        {player1}
       </Text>
-      {renderScoreRow(true, true)}
+      {renderScoreRow(scores1, true, usePinkForTotal1)}
+      {renderScoreRow(scores2, false, !usePinkForTotal1)}
 
-      {renderScoreRow(false)}
       <Text
         style={{
           fontFamily: 'poppins-semiBold',
@@ -117,9 +127,10 @@ export default function ScoreCard() {
           color: '#3F95F2',
           marginTop: 10,
           textAlign: 'center',
+          textTransform: 'capitalize',
         }}
       >
-        John
+        {player2}
       </Text>
       <View
         style={{
@@ -128,7 +139,11 @@ export default function ScoreCard() {
           justifyContent: 'center',
         }}
       >
-        <AgainButtons />
+        <AgainButtons
+          opponentId={player2.userId}
+          categoryName={categoryName}
+          handleRematch={handleRematch}
+        />
       </View>
     </View>
   );

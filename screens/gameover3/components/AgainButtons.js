@@ -1,11 +1,17 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-export default function AgainButtons() {
+export default function AgainButtons({ opponentId, categoryName, handleRematch }) {
+  const navigation = useNavigation();
+
   const ShareButton = () => {
     return (
       <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Categories');
+        }}
         style={{
           backgroundColor: 'white',
           padding: 5,
@@ -27,6 +33,11 @@ export default function AgainButtons() {
   const ChatButton = () => {
     return (
       <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Chat', {
+            chattingWithId: opponentId,
+          });
+        }}
         style={{
           backgroundColor: 'white',
           padding: 5,
@@ -48,6 +59,7 @@ export default function AgainButtons() {
   const RematchButton = () => {
     return (
       <TouchableOpacity
+        onPress={handleRematch}
         style={{
           backgroundColor: 'white',
           padding: 5,
@@ -76,6 +88,12 @@ export default function AgainButtons() {
   const playAgainButton = () => {
     return (
       <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Queue', {
+            categoryId: categoryName.split(' ').join('-'),
+            categoryName: categoryName,
+          });
+        }}
         style={{
           backgroundColor: 'white',
           padding: 5,

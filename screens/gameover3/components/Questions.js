@@ -2,8 +2,10 @@ import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
-export default function Questions() {
-  const renderQuestion = () => {
+export default function Questions({ questions }) {
+  console.log('🚀  questions:', questions);
+
+  const renderQuestion = (questionData) => {
     return (
       <View
         style={{
@@ -24,7 +26,7 @@ export default function Questions() {
             marginBottom: 12,
           }}
         >
-          Lorem ipsum dolor sit amet consectetur. In id nec mauris libero mattis vel malesuada nunc.
+          {questionData.Question}
         </Text>
         <View
           style={{
@@ -32,10 +34,7 @@ export default function Questions() {
             gap: 12,
           }}
         >
-          {renderQuestionItem()}
-          {renderQuestionItem()}
-          {renderQuestionItem()}
-          {renderQuestionItem()}
+          {questionData.Answers.map((answer) => renderQuestionItem(answer, questionData))}
         </View>
 
         <View
@@ -88,7 +87,10 @@ export default function Questions() {
     );
   };
 
-  const renderQuestionItem = () => {
+  const renderQuestionItem = (answerData, questionData) => {
+    const showYourAvatar = answerData.optionText === questionData.PlayerAnswers.you.answer;
+    const showOpponentAvatar = answerData.optionText === questionData.PlayerAnswers.opponent.answer;
+
     return (
       <View
         style={{
@@ -98,49 +100,53 @@ export default function Questions() {
           alignItems: 'center',
           padding: 5,
           borderWidth: 1,
-          borderColor: '#D5D5E0',
+          borderColor: answerData.isCorrect ? '#2CC672' : '#D5D5E0',
           borderRadius: 10,
           paddingVertical: 12,
         }}
       >
         <View>
-          <Image
-            source={{
-              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U8rFMfG5yemq64zE-CvmXIXU6Iozboavd70aWDFtUw&s',
-            }}
-            style={{
-              width: 30,
-              height: 30,
-              borderWidth: 1,
-              borderColor: '#EC80B4',
-              borderRadius: 100,
-            }}
-          />
+          {showYourAvatar && (
+            <Image
+              source={{
+                uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U8rFMfG5yemq64zE-CvmXIXU6Iozboavd70aWDFtUw&s',
+              }}
+              style={{
+                width: 30,
+                height: 30,
+                borderWidth: 1,
+                borderColor: '#EC80B4',
+                borderRadius: 100,
+              }}
+            />
+          )}
         </View>
         <View>
           <Text
             style={{
               fontFamily: 'poppins-regular',
               fontSize: 14,
-              color: '#262625',
+              color: answerData.isCorrect ? '#2CC672' : '#262625',
             }}
           >
-            Answer Key 1
+            {answerData.optionText}
           </Text>
         </View>
         <View>
-          <Image
-            source={{
-              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U8rFMfG5yemq64zE-CvmXIXU6Iozboavd70aWDFtUw&s',
-            }}
-            style={{
-              width: 30,
-              height: 30,
-              borderWidth: 1,
-              borderColor: '#EC80B4',
-              borderRadius: 100,
-            }}
-          />
+          {showOpponentAvatar && (
+            <Image
+              source={{
+                uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U8rFMfG5yemq64zE-CvmXIXU6Iozboavd70aWDFtUw&s',
+              }}
+              style={{
+                width: 30,
+                height: 30,
+                borderWidth: 1,
+                borderColor: '#EC80B4',
+                borderRadius: 100,
+              }}
+            />
+          )}
         </View>
       </View>
     );
@@ -153,12 +159,7 @@ export default function Questions() {
         gap: 10,
       }}
     >
-      {renderQuestion()}
-      {renderQuestion()}
-      {renderQuestion()}
-      {renderQuestion()}
-      {renderQuestion()}
-      {renderQuestion()}
+      {questions.map((question, index) => renderQuestion(question, index))}
     </View>
   );
 }
