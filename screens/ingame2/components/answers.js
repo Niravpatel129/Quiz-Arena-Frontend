@@ -30,7 +30,6 @@ export default function Answers({ answers, sessionId, timeRemaining }) {
     };
 
     // check if answer is correct or not
-    const correctAnswer = isCorrect;
 
     if (isCorrect) {
       playSound('correct_answer');
@@ -73,7 +72,7 @@ export default function Answers({ answers, sessionId, timeRemaining }) {
       <TouchableOpacity
         onPress={() => {
           if (!isAnswered) {
-            handleAnswer(text);
+            handleAnswer(text, answerCorrect);
           }
         }}
         style={{
