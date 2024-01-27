@@ -18,6 +18,7 @@ export default function DividerHeader({ headerText, shouldShowArrow }) {
           fontFamily: 'poppins-regular',
           fontSize: 19,
           color: '#262625',
+          textTransform: 'capitalize',
         }}
       >
         {headerText || ''}

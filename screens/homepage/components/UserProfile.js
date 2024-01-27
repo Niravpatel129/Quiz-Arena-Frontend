@@ -5,7 +5,7 @@ import { Image, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import DividerHeader from './DividerHeader';
 
-export default function UserProfile() {
+export default function UserProfile({ userData }) {
   return (
     <View>
       <DividerHeader headerText={'Your Profile'} />
@@ -37,7 +37,7 @@ export default function UserProfile() {
         >
           <Image
             source={{
-              uri: 'https://sm.mashable.com/mashable_sea/photo/default/man-fakes-death-cat-q6u_2z9w.png',
+              uri: userData?.profile?.avatar || '',
             }}
             style={{
               width: 100,
@@ -67,12 +67,14 @@ export default function UserProfile() {
                 fontFamily: 'poppins-bold',
                 fontSize: 20,
                 color: '#fff',
+                textTransform: 'capitalize',
               }}
             >
-              William Jones
+              {userData?.username}
             </Text>
-
-            <CountryFlag isoCode='us' size={16} />
+            {userData?.profile?.country && (
+              <CountryFlag isoCode={userData.profile.country} size={16} />
+            )}
           </View>
 
           <Text
@@ -108,7 +110,7 @@ export default function UserProfile() {
                   fontSize: 16,
                 }}
               >
-                Rating: 1200
+                {userData.averageRating && <>Rating: {userData.averageRating || 0}</>}
               </Text>
             </View>
           </View>

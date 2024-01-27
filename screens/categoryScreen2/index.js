@@ -7,11 +7,13 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { newRequest } from '../../api/newRequest';
 import InviteModal from '../../components/InviteModal/InviteModal';
 import LeaderboardsList from './components/LeaderboardsList';
+import getParentCategoryIcon from './getParentCategoryIcon';
 
 export default function CategoryScreen2({ route }) {
   const navigation = useNavigation();
   const category = route.params?.categoryName;
   const categoryId = route.params?.categoryId;
+  const categoryParent = route.params?.parentCategory;
   const [selectedTab, setSelectedTab] = React.useState('Top Players');
   const [leaderboardData, setLeaderboardData] = React.useState([]);
   const [isModalVisible, setModalVisible] = React.useState(false);
@@ -218,10 +220,11 @@ export default function CategoryScreen2({ route }) {
                   shadowOpacity: 0.5,
                   shadowRadius: 8,
                   elevation: 5,
+                  padding: 10,
                 }}
               >
                 <Ionicons
-                  name='ios-people'
+                  name={getParentCategoryIcon(categoryParent)}
                   size={100}
                   color='white'
                   style={{
@@ -230,7 +233,7 @@ export default function CategoryScreen2({ route }) {
                 />
                 <Text
                   style={{
-                    fontSize: category.length > 10 ? RFValue(9) : RFValue(15),
+                    fontSize: category.length > 20 ? RFValue(12) : RFValue(15),
                     fontWeight: '600',
                     lineHeight: 22,
                     fontStyle: 'normal',

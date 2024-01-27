@@ -2,12 +2,14 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import DividerHeader from './DividerHeader';
 
-export default function CategoriesList() {
+export default function CategoriesList({ parentCategory, subCategories }) {
   const navigation = useNavigation();
 
-  const renderCategoryCard = (index = 1) => {
+  const renderCategoryCard = ({ item, index = 1 }) => {
+    console.log('🚀  item:', item);
     // color options for linear gradient
     const colorOptions = {
       blue: ['#FF8F3B', '#FF4646'],
@@ -23,9 +25,9 @@ export default function CategoriesList() {
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('CategoryScreen', {
-            categoryId: 'logos',
-            categoryName: 'logos',
-            parentCategory: 'general knowledge',
+            categoryId: item.name.split(' ').join('-'),
+            categoryName: item.name,
+            parentCategory: parentCategory,
             categoryImage: '',
           });
         }}
@@ -36,9 +38,10 @@ export default function CategoriesList() {
             width: 120,
             height: 160,
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'space-evenly',
             borderRadius: 16,
             marginRight: 10,
+            padding: 2,
           }}
         >
           <Image
@@ -53,14 +56,21 @@ export default function CategoriesList() {
           ></Image>
 
           <Text
+            numberOfLines={2}
+            ellipsizeMode='tail'
             style={{
               color: '#fff',
               fontFamily: 'poppins-bold',
-              fontSize: 16,
+              fontSize: RFValue(12),
               marginTop: 3,
+              textTransform: 'capitalize',
+              textAlign: 'center',
+              height: 50,
+
+              // make ... after 2 lines
             }}
           >
-            Capitals
+            {item.name}
           </Text>
         </LinearGradient>
       </TouchableOpacity>
@@ -69,12 +79,12 @@ export default function CategoriesList() {
 
   return (
     <View>
-      <DividerHeader headerText={'Popular Categories'} />
+      <DividerHeader headerText={parentCategory} />
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={[1, 2, 3, 4, 5]}
-        renderItem={({ index }) => <>{renderCategoryCard(index)}</>}
+        data={subCategories}
+        renderItem={({ item, index }) => <>{renderCategoryCard({ item: item, index: index })}</>}
       />
     </View>
   );
