@@ -1,9 +1,6 @@
-import { Platform } from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
 
 const startAppFlyer = () => {
-  if (Platform.OS === 'web') return;
-
   appsFlyer.initSdk(
     {
       devKey: 'fpg8Qxro3LWTbpdamF9s77',
