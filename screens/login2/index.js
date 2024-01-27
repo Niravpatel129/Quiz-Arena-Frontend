@@ -73,7 +73,7 @@ export default function Login() {
 
   return (
     <LinearGradient
-      colors={['#0f0c29', '#302b63', '#24243e']}
+      colors={['#EC80B4', '#3F95F2']}
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
       style={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}

@@ -6,6 +6,7 @@ import * as Sentry from '@sentry/react-native';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Linking from 'expo-linking';
+import * as SplashScreen from 'expo-splash-screen';
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
@@ -44,6 +45,8 @@ Sentry.init({
   dsn: 'https://ebea8a70fc3ccc5fe921ee897bf9f2a3@o1363835.ingest.sentry.io/4506592682246144',
   tracesSampleRate: 1.0,
 });
+
+SplashScreen.preventAutoHideAsync();
 
 if (true) {
   import('./services/appsFlyer')
@@ -92,6 +95,17 @@ const linking = {
 
 function App() {
   const [fontsLoaded] = useFonts(fonts);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 600));
+        if (fontsLoaded) await SplashScreen.hideAsync();
+      } catch (e) {
+        console.warn(e);
+      }
+    })();
+  }, [fontsLoaded]);
 
   useEffect(() => {
     (async () => {

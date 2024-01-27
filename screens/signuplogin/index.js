@@ -127,7 +127,7 @@ export default function SignUpLogin({ navigation }) {
   };
 
   return (
-    <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
+    <LinearGradient colors={['#EC80B4', '#3F95F2']} style={{ flex: 1 }}>
       <SafeAreaView
         style={{
           flex: 1,
