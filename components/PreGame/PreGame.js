@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, SafeAreaView, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import Animated, {
@@ -15,6 +15,8 @@ export default function PreGame({ myData, opponentData }) {
   const leftCardTranslateX = useSharedValue(-500);
   const rightCardTranslateX = useSharedValue(500);
   const vsScale = useSharedValue(0);
+  const [isMyAvatarLoaded, setIsMyAvatarLoaded] = useState(false);
+  const [isOpponentAvatarLoaded, setIsOpponentAvatarLoaded] = useState(false);
 
   // Animated styles for player cards
   const leftCardStyle = useAnimatedStyle(() => {
@@ -38,6 +40,8 @@ export default function PreGame({ myData, opponentData }) {
 
   // Start animations when component mounts
   useEffect(() => {
+    if (!isMyAvatarLoaded || !isOpponentAvatarLoaded) return;
+
     leftCardTranslateX.value = withTiming(0, {
       duration: 800,
       easing: Easing.out(Easing.exp),
@@ -52,9 +56,9 @@ export default function PreGame({ myData, opponentData }) {
       duration: 800,
       easing: Easing.out(Easing.back(1.5)),
     });
-  }, []);
+  }, [isMyAvatarLoaded, isOpponentAvatarLoaded]);
 
-  const renderPlayerCard = (userData, isOpponent) => {
+  const renderPlayerCard = (userData, isOpponent, setIsAvatarLoaded) => {
     return (
       <View
         style={{
@@ -123,15 +127,14 @@ export default function PreGame({ myData, opponentData }) {
         <View>
           <Image
             source={{
-              uri:
-                userData?.playerInformation?.avatar ||
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzM6A1erx9khLr3mjq5FxsfMqW6vf5b8lvlmcqG88p-w&s',
+              uri: userData?.playerInformation?.avatar || '',
             }}
             style={{
               width: 100,
               height: 100,
               borderRadius: 20,
             }}
+            onLoad={() => setIsAvatarLoaded(true)}
           />
         </View>
       </View>
@@ -161,7 +164,9 @@ export default function PreGame({ myData, opponentData }) {
             justifyContent: 'space-between',
           }}
         >
-          <Animated.View style={[rightCardStyle]}>{renderPlayerCard(myData, false)}</Animated.View>
+          <Animated.View style={[rightCardStyle]}>
+            {renderPlayerCard(myData, false, setIsMyAvatarLoaded)}
+          </Animated.View>
           <Animated.View
             style={[
               {
@@ -187,7 +192,7 @@ export default function PreGame({ myData, opponentData }) {
             </Text>
           </Animated.View>
           <Animated.View style={[leftCardStyle]}>
-            {renderPlayerCard(opponentData, true)}
+            {renderPlayerCard(opponentData, true, setIsOpponentAvatarLoaded)}
           </Animated.View>
         </View>
       </SafeAreaView>

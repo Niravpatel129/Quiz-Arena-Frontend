@@ -35,7 +35,9 @@ export default function Questions({ questions }) {
             gap: 12,
           }}
         >
-          {questionData.Answers.map((answer) => renderQuestionItem(answer, questionData))}
+          {questionData.Answers.map((answer, index) =>
+            renderQuestionItem(answer, questionData, index),
+          )}
         </View>
 
         <View
@@ -88,13 +90,13 @@ export default function Questions({ questions }) {
     );
   };
 
-  const renderQuestionItem = (answerData, questionData) => {
+  const renderQuestionItem = (answerData, questionData, index) => {
     const showYourAvatar = answerData.optionText === questionData.PlayerAnswers.you.answer;
     const showOpponentAvatar = answerData.optionText === questionData.PlayerAnswers.opponent.answer;
 
     return (
       <View
-        key={answerData.optionText}
+        key={index}
         style={{
           width: '100%',
           flexDirection: 'row',

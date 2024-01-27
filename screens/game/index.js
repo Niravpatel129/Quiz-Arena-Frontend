@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { AppState, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import HighlightEffect from '../../components/HighlightEffect';
@@ -30,6 +30,7 @@ const GameScreen = ({ navigation, route }) => {
   const [sendBotAnswer, setSendBotAnswer] = React.useState(false);
   const [gameInProgress, setGameInProgress] = React.useState(false);
   const [imagesToPreload, setImagesToPreload] = React.useState([]);
+  const hasNavigated = useRef(false);
 
   useEffect(() => {
     if (!route.params?.gameSessionId) return;
@@ -138,15 +139,15 @@ const GameScreen = ({ navigation, route }) => {
       setHighlightTrigger(false);
     });
 
-    let hasNavigated = false;
     socketService.on('game_over', (results) => {
+      console.log(' rocket game over');
       setGameInProgress(false);
 
-      if (hasNavigated) {
+      if (hasNavigated.current) {
         return;
       }
 
-      hasNavigated = true;
+      hasNavigated.current = true;
       const mySocketId = socketService?.socket?.id;
 
       // find my data
