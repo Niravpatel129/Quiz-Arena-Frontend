@@ -1,9 +1,38 @@
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { newRequest } from '../../../api/newRequest';
 
 export default function Questions({ questions }) {
+  const [thumbsStatus, setThumbsStatus] = useState(
+    questions.map(() => ({ thumbsUp: false, thumbsDown: false })),
+  );
+
   console.log('🚀  questions:', questions);
+  const handleThumbsClick = async (index, thumbType) => {
+    // dont allow undoing of thumbs up or down
+
+    if (thumbsStatus[index].thumbsUp || thumbsStatus[index].thumbsDown) return;
+
+    // Toggle the status of the specific thumb for the question
+    const newThumbsStatus = [...thumbsStatus];
+    newThumbsStatus[index] = {
+      ...newThumbsStatus[index],
+      [thumbType]: !newThumbsStatus[index][thumbType],
+    };
+    setThumbsStatus(newThumbsStatus);
+
+    // Dummy console log function
+    console.log(`Thumbs ${thumbType} clicked for question ${index + 1}`);
+
+    if (thumbType === 'thumbsUp') {
+      await newRequest.put(`/question/${QuestionsData[index].QuestionId}/upvote`);
+    }
+
+    if (thumbType === 'thumbsDown') {
+      await newRequest.put(`/question/${QuestionsData[index].QuestionId}/downvote`);
+    }
+  };
 
   const renderQuestion = (questionData, index) => {
     return (
@@ -63,26 +92,40 @@ export default function Questions({ questions }) {
             }}
           >
             <TouchableOpacity
+              disabled={thumbsStatus[index].thumbsUp || thumbsStatus[index].thumbsDown}
+              onPress={() => handleThumbsClick(index, 'thumbsUp')}
               style={{
                 borderRadius: 10,
+                backgroundColor: thumbsStatus[index].thumbsUp ? '#2CC672' : '#fff',
                 borderWidth: 1,
                 borderColor: '#2CC672',
                 paddingVertical: 8,
                 paddingHorizontal: 22,
               }}
             >
-              <Ionicons name='thumbs-up-sharp' size={24} color='#2CC672' />
+              <Ionicons
+                name='thumbs-up-sharp'
+                size={24}
+                color={thumbsStatus[index].thumbsUp ? '#fff' : '#2CC672'}
+              />
             </TouchableOpacity>
             <TouchableOpacity
+              disabled={thumbsStatus[index].thumbsUp || thumbsStatus[index].thumbsDown}
+              onPress={() => handleThumbsClick(index, 'thumbsDown')}
               style={{
                 borderWidth: 1,
                 borderColor: '#FF5858',
                 paddingVertical: 8,
+                backgroundColor: thumbsStatus[index].thumbsDown ? '#FF5858' : '#fff',
                 borderRadius: 10,
                 paddingHorizontal: 22,
               }}
             >
-              <Ionicons name='thumbs-down-sharp' size={24} color='#FF5858' />
+              <Ionicons
+                name='thumbs-down-sharp'
+                size={24}
+                color={thumbsStatus[index].thumbsDown ? '#fff' : '#FF5858'}
+              />
             </TouchableOpacity>
           </View>
         </View>

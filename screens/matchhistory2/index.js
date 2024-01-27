@@ -85,6 +85,7 @@ export default function MatchHistory2() {
           elevation: 5,
         }}
       >
+        {loading && <ActivityIndicator size='large' color='#5E6064' style={{ marginTop: 20 }} />}
         <View
           style={{
             flexDirection: 'row',
