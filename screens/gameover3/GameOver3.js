@@ -1,10 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import RematchModal from '../../components/RematchModal/RematchModal';
+import useInAppReview from '../../hooks/useInAppReview';
 import socketService from '../../services/socketService';
 import Exp from './components/Exp';
 import PlayerCards from './components/PlayerCards';
@@ -16,6 +17,13 @@ export default function GameOver3({ route }) {
   const GameResults = route.params?.results;
   const navigation = useNavigation();
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
+  const requestReview = useInAppReview();
+
+  useEffect(() => {
+    if (!GameResults) return;
+
+    if (GameResults?.yourData?.didWin) requestReview();
+  }, [route.params?.results]);
 
   const handleRematch = () => {
     socketService.socket.emit('triggerRematch', {

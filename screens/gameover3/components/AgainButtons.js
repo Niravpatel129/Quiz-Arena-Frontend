@@ -1,16 +1,43 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { useTransitionalInterstitialAd } from '../../../hooks/useTransitionalInterstitialAd';
 
 export default function AgainButtons({ opponentId, categoryName, handleRematch }) {
   const navigation = useNavigation();
+  const [showAd] = useTransitionalInterstitialAd();
 
-  const ShareButton = () => {
+  const ShowAdBeforeNavigation = async (navigationTo, options) => {
+    try {
+      const gameCount = await AsyncStorage.getItem('gameCount');
+
+      if (!gameCount) {
+        await AsyncStorage.setItem('gameCount', '1');
+      } else {
+        const newGameCount = parseInt(gameCount) + 1;
+        await AsyncStorage.setItem('gameCount', newGameCount.toString());
+
+        if (newGameCount % 3 === 0) {
+          console.log('showing ad');
+          await showAd();
+        }
+      }
+
+      navigation.navigate(navigationTo, options);
+      return;
+    } catch (err) {
+      navigation.navigate(navigationTo, options);
+      console.log(err);
+    }
+  };
+
+  const HomeButton = () => {
     return (
       <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('Categories');
+        onPress={async () => {
+          await ShowAdBeforeNavigation('Categories');
         }}
         style={{
           backgroundColor: 'white',
@@ -88,8 +115,8 @@ export default function AgainButtons({ opponentId, categoryName, handleRematch }
   const playAgainButton = () => {
     return (
       <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('Queue', {
+        onPress={async () => {
+          await ShowAdBeforeNavigation('Queue', {
             categoryId: categoryName.split(' ').join('-'),
             categoryName: categoryName,
           });
@@ -141,7 +168,7 @@ export default function AgainButtons({ opponentId, categoryName, handleRematch }
           width: '100%',
         }}
       >
-        <View>{ShareButton()}</View>
+        <View>{HomeButton()}</View>
         <View>{ChatButton()}</View>
         <View
           style={{
