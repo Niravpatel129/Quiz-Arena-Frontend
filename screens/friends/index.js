@@ -7,6 +7,34 @@ import SocialsList from '../../components/SocialsList/SocialsList';
 export default function FriendsScreen({ navigation }) {
   const [activeTab, setActiveTab] = React.useState('tab1');
 
+  const renderTabs = ({ text, selected, onPress }) => {
+    return (
+      <TouchableOpacity
+        onPress={onPress}
+        style={{
+          backgroundColor: selected ? '#3F95F2' : '#ffffff',
+          borderRadius: 10,
+          borderWidth: 1,
+          borderColor: selected ? '' : '#3F95F2',
+          flex: 1,
+          height: 40,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Text
+          style={{
+            color: selected ? '#ffffff' : '#5E6064',
+            fontSize: 14,
+            textTransform: 'capitalize',
+          }}
+        >
+          {text}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -16,7 +44,6 @@ export default function FriendsScreen({ navigation }) {
     >
       <View
         style={{
-          // backgroundColor: '#1c2141',
           height: '100%',
         }}
       >
@@ -24,75 +51,29 @@ export default function FriendsScreen({ navigation }) {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-around',
-            padding: 10,
-            backgroundColor: '#84BDFA',
-            margin: 10,
+            // backgroundColor: '#84BDFA',
+            gap: 10,
+            paddingVertical: 10,
+            paddingHorizontal: 10,
             borderRadius: 22,
+            marginBottom: 20,
           }}
         >
-          <TouchableOpacity
-            onPress={() => setActiveTab('tab1')}
-            style={{
-              backgroundColor: activeTab === 'tab1' ? '#206DD8' : '#ffffff',
-              borderRadius: 22,
-              flex: 1,
-              height: 40,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Text
-              style={{
-                color: activeTab === 'tab1' ? '#ffffff' : '#206DD8',
-                fontSize: 22,
-                fontWeight: 700,
-              }}
-            >
-              Friends
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => setActiveTab('tab2')}
-            style={{
-              backgroundColor: activeTab === 'tab2' ? '#206DD8' : '#ffffff',
-              borderRadius: 22,
-              flex: 1,
-              height: 40,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Text
-              style={{
-                color: activeTab === 'tab2' ? '#ffffff' : '#206DD8',
-                fontSize: 22,
-                fontWeight: 700,
-              }}
-            >
-              Chats
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => setActiveTab('tab3')}
-            style={{
-              backgroundColor: activeTab === 'tab3' ? '#206DD8' : '#ffffff',
-              borderRadius: 22,
-              flex: 1,
-              height: 40,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Text
-              style={{
-                color: activeTab === 'tab3' ? '#ffffff' : '#206DD8',
-                fontSize: 22,
-                fontWeight: 700,
-              }}
-            >
-              External
-            </Text>
-          </TouchableOpacity>
+          {renderTabs({
+            text: 'Friends',
+            selected: activeTab === 'tab1',
+            onPress: () => setActiveTab('tab1'),
+          })}
+          {renderTabs({
+            text: 'Chats',
+            selected: activeTab === 'tab2',
+            onPress: () => setActiveTab('tab2'),
+          })}
+          {renderTabs({
+            text: 'External',
+            selected: activeTab === 'tab3',
+            onPress: () => setActiveTab('tab3'),
+          })}
         </View>
 
         <View>

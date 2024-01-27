@@ -132,7 +132,7 @@ function App() {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: '#1d284b',
+      background: '#fff',
     },
   };
 

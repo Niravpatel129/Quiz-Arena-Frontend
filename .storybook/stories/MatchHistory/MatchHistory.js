@@ -5,7 +5,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Text, View } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import {
-  ActivityIndicator,
   Animated,
   FlatList,
   Image,

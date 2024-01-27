@@ -331,11 +331,12 @@ export default function FriendsList() {
           gap: 12,
           alignItems: 'center',
           justifyContent: 'center',
+          marginHorizontal: 10,
         }}
       >
         <View
           style={{
-            width: '90%',
+            width: '100%',
           }}
         >
           <TextInput

@@ -4,11 +4,13 @@ import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { Dimensions, Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { useMenuContext } from '../../context/menu/MenuContext';
 
 export default function CustomHeader2(props) {
   const navigation = useNavigation();
   const screenHeight = Dimensions.get('window').height;
   const overlayHeight = screenHeight * 0.03; // 3% of the screen height
+  const { setMenuOpen } = useMenuContext();
 
   return (
     <View style={{ backgroundColor: '#fff', overflow: 'hidden' }}>
@@ -27,7 +29,8 @@ export default function CustomHeader2(props) {
               marginBottom: -10,
             }}
           >
-            <View
+            <TouchableOpacity
+              onPress={() => setMenuOpen()}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -45,7 +48,7 @@ export default function CustomHeader2(props) {
               >
                 Quiz Arena
               </Text>
-            </View>
+            </TouchableOpacity>
             <View>
               <TouchableOpacity
                 onPress={() => {

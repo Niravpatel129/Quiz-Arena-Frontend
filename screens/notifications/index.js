@@ -53,7 +53,6 @@ export default function NotificationsScreen({ navigation }) {
   };
 
   const renderNotification = (notificationInfo) => {
-    console.log('🚀  notificationInfo:', notificationInfo);
     return (
       <View>
         <View
