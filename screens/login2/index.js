@@ -136,7 +136,10 @@ export default function Login() {
                 height: 200,
                 marginVertical: 20,
               }}
-              source={require('../../assets/logo.png')}
+              // source={require('../../assets/logo.png')}
+              source={
+                'https://cdn.discordapp.com/attachments/1197974156965322832/1200709115786297384/2_copy.png?ex=65c72a81&is=65b4b581&hm=51b9cb17de42aaaf8cec546452149456b20b23a890000ef6aa0765ddcfcdf4a6&'
+              }
             />
 
             <Text

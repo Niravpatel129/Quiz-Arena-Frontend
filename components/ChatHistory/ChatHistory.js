@@ -67,14 +67,14 @@ export default function ChatHistory() {
           style={[
             {
               marginBottom: 10,
-              backgroundColor: '#1d284b',
+              backgroundColor: '#fff',
               flexDirection: 'row',
               alignItems: 'center',
               width: '100%',
               padding: 10,
               borderWidth: 1,
               borderColor: 'gray',
-              borderRadius: 30,
+              borderRadius: 20,
             },
             slideAnimation,
           ]}
@@ -118,7 +118,7 @@ export default function ChatHistory() {
                   style={{
                     fontWeight: 700,
                     fontSize: 16,
-                    color: 'white',
+                    color: '#474747',
                     maxWidth: 200,
                   }}
                 >

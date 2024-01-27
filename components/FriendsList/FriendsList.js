@@ -59,6 +59,8 @@ export default function FriendsList() {
 
   const sendFriendRequest = async () => {
     try {
+      if (!textInput) return;
+
       await newRequest.post('/users/notifications', {
         type: 'friendRequest',
         receiverName: textInput,
@@ -217,11 +219,13 @@ export default function FriendsList() {
           })
         }
         style={{
-          backgroundColor: '#1d284b',
+          backgroundColor: '#ffffff',
+          borderWidth: 1,
+          borderColor: '#C0E1FD',
           flexDirection: 'row',
           alignItems: 'center',
           padding: 10,
-          borderRadius: 52,
+          borderRadius: 20,
         }}
       >
         <TouchableOpacity
@@ -262,7 +266,7 @@ export default function FriendsList() {
               style={{
                 fontWeight: 700,
                 fontSize: 16,
-                color: 'white',
+                color: '#474747',
               }}
             >
               {friend.username || 'Player Name'}
@@ -274,7 +278,7 @@ export default function FriendsList() {
                 fontSize: 12,
               }}
             >
-              Last Active 9m
+              Last Active {formatLastActive(friend.lastActive, { type: 'short' })}
             </Text>
           </View>
           <View
@@ -286,7 +290,7 @@ export default function FriendsList() {
           >
             <TouchableOpacity
               style={{
-                backgroundColor: '#1c2141',
+                backgroundColor: '#206DD8',
                 fontFamily: 'Inter-Bold',
                 borderRadius: 12,
                 padding: 10,
@@ -337,6 +341,8 @@ export default function FriendsList() {
           <TextInput
             placeholder='Search Friends'
             style={{
+              borderWidth: 1,
+              borderColor: '#C0E1FD',
               backgroundColor: 'white',
               borderRadius: 12,
               padding: 20,
@@ -354,7 +360,7 @@ export default function FriendsList() {
               borderRadius: 12,
               marginRight: 70,
               zIndex: 1,
-              backgroundColor: '#1c2141',
+              backgroundColor: '#84BDFA',
               width: 70,
               height: 50,
               alignItems: 'center',

@@ -12,9 +12,9 @@ import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
 import { LogBox, View } from 'react-native';
 import Toast from 'react-native-toast-message';
-import CustomHeader from './components/CustomHeader/CustomHeader';
+import CustomHeader2 from './components/CustomHeader2/CustomHeader';
 import MenuModal from './components/MenuModal/MenuModal';
-import TabBar from './components/MyTabBar/MyTabBar';
+import TabBar2 from './components/Tabbar2/Tabbar2';
 import fonts from './config/fonts';
 import { AuthProvider } from './context/auth/AuthContext';
 import { MenuProvider } from './context/menu/MenuContext';
@@ -22,23 +22,23 @@ import { SocketProvider } from './context/socket/SocketContext';
 import { SoundProvider } from './context/sound/SoundContext';
 import { UpdateProvider } from './context/update/UpdateContext';
 import ProfileEditScreen from './screens';
-import Categories2 from './screens/categories2';
-import CategoryScreen from './screens/categoryScreen';
+import CategoryScreen2 from './screens/categoryScreen2';
 import ChallengeScreen from './screens/challenge';
 import Chat from './screens/chat';
 import Contribute from './screens/contribute';
 import CreateProfile from './screens/createProfile';
 import FriendsScreen from './screens/friends';
 import GameScreen from './screens/game';
-import GameOver2 from './screens/game_over2';
-import LeaderboardsScreen from './screens/leaderboards';
+import GameOver3 from './screens/gameover3/GameOver3';
+import Homepage from './screens/homepage';
+import Leaderboards2 from './screens/leaderboards2';
 import Login2 from './screens/login2';
-import MatchHistoryScreen from './screens/match_history';
+import MatchHistory2 from './screens/matchhistory2';
 import NotificationsScreen from './screens/notifications';
 import PlayersScreen from './screens/players';
-import ProfileScreen from './screens/profile';
+import Profile2 from './screens/profile2';
 import PublicProfile from './screens/publicProfile';
-import QueueScreen from './screens/queue_screen';
+import QueueScreen2 from './screens/queuescreen2';
 import SignUpLogin from './screens/signuplogin';
 
 Sentry.init({
@@ -138,32 +138,32 @@ function App() {
 
   function HomeTabNavigator() {
     return (
-      // <Tab.Navigator tabBar={(props) => <TabBar2 {...props} />}>
-      <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
+      <Tab.Navigator tabBar={(props) => <TabBar2 {...props} />}>
+        {/*  <Tab.Navigator tabBar={(props) => <TabBar {...props} />}> */}
         <Tab.Screen
           name='CategoriesHome'
-          component={Categories2}
+          component={Homepage}
           options={{
             headerShown: false,
           }}
         />
         <Tab.Screen
           name='History'
-          component={MatchHistoryScreen}
+          component={MatchHistory2}
           options={{
             headerShown: false,
           }}
         />
         <Tab.Screen
           name='Profile'
-          component={ProfileScreen}
+          component={Profile2}
           options={{
             headerShown: false,
           }}
         />
         <Tab.Screen
           name='Leaderboards'
-          component={LeaderboardsScreen}
+          component={Leaderboards2}
           options={{
             headerShown: false,
           }}
@@ -182,10 +182,10 @@ function App() {
   function StackNavigator() {
     return (
       <Stack.Navigator
-        screenOptions={({ route }) => CustomHeader(route)}
-        // screenOptions={{
-        //   header: (props) => <CustomHeader2 {...props} />,
-        // }}
+        // screenOptions={({ route }) => CustomHeader(route)}
+        screenOptions={{
+          header: (props) => <CustomHeader2 {...props} />,
+        }}
         options={{
           headerShadowVisible: false,
         }}
@@ -217,7 +217,7 @@ function App() {
 
         <Stack.Screen
           name='CategoryScreen'
-          component={CategoryScreen}
+          component={CategoryScreen2}
           options={{
             headerShown: false,
             headerShadowVisible: false,
@@ -235,7 +235,7 @@ function App() {
         {/* <Stack.Screen name='Drawer' component={DrawerNavigator} options={{ headerShown: false }} /> */}
         <Stack.Screen
           name='Queue'
-          component={QueueScreen}
+          component={QueueScreen2}
           options={{ title: 'Queue', headerShown: false }}
         />
         <Stack.Screen
@@ -251,7 +251,7 @@ function App() {
         />
         <Stack.Screen
           name='GameOver'
-          component={GameOver2}
+          component={GameOver3}
           options={{ title: 'Game Over', headerShown: false }}
         />
         <Stack.Screen

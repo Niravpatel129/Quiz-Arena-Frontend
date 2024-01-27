@@ -106,7 +106,7 @@ export default function SocialsList() {
     return (
       <TouchableOpacity
         style={{
-          backgroundColor: '#1d284b',
+          backgroundColor: '#fff',
           flexDirection: 'row',
           alignItems: 'center',
           padding: 10,
@@ -152,7 +152,7 @@ export default function SocialsList() {
               style={{
                 fontWeight: 700,
                 fontSize: 16,
-                color: 'white',
+                color: '#474747',
                 marginTop: 5,
               }}
             >

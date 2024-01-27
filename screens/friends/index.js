@@ -10,13 +10,13 @@ export default function FriendsScreen({ navigation }) {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: '#1c2141',
+        backgroundColor: '#ffffff',
         height: '100%',
       }}
     >
       <View
         style={{
-          backgroundColor: '#1c2141',
+          // backgroundColor: '#1c2141',
           height: '100%',
         }}
       >
@@ -25,7 +25,7 @@ export default function FriendsScreen({ navigation }) {
             flexDirection: 'row',
             justifyContent: 'space-around',
             padding: 10,
-            backgroundColor: '#1d284b',
+            backgroundColor: '#84BDFA',
             margin: 10,
             borderRadius: 22,
           }}
@@ -33,7 +33,7 @@ export default function FriendsScreen({ navigation }) {
           <TouchableOpacity
             onPress={() => setActiveTab('tab1')}
             style={{
-              backgroundColor: activeTab === 'tab1' ? '#fff' : '#1c2141',
+              backgroundColor: activeTab === 'tab1' ? '#206DD8' : '#ffffff',
               borderRadius: 22,
               flex: 1,
               height: 40,
@@ -43,7 +43,7 @@ export default function FriendsScreen({ navigation }) {
           >
             <Text
               style={{
-                color: activeTab === 'tab1' ? '#1c2141' : '#ffffff',
+                color: activeTab === 'tab1' ? '#ffffff' : '#206DD8',
                 fontSize: 22,
                 fontWeight: 700,
               }}
@@ -54,7 +54,7 @@ export default function FriendsScreen({ navigation }) {
           <TouchableOpacity
             onPress={() => setActiveTab('tab2')}
             style={{
-              backgroundColor: activeTab === 'tab2' ? '#fff' : '#1c2141',
+              backgroundColor: activeTab === 'tab2' ? '#206DD8' : '#ffffff',
               borderRadius: 22,
               flex: 1,
               height: 40,
@@ -64,7 +64,7 @@ export default function FriendsScreen({ navigation }) {
           >
             <Text
               style={{
-                color: activeTab === 'tab2' ? '#1c2141' : '#ffffff',
+                color: activeTab === 'tab2' ? '#ffffff' : '#206DD8',
                 fontSize: 22,
                 fontWeight: 700,
               }}
@@ -75,7 +75,7 @@ export default function FriendsScreen({ navigation }) {
           <TouchableOpacity
             onPress={() => setActiveTab('tab3')}
             style={{
-              backgroundColor: activeTab === 'tab3' ? '#fff' : '#1c2141',
+              backgroundColor: activeTab === 'tab3' ? '#206DD8' : '#ffffff',
               borderRadius: 22,
               flex: 1,
               height: 40,
@@ -85,7 +85,7 @@ export default function FriendsScreen({ navigation }) {
           >
             <Text
               style={{
-                color: activeTab === 'tab3' ? '#1c2141' : '#ffffff',
+                color: activeTab === 'tab3' ? '#ffffff' : '#206DD8',
                 fontSize: 22,
                 fontWeight: 700,
               }}

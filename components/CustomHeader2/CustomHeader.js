@@ -1,10 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { Dimensions, Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 
 export default function CustomHeader2(props) {
+  const navigation = useNavigation();
   const screenHeight = Dimensions.get('window').height;
   const overlayHeight = screenHeight * 0.03; // 3% of the screen height
 
@@ -45,7 +47,11 @@ export default function CustomHeader2(props) {
               </Text>
             </View>
             <View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.push('Notifications');
+                }}
+              >
                 <Ionicons name='notifications-outline' size={24} color='white' />
               </TouchableOpacity>
             </View>
