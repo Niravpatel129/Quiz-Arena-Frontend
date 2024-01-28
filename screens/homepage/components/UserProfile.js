@@ -3,6 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
+import { RFValue } from 'react-native-responsive-fontsize';
 import { calculateExp } from '../../../helpers/calculateExp';
 import DividerHeader from './DividerHeader';
 
@@ -100,6 +101,8 @@ export default function UserProfile({ userData }) {
             <View
               style={{
                 flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
                 gap: 5,
               }}
             >
@@ -107,8 +110,8 @@ export default function UserProfile({ userData }) {
               <Text
                 style={{
                   color: '#3F95F2',
-                  fontFamily: 'poppins-bold',
-                  fontSize: 16,
+                  fontFamily: 'poppins-semiBold',
+                  fontSize: RFValue(14),
                 }}
               >
                 {userData.averageRating && <>Rating: {userData.averageRating || 0}</>}
