@@ -82,6 +82,14 @@
         {
           "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
       ]
     ]
   },
