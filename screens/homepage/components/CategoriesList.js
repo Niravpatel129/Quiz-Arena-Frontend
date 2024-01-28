@@ -48,7 +48,7 @@ export default function CategoriesList({ parentCategory, subCategories }) {
             source={{
               uri:
                 item.logo ||
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Overwatch_circle_logo.svg/1200px-Overwatch_circle_logo.svg.png',
+                'https://cdn.discordapp.com/attachments/1198039556696571934/1200954944623231026/val_logo.png?ex=65c80f73&is=65b59a73&hm=985240294e0257c5ec347099cff49df0d4af15a01271734e030b3da10d1390c3&',
             }}
             style={{
               width: 50,
