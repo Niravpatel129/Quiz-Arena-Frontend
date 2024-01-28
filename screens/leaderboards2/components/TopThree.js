@@ -116,7 +116,7 @@ export default function TopThree({ data }) {
     <View
       style={{
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: data.length < 3 ? 'center' : 'space-between',
         marginHorizontal: 10,
         marginTop: 20,
       }}

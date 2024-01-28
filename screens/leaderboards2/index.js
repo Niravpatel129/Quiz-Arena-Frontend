@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
 import LeaderboardsList from './components/LeaderboardsList';
 import TopThree from './components/TopThree';
@@ -20,20 +21,37 @@ export default function Leaderboards2() {
 
   useEffect(() => {
     const fetchLeaderboards = async () => {
-      const response = await newRequest.get('/leaderboards');
-      const data = response.data;
-      data.sort((a, b) => b.averageRating - a.averageRating);
-      const animatedData = data.map((player) => ({
-        ...player,
-        opacity: new Animated.Value(0),
-        translateY: new Animated.Value(50),
-      }));
-      setLeaderboardsData(animatedData);
-      setLoading(false);
+      try {
+        const response = await newRequest.get(`/leaderboards/${selectedTab.toLowerCase()}`);
+        console.log('🚀  response:', response);
+        const data = response.data;
+        if (!data) return;
+
+        data.sort((a, b) => b.averageRating - a.averageRating);
+        const animatedData = data.map((player) => ({
+          ...player,
+          opacity: new Animated.Value(0),
+          translateY: new Animated.Value(50),
+        }));
+        setLeaderboardsData(animatedData);
+        setLoading(false);
+      } catch (error) {
+        console.log('🚀 ~ file: index.js ~ line 59 ~ fetchLeaderboards ~ error', error);
+        Toast.show({
+          type: 'error',
+          position: 'bottom',
+          text1: 'Error',
+          text2: 'Something went wrong',
+          visibilityTime: 2000,
+          autoHide: true,
+          topOffset: 30,
+          bottomOffset: 40,
+        });
+      }
     };
 
     fetchLeaderboards();
-  }, []);
+  }, [selectedTab]);
 
   React.useEffect(() => {
     const animateLeaderboards = () => {
