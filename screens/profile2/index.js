@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import Animated, {
   Easing,
@@ -10,6 +11,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { RFValue } from 'react-native-responsive-fontsize';
 import { newRequest } from '../../api/newRequest';
 import formatLastActive from '../../helpers/formatLastActive';
 
@@ -48,6 +50,7 @@ export default function Profile2({ userId }) {
           {
             alignItems: 'center',
             justifyContent: 'center',
+            width: '30%',
           },
         ]}
       >
@@ -68,6 +71,8 @@ export default function Profile2({ userId }) {
             fontFamily: 'poppins-bold',
             fontSize: 16,
             color: '#181A17',
+            textAlign: 'center',
+            textTransform: 'capitalize',
           }}
         >
           {title}
@@ -116,7 +121,7 @@ export default function Profile2({ userId }) {
         <View
           style={{
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'space-between',
           }}
         >
           <Ionicons name={icon} size={24} color='#fff' />
@@ -125,7 +130,8 @@ export default function Profile2({ userId }) {
               color: '#fff',
               fontFamily: 'poppins-regular',
               fontWeight: 400,
-              fontSize: 14,
+              textAlign: 'center',
+              fontSize: RFValue(13),
             }}
           >
             {title}
@@ -306,8 +312,8 @@ export default function Profile2({ userId }) {
               },
             ]}
           >
-            {renderStatsCard('Total Games', userData?.totalGames || 0, 1)}
-            {renderStatsCard('Win Rates', `${Math.floor(userData?.winRate || null)}%`, 2)}
+            {renderStatsCard('Games', userData?.totalGames || 0, 1)}
+            {renderStatsCard('Win Rate', `${Math.floor(userData?.winRate || null)}%`, 2)}
             {renderStatsCard('Avg Score', 85, 3)}
           </Animated.View>
           <View
@@ -344,6 +350,7 @@ export default function Profile2({ userId }) {
                     alignItems: 'flex-start',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
+                    alignContent: 'space-between',
                     gap: 5,
                   },
                 ]}

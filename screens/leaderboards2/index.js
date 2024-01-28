@@ -1,6 +1,14 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
-import { Animated, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Animated,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { newRequest } from '../../api/newRequest';
 import LeaderboardsList from './components/LeaderboardsList';
 import TopThree from './components/TopThree';
@@ -8,6 +16,7 @@ import TopThree from './components/TopThree';
 export default function Leaderboards2() {
   const [selectedTab, setSelectedTab] = React.useState('Global');
   const [leaderboardsData, setLeaderboardsData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
     const fetchLeaderboards = async () => {
@@ -20,6 +29,7 @@ export default function Leaderboards2() {
         translateY: new Animated.Value(50),
       }));
       setLeaderboardsData(animatedData);
+      setLoading(false);
     };
 
     fetchLeaderboards();
@@ -58,7 +68,7 @@ export default function Leaderboards2() {
         paddingVertical: 12,
         paddingHorizontal: 16,
         borderRadius: 12,
-        flex: 1, // Equal space distribution
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: selected ? 0 : 1,
@@ -67,12 +77,14 @@ export default function Leaderboards2() {
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: selected ? 1.0 : 0,
         shadowRadius: selected ? 3 : 0,
-        elevation: selected ? 4 : 0, // for Android shadow effect
+        elevation: selected ? 4 : 0,
       };
 
       return (
         <TouchableOpacity
-          onPress={() => setSelectedTab(text)}
+          onPress={() => {
+            setSelectedTab(text);
+          }}
           style={{
             flex: 1,
           }}
@@ -152,7 +164,11 @@ export default function Leaderboards2() {
                 marginTop: 50,
               }}
             >
-              <TopThree data={leaderboardsData} />
+              {loading && (
+                <ActivityIndicator size='large' color='#3d6bc6' style={{ marginTop: 20 }} />
+              )}
+
+              <TopThree data={leaderboardsData.slice(0, 3)} />
             </View>
             <View>
               <LeaderboardsList data={leaderboardsData.slice(3)} />

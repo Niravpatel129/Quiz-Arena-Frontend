@@ -105,7 +105,7 @@ export default function CategoryScreen2({ route }) {
           <Text
             style={{
               fontFamily: isSelected ? 'poppins-semiBold' : 'poppins-regular',
-              fontSize: 16,
+              fontSize: RFValue(14),
               color: isSelected ? '#3F95F2' : '#000000',
             }}
           >

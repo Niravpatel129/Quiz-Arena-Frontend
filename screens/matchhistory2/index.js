@@ -92,7 +92,6 @@ export default function MatchHistory2() {
           elevation: 5,
         }}
       >
-        {loading && <ActivityIndicator size='large' color='#5E6064' style={{ marginTop: 20 }} />}
         <View
           style={{
             flexDirection: 'row',
@@ -353,6 +352,8 @@ export default function MatchHistory2() {
             height: '100%',
           }}
         >
+          {loading && <ActivityIndicator size='large' color='#3d6bc6' style={{ marginTop: 20 }} />}
+
           {matchHistory?.map((item, index) => {
             return (
               <Animated.View
