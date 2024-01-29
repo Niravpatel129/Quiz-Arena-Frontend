@@ -27,6 +27,10 @@ const imageMap = {
   overwatch: require('./images/overwatch.png'),
   'pokemon gen 1': require('./images/pokemon_gen_1.png'),
   'general knowledge': require('./images/general_knowledge.png'),
+  landmarks: require('./images/landmarks.png'),
+  scientists: require('./images/scientists.png'),
+  'harry potter': require('./images/harry potter.png'),
+  'tarak mehta ka ooltah chashmah': require('./images/tarak mehta ka ooltah chashmah.png'),
 };
 
 function CategoryCard({ item, parentCategory }) {
