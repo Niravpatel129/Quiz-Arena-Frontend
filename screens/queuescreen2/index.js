@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import Animated, {
   useAnimatedStyle,
@@ -115,10 +115,6 @@ export default function QueueScreen2({ route }) {
   useEffect(() => {
     socketService.emit('join_queue', categoryName);
     startTimer();
-
-    // socketService.on('queue_update', (data) => {
-    //   setPlayersInQueue(data.queue.length);
-    // });
 
     socketService.on('game_start', (data) => {
       if (Platform.OS !== 'web') {
@@ -277,115 +273,117 @@ export default function QueueScreen2({ route }) {
           flex: 1,
         }}
       >
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{
-            position: 'absolute',
-            zIndex: 1,
-            top: 40,
-            left: 20,
-            padding: 5,
-          }}
-        >
-          <Ionicons name='arrow-back' size={34} color='white' />
-        </TouchableOpacity>
-
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'white',
-            padding: 20,
-            marginHorizontal: 20,
-            marginVertical: 20,
-            borderRadius: 25,
-          }}
-        >
-          {renderPlayerCard()}
-          <View
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
             style={{
-              alignItems: 'center',
-              marginVertical: 20,
+              position: 'absolute',
+              zIndex: 1,
+              top: 40,
+              left: 20,
+              padding: 5,
             }}
           >
-            <Image
-              source={require('../../assets/vs_icon.png')}
-              style={{ width: 100, height: 100 }}
-            />
-          </View>
-          <View>{renderSearchingCard()}</View>
-          <View
-            style={{
-              alignItems: 'center',
-              marginVertical: 20,
-            }}
-          >
-            <Text
-              style={{
-                color: 'black',
-                fontSize: RFValue(12),
-                fontFamily: 'poppins-regular',
-                marginTop: 'auto',
-              }}
-            >
-              In Queue for
-            </Text>
-            <Text
-              style={{
-                color: 'black',
-                fontWeight: 'bold',
-                fontSize: RFValue(12),
-                marginVertical: 3,
-                fontFamily: 'poppins-bold',
-                textTransform: 'capitalize',
-              }}
-            >
-              {categoryName}
-            </Text>
-          </View>
+            <Ionicons name='arrow-back' size={34} color='white' />
+          </TouchableOpacity>
 
           <View
             style={{
-              alignItems: 'center',
-              marginTop: 10,
+              flex: 1,
+              backgroundColor: 'white',
+              padding: 20,
+              marginHorizontal: 20,
+              marginVertical: 20,
+              borderRadius: 25,
             }}
           >
-            <Animated.Image
-              source={require('../../assets/hour_glass.png')}
-              style={[{ width: 50, height: 50 }, hourglassStyle]}
-            />
-            <Text
+            {renderPlayerCard()}
+            <View
               style={{
-                fontSize: RFValue(12),
-                fontWeight: 'bold',
-                fontFamily: 'poppins-bold',
-                marginTop: 3,
-                color: '#5E6064',
+                alignItems: 'center',
+                marginVertical: 20,
               }}
             >
-              Time In Queue:{' '}
+              <Image
+                source={require('../../assets/vs_icon.png')}
+                style={{ width: 100, height: 100 }}
+              />
+            </View>
+            <View>{renderSearchingCard()}</View>
+            <View
+              style={{
+                alignItems: 'center',
+                marginVertical: 20,
+              }}
+            >
               <Text
                 style={{
-                  fontFamily: 'poppins-bold',
-                  color: '#3F95F2',
+                  color: 'black',
+                  fontSize: RFValue(12),
+                  fontFamily: 'poppins-regular',
+                  marginTop: 'auto',
                 }}
               >
-                {/* 00:00:00 */}
-                {queueTime}
+                In Queue for
               </Text>
-            </Text>
-          </View>
+              <Text
+                style={{
+                  color: 'black',
+                  fontWeight: 'bold',
+                  fontSize: RFValue(12),
+                  marginVertical: 3,
+                  fontFamily: 'poppins-bold',
+                  textTransform: 'capitalize',
+                }}
+              >
+                {categoryName}
+              </Text>
+            </View>
 
-          <View
-            style={{
-              alignItems: 'center',
-              color: '#5E6064',
-              fontFamily: 'poppins-regular',
-              marginTop: 5,
-            }}
-          >
-            <Text>Estimated Wait Time: {estimatedWaitTime}</Text>
+            <View
+              style={{
+                alignItems: 'center',
+                marginTop: 10,
+              }}
+            >
+              <Animated.Image
+                source={require('../../assets/hour_glass.png')}
+                style={[{ width: 50, height: 50 }, hourglassStyle]}
+              />
+              <Text
+                style={{
+                  fontSize: RFValue(12),
+                  fontWeight: 'bold',
+                  fontFamily: 'poppins-bold',
+                  marginTop: 3,
+                  color: '#5E6064',
+                }}
+              >
+                Time In Queue:{' '}
+                <Text
+                  style={{
+                    fontFamily: 'poppins-bold',
+                    color: '#3F95F2',
+                  }}
+                >
+                  {/* 00:00:00 */}
+                  {queueTime}
+                </Text>
+              </Text>
+            </View>
+
+            <View
+              style={{
+                alignItems: 'center',
+                color: '#5E6064',
+                fontFamily: 'poppins-regular',
+                marginTop: 5,
+              }}
+            >
+              <Text>Estimated Wait Time: {estimatedWaitTime}</Text>
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </LinearGradient>
   );

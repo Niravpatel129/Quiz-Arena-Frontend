@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import DividerHeader from './DividerHeader';
 
 const imageMap = {
@@ -116,10 +117,23 @@ function CategoryCard({ item, parentCategory }) {
 }
 
 export default function CategoriesList({ parentCategory, subCategories }) {
-  console.log(subCategories.map((category) => category.name));
+  const offset = useSharedValue(50);
+  const opacity = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+      transform: [{ translateY: offset.value }],
+    };
+  });
+
+  useEffect(() => {
+    offset.value = withSpring(0, { stiffness: 150 });
+    opacity.value = withSpring(1);
+  }, []);
 
   return (
-    <View>
+    <Animated.View style={[{ flex: 1 }, animatedStyle]}>
       <DividerHeader headerText={parentCategory} />
       <FlatList
         horizontal
@@ -127,6 +141,6 @@ export default function CategoriesList({ parentCategory, subCategories }) {
         data={subCategories}
         renderItem={({ item }) => <CategoryCard item={item} parentCategory={parentCategory} />}
       />
-    </View>
+    </Animated.View>
   );
 }
