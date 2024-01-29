@@ -30,7 +30,7 @@ const imageMap = {
   landmarks: require('./images/landmarks.png'),
   scientists: require('./images/scientists.png'),
   'harry potter': require('./images/harry potter.png'),
-  'tarak mehta ka ooltah chashmah': require('./images/tarak mehta ka ooltah chashmah.png'),
+  'taarak mehta ka ooltah chashmah': require('./images/taarak mehta ka ooltah chashmah.png'),
 };
 
 function CategoryCard({ item, parentCategory }) {
