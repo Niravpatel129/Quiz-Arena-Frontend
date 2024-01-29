@@ -22,19 +22,37 @@ export const useTransitionalInterstitialAd = () => {
     };
   }, []);
 
-  const showAd = () => {
-    return new Promise((resolve) => {
+  const showAd = async () => {
+    await new Promise((resolve, reject) => {
       if (loaded && ad) {
-        ad.addAdEventListener(AdEventType.CLOSED, () => {
+        resolve();
+      } else if (ad) {
+        const loadListener = ad.addAdEventListener(AdEventType.LOADED, () => {
+          setLoaded(true);
+          loadListener.remove?.();
+          resolve();
+        });
+        const errorListener = ad.addAdEventListener(AdEventType.ERROR, (err) => {
+          console.error('Ad Load Error: ', err);
+          errorListener.remove?.();
+          reject(err);
+        });
+      } else {
+        reject(new Error('No ad instance available'));
+      }
+    });
+
+    if (loaded && ad) {
+      return new Promise((resolve) => {
+        const closeListener = ad.addAdEventListener(AdEventType.CLOSED, () => {
           setAd(null);
           setLoaded(false);
+          closeListener.remove?.();
           resolve();
         });
         ad.show();
-      } else {
-        resolve();
-      }
-    });
+      });
+    }
   };
 
   return [showAd];
