@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef } from 'react';
 import {
   Image,
@@ -15,6 +14,7 @@ import {
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
+import capitalizeFirstLetter from '../../helpers/capitalizeFirstLetter';
 import formatLastActive from '../../helpers/formatLastActive';
 import socketService from '../../services/socketService';
 
@@ -96,15 +96,16 @@ export default function Chat({
         style={{
           marginVertical: 20,
           marginHorizontal: 10,
-          alignSelf: isSender ? 'flex-start' : 'flex-end',
+          alignSelf: !isSender ? 'flex-start' : 'flex-end',
         }}
       >
-        <Text style={{ color: 'white', marginHorizontal: 5, marginBottom: 5 }}>
+        <Text style={{ color: 'black', marginHorizontal: 5, marginBottom: 5 }}>
           {name} {sentAgo && formatLastActive(sentAgo)}
         </Text>
         <View
           style={{
             width: '90%',
+            borderWidth: 1,
             backgroundColor: 'white',
             borderRadius: 10,
             justifyContent: 'center',
@@ -128,7 +129,7 @@ export default function Chat({
       >
         <Text
           style={{
-            color: 'white',
+            color: 'black',
             fontSize: 20,
             fontWeight: 700,
           }}
@@ -154,31 +155,53 @@ export default function Chat({
             marginHorizontal: 10,
           }}
         >
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('PublicProfile', { userId: chattingWithId });
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
               }}
             >
-              <Image
-                style={{ width: 50, height: 50, borderRadius: 25 }}
-                source={{
-                  uri: chat.chatingWith?.avatar,
-                  headers: {
-                    Accept: '*/*',
-                  },
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('PublicProfile', { userId: chattingWithId });
                 }}
-              />
-            </TouchableOpacity>
-            <View style={{ flexDirection: 'column', marginHorizontal: 20 }}>
-              <Text style={{ color: 'white', fontSize: 20, fontWeight: 700 }}>
-                {chat.chatingWith?.name}
-              </Text>
-              <Text style={{ color: '#d2d2d2', fontSize: 14 }}>
-                Active{' '}
-                {chat.chatingWith?.lastActive && formatLastActive(chat.chatingWith?.lastActive)}
-              </Text>
+              >
+                <Image
+                  style={{ width: 50, height: 50, borderRadius: 25 }}
+                  source={{
+                    uri: chat.chatingWith?.avatar,
+                    headers: {
+                      Accept: '*/*',
+                    },
+                  }}
+                />
+              </TouchableOpacity>
+              <View style={{ flexDirection: 'column', marginHorizontal: 20 }}>
+                <Text style={{ color: 'black', fontSize: 20, fontWeight: 700 }}>
+                  {capitalizeFirstLetter(chat.chatingWith?.name)}
+                </Text>
+                <Text style={{ color: '#d2d2d2', fontSize: 14 }}>
+                  Active{' '}
+                  {chat.chatingWith?.lastActive && formatLastActive(chat.chatingWith?.lastActive)}
+                </Text>
+              </View>
             </View>
+
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Ionicons name='ios-close' size={32} color='black' />
+            </TouchableOpacity>
           </View>
           <TouchableOpacity
             onPress={() => {
@@ -188,24 +211,24 @@ export default function Chat({
             <Ionicons name='close' size={32} color='white' />
           </TouchableOpacity>
         </View>
-        <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}>
-          {chat.chatMessages.length === 0 && (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Text style={{ color: 'white', fontSize: 20 }}>No messages yet</Text>
-            </View>
-          )}
-          <ScrollView style={{ flex: 1 }} ref={scrollViewRef}>
-            {chat.chatMessages.map((msg, index) => (
-              <View key={index}>{renderChatBubble(msg)}</View>
-            ))}
-          </ScrollView>
-        </LinearGradient>
+        {/* <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']} style={{ flex: 1 }}> */}
+        {chat.chatMessages.length === 0 && (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{ color: 'black', fontSize: 20 }}>No messages yet</Text>
+          </View>
+        )}
+        <ScrollView style={{ flex: 1 }} ref={scrollViewRef}>
+          {chat.chatMessages.map((msg, index) => (
+            <View key={index}>{renderChatBubble(msg)}</View>
+          ))}
+        </ScrollView>
+        {/* </LinearGradient> */}
 
         <View
           style={{
@@ -226,6 +249,7 @@ export default function Chat({
               padding: 10,
               borderRadius: 5,
               fontSize: 16,
+              borderWidth: 1,
             }}
             onChangeText={(text) => setTextInput(text)}
             value={textInput}
@@ -237,11 +261,12 @@ export default function Chat({
               padding: 5,
               borderRadius: 5,
               height: 52,
+              // borderWidth: 1,
               justifyContent: 'center',
               alignItems: 'center',
             }}
           >
-            <Ionicons name='send' size={30} color='white' />
+            <Ionicons name='send' size={30} color='black' />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

@@ -16,6 +16,10 @@ const formatLastActive = (dateString, options) => {
   const secondsInMonth = 2592000;
   const secondsInYear = 31536000;
 
+  // if (diffInSeconds < secondsInMinute) {
+  //   return type === 'short' ? 'now' : 'now';
+  // }
+
   if (diffInSeconds < secondsInMinute) {
     return type === 'short' ? `${diffInSeconds}s` : `${diffInSeconds} secs ago`;
   } else if (diffInSeconds < secondsInHour) {

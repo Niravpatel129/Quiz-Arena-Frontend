@@ -65,6 +65,9 @@ export default function NotificationsScreen({ navigation }) {
     }
 
     await newRequest.delete(`/users/notifications/${id}`);
+
+    // refresh notifications
+    fetchNotifications();
   };
 
   const renderNotification = (notificationInfo) => {

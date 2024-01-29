@@ -5,6 +5,7 @@ import { Image, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { calculateExp } from '../../../helpers/calculateExp';
+import capitalizeFirstLetter from '../../../helpers/capitalizeFirstLetter';
 import DividerHeader from './DividerHeader';
 
 export default function UserProfile({ userData }) {
@@ -69,10 +70,10 @@ export default function UserProfile({ userData }) {
                 fontFamily: 'poppins-bold',
                 fontSize: 20,
                 color: '#fff',
-                textTransform: 'capitalize',
+                // textTransform: 'capitalize',
               }}
             >
-              {userData?.username}
+              {capitalizeFirstLetter(userData?.username)}
             </Text>
             {userData?.profile?.country && (
               <CountryFlag isoCode={userData.profile.country} size={16} />

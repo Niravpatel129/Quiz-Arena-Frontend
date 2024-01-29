@@ -26,11 +26,11 @@ export default function Questions({ questions }) {
     console.log(`Thumbs ${thumbType} clicked for question ${index + 1}`);
 
     if (thumbType === 'thumbsUp') {
-      await newRequest.put(`/question/${QuestionsData[index].QuestionId}/upvote`);
+      await newRequest.put(`/question/${questions[index].QuestionId}/upvote`);
     }
 
     if (thumbType === 'thumbsDown') {
-      await newRequest.put(`/question/${QuestionsData[index].QuestionId}/downvote`);
+      await newRequest.put(`/question/${questions[index].QuestionId}/downvote`);
     }
   };
 

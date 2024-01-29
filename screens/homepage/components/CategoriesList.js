@@ -29,8 +29,8 @@ const imageMap = {
   'general knowledge': require('./images/general_knowledge.png'),
   landmarks: require('./images/landmarks.png'),
   scientists: require('./images/scientists.png'),
-  'harry potter': require('./images/harry potter.png'),
-  'taarak mehta ka ooltah chashmah': require('./images/taarak mehta ka ooltah chashmah.png'),
+  'harry potter': require('./images/harry_potter.png'),
+  'taarak mehta ka ooltah chashmah': require('./images/taarak_mehta_ka_ooltah_chashmah.png'),
 };
 
 function CategoryCard({ item, parentCategory }) {

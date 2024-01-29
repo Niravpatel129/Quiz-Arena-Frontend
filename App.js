@@ -103,6 +103,7 @@ function App() {
         if (fontsLoaded) await SplashScreen.hideAsync();
       } catch (e) {
         console.warn(e);
+        SplashScreen.hideAsync();
       }
     })();
   }, [fontsLoaded]);
