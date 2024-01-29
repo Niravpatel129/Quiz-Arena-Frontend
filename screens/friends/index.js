@@ -14,8 +14,8 @@ export default function FriendsScreen({ navigation }) {
         style={{
           backgroundColor: selected ? '#3F95F2' : '#ffffff',
           borderRadius: 10,
-          borderWidth: 1,
-          borderColor: selected ? '' : '#3F95F2',
+          borderWidth: selected ? 0 : 1,
+          borderColor: selected ? '' : '#beddff',
           flex: 1,
           height: 40,
           alignItems: 'center',
