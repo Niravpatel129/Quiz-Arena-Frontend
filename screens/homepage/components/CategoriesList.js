@@ -1,83 +1,122 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
-import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
+import React, { useState } from 'react';
+import { FlatList, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import DividerHeader from './DividerHeader';
 
-export default function CategoriesList({ parentCategory, subCategories }) {
+const imageMap = {
+  logos: require('./images/logos.png'),
+  friends: require('./images/friends.png'),
+  'the office': require('./images/the_office.png'),
+  flags: require('./images/flags.png'),
+  basketball: require('./images/basketball.png'),
+  capitals: require('./images/capitals.png'),
+  chemistry: require('./images/chemistry.png'),
+  biology: require('./images/biology.png'),
+  mathematics: require('./images/mathematics.png'),
+  physics: require('./images/physics.png'),
+  soccer: require('./images/soccer.png'),
+  cricket: require('./images/cricket.png'),
+  naruto: require('./images/naruto.png'),
+  'one piece': require('./images/one_piece.png'),
+  'attack on titan': require('./images/attack_on_titan.png'),
+  'game of thrones': require('./images/game_of_thrones.png'),
+  valorant: require('./images/valorant.png'),
+  'league of legends': require('./images/league_of_legends.png'),
+  overwatch: require('./images/overwatch.png'),
+  'pokemon gen 1': require('./images/pokemon_gen_1.png'),
+  'general knowledge': require('./images/general_knowledge.png'),
+};
+
+function CategoryCard({ item, parentCategory }) {
   const navigation = useNavigation();
+  const [imageSource, setImageSource] = useState(
+    imageMap[item.name] || {
+      uri:
+        item.logo ||
+        'https://images.unsplash.com/photo-1608848461950-0fe51dfc41cb?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
+    },
+  );
 
-  const renderCategoryCard = ({ item, index = 1 }) => {
-    console.log('🚀  item:', item);
-    // color options for linear gradient
-    const colorOptions = {
-      blue: ['#FF8F3B', '#FF4646'],
-      red: ['#A9CDF4', '#3F95F2'],
-      green: ['#CCB6FF', '#9769FF'],
-      yellow: ['#00AFB9', '#A4FAFF'],
-    };
+  const handleImageError = () => {
+    if (!imageMap[item.name]) {
+      setImageSource({
+        uri:
+          item.logo ||
+          'https://images.unsplash.com/photo-1608848461950-0fe51dfc41cb?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
+      });
+    }
+  };
 
-    // pick a color based on index in order keep going through the color options
-    const pickedRandomColor = Object.values(colorOptions)[index % 4];
+  const nameId = item.name.split(' ').join('-');
 
-    return (
+  return (
+    <View
+      style={{
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <TouchableOpacity
+        style={{
+          borderRadius: 16,
+          overflow: 'hidden',
+          marginRight: 10,
+        }}
         onPress={() => {
           navigation.navigate('CategoryScreen', {
-            categoryId: item.name.split(' ').join('-'),
+            categoryId: nameId,
             categoryName: item.name,
             parentCategory: parentCategory,
-            categoryImage: '',
+            categoryImage: item.logo || 'default_image_url',
           });
         }}
       >
-        <LinearGradient
-          colors={pickedRandomColor}
+        <ImageBackground
+          source={imageSource}
+          onError={handleImageError}
           style={{
             width: 120,
             height: 160,
             alignItems: 'center',
             justifyContent: 'space-evenly',
-            borderRadius: 16,
-            marginRight: 10,
             padding: 2,
           }}
         >
-          <Image
-            source={{
-              uri:
-                item.logo ||
-                'https://cdn.discordapp.com/attachments/1198039556696571934/1200954944623231026/val_logo.png?ex=65c80f73&is=65b59a73&hm=985240294e0257c5ec347099cff49df0d4af15a01271734e030b3da10d1390c3&',
-            }}
+          <View
             style={{
-              width: 50,
-              height: 50,
-              zIndex: -3,
-            }}
-          ></Image>
-
-          <Text
-            numberOfLines={2}
-            ellipsizeMode='tail'
-            style={{
-              color: '#fff',
-              fontFamily: 'poppins-bold',
-              fontSize: RFValue(12),
-              marginTop: 3,
-              textTransform: 'capitalize',
-              textAlign: 'center',
-              height: 50,
-
-              // make ... after 2 lines
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              width: '100%',
+              height: '100%',
+              alignItems: 'flex-end',
+              justifyContent: 'flex-end',
             }}
           >
-            {item.name}
-          </Text>
-        </LinearGradient>
+            <View></View>
+            <Ionicons name='play-circle' size={40} color='#fff' />
+          </View>
+        </ImageBackground>
       </TouchableOpacity>
-    );
-  };
+      <Text
+        style={{
+          fontSize: 12,
+          fontWeight: 'bold',
+          color: '#1d284b',
+          textTransform: 'capitalize',
+          maxWidth: 90,
+          textAlign: 'center',
+          flexWrap: 'wrap',
+          flexShrink: 1,
+        }}
+      >
+        {item.name}
+      </Text>
+    </View>
+  );
+}
+
+export default function CategoriesList({ parentCategory, subCategories }) {
+  console.log(subCategories.map((category) => category.name));
 
   return (
     <View>
@@ -86,7 +125,7 @@ export default function CategoriesList({ parentCategory, subCategories }) {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={subCategories}
-        renderItem={({ item, index }) => <>{renderCategoryCard({ item: item, index: index })}</>}
+        renderItem={({ item }) => <CategoryCard item={item} parentCategory={parentCategory} />}
       />
     </View>
   );

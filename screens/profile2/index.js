@@ -193,10 +193,18 @@ export default function Profile2({ userId }) {
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{
-            // marginVertical: 20,
             marginHorizontal: 10,
           }}
         >
+          {!userId && (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ProfileEdit');
+              }}
+            >
+              <Ionicons name='ios-cog' size={24} color='#262625' />
+            </TouchableOpacity>
+          )}
           <Animated.View
             style={[
               animatedStyle,

@@ -1,3 +1,5 @@
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { Text } from 'native-base';
 import React from 'react';
 import { Alert, Linking, TouchableOpacity, View } from 'react-native';
@@ -6,6 +8,7 @@ import { useAuth } from '../context/auth/AuthContext';
 
 export default function ProfileEditScreen() {
   const auth = useAuth();
+  const navigation = useNavigation();
 
   const handleDelete = async () => {
     try {
@@ -45,99 +48,108 @@ export default function ProfileEditScreen() {
     );
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        // justifyContent: 'center',
-        width: '100%',
-      }}
-    >
-      <Text
+    <View style={{}}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Ionicons name='ios-arrow-back' size={30} color='black' style={{ margin: 20 }} />
+      </TouchableOpacity>
+      <View
         style={{
-          color: 'white',
-          fontSize: 20,
-          fontWeight: 700,
-          marginTop: 20,
+          // flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
           width: '100%',
-          textAlign: 'center',
         }}
       >
-        More Options
-      </Text>
+        <Text
+          style={{
+            color: 'black',
+            fontSize: 20,
+            fontWeight: 700,
+            marginTop: 20,
+            width: '100%',
+            textAlign: 'center',
+          }}
+        >
+          Advanced Settings
+        </Text>
 
-      <View>
-        <TouchableOpacity
-          style={{
-            marginTop: 20,
-            backgroundColor: '#e96f6f',
-            padding: 10,
-            width: 200,
-            borderRadius: 5,
-          }}
-          onPress={() => {
-            // are you sure
+        <View>
+          <TouchableOpacity
+            style={{
+              marginTop: 20,
+              // backgroundColor: '#e96f6f',
+              borderWidth: 1,
+              padding: 10,
+              width: 200,
+              borderRadius: 5,
+            }}
+            onPress={() => {
+              // are you sure
 
-            showAlert();
-          }}
-        >
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontSize: 20,
-              fontWeight: 700,
+              showAlert();
             }}
           >
-            Delete Account
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            marginTop: 20,
-            backgroundColor: '#e96f6f',
-            padding: 10,
-            width: 200,
-            borderRadius: 5,
-          }}
-          onPress={() => {
-            auth.signOut();
-          }}
-        >
-          <Text
+            <Text
+              style={{
+                color: 'black',
+                textAlign: 'center',
+                fontSize: 20,
+                fontWeight: 700,
+              }}
+            >
+              Delete Account
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             style={{
-              color: 'white',
-              textAlign: 'center',
-              fontSize: 20,
-              fontWeight: 700,
+              marginTop: 20,
+              // backgroundColor: '#e96f6f',
+              borderWidth: 1,
+              padding: 10,
+              width: 200,
+              borderRadius: 5,
+            }}
+            onPress={() => {
+              // auth.signOut();
+              navigation.navigate('SignUpLogin');
             }}
           >
-            Logout
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            marginTop: 20,
-            backgroundColor: '#f96363',
-            padding: 10,
-            width: 200,
-            borderRadius: 5,
-          }}
-          onPress={() => {
-            Linking.openURL('https://quizarena.gg/privacy');
-          }}
-        >
-          <Text
+            <Text
+              style={{
+                color: 'black',
+                textAlign: 'center',
+                fontSize: 20,
+                fontWeight: 700,
+              }}
+            >
+              Logout
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             style={{
-              color: 'white',
-              textAlign: 'center',
-              fontSize: 20,
-              fontWeight: 700,
+              marginTop: 20,
+              // backgroundColor: '#f96363',
+              padding: 10,
+              width: 200,
+              borderWidth: 1,
+              borderRadius: 5,
+            }}
+            onPress={() => {
+              Linking.openURL('https://quizarena.gg/privacy');
             }}
           >
-            Terms of Use
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                color: 'black',
+                textAlign: 'center',
+                fontSize: 20,
+                fontWeight: 700,
+              }}
+            >
+              Terms of Use
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

@@ -2,21 +2,12 @@ import React from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const theme = {
-  colors: {
-    primary: '#4DAAFF', // Replace with your color
-    background: '#1d284b', // Replace with your color
-    text: 'white', // Replace with your color
-  },
-};
-
 const ICONS = {
-  Categories: 'ios-tree',
+  Categories: 'ios-home',
   History: 'calendar',
   Profile: 'ios-person',
-  Leaderboards: 'ios-trophy',
+  Rankings: 'ios-trophy',
   Friends: 'ios-people',
-  // Notifications: 'ios-notifications',
 };
 
 const TabBar2 = ({ state, descriptors, navigation }) => {
@@ -24,16 +15,12 @@ const TabBar2 = ({ state, descriptors, navigation }) => {
     <SafeAreaView
       style={{
         backgroundColor: '#FFFFFF',
-        // marginTop: 0,
       }}
     >
       <View
         style={{
           flexDirection: 'row',
           backgroundColor: '#FFFFFF',
-          // paddingBottom: 10,
-          // paddingTop: 16,
-          // paddingTop: 16,
         }}
       >
         {state.routes.map((route, index) => {
@@ -41,7 +28,7 @@ const TabBar2 = ({ state, descriptors, navigation }) => {
 
           const isFocused = state.index === index;
 
-          const iconName = ICONS[route.name] || 'book';
+          const iconName = ICONS[route.name] || 'ios-home';
 
           const onPress = () => {
             const event = navigation.emit({
@@ -76,7 +63,6 @@ const TabBar2 = ({ state, descriptors, navigation }) => {
                 alignItems: 'center',
                 paddingTop: 18,
                 paddingBottom: 10,
-                // background: 'red',
                 justifyContent: 'center',
               }}
             >

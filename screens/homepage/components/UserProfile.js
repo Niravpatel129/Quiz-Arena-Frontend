@@ -111,10 +111,10 @@ export default function UserProfile({ userData }) {
                 style={{
                   color: '#3F95F2',
                   fontFamily: 'poppins-semiBold',
-                  fontSize: RFValue(14),
+                  fontSize: RFValue(12),
                 }}
               >
-                {userData.averageRating && <>Rating: {userData.averageRating || 0}</>}
+                {userData.averageRating && <>Arena Rating: {userData.averageRating || 0}</>}
               </Text>
             </View>
           </View>

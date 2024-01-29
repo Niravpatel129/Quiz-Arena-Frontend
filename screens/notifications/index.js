@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
 import { useAuth } from '../../context/auth/AuthContext';
 
@@ -30,9 +31,8 @@ export default function NotificationsScreen({ navigation }) {
     fetchNotifications();
   };
 
-  const acceptNotification = async (id, gameId, category, type) => {
-    await newRequest.delete(`/users/notifications/${id}`);
-
+  const acceptNotification = async (id, gameId, category, type, options) => {
+    console.log('🚀  options:', options);
     if (type === 'gameInvite') {
       if (!gameId || !category) {
         alert('Game failed to start due to an error.');
@@ -48,8 +48,23 @@ export default function NotificationsScreen({ navigation }) {
     }
 
     if (type === 'friendRequest') {
-      alert('Friend request accepted!');
+      await newRequest.post(`/users/addFriend`, {
+        friendId: options.from,
+      });
+
+      Toast.show({
+        type: 'success',
+        position: 'bottom',
+        text1: 'Success',
+        text2: 'Friend request accepted!',
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
     }
+
+    await newRequest.delete(`/users/notifications/${id}`);
   };
 
   const renderNotification = (notificationInfo) => {
@@ -69,7 +84,7 @@ export default function NotificationsScreen({ navigation }) {
                 height: 80,
                 borderRadius: 100,
                 borderWidth: 3,
-                borderColor: 'white',
+                borderColor: '#5E6064',
               }}
               source={{
                 uri: 'https://t4.ftcdn.net/jpg/05/69/84/67/360_F_569846700_i3o9u2fhPVVq7iJAzkqMqCwjWSyv53tT.jpg',
@@ -86,7 +101,7 @@ export default function NotificationsScreen({ navigation }) {
           >
             <Text
               style={{
-                color: 'white',
+                color: '#5E6064',
                 fontSize: 18,
                 maxWidth: 250,
                 marginLeft: 10,
@@ -110,6 +125,7 @@ export default function NotificationsScreen({ navigation }) {
                     notificationInfo?.options?.gameId,
                     notificationInfo?.options?.category,
                     notificationInfo.type,
+                    notificationInfo,
                   )
                 }
                 style={{
@@ -120,7 +136,7 @@ export default function NotificationsScreen({ navigation }) {
               >
                 <Text
                   style={{
-                    color: 'white',
+                    color: '#5E6064',
                     fontSize: 18,
                     fontWeight: 700,
                   }}
@@ -138,7 +154,7 @@ export default function NotificationsScreen({ navigation }) {
               >
                 <Text
                   style={{
-                    color: 'white',
+                    color: '#5E6064',
                     fontSize: 18,
                     fontWeight: 700,
                   }}
@@ -168,14 +184,14 @@ export default function NotificationsScreen({ navigation }) {
     <View
       style={{
         height: '100%',
-        backgroundColor: '#1c2141',
+        backgroundColor: '#ffffff',
       }}
     >
       <SafeAreaView>
         <Ionicons
           name='arrow-back'
           size={24}
-          color='white'
+          color='#5E6064'
           style={{ marginTop: 16, marginLeft: 16 }}
           onPress={() => navigation.goBack()}
         />
@@ -200,7 +216,7 @@ export default function NotificationsScreen({ navigation }) {
               {notifications?.length === 0 && (
                 <Text
                   style={{
-                    color: 'white',
+                    color: '#5E6064',
                     fontSize: 18,
                     marginTop: 30,
                   }}

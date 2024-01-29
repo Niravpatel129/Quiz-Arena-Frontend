@@ -36,7 +36,7 @@ export default function CustomHeader2(props) {
                 alignItems: 'center',
               }}
             >
-              <Image source={require('../../assets/icon.png')} style={{ width: 40, height: 40 }} />
+              <Image source={require('../../assets/logo.png')} style={{ width: 40, height: 40 }} />
               <Text
                 style={{
                   color: 'white',

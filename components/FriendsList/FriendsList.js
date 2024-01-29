@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
 import formatLastActive from '../../helpers/formatLastActive';
 import ChallangeModal from '../ChallangeModal/ChallangeModal';
@@ -67,10 +68,29 @@ export default function FriendsList() {
       });
 
       setTextInput('');
-      alert('Friend request sent!');
+
+      Toast.show({
+        type: 'success',
+        position: 'bottom',
+        text1: 'Success',
+        text2: 'Friend request sent!',
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
     } catch (err) {
       console.log(err);
-      alert('User not found');
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Error',
+        text2: 'Friend request failed to send.',
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
     }
   };
 
