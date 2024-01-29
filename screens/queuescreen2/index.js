@@ -292,7 +292,7 @@ export default function QueueScreen2({ route }) {
               flex: 1,
               backgroundColor: 'white',
               padding: 20,
-              marginHorizontal: 20,
+              marginHorizontal: 10,
               marginVertical: 20,
               borderRadius: 25,
             }}
