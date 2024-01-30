@@ -1,35 +1,71 @@
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { useTransitionalInterstitialAd } from '../../../hooks/useTransitionalInterstitialAd';
+import React, { useEffect } from 'react';
+import { Platform, Text, TouchableOpacity, View } from 'react-native';
+import { TestIds, useInterstitialAd } from 'react-native-google-mobile-ads';
+import { useTracking } from '../../../context/tracking/TrackingContext';
 
+// let TestIds = {
+//   INTERSTITIAL: 'ca-app-pub-3940256099942544/1033173712',
+// };
+
+// let useInterstitialAd = () => {
+//   return {
+//     isLoaded: true,
+//     isClosed: false,
+//     load: () => {},
+//     show: () => {},
+//   };
+// };
+
+const androidORIOSAdUnitId =
+  Platform.OS === 'ios'
+    ? 'ca-app-pub-7342852291876571/2789459022'
+    : 'ca-app-pub-7342852291876571/7954155798';
+
+const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : androidORIOSAdUnitId;
 export default function AgainButtons({ opponentId, categoryName, handleRematch }) {
   const navigation = useNavigation();
-  const [showAd] = useTransitionalInterstitialAd();
+  const { trackingStatus } = useTracking();
+  const { isLoaded, isClosed, load, show } = useInterstitialAd(adUnitId, {
+    requestNonPersonalizedAdsOnly: !trackingStatus || true,
+  });
+  const [nextScreen, setNextScreen] = React.useState({
+    name: 'Categories',
+    config: {},
+  });
 
-  const ShowAdBeforeNavigation = async (navigationTo, options) => {
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  useEffect(() => {
+    if (isClosed) {
+      navigation.navigate(nextScreen.name, nextScreen.config);
+    }
+  }, [isClosed, navigation]);
+
+  const ShowAdBeforeNavigation = async (navigationTo, options = {}) => {
     try {
-      const gameCount = await AsyncStorage.getItem('gameCount');
+      let gameCount = await AsyncStorage.getItem('gameCount');
+      gameCount = gameCount ? parseInt(gameCount) + 1 : 1;
+      await AsyncStorage.setItem('gameCount', gameCount.toString());
 
-      if (!gameCount) {
-        await AsyncStorage.setItem('gameCount', '1');
-      } else {
-        const newGameCount = parseInt(gameCount) + 1;
-        await AsyncStorage.setItem('gameCount', newGameCount.toString());
-
-        if (newGameCount % 3 === 0) {
-          console.log('showing ad');
-          await showAd();
+      if (gameCount % 3 === 0) {
+        console.log('Showing an ad :(');
+        if (isLoaded) {
+          setNextScreen({ name: navigationTo, config: options });
+          show();
+        } else {
+          navigation.navigate(navigationTo, options);
         }
+      } else {
+        navigation.navigate(navigationTo, options);
       }
-
-      navigation.navigate(navigationTo, options);
-      return;
     } catch (err) {
+      console.log('Error in ShowAdBeforeNavigation:', err);
       navigation.navigate(navigationTo, options);
-      console.log(err);
     }
   };
 
@@ -37,6 +73,7 @@ export default function AgainButtons({ opponentId, categoryName, handleRematch }
     return (
       <TouchableOpacity
         onPress={async () => {
+          setNextScreen({ name: 'Categories', config: {} });
           await ShowAdBeforeNavigation('Categories');
         }}
         style={{
@@ -116,6 +153,11 @@ export default function AgainButtons({ opponentId, categoryName, handleRematch }
     return (
       <TouchableOpacity
         onPress={async () => {
+          setNextScreen({
+            name: 'Queue',
+            config: { categoryId: categoryName.split(' ').join('-'), categoryName: categoryName },
+          });
+
           await ShowAdBeforeNavigation('Queue', {
             categoryId: categoryName.split(' ').join('-'),
             categoryName: categoryName,

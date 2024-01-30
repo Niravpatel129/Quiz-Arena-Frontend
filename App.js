@@ -7,7 +7,6 @@ import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Linking from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
-import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
 import { LogBox, View } from 'react-native';
@@ -20,6 +19,7 @@ import { AuthProvider } from './context/auth/AuthContext';
 import { MenuProvider } from './context/menu/MenuContext';
 import { SocketProvider } from './context/socket/SocketContext';
 import { SoundProvider } from './context/sound/SoundContext';
+import { TrackingProvider } from './context/tracking/TrackingContext';
 import { UpdateProvider } from './context/update/UpdateContext';
 import ProfileEditScreen from './screens';
 import CategoryScreen2 from './screens/categoryScreen2';
@@ -107,15 +107,6 @@ function App() {
       }
     })();
   }, [fontsLoaded]);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await requestTrackingPermissionsAsync();
-      if (status === 'granted') {
-        console.log('Yay! I have user permission to track data');
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     LogBox.ignoreLogs([
@@ -289,22 +280,24 @@ function App() {
         <SocketProvider>
           <NavigationContainer theme={MyTheme} linking={linking}>
             <AuthProvider>
-              <MenuProvider>
-                <SoundProvider>
-                  <UpdateProvider>
-                    <LinearGradient
-                      colors={['#0f0c29', '#302b63', '#24243e']}
-                      style={{
-                        flex: 1,
-                        fontFeatureSettings: "'clig' off, 'liga' off",
-                      }}
-                    >
-                      <MenuModal />
-                      <StackNavigator />
-                    </LinearGradient>
-                  </UpdateProvider>
-                </SoundProvider>
-              </MenuProvider>
+              <TrackingProvider>
+                <MenuProvider>
+                  <SoundProvider>
+                    <UpdateProvider>
+                      <LinearGradient
+                        colors={['#0f0c29', '#302b63', '#24243e']}
+                        style={{
+                          flex: 1,
+                          fontFeatureSettings: "'clig' off, 'liga' off",
+                        }}
+                      >
+                        <MenuModal />
+                        <StackNavigator />
+                      </LinearGradient>
+                    </UpdateProvider>
+                  </SoundProvider>
+                </MenuProvider>
+              </TrackingProvider>
             </AuthProvider>
             <Toast />
           </NavigationContainer>
