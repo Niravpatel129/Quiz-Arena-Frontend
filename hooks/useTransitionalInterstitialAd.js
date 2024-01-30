@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import { AdEventType, InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
 
-const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-7342852291876571/2789459022';
+const androidORIOSAdUnitId =
+  Platform.OS === 'ios'
+    ? 'ca-app-pub-7342852291876571/2789459022'
+    : 'ca-app-pub-7342852291876571/7954155798';
+
+const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : androidORIOSAdUnitId;
 
 export const useTransitionalInterstitialAd = () => {
   const [ad, setAd] = useState(null);
