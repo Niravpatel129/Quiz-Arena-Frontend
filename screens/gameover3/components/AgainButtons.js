@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { useTransitionalInterstitialAd } from '../../../hooks/useTransitionalInterstitialAd.WEB';
+import { useTransitionalInterstitialAd } from '../../../hooks/useTransitionalInterstitialAd';
 
 export default function AgainButtons({ opponentId, categoryName, handleRematch }) {
   const navigation = useNavigation();
