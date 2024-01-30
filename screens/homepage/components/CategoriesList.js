@@ -60,13 +60,13 @@ function CategoryCard({ item, parentCategory }) {
       style={{
         flexDirection: 'column',
         alignItems: 'center',
+        marginRight: 10,
       }}
     >
       <TouchableOpacity
         style={{
           borderRadius: 16,
           overflow: 'hidden',
-          marginRight: 10,
         }}
         onPress={() => {
           navigation.navigate('CategoryScreen', {
@@ -112,6 +112,7 @@ function CategoryCard({ item, parentCategory }) {
           textAlign: 'center',
           flexWrap: 'wrap',
           flexShrink: 1,
+          marginTop: 4,
         }}
       >
         {item.name}
