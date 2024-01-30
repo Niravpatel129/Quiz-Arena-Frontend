@@ -99,7 +99,7 @@ export default function LeaderboardsList({ data }) {
               fontFamily: 'Roboto-Bold',
             }}
           >
-            {Math.floor(elo)}
+            {Math.floor(elo || 0)}
           </Text>
         </View>
       </View>
