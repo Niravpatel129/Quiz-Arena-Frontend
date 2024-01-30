@@ -140,13 +140,13 @@ const GameScreen = ({ navigation, route }) => {
     });
 
     socketService.on('game_over', (results) => {
-      console.log(' rocket game over');
       setGameInProgress(false);
 
       if (hasNavigated.current) {
         return;
       }
 
+      console.log(' rocket game over');
       hasNavigated.current = true;
       const mySocketId = socketService?.socket?.id;
 
