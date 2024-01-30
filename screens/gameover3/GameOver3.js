@@ -133,7 +133,7 @@ export default function GameOver3({ route }) {
             borderTopRightRadius: 25,
             width: '100%',
             height: '100%',
-            paddingVertical: 40,
+            paddingVertical: 20,
             paddingHorizontal: 5,
           }}
         >
@@ -147,7 +147,7 @@ export default function GameOver3({ route }) {
             </View>
             <View
               style={{
-                marginTop: 30,
+                marginTop: 20,
                 alignItems: 'center',
               }}
             >
@@ -158,7 +158,7 @@ export default function GameOver3({ route }) {
             </View>
             <View
               style={{
-                marginTop: 30,
+                marginTop: 20,
                 alignItems: 'center',
               }}
             >
@@ -166,7 +166,7 @@ export default function GameOver3({ route }) {
             </View>
             <View
               style={{
-                marginTop: 30,
+                marginTop: 20,
                 alignItems: 'center',
               }}
             >

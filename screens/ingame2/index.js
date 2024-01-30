@@ -71,7 +71,7 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
                 style={{
                   flex: 1,
                   width: '100%',
-                  marginTop: 10,
+                  height: '100%',
                   marginBottom: 30,
                   alignItems: 'center',
                   justifyContent: 'center',

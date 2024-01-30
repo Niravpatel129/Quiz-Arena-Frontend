@@ -18,7 +18,7 @@ export default function Exp() {
       <Text
         style={{
           fontFamily: 'poppins-bold',
-          fontSize: 32,
+          fontSize: 28,
           color: '#3F95F2',
         }}
       >
@@ -27,7 +27,7 @@ export default function Exp() {
       <Text
         style={{
           fontFamily: 'poppins-regular',
-          fontSize: 32,
+          fontSize: 28,
           marginLeft: 10,
           color: '#5E6064',
         }}

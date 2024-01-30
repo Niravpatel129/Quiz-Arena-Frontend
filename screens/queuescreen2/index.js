@@ -28,6 +28,7 @@ export default function QueueScreen2({ route }) {
   const categoryName = route.params?.categoryName || 'Logos';
   const [estimatedWaitTime, setEstimatedWaitTime] = useState(0);
   const { userData, fetchUser } = useAuth();
+  console.log('🚀  userData:', userData);
   const { setUpdateRequired } = useUpdateContext();
   const intervalRef = useRef(null);
   const [defaultQueueTime, setDefaultQueueTime] = useState(100);
@@ -189,7 +190,7 @@ export default function QueueScreen2({ route }) {
                 marginTop: 5,
               }}
             >
-              {userData?.averageRating} Rating
+              {userData?.allRating[categoryName]} Rating
             </Text>
           </View>
         </View>
@@ -279,12 +280,12 @@ export default function QueueScreen2({ route }) {
             style={{
               position: 'absolute',
               zIndex: 1,
-              top: 40,
-              left: 20,
+              top: 5,
+              left: 10,
               padding: 5,
             }}
           >
-            <Ionicons name='arrow-back' size={34} color='white' />
+            <Ionicons name='arrow-back' size={34} color='#ffffff' />
           </TouchableOpacity>
 
           <View
@@ -293,6 +294,7 @@ export default function QueueScreen2({ route }) {
               backgroundColor: 'white',
               padding: 20,
               marginHorizontal: 10,
+              marginTop: 50,
               marginVertical: 20,
               borderRadius: 25,
             }}

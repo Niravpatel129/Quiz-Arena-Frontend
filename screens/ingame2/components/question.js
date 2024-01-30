@@ -11,15 +11,17 @@ export default function Question({ question, questionImage }) {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#F8D2E6',
-        padding: 20,
+        paddingTop: 10,
+        paddingHorizontal: 10,
         height: '100%',
         borderRadius: 20,
+        flex: 1,
       }}
     >
       <Text
         style={{
           fontFamily: 'poppins-semiBold',
-          fontSize: RFValue(14),
+          fontSize: question?.length > 30 ? RFValue(13) : RFValue(15),
           textAlign: 'center',
           color: '#262625',
         }}
@@ -34,8 +36,8 @@ export default function Question({ question, questionImage }) {
           }}
           style={{
             marginTop: 10,
-            width: 150,
-            height: 100,
+            width: 190,
+            height: 190,
           }}
         />
       )}

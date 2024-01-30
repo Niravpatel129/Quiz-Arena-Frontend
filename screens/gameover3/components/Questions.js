@@ -58,6 +58,13 @@ export default function Questions({ questions }) {
         >
           {questionData.Question}
         </Text>
+        {questionData.QuestionImage && (
+          <Image
+            resizeMode='contain'
+            source={{ uri: questionData.QuestionImage }}
+            style={{ width: 150, height: 150, marginBottom: 10 }}
+          />
+        )}
         <View
           style={{
             width: '100%',
