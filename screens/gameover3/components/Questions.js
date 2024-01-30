@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
 import React, { useState } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
 
 export default function Questions({ questions }) {
@@ -60,7 +61,7 @@ export default function Questions({ questions }) {
         </Text>
         {questionData.QuestionImage && (
           <Image
-            resizeMode='contain'
+            contentFit='contain'
             source={{ uri: questionData.QuestionImage }}
             style={{ width: 150, height: 150, marginBottom: 10 }}
           />
