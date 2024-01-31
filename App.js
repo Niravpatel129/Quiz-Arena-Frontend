@@ -7,6 +7,7 @@ import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Linking from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import { NativeBaseProvider } from 'native-base';
 import { useEffect } from 'react';
 import { LogBox, View } from 'react-native';
@@ -95,6 +96,17 @@ const linking = {
 
 function App() {
   const [fontsLoaded] = useFonts(fonts);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await requestTrackingPermissionsAsync();
+      if (status === 'granted') {
+        console.log('Yay! I have user permission to track data');
+      } else {
+        console.log('Boo! I do not have user permission to track data');
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {
