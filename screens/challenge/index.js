@@ -1,6 +1,6 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
-import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
@@ -16,7 +16,7 @@ export default function ChallengeScreen({ route }) {
   const gameId = routeParam?.gameId || '123';
   const { userData, fetchUser } = useAuth();
   const navigation = useNavigation();
-  const [gameExpired, setGameExpired] = useState(false);
+  const [gameExpired, setGameExpired] = useState(true);
 
   useEffect(() => {
     fetchUser();
@@ -75,9 +75,14 @@ export default function ChallengeScreen({ route }) {
 
   const PlayerCard = (playerData, isPlaceholder) => {
     return (
-      <View style={{}}>
+      <View
+        style={{
+          borderRadius: 30,
+        }}
+      >
         <Image
           style={{
+            overflow: 'hidden',
             width: 120,
             height: 120,
             borderRadius: 30,
@@ -94,7 +99,7 @@ export default function ChallengeScreen({ route }) {
         />
         <Text
           style={{
-            color: 'white',
+            color: '#69829c',
             fontSize: 16,
             fontFamily: 'Inter-Bold',
             textAlign: 'center',
@@ -126,148 +131,169 @@ export default function ChallengeScreen({ route }) {
   };
 
   return (
-    <LinearGradient
-      colors={['#0f0c29', '#302b63', '#24243e']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0, y: 1 }}
-      style={{ height: '100%', padding: 5 }}
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: '#ffffff',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
     >
-      <View>
-        {!gameExpired && (
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              alignItems: 'center',
-              marginTop: 40,
-            }}
-          >
-            <View>
-              {PlayerCard(
-                {
-                  tag: 'Player Tag',
-                  playerName: userData?.username || 'Alex Smith',
-                  country: userData?.country || 'ca',
-                  avatar: userData?.avatar || '',
-                  elo: userData?.allRating[categoryName] || 1200,
-                  experience: userData?.experience,
-                },
-                false,
-              )}
-            </View>
-            <View>
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: 45,
-                  fontFamily: 'Inter-Regular',
-                  textAlign: 'center',
-                }}
-              >
-                VS
-              </Text>
-            </View>
-            <View>{PlayerCard({}, true)}</View>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={{
+          position: 'absolute',
+          top: 20,
+          left: 20,
+        }}
+      >
+        <Ionicons
+          name='close'
+          size={24}
+          color='black'
+          // style={{ position: 'absolute', top: 20, left: 20 }}
+        />
+      </TouchableOpacity>
+      {!gameExpired && (
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            marginTop: 40,
+          }}
+        >
+          <View>
+            {PlayerCard(
+              {
+                tag: 'Player Tag',
+                playerName: userData?.username || 'Alex Smith',
+                country: userData?.country || 'ca',
+                avatar: userData?.avatar || '',
+                elo: userData?.allRating[categoryName] || 1200,
+                experience: userData?.experience,
+              },
+              false,
+            )}
           </View>
-        )}
+          <View>
+            <Text
+              style={{
+                color: '#1e1e1e',
+                fontSize: 45,
+                fontFamily: 'Inter-Regular',
+                textAlign: 'center',
+              }}
+            >
+              VS
+            </Text>
+          </View>
+          <View>{PlayerCard({}, true)}</View>
+        </View>
+      )}
 
-        {!gameExpired ? (
-          <>
-            <View>
-              <View
-                style={{
-                  marginTop: 40,
-                }}
-              >
-                <Text
-                  style={{
-                    color: 'white',
-                    fontSize: 25,
-                    fontFamily: 'Inter-Regular',
-                    textAlign: 'center',
-                  }}
-                >
-                  Waiting for your opponent to join...
-                </Text>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontSize: 25,
-                    fontFamily: 'Inter-Bold',
-                    textAlign: 'center',
-                  }}
-                >
-                  {capitalizeFirstLetter(categoryName) || 'Logos'}
-                </Text>
-              </View>
-              <View
-                style={{
-                  marginTop: 40,
-                  alignItems: 'center',
-                }}
-              >
-                <Text
-                  style={{
-                    color: 'white',
-                    fontSize: 16,
-                    fontFamily: 'Inter-Regular',
-                    textAlign: 'center',
-                    marginTop: 10,
-                  }}
-                >
-                  Time in Queue: {Math.floor(queueTime)}{' '}
-                  {queueTime % 60 === 1 ? 'second' : 'seconds'}
-                </Text>
-              </View>
-            </View>
-          </>
-        ) : (
-          <>
+      {!gameExpired ? (
+        <>
+          <View>
             <View
               style={{
-                // marginTop: 40,
-                // flex: 1,
-                height: '100%',
-                justifyContent: 'center',
-                alignItems: 'center',
+                marginTop: 40,
               }}
             >
               <Text
                 style={{
-                  color: 'white',
+                  color: '#1e1e1e',
                   fontSize: 25,
                   fontFamily: 'Inter-Regular',
                   textAlign: 'center',
                 }}
               >
-                Your challenge has expired, return back to homepage
+                Waiting for your opponent to join...
               </Text>
-
-              <TouchableOpacity
+              <Text
                 style={{
-                  backgroundColor: 'white',
-                  padding: 10,
-                  borderRadius: 5,
-                  marginTop: 10,
-                  marginHorizontal: 20,
+                  color: '#1e1e1e',
+                  fontSize: 25,
+                  fontFamily: 'Inter-Bold',
+                  textAlign: 'center',
                 }}
-                onPress={() => navigation.navigate('CategoriesHome')}
               >
-                <Text
-                  style={{
-                    color: 'black',
-                    fontSize: 16,
-                    fontFamily: 'Inter-Regular',
-                    textAlign: 'center',
-                  }}
-                >
-                  Return to homepage
-                </Text>
-              </TouchableOpacity>
+                {capitalizeFirstLetter(categoryName) || 'Logos'}
+              </Text>
             </View>
-          </>
-        )}
-      </View>
-    </LinearGradient>
+            <View
+              style={{
+                marginTop: 40,
+                alignItems: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  color: '#1e1e1e',
+                  fontSize: 16,
+                  fontFamily: 'Inter-Regular',
+                  textAlign: 'center',
+                  marginTop: 10,
+                }}
+              >
+                Time in Queue: {Math.floor(queueTime)} {queueTime % 60 === 1 ? 'second' : 'seconds'}
+              </Text>
+            </View>
+          </View>
+        </>
+      ) : (
+        <>
+          <View
+            style={{
+              // marginTop: 40,
+              // flex: 1,
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Image
+              source={{
+                uri: 'https://cdn.discordapp.com/attachments/1201815017612398662/1202213592493981787/IMG_3419.webp?ex=65cca3a8&is=65ba2ea8&hm=3b03405ac15ecc894bab9a242ba73b08301b8cd8e5cb8dd634f5dbef8290f006&',
+              }}
+              style={{ width: 200, height: 200 }}
+            />
+            <Text
+              style={{
+                color: '#1e1e1e',
+                fontSize: 25,
+                fontFamily: 'Inter-Regular',
+                textAlign: 'center',
+              }}
+            >
+              Your challenge has expired, return back to homepage
+            </Text>
+
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#2a78e6',
+                padding: 10,
+                borderRadius: 5,
+                marginTop: 10,
+                marginHorizontal: 20,
+                // borderWidth: 1,
+              }}
+              onPress={() => navigation.navigate('Home')}
+            >
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 16,
+                  fontFamily: 'Inter-Regular',
+                  textAlign: 'center',
+                }}
+              >
+                Return to homepage
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
+    </View>
   );
 }
