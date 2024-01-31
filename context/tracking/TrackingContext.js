@@ -1,3 +1,4 @@
+import requestTrackingPermissionsAsync from 'expo-tracking-transparency';
 import React, { createContext, useEffect, useState } from 'react';
 
 export const TrackingContext = createContext();
