@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import Answers from './components/answers';
 import Header from './components/header';
@@ -7,6 +7,17 @@ import Question from './components/question';
 import QuestionNoBar from './components/questionNoBar';
 
 export default function Ingame2({ roundNumber, InGameData, timer }) {
+  const AnswersRef = React.useRef(null);
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+
+  useEffect(() => {
+    imageLoaded && AnswersRef.current && AnswersRef.current.scrollToEnd({ animated: true });
+  }, [imageLoaded, roundNumber]);
+
+  useEffect(() => {
+    setImageLoaded(false);
+  }, [roundNumber]);
+
   return (
     <LinearGradient
       colors={['#EC80B4', '#3F95F2']}
@@ -33,6 +44,7 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
           }}
         >
           <ScrollView
+            ref={AnswersRef}
             contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}
             style={{
@@ -72,12 +84,13 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
                   flex: 1,
                   width: '100%',
                   height: '100%',
-                  marginBottom: 30,
+                  marginBottom: 10,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
                 <Question
+                  setImageLoaded={setImageLoaded}
                   question={InGameData.RoundData.question}
                   questionImage={InGameData.RoundData.image}
                 />

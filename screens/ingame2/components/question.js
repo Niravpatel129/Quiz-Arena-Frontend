@@ -3,7 +3,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-export default function Question({ question, questionImage }) {
+export default function Question({ question, questionImage, setImageLoaded }) {
   return (
     <View
       style={{
@@ -21,7 +21,7 @@ export default function Question({ question, questionImage }) {
       <Text
         style={{
           fontFamily: 'poppins-semiBold',
-          fontSize: question?.length > 30 ? RFValue(13) : RFValue(15),
+          fontSize: question?.length > 30 && questionImage ? RFValue(10) : RFValue(13),
           textAlign: 'center',
           color: '#262625',
         }}
@@ -30,14 +30,14 @@ export default function Question({ question, questionImage }) {
       </Text>
       {questionImage && (
         <Image
+          onLoad={() => setImageLoaded(true)}
           contentFit='contain'
           source={{
             uri: questionImage || 'https://www.worldatlas.com/r/w1200/img/flag/ca-flag.jpg',
           }}
           style={{
-            marginTop: 10,
-            width: 190,
-            height: 190,
+            width: 180,
+            height: 180,
           }}
         />
       )}
