@@ -22,7 +22,9 @@ export default function Leaderboards2() {
   useEffect(() => {
     const fetchLeaderboards = async () => {
       try {
-        const response = await newRequest.get(`/leaderboards/${selectedTab.toLowerCase()}`);
+        let key = selectedTab.toLowerCase() === 'friends' ? 'added-friends' : 'global';
+
+        const response = await newRequest.get(`/leaderboards/${key}`);
         console.log('🚀  response:', response);
         const data = response.data;
         if (!data) return;

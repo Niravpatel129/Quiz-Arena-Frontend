@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import * as Contacts from 'expo-contacts';
 import { ScrollView } from 'native-base';
 import React, { useEffect } from 'react';
@@ -17,6 +18,7 @@ export default function SocialsList() {
   const [friends = [], setFriends] = React.useState([]);
   const [syncedFriends = [], setSyncedFriends] = React.useState([]);
   const [textInput, setTextInput] = React.useState('');
+  const navigation = useNavigation();
 
   useEffect(() => {
     const getContacts = async () => {
