@@ -38,9 +38,7 @@ export default function ChallangeModal({ opponentUserId, isModalVisible, hideMod
   }, []);
 
   const handleCategoryChange = (itemValue, itemIndex) => {
-    if (!pickerItems[itemIndex].isDivider) {
-      setSelectedCategory(itemValue);
-    }
+    setSelectedCategory(itemValue);
   };
 
   return (

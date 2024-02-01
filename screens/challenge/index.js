@@ -192,24 +192,31 @@ export default function ChallengeScreen({ route }) {
         </View>
       )}
 
-      {!gameExpired ? (
+      {gameExpired ? (
         <>
           <View>
             <View
               style={{
-                marginTop: 40,
+                alignItems: 'center',
               }}
             >
               <Text
                 style={{
                   color: '#1e1e1e',
-                  fontSize: 25,
+                  fontSize: 20,
                   fontFamily: 'Inter-Regular',
                   textAlign: 'center',
+                  marginBottom: 10,
                 }}
               >
                 Waiting for your opponent to join...
               </Text>
+              <Image
+                source={{
+                  uri: 'https://cdn.discordapp.com/attachments/1201815017612398662/1202213592493981787/IMG_3419.webp?ex=65cca3a8&is=65ba2ea8&hm=3b03405ac15ecc894bab9a242ba73b08301b8cd8e5cb8dd634f5dbef8290f006&',
+                }}
+                style={{ width: 200, height: 200 }}
+              />
               <Text
                 style={{
                   color: '#1e1e1e',
@@ -236,7 +243,7 @@ export default function ChallengeScreen({ route }) {
                   marginTop: 10,
                 }}
               >
-                Time in Queue: {Math.floor(queueTime)} {queueTime % 60 === 1 ? 'second' : 'seconds'}
+                Time waiting: {Math.floor(queueTime)} {queueTime % 60 === 1 ? 'second' : 'seconds'}
               </Text>
             </View>
           </View>
