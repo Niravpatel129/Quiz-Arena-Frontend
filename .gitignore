@@ -72,5 +72,3 @@ yarn-error.*
 *.tsbuildinfo
 
 # @end expo-cli
-hooks/useTransitionalInterstitialAd.native.js
-screens/gameover3/components/AgainButtons.js
