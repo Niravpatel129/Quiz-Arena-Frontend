@@ -2,7 +2,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
-import { Animated, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Animated,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { newRequest } from '../../api/newRequest';
 import InviteModal from '../../components/InviteModal/InviteModal';
@@ -205,48 +213,57 @@ export default function CategoryScreen2({ route }) {
                 gap: 10,
               }}
             >
-              <LinearGradient
-                colors={['#FF8F3B', '#FF4646']}
-                start={{ x: 0.0, y: 0.0 }}
-                end={{ x: 1.0, y: 1.0 }}
-                style={{
-                  width: 192,
-                  height: 188,
-                  borderRadius: 25,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  shadowOffset: { width: 1, height: 1 },
-                  shadowColor: '#6F7CC8',
-                  shadowOpacity: 0.5,
-                  shadowRadius: 8,
-                  elevation: 5,
-                  padding: 10,
+              <TouchableWithoutFeedback
+                onLongPress={() => {
+                  navigation.navigate('Solo', {
+                    categoryId: categoryId,
+                    categoryName: category,
+                  });
                 }}
               >
-                <Ionicons
-                  name={getParentCategoryIcon(categoryParent)}
-                  size={100}
-                  color='white'
+                <LinearGradient
+                  colors={['#FF8F3B', '#FF4646']}
+                  start={{ x: 0.0, y: 0.0 }}
+                  end={{ x: 1.0, y: 1.0 }}
                   style={{
-                    transform: [{ rotate: '-5deg' }],
-                  }}
-                />
-                <Text
-                  style={{
-                    fontSize: category.length > 20 ? RFValue(12) : RFValue(15),
-                    fontWeight: '600',
-                    lineHeight: 22,
-                    fontStyle: 'normal',
-                    textAlign: 'center',
-                    color: '#FFFFFF',
-                    fontFamily: 'poppins-bold',
-                    marginTop: -10,
-                    textTransform: 'capitalize',
+                    width: 192,
+                    height: 188,
+                    borderRadius: 25,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    shadowOffset: { width: 1, height: 1 },
+                    shadowColor: '#6F7CC8',
+                    shadowOpacity: 0.5,
+                    shadowRadius: 8,
+                    elevation: 5,
+                    padding: 10,
                   }}
                 >
-                  {category}
-                </Text>
-              </LinearGradient>
+                  <Ionicons
+                    name={getParentCategoryIcon(categoryParent)}
+                    size={100}
+                    color='white'
+                    style={{
+                      transform: [{ rotate: '-5deg' }],
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: category.length > 20 ? RFValue(12) : RFValue(15),
+                      fontWeight: '600',
+                      lineHeight: 22,
+                      fontStyle: 'normal',
+                      textAlign: 'center',
+                      color: '#FFFFFF',
+                      fontFamily: 'poppins-bold',
+                      marginTop: -10,
+                      textTransform: 'capitalize',
+                    }}
+                  >
+                    {category}
+                  </Text>
+                </LinearGradient>
+              </TouchableWithoutFeedback>
 
               {/* Buttons Container*/}
               <View

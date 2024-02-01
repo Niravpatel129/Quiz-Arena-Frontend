@@ -28,6 +28,7 @@ import ChallengeScreen from './screens/challenge';
 import Chat from './screens/chat';
 import Contribute from './screens/contribute';
 import CreateProfile from './screens/createProfile';
+import FeederScreen from './screens/feeder';
 import FriendsScreen from './screens/friends';
 import GameScreen from './screens/game';
 import GameOver3 from './screens/gameover3/GameOver3';
@@ -41,6 +42,7 @@ import Profile2 from './screens/profile2';
 import PublicProfile from './screens/publicProfile';
 import QueueScreen2 from './screens/queuescreen2';
 import SignUpLogin from './screens/signuplogin';
+import SoloPreGame from './screens/soloPreGame';
 
 Sentry.init({
   dsn: 'https://ebea8a70fc3ccc5fe921ee897bf9f2a3@o1363835.ingest.sentry.io/4506592682246144',
@@ -194,8 +196,6 @@ function App() {
           headerShadowVisible: false,
         }}
       >
-        {/* <Stack.Screen name='Dev' component={Leaderboards2} options={{ headerShown: true }} /> */}
-
         <Stack.Screen
           name='Home'
           component={Login2}
@@ -278,6 +278,14 @@ function App() {
           component={HomeTabNavigator}
           options={{ headerShown: true }}
         />
+        <Stack.Screen
+          name='Solo'
+          component={SoloPreGame}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen name='Feeder' component={FeederScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     );
   }
