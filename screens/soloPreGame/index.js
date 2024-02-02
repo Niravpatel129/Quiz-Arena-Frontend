@@ -13,7 +13,6 @@ import {
 
 export default function SoloPreGame() {
   const navigation = useNavigation();
-  const backgroundImage = require('./images/background.png');
   const fadeAnim = new Animated.Value(0);
   const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground);
 
@@ -28,7 +27,9 @@ export default function SoloPreGame() {
 
   return (
     <AnimatedImageBackground
-      source={backgroundImage}
+      source={{
+        uri: 'https://cdn.discordapp.com/attachments/1110409819808079982/1202937279581134958/background.png?ex=65cf45a4&is=65bcd0a4&hm=0d4e4b94de5bd0f31709f4a3dfd9b219e6e3099638abc675d4ca44e1d457e9a1',
+      }}
       style={{ flex: 1, opacity: fadeAnim }}
       resizeMode='cover'
     >
