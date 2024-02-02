@@ -3,20 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { Platform, Text, TouchableOpacity, View } from 'react-native';
+import { TestIds, useInterstitialAd } from 'react-native-google-mobile-ads';
 import { useTracking } from '../../../context/tracking/TrackingContext';
-
-let TestIds = {
-  INTERSTITIAL: 'ca-app-pub-3940256099942544/1033173712',
-};
-
-let useInterstitialAd = () => {
-  return {
-    isLoaded: true,
-    isClosed: false,
-    load: () => {},
-    show: () => {},
-  };
-};
 
 const androidORIOSAdUnitId =
   Platform.OS === 'ios'
