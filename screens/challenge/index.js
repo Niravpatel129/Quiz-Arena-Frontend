@@ -17,6 +17,7 @@ export default function ChallengeScreen({ route }) {
   const { userData, fetchUser } = useAuth();
   const navigation = useNavigation();
   const [gameExpired, setGameExpired] = useState(true);
+  const [redirecting, setRedirecting] = useState(false);
 
   useEffect(() => {
     fetchUser();
@@ -31,13 +32,31 @@ export default function ChallengeScreen({ route }) {
     });
 
     socketService.on('challengeExpired', () => {
+      if (redirecting) return;
+
+      setRedirecting(true);
       if (!navigation) return null;
+
+      console.log('challengeExpired');
 
       setGameExpired(true);
       clearInterval(intervalRef.current);
+
+      // wait 3 seconds before redirecting
+      setTimeout(() => {
+        if (Platform.OS !== 'web') {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        }
+
+        navigation.navigate('Home');
+      }, 3000);
     });
 
     socketService.on('game_start', (data) => {
+      if (redirecting) return;
+
+      setRedirecting(true);
+
       clearInterval(intervalRef.current);
 
       if (Platform.OS !== 'web') {
@@ -192,7 +211,7 @@ export default function ChallengeScreen({ route }) {
         </View>
       )}
 
-      {gameExpired ? (
+      {!gameExpired ? (
         <>
           <View>
             <View
@@ -273,7 +292,7 @@ export default function ChallengeScreen({ route }) {
                 textAlign: 'center',
               }}
             >
-              Your challenge has expired, return back to homepage
+              Your challenge has expired!
             </Text>
 
             <TouchableOpacity
@@ -283,7 +302,6 @@ export default function ChallengeScreen({ route }) {
                 borderRadius: 5,
                 marginTop: 10,
                 marginHorizontal: 20,
-                // borderWidth: 1,
               }}
               onPress={() => navigation.navigate('Home')}
             >

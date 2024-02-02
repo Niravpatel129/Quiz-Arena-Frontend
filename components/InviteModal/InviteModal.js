@@ -21,8 +21,8 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
   const [showCopied, setShowCopied] = useState(false);
   const navigation = useNavigation();
   const [loadingText, setLoadingText] = useState('Waiting for opponent to join');
-  // const animation = new Animated.Value(0);
   const rotation = useSharedValue(0);
+  const [navigateToChallenge, setNavigateToChallenge] = useState(false);
 
   const spin = useAnimatedStyle(() => {
     return {
@@ -34,23 +34,6 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
     // Start the spinning animation
     rotation.value = withRepeat(withTiming(360, { duration: 2000 }), -1, false);
   }, []);
-
-  // useEffect(() => {
-  //   Animated.loop(
-  //     Animated.timing(animation, {
-  //       toValue: 5,
-  //       duration: 7800,
-  //       useNativeDriver: true, // 'useNativeDriver' set to false as we are animating non-numeric style
-  //     }),
-  //   ).start();
-
-  //   animation.addListener(({ value }) => {
-  //     const dots = '.'.repeat(Math.floor(value));
-  //     setLoadingText(`Waiting for opponent to join${dots}`);
-  //   });
-
-  //   return () => animation.removeAllListeners();
-  // }, []);
 
   useEffect(() => {
     setGameRoomId(Math.floor(Math.random() * 100000));
@@ -81,8 +64,16 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
 
     // On
 
-    socketService.on('game_start', (data) => {
+    socketService.on('game_start', async (data) => {
+      if (!isModalVisible) return;
+
       hideModal();
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      if (navigateToChallenge) return;
+
+      setNavigateToChallenge(true);
 
       if (Platform.OS !== 'web') {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);

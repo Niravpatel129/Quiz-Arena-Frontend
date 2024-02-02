@@ -162,7 +162,11 @@ export default function CategoryScreen2({ route }) {
           <InviteModal
             category={category}
             isModalVisible={isModalVisible}
-            hideModal={() => setModalVisible(false)}
+            hideModal={() => {
+              if (!isModalVisible) return;
+
+              setModalVisible(false);
+            }}
           />
           <View
             style={{
@@ -280,7 +284,11 @@ export default function CategoryScreen2({ route }) {
                   text: 'Play',
                 })}
                 {renderButton({
-                  onPress: () => setModalVisible(true),
+                  onPress: () => {
+                    if (isModalVisible) return;
+
+                    setModalVisible(true);
+                  },
                   text: 'Invite',
                 })}
                 {renderButton({

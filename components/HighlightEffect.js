@@ -27,7 +27,7 @@ const HighlightEffect = ({ isCorrect, trigger }) => {
 
   const highlightStyle = {
     ...styles.highlight,
-    width: width * 0.2, // Set width to 20% of the screen width
+    width: width * 0.05, // Set width to 20% of the screen width
     opacity: highlightAnim,
   };
 

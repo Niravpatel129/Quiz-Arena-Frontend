@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import useFeederGameMode from '../../hooks/useFeederGameMode';
 
 const FeederScreen = () => {
@@ -24,12 +24,25 @@ const FeederScreen = () => {
   console.log('🚀  currentQuestion:', currentQuestion);
 
   return (
-    <View>
-      <Text>Score: {score}</Text>
-      <Text>{currentQuestion.question}</Text>
-      <Button title='Answer' onPress={() => answerQuestion(currentQuestion.correctAnswer)} />
-      <Button title='Wrong Answer' onPress={() => answerQuestion('Wrong')} />
-    </View>
+    <SafeAreaView>
+      <View>
+        <Text>Score: {score}</Text>
+        <Text>{currentQuestion.question}</Text>
+        {currentQuestion.answers.map((answer, index) => {
+          return (
+            <TouchableOpacity
+              key={index}
+              title={answer}
+              onPress={() => answerQuestion(answer.optionText)}
+            >
+              <Text>{answer.optionText}</Text>
+            </TouchableOpacity>
+          );
+        })}
+        <Button title='Answer' onPress={() => answerQuestion(currentQuestion.correctAnswer)} />
+        <Button title='Wrong Answer' onPress={() => answerQuestion('Wrong')} />
+      </View>
+    </SafeAreaView>
   );
 };
 
