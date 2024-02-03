@@ -1,11 +1,20 @@
 import React from 'react';
-import { Button, SafeAreaView, Text, View } from 'react-native';
+import { Button, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import useFeederGameMode from '../../hooks/useFeederGameMode';
 import MainGame from './components/MainGame';
 
 const FeederScreen = () => {
-  const { questions, currentQuestionIndex, score, gameActive, startGame, answerQuestion } =
-    useFeederGameMode();
+  const {
+    questions,
+    currentQuestionIndex,
+    score,
+    gameActive,
+    startGame,
+    answerQuestion,
+    showPickPercentage,
+    continueGame,
+    continueGameOrEnd,
+  } = useFeederGameMode();
 
   const renderGameState = () => {
     if (!gameActive) {
@@ -30,7 +39,12 @@ const FeederScreen = () => {
             width: '100%',
           }}
         >
-          <MainGame question={questions[currentQuestionIndex]} onAnswer={answerQuestion} />
+          <MainGame
+            question={questions[currentQuestionIndex]}
+            onAnswer={answerQuestion}
+            showPickPercentage={showPickPercentage}
+            continueGame={continueGameOrEnd}
+          />
         </View>
       );
     }
@@ -50,6 +64,15 @@ const FeederScreen = () => {
           }}
         >
           {renderGameState()}
+          {showPickPercentage && (
+            <TouchableOpacity
+              onPress={() => {
+                continueGame();
+              }}
+            >
+              <Text>Continue</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </SafeAreaView>
     </View>

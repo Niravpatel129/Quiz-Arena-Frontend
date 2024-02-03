@@ -18,7 +18,9 @@ const useFeederGameMode = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [gameActive, setGameActive] = useState(false);
   const [score, setScore] = useState(0);
-  const [userAnswers, setUserAnswers] = useState([]); // State to store user answers
+  const [userAnswers, setUserAnswers] = useState([]);
+  const [showPickPercentage, setShowPickPercentage] = useState(false);
+  const [waitingForNext, setWaitingForNext] = useState(false); // State to manage pause
 
   useEffect(() => {
     if (gameActive) {
@@ -29,7 +31,9 @@ const useFeederGameMode = () => {
   const startGame = () => {
     setGameActive(true);
     setCurrentQuestionIndex(0);
-    setUserAnswers([]); // Reset answers when game starts
+    setUserAnswers([]);
+    setShowPickPercentage(false);
+    setWaitingForNext(false); // Reset waiting state
   };
 
   const submitUserAnswers = async () => {
@@ -45,36 +49,61 @@ const useFeederGameMode = () => {
     (answer) => {
       console.log('🚀  answer:', answer);
       const isCorrect = questions[currentQuestionIndex].correctAnswer === answer;
-      const nextIndex = currentQuestionIndex + 1;
 
-      // Save user answer
-      const userAnswer = {
-        question: questions[currentQuestionIndex]._id,
-        answer: answer,
-        isCorrect: isCorrect,
-      };
-      setUserAnswers([...userAnswers, userAnswer]);
+      setUserAnswers((prevUserAnswers) => [
+        ...prevUserAnswers,
+        {
+          question: questions[currentQuestionIndex]._id,
+          answer: answer,
+          isCorrect: isCorrect,
+        },
+      ]);
+      setShowPickPercentage(true);
+      setWaitingForNext(true); // Always pause after answering
 
-      if (isCorrect) {
-        if (nextIndex < questions.length) {
-          setCurrentQuestionIndex(nextIndex);
-        } else {
-          const startOrder = questions[questions.length - 1].order + 1;
-          fetchQuestions(5, startOrder).then((newQuestions) => {
-            setQuestions([...questions, ...newQuestions]);
-            setCurrentQuestionIndex(nextIndex);
-          });
-        }
-        setScore(score + 1);
+      if (!isCorrect) {
+        // If answer is incorrect, we also pause the game but do not immediately end it
       } else {
-        setGameActive(false);
-        submitUserAnswers(); // Submit answers when game is over
+        setScore((prevScore) => prevScore + 1);
       }
     },
-    [questions, currentQuestionIndex, userAnswers],
+    [questions, currentQuestionIndex],
   );
 
-  return { questions, currentQuestionIndex, gameActive, score, startGame, answerQuestion };
+  const continueGame = useCallback(() => {
+    const isCorrect =
+      questions[currentQuestionIndex]?.correctAnswer === userAnswers[currentQuestionIndex]?.answer;
+    if (!isCorrect && gameActive) {
+      // If the last answer was incorrect and game is still active, end the game.
+      setGameActive(false);
+      submitUserAnswers(); // Optionally submit answers here or elsewhere based on your flow
+    } else {
+      // Continue to the next question if correct or first incorrect answer was just given
+      const nextIndex = currentQuestionIndex + 1;
+      if (nextIndex < questions.length) {
+        setCurrentQuestionIndex(nextIndex);
+      } else {
+        fetchQuestions(5, questions[questions.length - 1].order + 1).then((newQuestions) => {
+          setQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
+          setCurrentQuestionIndex(nextIndex);
+        });
+      }
+    }
+    setShowPickPercentage(false);
+    setWaitingForNext(false); // Ready to proceed to the next question or end game
+  }, [currentQuestionIndex, questions, userAnswers, gameActive]);
+
+  return {
+    questions,
+    currentQuestionIndex,
+    gameActive,
+    score,
+    startGame,
+    answerQuestion,
+    showPickPercentage,
+    continueGame,
+    waitingForNext,
+  };
 };
 
 export default useFeederGameMode;

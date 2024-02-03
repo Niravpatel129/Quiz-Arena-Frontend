@@ -1,11 +1,16 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-export default function MainGame({ question, onAnswer }) {
-  console.log('🚀  question:', question);
+export default function MainGame({ question, onAnswer, showPickPercentage }) {
+  const [userSelected, setUserSelected] = React.useState(null);
+
+  useEffect(() => {
+    setUserSelected(null);
+  }, [showPickPercentage]);
+
   const renderHeader = () => {
     const skullColor =
       question.stats.correctAnswers / question.stats.totalAnswers > 0.5 ? 'red' : 'black';
@@ -73,14 +78,20 @@ export default function MainGame({ question, onAnswer }) {
   const renderAnswerButton = ({ answer }) => {
     return (
       <TouchableOpacity
-        onPress={() => onAnswer(answer.optionText)}
+        onPress={() => {
+          if (userSelected) return;
+
+          setUserSelected(answer.optionText);
+          onAnswer(answer.optionText);
+        }}
         style={{
-          borderWidth: 1,
+          borderWidth: 2,
           padding: 10,
           width: '100%',
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
+          borderColor: userSelected === answer.optionText ? 'green' : 'black',
         }}
       >
         <Text
@@ -92,7 +103,7 @@ export default function MainGame({ question, onAnswer }) {
         >
           {answer.optionText}
         </Text>
-        <Text>{answer.pickPercentage}</Text>
+        {showPickPercentage && <Text>{answer.pickPercentage}</Text>}
       </TouchableOpacity>
     );
   };
