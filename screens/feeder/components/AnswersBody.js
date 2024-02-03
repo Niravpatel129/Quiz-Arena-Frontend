@@ -1,9 +1,25 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import CustomButton from './CustomButton';
 
-const AnswersBody = ({ question, onAnswer }) => {
+const AnswersBody = ({ question, onAnswer, continueGame }) => {
   const [userSelected, setUserSelected] = React.useState(null);
+  const [gameState, setGameState] = React.useState('active');
+
+  const handleContinueGame = () => {
+    if (gameState === 'active') {
+      // submit answer
+      onAnswer(userSelected);
+      setGameState('answer-submitted');
+    }
+
+    if (gameState === 'answer-submitted') {
+      // restart game
+      continueGame();
+      setGameState('active');
+    }
+  };
 
   React.useEffect(() => {
     setUserSelected(null);
@@ -14,27 +30,15 @@ const AnswersBody = ({ question, onAnswer }) => {
     const didUserPickCorrectAnswer = answer.isCorrect && userSelected === answer.optionText;
 
     return (
-      <TouchableOpacity
+      <CustomButton
+        title={'Hello World'}
         onPress={() => {
-          // if its not null return
-          if (userSelected) return;
-
           setUserSelected(answer.optionText);
-          onAnswer(answer.optionText);
-        }}
-        style={{
-          backgroundColor: didUserPickCorrectAnswer ? 'green' : 'white',
-          borderWidth: 2,
-          padding: 20,
-          width: '100%',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
         }}
       >
         <Text
           style={{
-            color: didUserPickCorrectAnswer ? 'white' : 'black',
+            color: 'black',
             fontSize: RFValue(16),
             fontWeight: 'bold',
             fontFamily: 'poppins-regular',
@@ -42,8 +46,7 @@ const AnswersBody = ({ question, onAnswer }) => {
         >
           {answer.optionText}
         </Text>
-        {userSelected && <Text>{answer.pickPercentage}</Text>}
-      </TouchableOpacity>
+      </CustomButton>
     );
   };
 
@@ -60,6 +63,31 @@ const AnswersBody = ({ question, onAnswer }) => {
       {question.answers.map((answer, index) => {
         return <React.Fragment key={index}>{renderAnswersBody({ answer })}</React.Fragment>;
       })}
+      <View
+        style={{
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <CustomButton variant='default' onPress={() => handleContinueGame()}>
+          <Text
+            style={{
+              color: 'white',
+              textTransform: 'uppercase',
+              letterSpacing: 1.5,
+              fontWeight: 'bold',
+            }}
+          >
+            {
+              {
+                active: 'Submit Answer',
+                'answer-submitted': 'Continue',
+              }[gameState]
+            }
+          </Text>
+        </CustomButton>
+      </View>
     </View>
   );
 };
