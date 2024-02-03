@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { newRequest } from '../api/newRequest';
 
-// Function to fetch questions from your backend
 const fetchQuestions = async (numQuestions, startOrder = 0) => {
   try {
     const response = await newRequest.get(
@@ -19,6 +18,7 @@ const useFeederGameMode = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [gameActive, setGameActive] = useState(false);
   const [score, setScore] = useState(0);
+  const [userAnswers, setUserAnswers] = useState([]); // State to store user answers
 
   useEffect(() => {
     if (gameActive) {
@@ -29,15 +29,33 @@ const useFeederGameMode = () => {
   const startGame = () => {
     setGameActive(true);
     setCurrentQuestionIndex(0);
+    setUserAnswers([]); // Reset answers when game starts
+  };
+
+  const submitUserAnswers = async () => {
+    try {
+      await newRequest.post('/feeder/user-answers', userAnswers);
+      console.log('User answers submitted successfully');
+    } catch (error) {
+      console.error('Error submitting user answers:', error);
+    }
   };
 
   const answerQuestion = useCallback(
     (answer) => {
       console.log('🚀  answer:', answer);
+      const isCorrect = questions[currentQuestionIndex].correctAnswer === answer;
+      const nextIndex = currentQuestionIndex + 1;
 
-      if (questions[currentQuestionIndex].correctAnswer === answer) {
-        const nextIndex = currentQuestionIndex + 1;
+      // Save user answer
+      const userAnswer = {
+        question: questions[currentQuestionIndex]._id,
+        answer: answer,
+        isCorrect: isCorrect,
+      };
+      setUserAnswers([...userAnswers, userAnswer]);
 
+      if (isCorrect) {
         if (nextIndex < questions.length) {
           setCurrentQuestionIndex(nextIndex);
         } else {
@@ -47,13 +65,13 @@ const useFeederGameMode = () => {
             setCurrentQuestionIndex(nextIndex);
           });
         }
-
         setScore(score + 1);
       } else {
         setGameActive(false);
+        submitUserAnswers(); // Submit answers when game is over
       }
     },
-    [questions, currentQuestionIndex],
+    [questions, currentQuestionIndex, userAnswers],
   );
 
   return { questions, currentQuestionIndex, gameActive, score, startGame, answerQuestion };

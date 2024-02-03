@@ -7,6 +7,9 @@ import { RFValue } from 'react-native-responsive-fontsize';
 export default function MainGame({ question, onAnswer }) {
   console.log('🚀  question:', question);
   const renderHeader = () => {
+    const skullColor =
+      question.stats.correctAnswers / question.stats.totalAnswers > 0.5 ? 'red' : 'black';
+
     return (
       <View
         style={{
@@ -25,7 +28,7 @@ export default function MainGame({ question, onAnswer }) {
         </Text>
         <Text>Music</Text>
         <Text>
-          <Ionicons name='skull' size={32} color='black' />
+          <Ionicons name='skull' size={32} color={skullColor} />
         </Text>
       </View>
     );
@@ -68,7 +71,6 @@ export default function MainGame({ question, onAnswer }) {
   };
 
   const renderAnswerButton = ({ answer }) => {
-    console.log('🚀  answer:', answer);
     return (
       <TouchableOpacity
         onPress={() => onAnswer(answer.optionText)}
@@ -90,6 +92,7 @@ export default function MainGame({ question, onAnswer }) {
         >
           {answer.optionText}
         </Text>
+        <Text>{answer.pickPercentage}</Text>
       </TouchableOpacity>
     );
   };
