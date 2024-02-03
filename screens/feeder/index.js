@@ -44,6 +44,7 @@ const FeederScreen = () => {
           }}
         >
           <MainGame
+            score={score}
             question={questions[currentQuestionIndex]}
             onAnswer={answerQuestion}
             showPickPercentage={showPickPercentage}

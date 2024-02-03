@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Text, View } from 'react-native';
 
-const QuestionHeader = ({ question }) => {
+const QuestionHeader = ({ question, score }) => {
   const skullColor =
     question.stats?.correctAnswers / question.stats?.totalAnswers > 0.5 ? 'red' : 'black';
 
@@ -19,9 +19,21 @@ const QuestionHeader = ({ question }) => {
         }}
       >
         <Ionicons name='rocket' size={32} color='black' />
-        <Text>63</Text>
+        <Text
+          style={{
+            fontSize: 24,
+          }}
+        >
+          {score}
+        </Text>
       </Text>
-      <Text>Music</Text>
+      <Text
+        style={{
+          fontSize: 24,
+        }}
+      >
+        Music
+      </Text>
       <Text>
         <Ionicons name='skull' size={32} color={skullColor} />
       </Text>

@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import AnswersBody from './AnswersBody';
 import QuestionBody from './QuestionBody';
 import QuestionHeader from './QuestionHeader';
-export default function MainGame({ question, onAnswer, continueGame }) {
+export default function MainGame({ question, onAnswer, continueGame, score }) {
   return (
     <View
       style={{
@@ -17,7 +17,7 @@ export default function MainGame({ question, onAnswer, continueGame }) {
           height: 50,
         }}
       >
-        <QuestionHeader question={question} />
+        <QuestionHeader score={score} question={question} />
       </View>
       <QuestionBody question={question} />
 

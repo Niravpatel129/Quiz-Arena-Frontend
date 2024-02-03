@@ -5,9 +5,14 @@ import CustomButton from './CustomButton';
 
 const AnswersBody = ({ question, onAnswer, continueGame }) => {
   const [userSelected, setUserSelected] = React.useState(null);
+  const [selectedAnswer, setSelectedAnswer] = React.useState(null);
   const [gameState, setGameState] = React.useState('active');
+  const [isSelected, setIsSelected] = React.useState({});
+  const [wasCorrect, setWasCorrect] = React.useState(false);
 
   const handleContinueGame = () => {
+    setWasCorrect(question.answers.find((answer) => answer.isCorrect).optionText === userSelected);
+
     if (gameState === 'active') {
       // submit answer
       onAnswer(userSelected);
@@ -26,26 +31,80 @@ const AnswersBody = ({ question, onAnswer, continueGame }) => {
   }, [question]);
 
   const renderAnswersBody = ({ answer }) => {
-    console.log('🚀  answer:', answer);
+    let textColor = 'black';
     const didUserPickCorrectAnswer = answer.isCorrect && userSelected === answer.optionText;
+    let buttonVariant = 'alternative';
+    // gameState === 'active' ? 'alternative' : didUserPickCorrectAnswer ? 'default' : 'alternative';
+
+    if (gameState === 'active') {
+      buttonVariant = 'alternative';
+    }
+
+    if (
+      gameState === 'answer-submitted' &&
+      answer.isCorrect &&
+      userSelected === answer.optionText
+    ) {
+      textColor = 'white';
+      buttonVariant = 'default';
+    }
+
+    if (
+      gameState === 'answer-submitted' &&
+      userSelected === answer.optionText &&
+      !answer.isCorrect
+    ) {
+      textColor = 'white';
+      buttonVariant = 'danger';
+    }
+    // only change the didUserPickCorrectAnswer to danger if that is the option the user selected
+    // if (gameState === 'active' && userSelected !== answer.optionText && answer.isCorrect) {
+    //   buttonVariant = 'danger';
+    // }
 
     return (
       <CustomButton
-        title={'Hello World'}
+        title={answer.optionText}
+        variant={buttonVariant}
+        setIsSelected={() => {
+          setIsSelected({ [answer.optionText]: true });
+        }}
+        isSelected={isSelected[answer.optionText]}
         onPress={() => {
           setUserSelected(answer.optionText);
         }}
       >
-        <Text
+        <View
           style={{
-            color: 'black',
-            fontSize: RFValue(16),
-            fontWeight: 'bold',
-            fontFamily: 'poppins-regular',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
           }}
         >
-          {answer.optionText}
-        </Text>
+          <Text
+            style={{
+              color: textColor,
+              fontSize: RFValue(16),
+              fontWeight: 'bold',
+              fontFamily: 'poppins-regular',
+            }}
+          >
+            {answer.optionText}
+          </Text>
+          {gameState === 'answer-submitted' && (
+            <Text
+              style={{
+                color: textColor,
+                fontSize: RFValue(16),
+                fontWeight: 'bold',
+                fontFamily: 'poppins-regular',
+              }}
+            >
+              {answer.pickPercentage + '%'}
+            </Text>
+          )}
+        </View>
       </CustomButton>
     );
   };
@@ -70,19 +129,27 @@ const AnswersBody = ({ question, onAnswer, continueGame }) => {
           alignItems: 'center',
         }}
       >
-        <CustomButton variant='default' onPress={() => handleContinueGame()}>
+        <CustomButton
+          variant={
+            {
+              active: 'primary',
+              'answer-submitted': 'default',
+            }[gameState]
+          }
+          onPress={() => handleContinueGame()}
+        >
           <Text
             style={{
               color: 'white',
-              textTransform: 'uppercase',
-              letterSpacing: 1.5,
+              fontSize: RFValue(16),
               fontWeight: 'bold',
+              fontFamily: 'poppins-regular',
             }}
           >
             {
               {
                 active: 'Submit Answer',
-                'answer-submitted': 'Continue',
+                'answer-submitted': wasCorrect ? 'Continue' : 'Try Again',
               }[gameState]
             }
           </Text>
