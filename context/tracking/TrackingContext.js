@@ -8,13 +8,17 @@ export const TrackingProvider = ({ children }) => {
 
   useEffect(() => {
     (async () => {
-      const { status } = await requestTrackingPermissionsAsync();
-      if (status === 'granted') {
-        console.log('Yay! I have user permission to track data');
-        setTrackingStatus(true);
-      } else {
-        console.log('Boo! I do not have user permission to track data');
-        setTrackingStatus(false);
+      try {
+        const { status } = await requestTrackingPermissionsAsync();
+        if (status === 'granted') {
+          console.log('Yay! I have user permission to track data');
+          setTrackingStatus(true);
+        } else {
+          console.log('Boo! I do not have user permission to track data');
+          setTrackingStatus(false);
+        }
+      } catch (e) {
+        // console.log(e);
       }
     })();
   }, []);

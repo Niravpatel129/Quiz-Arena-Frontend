@@ -5,7 +5,7 @@ import { newRequest } from '../api/newRequest';
 const fetchQuestions = async (numQuestions, startOrder = 0) => {
   try {
     const response = await newRequest.get(
-      `/feeder/questions?numQuestions=${numQuestions}&startOrder=${startOrder}`,
+      `/feeder/questions?numQuestions=${numQuestions}&startOrder=${startOrder}&category=logos`,
     );
     return response.data;
   } catch (error) {

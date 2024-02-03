@@ -54,8 +54,12 @@ SplashScreen.preventAutoHideAsync();
 if (true) {
   import('./services/appsFlyer')
     .then((module) => {
-      startAppFlyer = module.default;
-      startAppFlyer();
+      try {
+        startAppFlyer = module.default;
+        startAppFlyer();
+      } catch (e) {
+        // console.log('🚀 ~ file: App.js ~ line 85 ~ .then ~ e', e);
+      }
     })
     .catch((err) => {
       console.error('Failed to load startAppFlyer', err);
@@ -102,10 +106,14 @@ function App() {
   useEffect(() => {
     (async () => {
       const { status } = await requestTrackingPermissionsAsync();
-      if (status === 'granted') {
-        console.log('Yay! I have user permission to track data');
-      } else {
-        console.log('Boo! I do not have user permission to track data');
+      try {
+        if (status === 'granted') {
+          console.log('Yay! I have user permission to track data');
+        } else {
+          console.log('Boo! I do not have user permission to track data');
+        }
+      } catch (e) {
+        // console.log(e);
       }
     })();
   }, []);
@@ -145,7 +153,6 @@ function App() {
   function HomeTabNavigator() {
     return (
       <Tab.Navigator tabBar={(props) => <TabBar2 {...props} />}>
-        {/*  <Tab.Navigator tabBar={(props) => <TabBar {...props} />}> */}
         <Tab.Screen
           name='Home'
           component={Homepage}
@@ -196,6 +203,8 @@ function App() {
           headerShadowVisible: false,
         }}
       >
+        {/* <Tab.Screen name='dev' component={FeederScreen} options={{ headerShown: false }} /> */}
+
         <Stack.Screen
           name='Home'
           component={Login2}
