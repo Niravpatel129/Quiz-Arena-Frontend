@@ -71,6 +71,7 @@ const useFeederGameMode = () => {
   );
 
   const continueGame = useCallback(() => {
+    console.log('🚀  continueGame');
     const isCorrect =
       questions[currentQuestionIndex]?.correctAnswer === userAnswers[currentQuestionIndex]?.answer;
     if (!isCorrect && gameActive) {

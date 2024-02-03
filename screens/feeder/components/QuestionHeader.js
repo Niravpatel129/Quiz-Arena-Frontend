@@ -2,10 +2,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { Text, View } from 'react-native';
 
 const QuestionHeader = ({ question }) => {
-  if (!question) {
-    return null;
-  }
-
   const skullColor =
     question.stats?.correctAnswers / question.stats?.totalAnswers > 0.5 ? 'red' : 'black';
 

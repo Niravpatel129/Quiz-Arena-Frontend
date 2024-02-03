@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Button, SafeAreaView, Text, View } from 'react-native';
 import useFeederGameMode from '../../hooks/useFeederGameMode';
 import MainGame from './components/MainGame';
 
@@ -13,8 +13,12 @@ const FeederScreen = () => {
     answerQuestion,
     showPickPercentage,
     continueGame,
-    continueGameOrEnd,
   } = useFeederGameMode();
+
+  useEffect(() => {
+    // start game on mount
+    startGame();
+  }, []);
 
   const renderGameState = () => {
     if (!gameActive) {
@@ -43,7 +47,7 @@ const FeederScreen = () => {
             question={questions[currentQuestionIndex]}
             onAnswer={answerQuestion}
             showPickPercentage={showPickPercentage}
-            continueGame={continueGameOrEnd}
+            continueGame={continueGame}
           />
         </View>
       );
@@ -64,15 +68,6 @@ const FeederScreen = () => {
           }}
         >
           {renderGameState()}
-          {showPickPercentage && (
-            <TouchableOpacity
-              onPress={() => {
-                continueGame();
-              }}
-            >
-              <Text>Continue</Text>
-            </TouchableOpacity>
-          )}
         </View>
       </SafeAreaView>
     </View>
