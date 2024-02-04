@@ -19,7 +19,7 @@ export default function FeederHome({ handleEnter }) {
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 700,
+      duration: 400,
       useNativeDriver: true,
       delay: 200,
     }).start();

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useSound } from '../../../context/sound/SoundContext';
 import CustomButton from './CustomButton';
 
 const AnswersBody = ({ question, onAnswer, continueGame, setGameOver }) => {
@@ -8,12 +9,23 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver }) => {
   const [gameState, setGameState] = React.useState('active');
   const [isSelected, setIsSelected] = React.useState({});
   const [wasCorrect, setWasCorrect] = React.useState(false);
+  const soundContext = useSound();
 
   const handleContinueGame = () => {
     // check if we have a selected answer
     if (!userSelected) return;
 
-    setWasCorrect(question.answers.find((answer) => answer.isCorrect).optionText === userSelected);
+    let wasUserCorrect =
+      question.answers.find((answer) => answer.isCorrect).optionText === userSelected;
+    setWasCorrect(wasUserCorrect);
+
+    if (wasUserCorrect && gameState === 'active') {
+      soundContext.playSound('solo_correct');
+    }
+
+    if (wasUserCorrect === false && gameState === 'active') {
+      soundContext.playSound('solo_fail');
+    }
 
     if (gameState === 'active') {
       // submit answer
@@ -101,7 +113,7 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver }) => {
                 fontFamily: 'poppins-regular',
               }}
             >
-              {answer.pickPercentage + '%'}
+              {answer.pickPercentage}
             </Text>
           )}
         </View>
@@ -132,7 +144,7 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver }) => {
         <CustomButton
           variant={
             {
-              active: 'primary',
+              active: 'customPink',
               'answer-submitted': 'default',
             }[gameState]
           }

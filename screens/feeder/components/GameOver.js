@@ -5,7 +5,6 @@ import { Text, View } from 'react-native';
 import CustomButtom from './CustomButton';
 
 export default function GameOver({ score, handleStartGame, results }) {
-  console.log('🚀  results:', results);
   const [isSelected, setIsSelected] = useState(false);
   const navigation = useNavigation();
 

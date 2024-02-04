@@ -17,14 +17,14 @@ const Transition = ({ animationText }) => {
     opacity.value = withTiming(1, { duration: 300 });
 
     // Wait for a few seconds, then fade out and show the next question
-    const timeout = setTimeout(() => {
-      opacity.value = withTiming(0, { duration: 300 }, () => {
-        // Move to the next question or loop back to the first
-        setIndex((prevIndex) => (prevIndex + 1) % animationText.length);
-      });
-    }, 1000);
+    // const timeout = setTimeout(() => {
+    //   opacity.value = withTiming(0, { duration: 300 }, () => {
+    //     // Move to the next question or loop back to the first
+    //     setIndex((prevIndex) => (prevIndex + 1) % animationText.length);
+    //   });
+    // }, 1000);
 
-    return () => clearTimeout(timeout);
+    // return () => clearTimeout(timeout);
   }, [index, animationText.length]);
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -41,7 +41,15 @@ const Transition = ({ animationText }) => {
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.textContainer, animatedStyle]}>
-        <Text style={styles.text}>{animationText[index]}</Text>
+        <Text
+          style={{
+            fontSize: 44,
+            textAlign: 'center',
+            letterSpacing: 2,
+          }}
+        >
+          {animationText[index]}
+        </Text>
       </Animated.View>
     </View>
   );

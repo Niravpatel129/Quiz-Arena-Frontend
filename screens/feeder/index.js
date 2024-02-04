@@ -6,7 +6,9 @@ import GameOver from './components/GameOver';
 import MainGame from './components/MainGame';
 import Transition from './components/Transition';
 
-const FeederScreen = () => {
+const FeederScreen = ({ route }) => {
+  console.log('🚀  route:', route);
+
   const {
     questions,
     currentQuestionIndex,
@@ -22,14 +24,12 @@ const FeederScreen = () => {
   const [showCountdown, setShowCountdown] = useState(false);
 
   useEffect(() => {
-    console.log('🚀  currentQuestionIndex:', currentQuestionIndex);
-    console.log('🚀  gameActive:', gameActive);
     if (!gameActive) return;
 
     setShowCountdown(true); // Show countdown first
     setTimeout(() => {
       setShowCountdown(false);
-    }, 2500); // Adjust this duration according to your countdown length
+    }, 1000); // Adjust this duration according to your countdown length
   }, [currentQuestionIndex, gameActive]);
 
   const handleStartGame = () => {
@@ -37,10 +37,13 @@ const FeederScreen = () => {
     setGameOver(false);
   };
 
+  if (!gameActive && questions.length === 0) {
+    return <FeederHome handleEnter={handleStartGame} />;
+  }
+
   const renderGameState = () => {
     if (showCountdown) {
       if (!questions[currentQuestionIndex]) return;
-      console.log('🚀  questions[currentQuestionIndex]:', questions[currentQuestionIndex]);
       const caluclateQuestionAnswerRatio = Math.floor(
         (questions[currentQuestionIndex].stats.correctAnswers /
           questions[currentQuestionIndex].stats.totalAnswers) *
@@ -61,20 +64,16 @@ const FeederScreen = () => {
       return <GameOver score={score} handleStartGame={handleStartGame} results={results} />;
     }
 
-    if (!gameActive && questions.length === 0) {
-      return <FeederHome handleEnter={handleStartGame} />;
-    } else {
-      return (
-        <MainGame
-          score={score}
-          question={questions[currentQuestionIndex]}
-          onAnswer={answerQuestion}
-          showPickPercentage={showPickPercentage}
-          continueGame={continueGame}
-          setGameOver={setGameOver}
-        />
-      );
-    }
+    return (
+      <MainGame
+        score={score}
+        question={questions[currentQuestionIndex]}
+        onAnswer={answerQuestion}
+        showPickPercentage={showPickPercentage}
+        continueGame={continueGame}
+        setGameOver={setGameOver}
+      />
+    );
   };
 
   return (
