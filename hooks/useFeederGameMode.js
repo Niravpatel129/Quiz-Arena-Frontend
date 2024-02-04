@@ -13,7 +13,7 @@ const fetchQuestions = async (numQuestions, startOrder = 0) => {
   }
 };
 
-const useFeederGameMode = () => {
+const useFeederGameMode = (category = 'logos') => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [gameActive, setGameActive] = useState(false);
@@ -21,6 +21,7 @@ const useFeederGameMode = () => {
   const [userAnswers, setUserAnswers] = useState([]);
   const [showPickPercentage, setShowPickPercentage] = useState(false);
   const [waitingForNext, setWaitingForNext] = useState(false);
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
     if (gameActive) {
@@ -34,6 +35,7 @@ const useFeederGameMode = () => {
     setUserAnswers([]);
     setShowPickPercentage(false);
     setWaitingForNext(false);
+    setScore(0);
   };
 
   const submitUserAnswers = async () => {
@@ -69,6 +71,19 @@ const useFeederGameMode = () => {
     [questions, currentQuestionIndex],
   );
 
+  const uploadFeederResults = async () => {
+    try {
+      const res = await newRequest.post('/feeder/results', {
+        scoreAchieved: score,
+        category: category,
+      });
+      setResults(res.data);
+      console.log('Feeder results uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading feeder results:', error);
+    }
+  };
+
   const continueGame = useCallback(() => {
     console.log('🚀  continueGame');
     const isCorrect =
@@ -76,6 +91,7 @@ const useFeederGameMode = () => {
     if (!isCorrect && gameActive) {
       setGameActive(false);
       submitUserAnswers();
+      uploadFeederResults();
     } else {
       const nextIndex = currentQuestionIndex + 1;
       if (nextIndex < questions.length) {
@@ -101,6 +117,7 @@ const useFeederGameMode = () => {
     showPickPercentage,
     continueGame,
     waitingForNext,
+    results,
   };
 };
 

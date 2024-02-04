@@ -16,6 +16,7 @@ const FeederScreen = () => {
     answerQuestion,
     showPickPercentage,
     continueGame,
+    results,
   } = useFeederGameMode();
   const [gameOver, setGameOver] = useState(false);
   const [showCountdown, setShowCountdown] = useState(false);
@@ -57,7 +58,7 @@ const FeederScreen = () => {
     }
 
     if (gameOver) {
-      return <GameOver score={score} handleStartGame={handleStartGame} />;
+      return <GameOver score={score} handleStartGame={handleStartGame} results={results} />;
     }
 
     if (!gameActive && questions.length === 0) {

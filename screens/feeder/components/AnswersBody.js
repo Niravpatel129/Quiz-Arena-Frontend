@@ -10,6 +10,9 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver }) => {
   const [wasCorrect, setWasCorrect] = React.useState(false);
 
   const handleContinueGame = () => {
+    // check if we have a selected answer
+    if (!userSelected) return;
+
     setWasCorrect(question.answers.find((answer) => answer.isCorrect).optionText === userSelected);
 
     if (gameState === 'active') {

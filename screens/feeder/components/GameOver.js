@@ -4,12 +4,18 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import CustomButtom from './CustomButton';
 
-export default function GameOver({ score, handleStartGame }) {
+export default function GameOver({ score, handleStartGame, results }) {
+  console.log('🚀  results:', results);
   const [isSelected, setIsSelected] = useState(false);
   const navigation = useNavigation();
 
   return (
-    <View>
+    <View
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <Text
         style={{
           fontSize: 24,
@@ -17,7 +23,7 @@ export default function GameOver({ score, handleStartGame }) {
           letterSpacing: 2,
         }}
       >
-        How Awful!
+        Not too shabby!
       </Text>
       <Image
         source={{
@@ -39,6 +45,24 @@ export default function GameOver({ score, handleStartGame }) {
       >
         Your Score: {score}
       </Text>
+      <Text
+        style={{
+          fontSize: 24,
+          fontFamily: 'poppins-regular',
+          letterSpacing: 2,
+          color: 'black',
+          textAlign: 'center',
+        }}
+      >
+        Your Personal Best: {results.personalBest}
+      </Text>
+
+      <Text>That attempt was better than {results.percentileRank}% of the players!</Text>
+
+      <Text>
+        Your personal best is in the Top {results.personalBestPercentileRank}% percentile.
+      </Text>
+
       <View
         style={{
           gap: 10,
