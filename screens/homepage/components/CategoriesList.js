@@ -15,6 +15,7 @@ const imageMap = {
   chemistry: require('./images/chemistry.png'),
   biology: require('./images/biology.png'),
   mathematics: require('./images/mathematics.png'),
+  psychology: require('./images/psychology.png'),
   physics: require('./images/physics.png'),
   soccer: require('./images/soccer.png'),
   cricket: require('./images/cricket.png'),
