@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 
-export default function FeederHome({ handleEnter }) {
+export default function FeederHome({ categoryName, handleEnter }) {
   const navigation = useNavigation();
   const fadeAnim = new Animated.Value(0);
   const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground);
@@ -73,7 +73,7 @@ export default function FeederHome({ handleEnter }) {
               Feeder Mode{' '}
               <View>
                 <Ionicons
-                  name='airplane'
+                  name='compass'
                   size={30}
                   color='#fff'
                   style={{
@@ -93,7 +93,7 @@ export default function FeederHome({ handleEnter }) {
                 color: '#ffffff',
               }}
             >
-              Logos
+              {categoryName || 'General Knowledge'}
             </Text>
 
             <TouchableOpacity

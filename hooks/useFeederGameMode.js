@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { newRequest } from '../api/newRequest';
 
-const fetchQuestions = async (numQuestions, startOrder = 0) => {
+const fetchQuestions = async (numQuestions, startOrder = 0, category) => {
   try {
     const response = await newRequest.get(
-      `/feeder/questions?numQuestions=${numQuestions}&startOrder=${startOrder}&category=logos`,
+      `/feeder/questions?numQuestions=${numQuestions}&startOrder=${startOrder}&category=${category}`,
     );
     return response.data;
   } catch (error) {
@@ -25,7 +25,7 @@ const useFeederGameMode = (category = 'logos') => {
 
   useEffect(() => {
     if (gameActive) {
-      fetchQuestions(10).then((qs) => setQuestions(qs));
+      fetchQuestions(10, 0, category).then((qs) => setQuestions(qs));
     }
   }, [gameActive]);
 

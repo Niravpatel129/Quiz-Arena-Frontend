@@ -42,6 +42,7 @@ export default function MainGame({ question, onAnswer, continueGame, score, setG
     <Animated.View
       style={[
         {
+          justifyContent: 'space-between',
           padding: 10,
           width: '100%',
           height: '100%',

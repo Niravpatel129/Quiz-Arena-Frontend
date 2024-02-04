@@ -19,7 +19,7 @@ const FeederScreen = ({ route }) => {
     showPickPercentage,
     continueGame,
     results,
-  } = useFeederGameMode();
+  } = useFeederGameMode(route.params?.categoryId?.replace(/-/g, ' '));
   const [gameOver, setGameOver] = useState(false);
   const [showCountdown, setShowCountdown] = useState(false);
 
@@ -38,7 +38,7 @@ const FeederScreen = ({ route }) => {
   };
 
   if (!gameActive && questions.length === 0) {
-    return <FeederHome handleEnter={handleStartGame} />;
+    return <FeederHome categoryName={route.params?.categoryName} handleEnter={handleStartGame} />;
   }
 
   const renderGameState = () => {
