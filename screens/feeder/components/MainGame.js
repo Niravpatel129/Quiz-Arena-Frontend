@@ -1,21 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import AnswersBody from './AnswersBody';
 import QuestionBody from './QuestionBody';
 import QuestionHeader from './QuestionHeader';
+import TimeProgressBar from './TimeProgressBar';
 
 export default function MainGame({ question, onAnswer, continueGame, score, setGameOver }) {
-  // Opacity value is controlled by a shared value, starting from 0 (invisible).
   const opacity = useSharedValue(0);
+  const [timer, setTimer] = useState(0);
 
-  // useEffect to start the animation when the component mounts.
   useEffect(() => {
-    // Opacity animates to 1 (fully visible) over 500 milliseconds.
+    console.log('question changed');
+  }, [question]);
+
+  useEffect(() => {
     opacity.value = withTiming(1, { duration: 500 });
   }, [opacity]);
 
-  // Animated style that will interpolate the opacity shared value.
   const animatedStyle = useAnimatedStyle(() => {
     return {
       opacity: opacity.value,
@@ -69,7 +71,12 @@ export default function MainGame({ question, onAnswer, continueGame, score, setG
         onAnswer={onAnswer}
         continueGame={continueGame}
         setGameOver={setGameOver}
+        setTimer={setTimer}
+        timer={timer}
       />
+
+      <TimeProgressBar currentTime={timer} maxTime={100} />
+      {/* {timer} */}
     </Animated.View>
   );
 }

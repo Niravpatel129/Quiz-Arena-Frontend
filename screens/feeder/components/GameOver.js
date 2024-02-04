@@ -56,11 +56,14 @@ export default function GameOver({ score, handleStartGame, results }) {
         Your Personal Best: {results.personalBest}
       </Text>
 
-      <Text>That attempt was better than {results.percentileRank}% of the players!</Text>
-
-      <Text>
-        Your personal best is in the Top {results.personalBestPercentileRank}% percentile.
-      </Text>
+      {results.percentileRank && (
+        <Text>That attempt was better than {results.percentileRank}% of the players!</Text>
+      )}
+      {results.personalBestPercentileRank && (
+        <Text>
+          Your personal best is in the Top {results.personalBestPercentileRank}% percentile.
+        </Text>
+      )}
 
       <View
         style={{

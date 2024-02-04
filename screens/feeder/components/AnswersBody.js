@@ -1,19 +1,52 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useSound } from '../../../context/sound/SoundContext';
 import CustomButton from './CustomButton';
 
-const AnswersBody = ({ question, onAnswer, continueGame, setGameOver }) => {
+const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, setTimer }) => {
   const [userSelected, setUserSelected] = React.useState(null);
   const [gameState, setGameState] = React.useState('active');
   const [isSelected, setIsSelected] = React.useState({});
   const [wasCorrect, setWasCorrect] = React.useState(false);
   const soundContext = useSound();
 
+  const [timerStarted, setTimerStarted] = React.useState(false);
+  const [myInterval, setMyInterval] = React.useState(null);
+
+  useEffect(() => {
+    if (timer >= 110) {
+      // setGameOver(true);
+      setGameState('answer-submitted');
+      console.log('🚀  game over');
+    }
+  }, [timer]);
+
+  const startTimer = () => {
+    if (timerStarted) return;
+    setTimerStarted(true);
+    const timerInterval = setInterval(() => {
+      setTimer((prev) => prev + 1);
+    }, 100);
+
+    setMyInterval(timerInterval);
+  };
+
+  useEffect(() => {
+    startTimer();
+
+    setTimer(0);
+
+    return () => {
+      clearInterval(myInterval);
+    };
+  }, [question]);
+
   const handleContinueGame = () => {
     // check if we have a selected answer
-    if (!userSelected) return;
+    if (!userSelected && gameState === 'active') return;
+
+    clearInterval(myInterval);
 
     let wasUserCorrect =
       question.answers.find((answer) => answer.isCorrect).optionText === userSelected;
