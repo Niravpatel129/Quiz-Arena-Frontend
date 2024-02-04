@@ -3,14 +3,16 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import capitalizeFirstLetter from '../../../helpers/capitalizeFirstLetter';
+import formatLastActive from '../../../helpers/formatLastActive';
 
 export default function RenderKing({ currentFeederKing }) {
-  console.log('🚀  currentFeederKing:', currentFeederKing);
+  const feederKing = currentFeederKing[0];
+  const previousFeederKing = currentFeederKing[1];
+
   return (
     <View
       style={{
-        margin: 20,
-        // flexDirection: 'row',
+        margin: 40,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -31,12 +33,13 @@ export default function RenderKing({ currentFeederKing }) {
       </Text>
       <Image
         source={{
-          uri: currentFeederKing.user.profile.avatar,
+          uri: feederKing.userDetails.profile.avatar,
         }}
         style={{
           width: 100,
           height: 100,
           marginBottom: 10,
+          borderRadius: 15,
         }}
       />
 
@@ -48,13 +51,13 @@ export default function RenderKing({ currentFeederKing }) {
           color: '#fff',
         }}
       >
-        {capitalizeFirstLetter(currentFeederKing.user.username)}
+        {capitalizeFirstLetter(feederKing.userDetails.username)}
         <CountryFlag
           style={{
             marginLeft: 6,
           }}
-          isoCode={currentFeederKing.user.profile.country}
-          size={17}
+          isoCode={feederKing.userDetails.profile.country}
+          size={14}
         />
       </Text>
       <Text
@@ -65,8 +68,41 @@ export default function RenderKing({ currentFeederKing }) {
           color: '#fff',
         }}
       >
-        {currentFeederKing.scoreAchieved} Feed Score
+        {feederKing.scoreAchieved} Feed Score
       </Text>
+      {previousFeederKing &&
+        previousFeederKing.userDetails.username !== feederKing.userDetails.usernme && (
+          <>
+            <Text
+              style={{
+                fontFamily: 'poppins-semiBold',
+                fontSize: 14,
+                textAlign: 'center',
+                color: '#fff',
+                marginTop: 10,
+              }}
+            >
+              Seat Taken from {capitalizeFirstLetter(previousFeederKing.userDetails.username)}
+              <CountryFlag
+                style={{
+                  marginLeft: 6,
+                }}
+                isoCode={previousFeederKing.userDetails.profile.country}
+                size={12}
+              />
+            </Text>
+            <Text
+              style={{
+                fontFamily: 'poppins-semiBold',
+                fontSize: 14,
+                textAlign: 'center',
+                color: 'lightgray',
+              }}
+            >
+              {formatLastActive(previousFeederKing.updatedAt)}
+            </Text>
+          </>
+        )}
     </View>
   );
 }
