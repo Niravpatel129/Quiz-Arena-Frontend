@@ -18,19 +18,28 @@ export default function FeederHome({ categoryName, handleEnter }) {
   const navigation = useNavigation();
   const fadeAnim = new Animated.Value(0);
   const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground);
-  const [currentFeederKing, setCurrentFeederKing] = React.useState(null);
+  const [currentFeederKing, setCurrentFeederKing] = React.useState(undefined);
+  const [loaded, setLoaded] = React.useState(false);
 
   useEffect(() => {
     const fetchFeederKing = async () => {
-      const response = await newRequest.get(`/feeder/king/${categoryName.replace(/ /g, '-')}`);
+      try {
+        const response = await newRequest.get(`/feeder/king/${categoryName.replace(/ /g, '-')}`);
 
-      setCurrentFeederKing(response.data);
+        setCurrentFeederKing(response.data);
+      } catch (error) {
+        console.log('error', error);
+      } finally {
+        setLoaded(true);
+      }
     };
 
     fetchFeederKing();
   }, [categoryName]);
 
   useEffect(() => {
+    if (!loaded) return;
+
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 400,
@@ -87,7 +96,7 @@ export default function FeederHome({ categoryName, handleEnter }) {
                 color: '#fff',
                 textShadowColor: 'rgba(0, 0, 0, 0.75)',
                 textShadowOffset: { width: -1, height: 1 },
-                textShadowRadius: 3,
+                textShadowRadius: 10,
                 textTransform: 'capitalize',
               }}
             >

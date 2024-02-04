@@ -23,6 +23,8 @@ const useFeederGameMode = (category = 'logos') => {
   const [showPickPercentage, setShowPickPercentage] = useState(false);
   const [waitingForNext, setWaitingForNext] = useState(false);
   const [results, setResults] = useState([]);
+  const [gameOver, setGameOver] = useState(false);
+
   useEffect(() => {
     if (gameActive) {
       fetchQuestions(10, 0, category).then((qs) => setQuestions(qs));
@@ -96,24 +98,27 @@ const useFeederGameMode = (category = 'logos') => {
       if (nextIndex < questions.length) {
         setCurrentQuestionIndex(nextIndex);
       } else {
-        fetchQuestions(5, questions[questions.length - 1].order + 1).then((newQuestions) => {
-          setQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
-          if (newQuestions.length === 0) {
-            // Check if no new questions were fetched
-            Toast.show({
-              type: 'error',
-              text1: 'No more questions',
-              text2: 'You have reached the end of the game',
-            });
-
-            setGameActive(false); // End the game if there are no more questions
-            submitUserAnswers();
-            uploadFeederResults();
-          } else {
+        fetchQuestions(5, questions[questions.length - 1].order + 1, category).then(
+          (newQuestions) => {
             setQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
-            setCurrentQuestionIndex(nextIndex);
-          }
-        });
+            if (newQuestions.length === 0) {
+              // Check if no new questions were fetched
+              Toast.show({
+                type: 'error',
+                text1: 'No more questions',
+                text2: 'You have reached the end of the game',
+              });
+
+              setGameOver(true);
+              setGameActive(false); // End the game if there are no more questions
+              submitUserAnswers();
+              uploadFeederResults();
+            } else {
+              setQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
+              setCurrentQuestionIndex(nextIndex);
+            }
+          },
+        );
       }
     }
     setShowPickPercentage(false);
@@ -131,6 +136,8 @@ const useFeederGameMode = (category = 'logos') => {
     continueGame,
     waitingForNext,
     results,
+    gameOver,
+    setGameOver,
   };
 };
 

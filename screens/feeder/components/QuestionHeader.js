@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Text, View } from 'react-native';
 
-const QuestionHeader = ({ question, score }) => {
+const QuestionHeader = ({ question, score, categoryName }) => {
   const skullColor =
     question?.stats?.correctAnswers / question?.stats?.totalAnswers > 0.5 ? 'red' : 'black';
 
@@ -30,9 +30,10 @@ const QuestionHeader = ({ question, score }) => {
       <Text
         style={{
           fontSize: 24,
+          textTransform: 'capitalize',
         }}
       >
-        Music
+        {categoryName || 'General Knowledge'}
       </Text>
       <Text>
         <Ionicons name='skull' size={32} color={skullColor} />

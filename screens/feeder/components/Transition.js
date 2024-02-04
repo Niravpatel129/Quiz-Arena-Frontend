@@ -40,7 +40,17 @@ const Transition = ({ animationText }) => {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={[styles.textContainer, animatedStyle]}>
+      <Animated.View
+        style={[
+          styles.textContainer,
+          animatedStyle,
+          {
+            height: '100%',
+            flex: 1,
+            marginTop: '40%',
+          },
+        ]}
+      >
         <Text
           style={{
             fontSize: 30,
@@ -58,8 +68,10 @@ const Transition = ({ animationText }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
   },
   textContainer: {
     // Adjust your text container styling as needed

@@ -11,26 +11,29 @@ import Animated, {
 import CustomButton from './CustomButton'; // Ensure your file name matches
 
 export default function GameOver({ score, handleStartGame, results }) {
+  console.log('🚀  results:', results);
   const navigation = useNavigation();
   const [isSelected, setIsSelected] = useState(false);
 
-  // Reanimated shared value for opacity
+  // Animation control: opacity value
   const opacity = useSharedValue(0);
 
-  // Reanimated animated style for fade-in effect
+  // Animated style
   const animatedStyle = useAnimatedStyle(() => {
     return {
       opacity: opacity.value,
     };
   });
 
-  // Trigger the animation on component mount
+  // Trigger the animation when `results` changes and is not null
   useEffect(() => {
-    opacity.value = withTiming(1, {
-      duration: 1000, // 1000 milliseconds = 1 second for the fade-in effect
-      easing: Easing.out(Easing.exp), // This easing function creates a smooth effect
-    });
-  }, []);
+    if (results && results.feeder) {
+      opacity.value = withTiming(1, {
+        duration: 500, // Animation duration in milliseconds
+        easing: Easing.out(Easing.quad), // Easing function
+      });
+    }
+  }, [results]); // Dependency array, effect runs when `results` changes
 
   return (
     <Animated.View
@@ -38,6 +41,7 @@ export default function GameOver({ score, handleStartGame, results }) {
         {
           justifyContent: 'center',
           alignItems: 'center',
+          flex: 1, // Ensure it takes full space if needed
         },
         animatedStyle, // Apply the animated style here for the fade-in effect
       ]}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 import useFeederGameMode from '../../hooks/useFeederGameMode';
 import FeederHome from './components/FeederHome';
 import GameOver from './components/GameOver';
@@ -7,8 +7,6 @@ import MainGame from './components/MainGame';
 import Transition from './components/Transition';
 
 const FeederScreen = ({ route }) => {
-  console.log('🚀  route:', route);
-
   const {
     questions,
     currentQuestionIndex,
@@ -19,8 +17,9 @@ const FeederScreen = ({ route }) => {
     showPickPercentage,
     continueGame,
     results,
+    gameOver,
+    setGameOver,
   } = useFeederGameMode(route.params?.categoryId?.replace(/-/g, ' '));
-  const [gameOver, setGameOver] = useState(false);
   const [showCountdown, setShowCountdown] = useState(false);
 
   useEffect(() => {
@@ -52,19 +51,11 @@ const FeederScreen = ({ route }) => {
 
       let text = `Round ${currentQuestionIndex + 1}`;
 
-      if (caluclateQuestionAnswerRatio) {
+      if (!isNaN(caluclateQuestionAnswerRatio)) {
         text += `:${caluclateQuestionAnswerRatio}% of the players have gotten this correct!`;
       }
-      return (
-        <Transition
-          animationText={[
-            `Round ${
-              currentQuestionIndex + 1
-            }: ${caluclateQuestionAnswerRatio}% of the players have gotten this correct!`,
-            `, good luck!`,
-          ]}
-        />
-      );
+
+      return <Transition animationText={[text]} />;
     }
 
     if (gameOver) {
@@ -73,6 +64,7 @@ const FeederScreen = ({ route }) => {
 
     return (
       <MainGame
+        categoryName={route.params?.categoryName}
         score={score}
         question={questions[currentQuestionIndex]}
         onAnswer={answerQuestion}
@@ -84,29 +76,26 @@ const FeederScreen = ({ route }) => {
   };
 
   return (
-    <View
+    <SafeAreaView
       style={{
-        // margin: 10,
         height: '100%',
+        flex: 1,
       }}
     >
-      <SafeAreaView
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
         style={{
           height: '100%',
         }}
       >
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100%',
-            width: '100%',
-          }}
-        >
-          {renderGameState()}
-        </View>
-      </SafeAreaView>
-    </View>
+        {renderGameState()}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

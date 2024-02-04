@@ -13,7 +13,7 @@ const QuestionBody = ({ question }) => {
     >
       <Text
         style={{
-          fontSize: RFValue(20),
+          fontSize: question.question.length > 40 ? RFValue(18) : RFValue(20),
           fontWeight: 'bold',
           fontFamily: 'poppins-regular',
           textAlign: 'center',
@@ -21,17 +21,15 @@ const QuestionBody = ({ question }) => {
       >
         {question.question}
       </Text>
-      {question.helperImage && (
+      {question.helperImage !== '' && (
         <Image
           contentFit='contain'
           source={{
-            uri:
-              question.helperImage ||
-              'https://cdn1.tedsby.com/tb/medium/storage/9/3/6/936400/handmade-cat-cute-kitten-by-inna-vishevskaya.jpg',
+            uri: question.helperImage || '',
           }}
           style={{
             width: '100%',
-            height: 200,
+            height: 150,
             marginBottom: 10,
           }}
         />

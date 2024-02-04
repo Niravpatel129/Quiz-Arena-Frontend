@@ -6,7 +6,14 @@ import QuestionBody from './QuestionBody';
 import QuestionHeader from './QuestionHeader';
 import TimeProgressBar from './TimeProgressBar';
 
-export default function MainGame({ question, onAnswer, continueGame, score, setGameOver }) {
+export default function MainGame({
+  question,
+  onAnswer,
+  continueGame,
+  score,
+  setGameOver,
+  categoryName,
+}) {
   const opacity = useSharedValue(0);
   const [timer, setTimer] = useState(0);
 
@@ -49,7 +56,7 @@ export default function MainGame({ question, onAnswer, continueGame, score, setG
           width: '100%',
           height: '100%',
         },
-        animatedStyle, // Apply the animated opacity style here.
+        animatedStyle,
       ]}
     >
       <View
@@ -57,15 +64,10 @@ export default function MainGame({ question, onAnswer, continueGame, score, setG
           height: 50,
         }}
       >
-        <QuestionHeader score={score} question={question} />
+        <QuestionHeader score={score} question={question} categoryName={categoryName} />
       </View>
       <QuestionBody question={question} />
 
-      <View
-        style={{
-          marginVertical: 20,
-        }}
-      ></View>
       <AnswersBody
         question={question}
         onAnswer={onAnswer}

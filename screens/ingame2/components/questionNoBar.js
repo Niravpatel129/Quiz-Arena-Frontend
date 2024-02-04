@@ -5,7 +5,7 @@ export default function QuestionNoBar({ roundNumber }) {
   return (
     <View
       style={{
-        marginTop: 20,
+        marginTop: 15,
         marginHorizontal: 5,
       }}
     >
