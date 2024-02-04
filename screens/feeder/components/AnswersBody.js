@@ -13,12 +13,29 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
 
   const [timerStarted, setTimerStarted] = React.useState(false);
   const [myInterval, setMyInterval] = React.useState(null);
+  const [shuffledAnswers, setShuffledAnswers] = React.useState([]);
+
+  // Shuffle function
+  const shuffleArray = (array) => {
+    let shuffled = array.slice(); // Create a copy of the array
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // Swap elements
+    }
+    return shuffled;
+  };
+
+  useEffect(() => {
+    setShuffledAnswers(shuffleArray(question.answers));
+  }, [question]);
 
   useEffect(() => {
     if (timer >= 110) {
       // setGameOver(true);
       setGameState('answer-submitted');
       console.log('🚀  game over');
+      // stop the timer
+      clearInterval(myInterval);
     }
   }, [timer]);
 
@@ -164,7 +181,7 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
         gap: 10,
       }}
     >
-      {question.answers.map((answer, index) => {
+      {shuffledAnswers.map((answer, index) => {
         return <React.Fragment key={index}>{renderAnswersBody({ answer })}</React.Fragment>;
       })}
       <View

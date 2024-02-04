@@ -88,7 +88,8 @@ const CustomButton = ({
   const buttonStyle = getButtonStyle();
 
   const handlePress = () => {
-    if (variant === 'alternative') {
+    console.log('handlePress');
+    if (variant === 'alternative' && setIsSelected) {
       if (!setIsSelected) return;
       setIsSelected(!isSelected);
     }

@@ -50,11 +50,18 @@ const FeederScreen = ({ route }) => {
           100,
       );
 
+      let text = `Round ${currentQuestionIndex + 1}`;
+
+      if (caluclateQuestionAnswerRatio) {
+        text += `:${caluclateQuestionAnswerRatio}% of the players have gotten this correct!`;
+      }
       return (
         <Transition
           animationText={[
-            `Round ${currentQuestionIndex + 1}`,
-            `${caluclateQuestionAnswerRatio}% of the players have gotten this correct, good luck!`,
+            `Round ${
+              currentQuestionIndex + 1
+            }: ${caluclateQuestionAnswerRatio}% of the players have gotten this correct!`,
+            `, good luck!`,
           ]}
         />
       );

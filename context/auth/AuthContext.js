@@ -143,13 +143,13 @@ export const AuthProvider = ({ children }) => {
       await AsyncStorage.removeItem('userToken');
       navigation.reset({
         index: 0,
-        routes: [{ name: 'Home' }],
+        routes: [{ name: 'Login2' }],
       });
     } catch (err) {
       console.log(err);
       navigation.reset({
         index: 0,
-        routes: [{ name: 'Home' }],
+        routes: [{ name: 'Login2' }],
       });
     }
   };

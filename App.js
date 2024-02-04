@@ -42,7 +42,6 @@ import Profile2 from './screens/profile2';
 import PublicProfile from './screens/publicProfile';
 import QueueScreen2 from './screens/queuescreen2';
 import SignUpLogin from './screens/signuplogin';
-import SoloPreGame from './screens/soloPreGame';
 
 Sentry.init({
   dsn: 'https://ebea8a70fc3ccc5fe921ee897bf9f2a3@o1363835.ingest.sentry.io/4506592682246144',
@@ -206,7 +205,7 @@ function App() {
         {/* <Tab.Screen name='dev' component={FeederScreen} options={{ headerShown: false }} /> */}
 
         <Stack.Screen
-          name='Home'
+          name='Login2'
           component={Login2}
           options={{ title: 'Welcome', headerShown: false }}
         />
@@ -289,7 +288,7 @@ function App() {
         />
         <Stack.Screen
           name='Solo'
-          component={SoloPreGame}
+          component={FeederScreen}
           options={{
             headerShown: false,
           }}

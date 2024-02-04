@@ -43,7 +43,7 @@ const Transition = ({ animationText }) => {
       <Animated.View style={[styles.textContainer, animatedStyle]}>
         <Text
           style={{
-            fontSize: 44,
+            fontSize: 30,
             textAlign: 'center',
             letterSpacing: 2,
           }}
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     // Adjust your text container styling as needed
   },
   text: {
-    fontSize: 20,
+    fontSize: 16,
     // Adjust your text styling as needed
   },
 });

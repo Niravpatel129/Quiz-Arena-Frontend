@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import Toast from 'react-native-toast-message';
 import { newRequest } from '../api/newRequest';
 
 const fetchQuestions = async (numQuestions, startOrder = 0, category) => {
@@ -22,7 +23,6 @@ const useFeederGameMode = (category = 'logos') => {
   const [showPickPercentage, setShowPickPercentage] = useState(false);
   const [waitingForNext, setWaitingForNext] = useState(false);
   const [results, setResults] = useState([]);
-
   useEffect(() => {
     if (gameActive) {
       fetchQuestions(10, 0, category).then((qs) => setQuestions(qs));
@@ -98,7 +98,21 @@ const useFeederGameMode = (category = 'logos') => {
       } else {
         fetchQuestions(5, questions[questions.length - 1].order + 1).then((newQuestions) => {
           setQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
-          setCurrentQuestionIndex(nextIndex);
+          if (newQuestions.length === 0) {
+            // Check if no new questions were fetched
+            Toast.show({
+              type: 'error',
+              text1: 'No more questions',
+              text2: 'You have reached the end of the game',
+            });
+
+            setGameActive(false); // End the game if there are no more questions
+            submitUserAnswers();
+            uploadFeederResults();
+          } else {
+            setQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
+            setCurrentQuestionIndex(nextIndex);
+          }
         });
       }
     }

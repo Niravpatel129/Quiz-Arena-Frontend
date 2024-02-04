@@ -1,19 +1,46 @@
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
-import React, { useState } from 'react';
-import { Text, View } from 'react-native';
-import CustomButtom from './CustomButton';
+import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import CustomButton from './CustomButton'; // Ensure your file name matches
 
 export default function GameOver({ score, handleStartGame, results }) {
-  const [isSelected, setIsSelected] = useState(false);
   const navigation = useNavigation();
+  const [isSelected, setIsSelected] = useState(false);
+
+  // Reanimated shared value for opacity
+  const opacity = useSharedValue(0);
+
+  // Reanimated animated style for fade-in effect
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+    };
+  });
+
+  // Trigger the animation on component mount
+  useEffect(() => {
+    opacity.value = withTiming(1, {
+      duration: 1000, // 1000 milliseconds = 1 second for the fade-in effect
+      easing: Easing.out(Easing.exp), // This easing function creates a smooth effect
+    });
+  }, []);
 
   return (
-    <View
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+    <Animated.View
+      style={[
+        {
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+        animatedStyle, // Apply the animated style here for the fade-in effect
+      ]}
     >
       <Text
         style={{
@@ -26,7 +53,7 @@ export default function GameOver({ score, handleStartGame, results }) {
       </Text>
       <Image
         source={{
-          uri: 'https://cdn.discordapp.com/attachments/1201815017612398662/1202213592493981787/IMG_3419.webp?ex=65cca3a8&is=65ba2ea8&hm=3b03405ac15ecc894bab9a242ba73b08301b8cd8e5cb8dd634f5dbef8290f006&',
+          uri: 'https://cdn.discordapp.com/attachments/1201815017612398662/1202213592493981787/IMG_3419.webp',
         }}
         style={{
           width: 200,
@@ -68,10 +95,12 @@ export default function GameOver({ score, handleStartGame, results }) {
       <View
         style={{
           gap: 10,
+          marginTop: 20,
         }}
       >
-        <CustomButtom
-          title='Restart Game'
+        <CustomButton
+          title='Play Again'
+          variant='primary'
           onPress={() => {
             console.log('Restart Game');
             handleStartGame();
@@ -81,29 +110,32 @@ export default function GameOver({ score, handleStartGame, results }) {
         >
           <Text
             style={{
+              color: 'white',
+              fontFamily: 'poppins-semiBold',
+              fontSize: 18,
               textAlign: 'center',
             }}
           >
             Restart Game
           </Text>
-        </CustomButtom>
-        <CustomButtom
-          title='Restart Game'
+        </CustomButton>
+        <TouchableOpacity
           onPress={() => {
             navigation.navigate('Home');
           }}
-          isSelected={isSelected}
-          setIsSelected={setIsSelected}
         >
           <Text
             style={{
+              color: 'black',
+              fontFamily: 'poppins-semiBold',
+              fontSize: 14,
               textAlign: 'center',
             }}
           >
             Go back home
           </Text>
-        </CustomButtom>
+        </TouchableOpacity>
       </View>
-    </View>
+    </Animated.View>
   );
 }
