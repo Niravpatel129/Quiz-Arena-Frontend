@@ -38,6 +38,7 @@ const useFeederGameMode = () => {
 
   const submitUserAnswers = async () => {
     try {
+      if (userAnswers.length === 0) return;
       await newRequest.post('/feeder/user-answers', userAnswers);
       console.log('User answers submitted successfully');
     } catch (error) {
