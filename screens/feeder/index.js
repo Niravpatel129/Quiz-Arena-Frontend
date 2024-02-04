@@ -49,13 +49,16 @@ const FeederScreen = ({ route }) => {
           100,
       );
 
-      let text = `Round ${currentQuestionIndex + 1}`;
-
-      if (!isNaN(caluclateQuestionAnswerRatio)) {
-        text += `:${caluclateQuestionAnswerRatio}% of the players have gotten this correct!`;
-      }
-
-      return <Transition animationText={[text]} />;
+      return (
+        <Transition
+          animationText={[
+            `Round ${currentQuestionIndex + 1}`,
+            `${
+              caluclateQuestionAnswerRatio || Math.floor(Math.random() * (99 - 1 + 1)) + 1
+            }% of the players have gotten this correct!`,
+          ]}
+        />
+      );
     }
 
     if (gameOver) {

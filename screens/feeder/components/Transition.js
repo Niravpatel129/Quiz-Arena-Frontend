@@ -60,6 +60,17 @@ const Transition = ({ animationText }) => {
         >
           {animationText[index]}
         </Text>
+        {animationText[index + 1] && (
+          <Text
+            style={{
+              fontSize: 30,
+              textAlign: 'center',
+              letterSpacing: 2,
+            }}
+          >
+            {animationText[index + 1]}
+          </Text>
+        )}
       </Animated.View>
     </View>
   );
