@@ -20,7 +20,7 @@ const useFeederGameMode = () => {
   const [score, setScore] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [showPickPercentage, setShowPickPercentage] = useState(false);
-  const [waitingForNext, setWaitingForNext] = useState(false); // State to manage pause
+  const [waitingForNext, setWaitingForNext] = useState(false);
 
   useEffect(() => {
     if (gameActive) {
@@ -33,7 +33,7 @@ const useFeederGameMode = () => {
     setCurrentQuestionIndex(0);
     setUserAnswers([]);
     setShowPickPercentage(false);
-    setWaitingForNext(false); // Reset waiting state
+    setWaitingForNext(false);
   };
 
   const submitUserAnswers = async () => {
@@ -47,7 +47,6 @@ const useFeederGameMode = () => {
 
   const answerQuestion = useCallback(
     (answer) => {
-      console.log('🚀  answer:', answer);
       const isCorrect = questions[currentQuestionIndex].correctAnswer === answer;
 
       setUserAnswers((prevUserAnswers) => [
@@ -59,10 +58,9 @@ const useFeederGameMode = () => {
         },
       ]);
       setShowPickPercentage(true);
-      setWaitingForNext(true); // Always pause after answering
+      setWaitingForNext(true);
 
       if (!isCorrect) {
-        // If answer is incorrect, we also pause the game but do not immediately end it
       } else {
         setScore((prevScore) => prevScore + 1);
       }
@@ -75,11 +73,9 @@ const useFeederGameMode = () => {
     const isCorrect =
       questions[currentQuestionIndex]?.correctAnswer === userAnswers[currentQuestionIndex]?.answer;
     if (!isCorrect && gameActive) {
-      // If the last answer was incorrect and game is still active, end the game.
       setGameActive(false);
-      submitUserAnswers(); // Optionally submit answers here or elsewhere based on your flow
+      submitUserAnswers();
     } else {
-      // Continue to the next question if correct or first incorrect answer was just given
       const nextIndex = currentQuestionIndex + 1;
       if (nextIndex < questions.length) {
         setCurrentQuestionIndex(nextIndex);
@@ -91,7 +87,7 @@ const useFeederGameMode = () => {
       }
     }
     setShowPickPercentage(false);
-    setWaitingForNext(false); // Ready to proceed to the next question or end game
+    setWaitingForNext(false);
   }, [currentQuestionIndex, questions, userAnswers, gameActive]);
 
   return {

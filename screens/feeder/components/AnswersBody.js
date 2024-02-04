@@ -3,9 +3,8 @@ import { Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import CustomButton from './CustomButton';
 
-const AnswersBody = ({ question, onAnswer, continueGame }) => {
+const AnswersBody = ({ question, onAnswer, continueGame, setGameOver }) => {
   const [userSelected, setUserSelected] = React.useState(null);
-  const [selectedAnswer, setSelectedAnswer] = React.useState(null);
   const [gameState, setGameState] = React.useState('active');
   const [isSelected, setIsSelected] = React.useState({});
   const [wasCorrect, setWasCorrect] = React.useState(false);
@@ -20,6 +19,8 @@ const AnswersBody = ({ question, onAnswer, continueGame }) => {
     }
 
     if (gameState === 'answer-submitted') {
+      if (!wasCorrect) setGameOver(true);
+
       // restart game
       continueGame();
       setGameState('active');
@@ -57,10 +58,6 @@ const AnswersBody = ({ question, onAnswer, continueGame }) => {
       textColor = 'white';
       buttonVariant = 'danger';
     }
-    // only change the didUserPickCorrectAnswer to danger if that is the option the user selected
-    // if (gameState === 'active' && userSelected !== answer.optionText && answer.isCorrect) {
-    //   buttonVariant = 'danger';
-    // }
 
     return (
       <CustomButton

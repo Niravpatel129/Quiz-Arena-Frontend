@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 
 const QuestionHeader = ({ question, score }) => {
   const skullColor =
-    question.stats?.correctAnswers / question.stats?.totalAnswers > 0.5 ? 'red' : 'black';
+    question?.stats?.correctAnswers / question?.stats?.totalAnswers > 0.5 ? 'red' : 'black';
 
   return (
     <View

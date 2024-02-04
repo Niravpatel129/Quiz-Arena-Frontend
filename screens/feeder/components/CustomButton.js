@@ -108,9 +108,11 @@ const CustomButton = ({
 
   const handlePress = () => {
     if (variant === 'alternative') {
+      if (!setIsSelected) return;
       setIsSelected(!isSelected);
     }
     if (onPress) {
+      console.log('onPress');
       onPress();
     }
   };

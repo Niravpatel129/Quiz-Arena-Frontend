@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
-import { Button, SafeAreaView, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, View } from 'react-native';
 import useFeederGameMode from '../../hooks/useFeederGameMode';
+import FeederHome from './components/FeederHome';
+import GameOver from './components/GameOver';
 import MainGame from './components/MainGame';
 
 const FeederScreen = () => {
@@ -14,33 +16,31 @@ const FeederScreen = () => {
     showPickPercentage,
     continueGame,
   } = useFeederGameMode();
+  const [gameOver, setGameOver] = useState(false);
 
-  useEffect(() => {
-    // start game on mount
+  const handleStartGame = () => {
+    setGameOver(false);
     startGame();
-  }, []);
+  };
 
   const renderGameState = () => {
-    if (!gameActive) {
+    if (gameOver) {
       return (
         <View>
-          <Text>Welcome to the Feeder Game!</Text>
-          <Button title='Start Game' onPress={startGame} />
+          <GameOver score={score} handleStartGame={handleStartGame} />
         </View>
       );
-    } else if (currentQuestionIndex >= questions.length) {
-      return (
-        <View>
-          <Text>Game Over!</Text>
-          <Text>Your Score: {score}</Text>
-          <Button title='Restart Game' onPress={startGame} />
-        </View>
-      );
+    }
+
+    if (!gameActive && questions.length === 0) {
+      return <FeederHome handleEnter={handleStartGame} />;
     } else {
       return (
         <View
           style={{
             width: '100%',
+            height: '100%',
+            // flex: 1,
           }}
         >
           <MainGame
@@ -49,6 +49,7 @@ const FeederScreen = () => {
             onAnswer={answerQuestion}
             showPickPercentage={showPickPercentage}
             continueGame={continueGame}
+            setGameOver={setGameOver}
           />
         </View>
       );
@@ -58,14 +59,22 @@ const FeederScreen = () => {
   return (
     <View
       style={{
-        margin: 10,
+        // margin: 10,
+        height: '100%',
       }}
     >
-      <SafeAreaView>
+      <SafeAreaView
+        style={{
+          height: '100%',
+        }}
+      >
         <View
           style={{
             justifyContent: 'center',
             alignItems: 'center',
+            height: '100%',
+            // flex: 1,
+            width: '100%',
           }}
         >
           {renderGameState()}
