@@ -99,7 +99,7 @@ export default function RenderKing({ currentFeederKing }) {
                 color: 'lightgray',
               }}
             >
-              {formatLastActive(previousFeederKing.updatedAt)}
+              {formatLastActive(feederKing.updatedAt)}
             </Text>
           </>
         )}
