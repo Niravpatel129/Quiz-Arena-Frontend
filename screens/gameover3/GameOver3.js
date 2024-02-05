@@ -19,7 +19,7 @@ export default function GameOver3({ route }) {
   const navigation = useNavigation();
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
   const requestReview = useInAppReview();
-  const translateY = useSharedValue(50); // Starting below the view by 50 pixels
+  const translateY = useSharedValue(50);
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{ translateY: translateY.value }],
@@ -27,7 +27,7 @@ export default function GameOver3({ route }) {
   });
 
   useEffect(() => {
-    translateY.value = withSpring(0); // Animate to its original position
+    translateY.value = withSpring(0);
   }, []);
 
   useEffect(() => {
