@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
 import { BackHandler, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import Toast from 'react-native-toast-message';
 import RematchModal from '../../components/RematchModal/RematchModal';
 import useInAppReview from '../../hooks/useInAppReview';
@@ -18,6 +19,16 @@ export default function GameOver3({ route }) {
   const navigation = useNavigation();
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
   const requestReview = useInAppReview();
+  const translateY = useSharedValue(50); // Starting below the view by 50 pixels
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translateY.value }],
+    };
+  });
+
+  useEffect(() => {
+    translateY.value = withSpring(0); // Animate to its original position
+  }, []);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
@@ -153,17 +164,20 @@ export default function GameOver3({ route }) {
             <View>
               <TryAgain didWin={GameResults?.yourData?.didWin} />
             </View>
-            <View
-              style={{
-                marginTop: 20,
-                alignItems: 'center',
-              }}
+            <Animated.View
+              style={[
+                {
+                  marginTop: 20,
+                  alignItems: 'center',
+                },
+                animatedStyle,
+              ]}
             >
               <PlayerCards
                 yourData={GameResults.yourData}
                 opponentData={GameResults.opponentData}
               />
-            </View>
+            </Animated.View>
             <View
               style={{
                 marginTop: 20,
