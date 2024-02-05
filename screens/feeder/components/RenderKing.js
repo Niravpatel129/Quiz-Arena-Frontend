@@ -12,7 +12,7 @@ export default function RenderKing({ currentFeederKing }) {
   return (
     <View
       style={{
-        margin: 40,
+        margin: 20,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',

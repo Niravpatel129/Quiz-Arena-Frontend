@@ -5,7 +5,7 @@ import {
   Animated,
   Image,
   ImageBackground,
-  SafeAreaView,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
@@ -56,7 +56,7 @@ export default function FeederHome({ categoryName, handleEnter }) {
       style={{ flex: 1, opacity: fadeAnim, width: '100%', height: '100%' }}
       resizeMode='cover'
     >
-      <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             flex: 1,
@@ -84,6 +84,7 @@ export default function FeederHome({ categoryName, handleEnter }) {
                 textShadowColor: 'rgba(0, 0, 0, 0.75)',
                 textShadowOffset: { width: -1, height: 1 },
                 textShadowRadius: 3,
+                marginTop: 30,
               }}
             >
               Feeder Mode
@@ -118,7 +119,6 @@ export default function FeederHome({ categoryName, handleEnter }) {
             )}
             <View
               style={{
-                marginTop: 40,
                 width: '100%',
               }}
             >
@@ -131,7 +131,7 @@ export default function FeederHome({ categoryName, handleEnter }) {
             </View>
           </View>
         </View>
-      </SafeAreaView>
+      </ScrollView>
     </AnimatedImageBackground>
   );
 }
