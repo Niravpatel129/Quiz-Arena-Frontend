@@ -29,7 +29,7 @@ export default function RenderKing({ currentFeederKing }) {
           color: '#fff',
         }}
       >
-        Current Feeder King
+        Current King
       </Text>
       <Image
         source={{
@@ -38,20 +38,28 @@ export default function RenderKing({ currentFeederKing }) {
         style={{
           width: 100,
           height: 100,
-          marginBottom: 10,
+          marginBottom: 7,
           borderRadius: 15,
         }}
       />
 
-      <Text
+      <View
         style={{
-          fontFamily: 'poppins-semiBold',
-          fontSize: 20,
-          textAlign: 'center',
-          color: '#fff',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        {capitalizeFirstLetter(feederKing.userDetails.username)}
+        <Text
+          style={{
+            fontFamily: 'poppins-semiBold',
+            fontSize: 20,
+            textAlign: 'center',
+            color: '#fff',
+          }}
+        >
+          {capitalizeFirstLetter(feederKing.userDetails.username)}
+        </Text>
         <CountryFlag
           style={{
             marginLeft: 6,
@@ -59,16 +67,16 @@ export default function RenderKing({ currentFeederKing }) {
           isoCode={feederKing.userDetails.profile.country}
           size={14}
         />
-      </Text>
+      </View>
       <Text
         style={{
           fontFamily: 'poppins-semiBold',
-          fontSize: 20,
+          fontSize: 18,
           textAlign: 'center',
-          color: '#fff',
+          color: 'lightgray',
         }}
       >
-        {feederKing.scoreAchieved} Feed Score
+        Reached Round {feederKing.scoreAchieved}
       </Text>
       {previousFeederKing &&
         previousFeederKing.userDetails.username !== feederKing.userDetails.usernme && (
@@ -88,7 +96,7 @@ export default function RenderKing({ currentFeederKing }) {
                   marginLeft: 6,
                 }}
                 isoCode={previousFeederKing.userDetails.profile.country}
-                size={12}
+                size={13}
               />
             </Text>
             <Text
@@ -99,7 +107,7 @@ export default function RenderKing({ currentFeederKing }) {
                 color: 'lightgray',
               }}
             >
-              {formatLastActive(feederKing.updatedAt)}
+              {formatLastActive(feederKing?.updatedAt || previousFeederKing?.updatedAt)}
             </Text>
           </>
         )}

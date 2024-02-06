@@ -1,15 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import {
-  Animated,
-  Image,
-  ImageBackground,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Animated, ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
 import CustomButton from './CustomButton';
 import RenderKing from './RenderKing';
@@ -20,6 +12,7 @@ export default function FeederHome({ categoryName, handleEnter }) {
   const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground);
   const [currentFeederKing, setCurrentFeederKing] = React.useState(undefined);
   const [loaded, setLoaded] = React.useState(false);
+  const [imageLoaded, setImageLoaded] = React.useState(false);
 
   useEffect(() => {
     const fetchFeederKing = async () => {
@@ -38,11 +31,11 @@ export default function FeederHome({ categoryName, handleEnter }) {
   }, [categoryName]);
 
   useEffect(() => {
-    if (!loaded) return;
+    if (!loaded || !imageLoaded) return;
 
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 400,
+      duration: 100,
       useNativeDriver: true,
       delay: 200,
     }).start();
@@ -50,6 +43,9 @@ export default function FeederHome({ categoryName, handleEnter }) {
 
   return (
     <AnimatedImageBackground
+      onLoad={() => {
+        setImageLoaded(true);
+      }}
       source={{
         uri: 'https://cdn.discordapp.com/attachments/1110409819808079982/1202937279581134958/background.png?ex=65cf45a4&is=65bcd0a4&hm=0d4e4b94de5bd0f31709f4a3dfd9b219e6e3099638abc675d4ca44e1d457e9a1',
       }}
@@ -103,7 +99,7 @@ export default function FeederHome({ categoryName, handleEnter }) {
             >
               {categoryName || 'General Knowledge'}
             </Text>
-            <Image
+            {/* <Image
               source={{
                 uri: 'https://cdn.discordapp.com/attachments/1201815017612398662/1202213592493981787/IMG_3419.webp?ex=65cca3a8&is=65ba2ea8&hm=3b03405ac15ecc894bab9a242ba73b08301b8cd8e5cb8dd634f5dbef8290f006&',
               }}
@@ -112,7 +108,7 @@ export default function FeederHome({ categoryName, handleEnter }) {
                 height: 200,
                 borderRadius: 20,
               }}
-            />
+            /> */}
 
             {currentFeederKing && (
               <RenderKing currentFeederKing={currentFeederKing} categoryName={categoryName} />

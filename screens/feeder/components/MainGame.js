@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import AnswersBody from './AnswersBody';
 import QuestionBody from './QuestionBody';
@@ -41,7 +41,7 @@ export default function MainGame({
           alignItems: 'center',
         }}
       >
-        <ActivityIndicator size='large' color='#000' />
+        {/* <ActivityIndicator size='large' color='#000' /> */}
       </View>
     );
   }
@@ -67,17 +67,19 @@ export default function MainGame({
         <QuestionHeader score={score} question={question} categoryName={categoryName} />
       </View>
       <QuestionBody question={question} />
+      <View>
+        <AnswersBody
+          question={question}
+          onAnswer={onAnswer}
+          continueGame={continueGame}
+          setGameOver={setGameOver}
+          setTimer={setTimer}
+          timer={timer}
+        />
 
-      <AnswersBody
-        question={question}
-        onAnswer={onAnswer}
-        continueGame={continueGame}
-        setGameOver={setGameOver}
-        setTimer={setTimer}
-        timer={timer}
-      />
+        <TimeProgressBar currentTime={timer} maxTime={100} />
+      </View>
 
-      <TimeProgressBar currentTime={timer} maxTime={100} />
       {/* {timer} */}
     </Animated.View>
   );

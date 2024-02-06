@@ -21,7 +21,7 @@ const QuestionBody = ({ question }) => {
       >
         {question.question}
       </Text>
-      {question.helperImage !== '' && (
+      {question.helperImage && question.helperImage !== '' && (
         <Image
           contentFit='contain'
           source={{
