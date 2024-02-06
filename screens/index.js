@@ -146,7 +146,7 @@ export default function ProfileEditScreen() {
                 fontWeight: 700,
               }}
             >
-              Terms of Use
+              Terms of Use and Privacy Policy
             </Text>
           </TouchableOpacity>
         </View>
