@@ -31,6 +31,25 @@ export default function GameOver3({ route }) {
   }, []);
 
   useEffect(() => {
+    socketService.socket.on('rematchRequest', (gameSessionId) => {
+      console.log('rematch request');
+
+      setRematchModalVisible(true);
+    });
+
+    socketService.socket.on('rematchAccepted', (gameSessionId) => {
+      console.log('rematch accepted');
+      navigation.navigate('Game', { game: data.game });
+    });
+
+    socketService.socket.on('rematchDeclined', (gameSessionId) => {
+      console.log('rematch declined');
+      alert('Rematch declined');
+      setRematchModalVisible(false);
+    });
+  }, []);
+
+  useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       navigation.navigate('Categories');
     });

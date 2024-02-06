@@ -330,7 +330,7 @@ export default function SignUpLogin({ navigation }) {
                         onSubmitEditing={handleLogin}
                       />
                     </View>
-                    <TouchableOpacity>
+                    {/* <TouchableOpacity>
                       <Text
                         style={{
                           color: 'white',
@@ -339,7 +339,7 @@ export default function SignUpLogin({ navigation }) {
                       >
                         Forgot your password?
                       </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </>
                 )}
 

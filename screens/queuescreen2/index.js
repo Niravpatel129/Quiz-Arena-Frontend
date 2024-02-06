@@ -24,11 +24,12 @@ const IS_PRODUCTION = process.env.EXPO_PUBLIC_PROD_BACKEND || process.env.NODE_E
 
 export default function QueueScreen2({ route }) {
   const navigation = useNavigation();
+  const [queueJoined, setQueueJoined] = useState(false);
   const [queueTime, setQueueTime] = useState(1);
+  const [gameStarted, setGameStarted] = useState(false);
   const categoryName = route.params?.categoryName || 'Logos';
   const [estimatedWaitTime, setEstimatedWaitTime] = useState(0);
   const { userData, fetchUser } = useAuth();
-  console.log('🚀  userData:', userData);
   const { setUpdateRequired } = useUpdateContext();
   const intervalRef = useRef(null);
   const [defaultQueueTime, setDefaultQueueTime] = useState(100);
@@ -114,10 +115,19 @@ export default function QueueScreen2({ route }) {
   }, [queueTime]);
 
   useEffect(() => {
-    socketService.emit('join_queue', categoryName);
+    if (!queueJoined) {
+      console.log('joining queue');
+      socketService.emit('join_queue', categoryName);
+      setQueueJoined(true);
+    }
+
     startTimer();
 
     socketService.on('game_start', (data) => {
+      if (gameStarted) return;
+
+      setGameStarted(true);
+
       if (Platform.OS !== 'web') {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       }
@@ -135,9 +145,11 @@ export default function QueueScreen2({ route }) {
     });
 
     return () => {
+      setQueueJoined(false);
       setQueueTime(0);
       socketService.emit('leave_queue', categoryName);
       clearInterval(intervalRef.current);
+      setGameStarted(false);
     };
   }, []);
 
