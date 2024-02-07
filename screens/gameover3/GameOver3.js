@@ -214,6 +214,8 @@ export default function GameOver3({ route }) {
               <ScoreCard
                 player1={GameResults?.yourData?.username}
                 player2={GameResults?.opponentData?.username}
+                player1Id={GameResults?.yourData?.userId}
+                player2Id={GameResults?.opponentData?.userId}
                 scores1={GameResults?.yourData?.gameData?.scores?.map((v) => v.points)}
                 scores2={GameResults?.opponentData?.gameData?.scores?.map((v) => v.points)}
                 categoryName={GameResults?.category}

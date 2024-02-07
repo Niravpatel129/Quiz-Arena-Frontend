@@ -5,6 +5,7 @@ import AgainButtons from './AgainButtons';
 export default function ScoreCard({
   player1,
   player2,
+  player2Id,
   scores1 = [],
   scores2 = [],
   categoryName,
@@ -140,7 +141,7 @@ export default function ScoreCard({
         }}
       >
         <AgainButtons
-          opponentId={player2.userId}
+          opponentId={player2Id}
           categoryName={categoryName}
           handleRematch={handleRematch}
         />
