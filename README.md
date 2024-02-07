@@ -1,5 +1,5 @@
 Preview:
+<img width="804" alt="image" src="https://github.com/Niravpatel129/Quiz-Arena-Frontend-Scaffold/assets/43049943/98ac05ee-1209-4293-8885-fab6d083e021">
 
-![image](https://github.com/Niravpatel129/Quiz-Arena-Frontend-Scaffold/assets/43049943/8f620589-3471-4e4a-9842-548a94a18029)
-
-<!--       // "googleServicesFile": "./google/elo-mastery-b6f43-f8db4624ebc1.json", -->
+App Store:
+https://apps.apple.com/ca/app/quiz-arena-trivia-questions/id6474947179?platform=iphone
