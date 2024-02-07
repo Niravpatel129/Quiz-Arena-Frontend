@@ -80,8 +80,7 @@ export default function PlayerCards({ yourData, opponentData }) {
               fontSize: 13,
             }}
           >
-            {playerData?.didWin ? '+' : ''}
-            {playerData?.ratingChange}
+            {Math.abs(playerData?.ratingChange)}
           </Text>
         </View>
       </View>
