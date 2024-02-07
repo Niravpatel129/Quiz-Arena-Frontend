@@ -91,6 +91,8 @@ export default function InviteModal({ category, isModalVisible, hideModal }) {
     });
 
     return () => {
+      socketService.off('game_start');
+
       socketService.emit('leaveChallengeQueue', {
         gameId: gameRoomId,
         category: category,

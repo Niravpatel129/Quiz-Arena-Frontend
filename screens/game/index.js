@@ -233,6 +233,15 @@ const GameScreen = ({ navigation, route }) => {
       setIsCorrectAnswer(result.isCorrect);
       setHighlightTrigger(!highlightTrigger);
     });
+
+    return () => {
+      socketService.off('new_round');
+      socketService.off('game_over');
+      socketService.off('answer_result');
+      socketService.off('opponent_guessed');
+      socketService.off('disconnect');
+      socketService.off('connection_lost');
+    };
   }, []);
 
   useEffect(() => {

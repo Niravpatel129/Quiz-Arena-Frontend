@@ -36,6 +36,12 @@ class SocketService {
     }
   }
 
+  off(event, func) {
+    if (this.socket) {
+      this.socket.off(event, func);
+    }
+  }
+
   emit(event, data) {
     if (this.socket) {
       const throttledEmit = _.throttle((event, ...args) => {

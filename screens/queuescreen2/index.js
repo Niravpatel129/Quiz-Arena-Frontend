@@ -150,6 +150,7 @@ export default function QueueScreen2({ route }) {
       socketService.emit('leave_queue', categoryName);
       clearInterval(intervalRef.current);
       setGameStarted(false);
+      socketService.off('game_start');
     };
   }, []);
 

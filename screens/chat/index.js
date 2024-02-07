@@ -36,6 +36,10 @@ export default function Chat({
     socketService.on('chat_message_recieved', () => {
       fetchChat();
     });
+
+    return () => {
+      socketService.off('chat_message_recieved');
+    };
   }, [chat]);
 
   const fetchChat = async () => {

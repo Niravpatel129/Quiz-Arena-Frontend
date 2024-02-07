@@ -47,6 +47,12 @@ export default function GameOver3({ route }) {
       alert('Rematch declined');
       setRematchModalVisible(false);
     });
+
+    return () => {
+      socketService.socket.off('rematchRequest');
+      socketService.socket.off('rematchAccepted');
+      socketService.socket.off('rematchDeclined');
+    };
   }, []);
 
   useEffect(() => {

@@ -79,6 +79,11 @@ export default function ChallengeScreen({ route }) {
     });
 
     return () => {
+      clearInterval(intervalRef.current);
+
+      socketService.off('challengeExpired');
+      socketService.off('game_start');
+
       socketService.emit('leaveChallengeQueue', {
         gameId: gameId,
         category: categoryName,
