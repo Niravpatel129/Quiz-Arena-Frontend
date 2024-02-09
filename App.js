@@ -56,9 +56,7 @@ if (true) {
       try {
         startAppFlyer = module.default;
         startAppFlyer();
-      } catch (e) {
-        // console.log('🚀 ~ file: App.js ~ line 85 ~ .then ~ e', e);
-      }
+      } catch (e) {}
     })
     .catch((err) => {
       console.error('Failed to load startAppFlyer', err);
