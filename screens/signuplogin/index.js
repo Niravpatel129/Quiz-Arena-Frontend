@@ -29,6 +29,7 @@ export default function SignUpLogin({ navigation }) {
   const { signIn } = useAuth();
   const [avatarUri, setAvatarUri] = React.useState(null);
   const [avatar, setAvatar] = React.useState(null);
+  const passwordInputRef = React.useRef(null);
 
   useEffect(() => {
     const getEmail = async () => {
@@ -67,12 +68,10 @@ export default function SignUpLogin({ navigation }) {
     const newUri = result.assets[0].uri;
     console.log('🚀  newUri:', newUri);
     if (!newUri) return;
-    // if (!result.canceled) {
     setAvatarUri(newUri);
     const url = await upload(newUri);
     console.log('🚀  url:', url);
     setAvatar(url);
-    // }
   };
 
   const handleLogin = () => {
@@ -151,15 +150,14 @@ export default function SignUpLogin({ navigation }) {
           <ScrollView
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ flexGrow: 1 }}
-            keyboardShouldPersistTaps='handled'
-            style={{
-              margin: 20,
-              height: '100%',
+            contentContainerStyle={{
+              flexGrow: 1,
             }}
+            keyboardShouldPersistTaps='handled'
           >
             <View
               style={{
+                padding: 20,
                 width: '100%',
                 alignItems: 'center',
               }}
@@ -168,7 +166,6 @@ export default function SignUpLogin({ navigation }) {
                 source={{
                   uri: 'https://cdn.discordapp.com/attachments/1197974156965322832/1200709115786297384/2_copy.png?ex=65c72a81&is=65b4b581&hm=51b9cb17de42aaaf8cec546452149456b20b23a890000ef6aa0765ddcfcdf4a6&',
                 }}
-                // source={require('../../assets/logo.png')}
                 style={{
                   width: 180,
                   height: 180,
@@ -247,9 +244,9 @@ export default function SignUpLogin({ navigation }) {
                       color={'#516696'}
                     />
                     <TextInput
+                      returnKeyType='continue'
                       style={{
                         padding: 10,
-                        // backgroundColor: 'white',
                         borderRadius: 6,
                         marginBottom: 10,
                         fontSize: 20,
@@ -294,6 +291,8 @@ export default function SignUpLogin({ navigation }) {
                         placeholder='Email'
                         onChangeText={setEmail}
                         value={email}
+                        returnKeyType='next'
+                        onSubmitEditing={() => passwordInputRef.current?.focus()}
                       />
                     </View>
                     {/* Input Password */}
@@ -315,6 +314,7 @@ export default function SignUpLogin({ navigation }) {
                         color={'#516696'}
                       />
                       <TextInput
+                        ref={passwordInputRef} // Use the ref here
                         style={{
                           padding: 10,
                           backgroundColor: '#e9eef3',
@@ -328,6 +328,7 @@ export default function SignUpLogin({ navigation }) {
                         onChangeText={setPassword}
                         value={password}
                         onSubmitEditing={handleLogin}
+                        returnKeyType='done'
                       />
                     </View>
                     {/* <TouchableOpacity>
