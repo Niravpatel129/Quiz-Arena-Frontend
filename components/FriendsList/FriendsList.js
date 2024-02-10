@@ -136,7 +136,7 @@ export default function FriendsList() {
             >
               <Text
                 style={{
-                  color: 'white',
+                  color: 'black',
                   fontSize: 14,
                   maxWidth: 250,
                   marginLeft: 10,
