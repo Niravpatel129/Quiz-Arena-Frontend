@@ -7,6 +7,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-na
 import Toast from 'react-native-toast-message';
 import RematchModal from '../../components/RematchModal/RematchModal';
 import useInAppReview from '../../hooks/useInAppReview';
+import useRecentlyPlayed from '../../hooks/useRecentlyPlayed';
 import socketService from '../../services/socketService';
 import Exp from './components/Exp';
 import PlayerCards from './components/PlayerCards';
@@ -20,6 +21,7 @@ export default function GameOver3({ route }) {
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
   const requestReview = useInAppReview();
   const translateY = useSharedValue(50);
+  const { addRecentlyPlayedCategory } = useRecentlyPlayed();
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{ translateY: translateY.value }],
@@ -27,6 +29,8 @@ export default function GameOver3({ route }) {
   });
 
   useEffect(() => {
+    if (GameResults.category) addRecentlyPlayedCategory(GameResults.category);
+
     translateY.value = withSpring(0);
   }, []);
 

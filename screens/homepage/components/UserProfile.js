@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { calculateExp } from '../../../helpers/calculateExp';
@@ -9,6 +10,8 @@ import capitalizeFirstLetter from '../../../helpers/capitalizeFirstLetter';
 import DividerHeader from './DividerHeader';
 
 export default function UserProfile({ userData }) {
+  const navigation = useNavigation();
+
   return (
     <View>
       <DividerHeader headerText={'Your Profile'} />
@@ -32,7 +35,10 @@ export default function UserProfile({ userData }) {
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
-        <View
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Profile');
+          }}
           style={{
             position: 'relative',
             overflow: 'hidden',
@@ -51,7 +57,7 @@ export default function UserProfile({ userData }) {
               marginRight: 13,
             }}
           ></Image>
-        </View>
+        </TouchableOpacity>
 
         <View
           style={{

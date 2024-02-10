@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { newRequest } from '../../api/newRequest';
+import useRecentlyPlayed from '../../hooks/useRecentlyPlayed';
 import useStreak from '../../hooks/useStreak';
 import CategoriesList from './components/CategoriesList';
 import UserProfile from './components/UserProfile';
@@ -11,6 +12,7 @@ export default function Homepage() {
   const [userData, setUserData] = useState({});
   const opacity = useSharedValue(0);
   const [updateStreak] = useStreak();
+  const { fetchRecentlyPlayed } = useRecentlyPlayed();
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -22,6 +24,13 @@ export default function Homepage() {
     const fetchData = async () => {
       updateStreak();
       const res = await newRequest('/homepage/home');
+      const previous = await fetchRecentlyPlayed();
+      if (previous.length > 0)
+        res.data.categories.unshift({
+          parentCategory: 'Recently Played',
+          subCategories: previous.map((category) => ({ name: category, image: '' })),
+        });
+
       setCategories(res.data.categories);
       setUserData(res.data.user);
     };
