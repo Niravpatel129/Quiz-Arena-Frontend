@@ -1,14 +1,18 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useEffect } from 'react';
-import { SafeAreaView, ScrollView, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, SafeAreaView, ScrollView, View } from 'react-native';
 import Answers from './components/answers';
 import Header from './components/header';
 import Question from './components/question';
 import QuestionNoBar from './components/questionNoBar';
 
 export default function Ingame2({ roundNumber, InGameData, timer }) {
-  const AnswersRef = React.useRef(null);
-  const [imageLoaded, setImageLoaded] = React.useState(false);
+  const AnswersRef = useRef(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // Initial value for opacity: 0
+  const questionFadeAnim = useRef(new Animated.Value(0)).current;
+  const answersFadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     imageLoaded && AnswersRef.current && AnswersRef.current.scrollToEnd({ animated: true });
@@ -16,22 +20,30 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
 
   useEffect(() => {
     setImageLoaded(false);
-  }, [roundNumber]);
+
+    // Reset opacity to 0 before starting the animation for both question and answers
+    questionFadeAnim.setValue(0);
+    answersFadeAnim.setValue(0);
+
+    // Sequence to animate question first, then answers after a delay
+    Animated.sequence([
+      Animated.timing(questionFadeAnim, {
+        toValue: 1, // Fade in the question
+        duration: 500, // Animation duration of 500ms
+        useNativeDriver: true,
+      }),
+      Animated.delay(1500), // Delay of 1500ms (2 seconds) before starting the next animation
+      Animated.timing(answersFadeAnim, {
+        toValue: 1, // Fade in the answers
+        duration: 500, // Animation duration of 500ms
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [roundNumber]); // Dependency array includes roundNumber to trigger effect on its change
 
   return (
-    <LinearGradient
-      colors={['#EC80B4', '#3F95F2']}
-      style={{
-        flex: 1,
-        height: '100%',
-      }}
-    >
-      <SafeAreaView
-        style={{
-          flex: 1,
-          height: '100%',
-        }}
-      >
+    <LinearGradient colors={['#EC80B4', '#3F95F2']} style={{ flex: 1, height: '100%' }}>
+      <SafeAreaView style={{ flex: 1, height: '100%' }}>
         <View
           style={{
             flex: 1,
@@ -47,22 +59,10 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
             ref={AnswersRef}
             contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
+            style={{ width: '100%', height: '100%' }}
           >
-            <View
-              style={{
-                width: '100%',
-                flex: 1,
-              }}
-            >
-              <View
-                style={{
-                  width: '100%',
-                }}
-              >
+            <View style={{ width: '100%', flex: 1 }}>
+              <View style={{ width: '100%' }}>
                 <Header
                   timeRemaining={timer}
                   yourData={InGameData.PlayerOneInformation}
@@ -73,10 +73,11 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
                 <QuestionNoBar roundNumber={roundNumber} />
               </View>
             </View>
-            <View
+            <Animated.View
               style={{
                 justifyContent: 'space-between',
                 flex: 1,
+                opacity: questionFadeAnim, // Use the animated opacity value for question
               }}
             >
               <View
@@ -95,20 +96,21 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
                   questionImage={InGameData.RoundData.image}
                 />
               </View>
-              <View
-                style={{
-                  width: '100%',
-                  flex: 1,
-                  justifyContent: 'flex-end',
-                }}
-              >
-                <Answers
-                  answers={InGameData.RoundData.answers}
-                  sessionId={InGameData.sessionId}
-                  timeRemaining={timer}
-                />
-              </View>
-            </View>
+            </Animated.View>
+            <Animated.View
+              style={{
+                width: '100%',
+                flex: 1,
+                justifyContent: 'flex-end',
+                opacity: answersFadeAnim, // Use the animated opacity value for answers
+              }}
+            >
+              <Answers
+                answers={InGameData.RoundData.answers}
+                sessionId={InGameData.sessionId}
+                timeRemaining={timer}
+              />
+            </Animated.View>
           </ScrollView>
         </View>
       </SafeAreaView>
