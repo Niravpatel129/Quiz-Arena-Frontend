@@ -37,6 +37,7 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
               fontFamily: 'poppins-semiBold',
               fontSize: RFValue(12),
               textTransform: 'capitalize',
+              maxWidth: 120,
             }}
           >
             {isOpponent ? opponentData?.username : yourData?.username}

@@ -160,7 +160,12 @@ export default function Questions({ questions }) {
           paddingVertical: 12,
         }}
       >
-        <View>
+        <View
+          style={{
+            width: 30,
+            height: 30,
+          }}
+        >
           {showYourAvatar && (
             <Image
               source={{
@@ -178,7 +183,11 @@ export default function Questions({ questions }) {
             />
           )}
         </View>
-        <View>
+        <View
+          style={{
+            maxWidth: '70%',
+          }}
+        >
           <Text
             style={{
               fontFamily: 'poppins-regular',
@@ -189,7 +198,12 @@ export default function Questions({ questions }) {
             {answerData.optionText}
           </Text>
         </View>
-        <View>
+        <View
+          style={{
+            width: 30,
+            height: 30,
+          }}
+        >
           {showOpponentAvatar && (
             <Image
               source={{

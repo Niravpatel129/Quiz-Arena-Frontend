@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import AnimatedButton from '../../../components/AnimatedButton/AnimatedButton';
 import { useSound } from '../../../context/sound/SoundContext';
 import socketService from '../../../services/socketService';
+import AnswerButton from './AnswerButton';
 
 export default function Answers({ answers, sessionId, timeRemaining }) {
   const [selectedAnswer, setSelectedAnswer] = React.useState(null);
@@ -23,14 +22,11 @@ export default function Answers({ answers, sessionId, timeRemaining }) {
     setSelectedAnswer(answer);
     setIsAnswered(true);
 
-    // Backend
     const resData = {
       sessionId: sessionId,
       answer: answer,
       timeRemaining: timeRemaining,
     };
-
-    // check if answer is correct or not
 
     if (isCorrect) {
       playSound('correct_answer');
@@ -38,71 +34,7 @@ export default function Answers({ answers, sessionId, timeRemaining }) {
       playSound('button_press');
     }
 
-    // Emit the event with the data
     socketService.emit('submit_answer', resData);
-  };
-
-  const getButtonStyles = (text, answerCorrect) => {
-    let buttonColor = '#EFF8FF';
-    let buttonShadowColor = '#CBD9F0';
-    let textColor = '#262625';
-
-    if (isAnswered) {
-      if (answerCorrect) {
-        buttonColor = '#00C48C';
-        buttonShadowColor = '#00C48C';
-        textColor = '#ffffff';
-      } else if (selectedAnswer === text) {
-        buttonColor = '#FF5858';
-        buttonShadowColor = '#F73535';
-        textColor = '#ffffff';
-      }
-    } else if (selectedAnswer === text) {
-      buttonColor = answerCorrect ? '#00C48C' : '#FF5858';
-      buttonShadowColor = answerCorrect ? '#00C48C' : '#F73535';
-      textColor = '#ffffff';
-    }
-
-    return { buttonColor, buttonShadowColor, textColor };
-  };
-
-  const renderButton = ({ text, answerCorrect }) => {
-    const { buttonColor, buttonShadowColor, textColor } = getButtonStyles(text, answerCorrect);
-
-    return (
-      <AnimatedButton
-        number={selectedAnswer && answerCorrect ? calculateTimeBasedScore(timeRemaining) : 0}
-        onPress={() => {
-          if (!isAnswered) {
-            handleAnswer(text, answerCorrect);
-          }
-        }}
-        style={{
-          backgroundColor: buttonColor,
-          width: '100%',
-          padding: 20,
-          borderRadius: 100,
-        }}
-      >
-        <Text
-          style={{
-            color: textColor,
-            fontFamily: 'poppins-regular',
-            fontSize: RFValue(11),
-            shadowColor: buttonShadowColor,
-            shadowOffset: {
-              width: 0,
-              height: -6,
-            },
-            shadowOpacity: 0.2,
-            shadowRadius: 8,
-            elevation: 5,
-          }}
-        >
-          {text || 'USA'}
-        </Text>
-      </AnimatedButton>
-    );
   };
 
   return (
@@ -124,12 +56,18 @@ export default function Answers({ answers, sessionId, timeRemaining }) {
         }}
       >
         {randomziedAnswers.map((answer, index) => (
-          <React.Fragment key={index}>
-            {renderButton({
-              text: answer.optionText,
-              answerCorrect: answer.isCorrect,
-            })}
-          </React.Fragment>
+          <AnswerButton
+            key={index}
+            text={answer.optionText}
+            answerCorrect={answer.isCorrect}
+            isSelected={selectedAnswer === answer.optionText}
+            isAnswered={isAnswered}
+            onPress={() => {
+              if (!isAnswered) {
+                handleAnswer(answer.optionText, answer.isCorrect);
+              }
+            }}
+          />
         ))}
       </View>
     </View>

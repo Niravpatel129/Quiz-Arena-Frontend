@@ -56,18 +56,20 @@ const AnimatedButton = ({ children, onPress, style, number }) => {
     >
       <Animated.View style={[style, animatedStyle]}>
         {children}
-        <Animated.Text
-          style={[
-            floatingTextStyle,
-            {
-              color: '#EC80B4',
-              fontSize: 30,
-              fontFamily: 'Inter-Bold',
-            },
-          ]}
-        >
-          +{number}
-        </Animated.Text>
+        {number && (
+          <Animated.Text
+            style={[
+              floatingTextStyle,
+              {
+                color: number === 0 ? '#EC0394' : '#EC80B4',
+                fontSize: 24,
+                fontFamily: 'poppins-semiBold',
+              },
+            ]}
+          >
+            +{number}
+          </Animated.Text>
+        )}
       </Animated.View>
     </TouchableOpacity>
   );
