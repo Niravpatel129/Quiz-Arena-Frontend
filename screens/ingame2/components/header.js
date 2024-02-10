@@ -1,9 +1,29 @@
-import React from 'react';
-import { Image, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Animated, Image, Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import TubeFillComponent from './TubeFillComponent';
 
 export default function Header({ timeRemaining, yourData, opponentData }) {
+  // Initialize Animated Value for scale
+  const scaleAnim = useState(new Animated.Value(1))[0]; // Initial scale value
+
+  // Animate on Time Change
+  useEffect(() => {
+    scaleAnim.setValue(1); // Reset scale before animation
+    Animated.sequence([
+      Animated.spring(scaleAnim, {
+        toValue: 1.2,
+        friction: 3,
+        useNativeDriver: true,
+      }),
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        friction: 3,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [timeRemaining, scaleAnim]);
+
   const renderPlayCard = ({ isOpponent }) => {
     const progressBar = isOpponent ? opponentData?.score : yourData?.score;
 
@@ -25,7 +45,7 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
             borderWidth: 2,
             borderColor: isOpponent ? '#FF5858' : '#2CC672',
           }}
-        ></Image>
+        />
         <View
           style={{
             alignItems: isOpponent ? 'flex-end' : 'flex-start',
@@ -58,7 +78,7 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
               fontSize: RFValue(13),
             }}
           >
-            {isOpponent ? opponentData?.score : yourData?.score}
+            {progressBar}
           </Text>
           <View
             style={{
@@ -102,11 +122,7 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
           alignItems: 'center',
         }}
       >
-        <View>
-          {renderPlayCard({
-            isOpponent: false,
-          })}
-        </View>
+        <View>{renderPlayCard({ isOpponent: false })}</View>
         <View
           style={{
             borderRadius: 100,
@@ -119,21 +135,20 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
             justifyContent: 'center',
           }}
         >
-          <Text
-            style={{
-              fontFamily: 'poppins-semiBold',
-              fontSize: RFValue(10),
-              color: 'white',
-            }}
+          <Animated.Text
+            style={[
+              {
+                fontFamily: 'poppins-semiBold',
+                fontSize: RFValue(10),
+                color: 'white',
+                transform: [{ scale: scaleAnim }],
+              },
+            ]}
           >
             {timeRemaining > 0 ? timeRemaining : '⏰'}
-          </Text>
+          </Animated.Text>
         </View>
-        <View>
-          {renderPlayCard({
-            isOpponent: true,
-          })}
-        </View>
+        <View>{renderPlayCard({ isOpponent: true })}</View>
       </View>
     </View>
   );
