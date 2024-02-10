@@ -130,6 +130,7 @@ export default function ChallangeModal({ opponentUserId, isModalVisible, hideMod
               navigation.navigate('Challenge', {
                 gameId: generatedGameId,
                 categoryName: selectedCategory,
+                gameInvite: generatedGameId,
               });
             }}
           >

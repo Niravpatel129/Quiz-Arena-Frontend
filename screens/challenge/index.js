@@ -14,6 +14,7 @@ export default function ChallengeScreen({ route }) {
   const intervalRef = useRef(null);
   const categoryName = routeParam?.categoryName;
   const gameId = routeParam?.gameId || '123';
+  const gameInvite = routeParam?.gameInvite;
   const { userData, fetchUser } = useAuth();
   const navigation = useNavigation();
   const [gameExpired, setGameExpired] = useState(true);
@@ -178,43 +179,6 @@ export default function ChallengeScreen({ route }) {
           // style={{ position: 'absolute', top: 20, left: 20 }}
         />
       </TouchableOpacity>
-      {!gameExpired && (
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-            marginTop: 40,
-          }}
-        >
-          <View>
-            {PlayerCard(
-              {
-                tag: 'Player Tag',
-                playerName: userData?.username || 'Alex Smith',
-                country: userData?.country || 'ca',
-                avatar: userData?.avatar || '',
-                elo: userData?.allRating[categoryName] || 1200,
-                experience: userData?.experience,
-              },
-              false,
-            )}
-          </View>
-          <View>
-            <Text
-              style={{
-                color: '#1e1e1e',
-                fontSize: 45,
-                fontFamily: 'Inter-Regular',
-                textAlign: 'center',
-              }}
-            >
-              VS
-            </Text>
-          </View>
-          <View>{PlayerCard({}, true)}</View>
-        </View>
-      )}
 
       {!gameExpired ? (
         <>
@@ -297,7 +261,7 @@ export default function ChallengeScreen({ route }) {
                 textAlign: 'center',
               }}
             >
-              Your challenge has expired!
+              {gameInvite ? 'Waiting for opponent...' : 'Your challenge has expired!'}
             </Text>
 
             <TouchableOpacity
