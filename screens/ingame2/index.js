@@ -32,7 +32,7 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
         duration: 500, // Animation duration of 500ms
         useNativeDriver: true,
       }),
-      Animated.delay(1500), // Delay of 1500ms (2 seconds) before starting the next animation
+      Animated.delay(1000), // Delay of 1500ms (2 seconds) before starting the next animation
       Animated.timing(answersFadeAnim, {
         toValue: 1, // Fade in the answers
         duration: 500, // Animation duration of 500ms

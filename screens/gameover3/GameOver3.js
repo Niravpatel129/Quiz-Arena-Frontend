@@ -41,9 +41,12 @@ export default function GameOver3({ route }) {
       setRematchModalVisible(true);
     });
 
-    socketService.socket.on('rematchAccepted', (gameSessionId) => {
+    socketService.socket.on('rematchAccepted', (game) => {
       console.log('rematch accepted');
-      navigation.navigate('Game', { game: data.game });
+      navigation.navigate('Game', {
+        gameSessionId: game.gameSessionId,
+        players: game.players,
+      });
     });
 
     socketService.socket.on('rematchDeclined', (gameSessionId) => {

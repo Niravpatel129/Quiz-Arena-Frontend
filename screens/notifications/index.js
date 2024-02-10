@@ -139,7 +139,7 @@ export default function NotificationsScreen({ navigation }) {
               >
                 <Text
                   style={{
-                    color: '#5E6064',
+                    color: '#fff',
                     fontSize: 18,
                     fontWeight: 700,
                   }}
@@ -157,7 +157,7 @@ export default function NotificationsScreen({ navigation }) {
               >
                 <Text
                   style={{
-                    color: '#5E6064',
+                    color: '#fff',
                     fontSize: 18,
                     fontWeight: 700,
                   }}
