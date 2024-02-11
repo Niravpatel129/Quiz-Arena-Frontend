@@ -5,8 +5,6 @@ import CountryFlag from 'react-native-country-flag';
 
 export default function PlayerCards({ yourData, opponentData }) {
   const renderPlayerCard = ({ playerData }) => {
-    console.log('🚀  playerData:', playerData);
-
     return (
       <View
         style={{

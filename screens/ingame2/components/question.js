@@ -11,7 +11,7 @@ export default function Question({ question, questionImage, setImageLoaded }) {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#F8D2E6',
-        paddingTop: 10,
+        paddingTop: 8,
         paddingHorizontal: 10,
         height: '100%',
         borderRadius: 20,
@@ -21,7 +21,7 @@ export default function Question({ question, questionImage, setImageLoaded }) {
       <Text
         style={{
           fontFamily: 'poppins-semiBold',
-          fontSize: question?.length > 30 && questionImage ? RFValue(10) : RFValue(13),
+          fontSize: question?.length > 30 && questionImage ? RFValue(11) : RFValue(14),
           textAlign: 'center',
           color: '#262625',
         }}
@@ -36,8 +36,9 @@ export default function Question({ question, questionImage, setImageLoaded }) {
             uri: questionImage || 'https://www.worldatlas.com/r/w1200/img/flag/ca-flag.jpg',
           }}
           style={{
-            width: 180,
-            height: 180,
+            width: 280,
+            height: 140,
+            padding: 3,
           }}
         />
       )}

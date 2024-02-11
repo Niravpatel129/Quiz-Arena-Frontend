@@ -9,7 +9,6 @@ export default function Questions({ questions }) {
     questions.map(() => ({ thumbsUp: false, thumbsDown: false })),
   );
 
-  console.log('🚀  questions:', questions);
   const handleThumbsClick = async (index, thumbType) => {
     // dont allow undoing of thumbs up or down
 
