@@ -98,8 +98,6 @@ export default function SignUpLogin({ navigation }) {
         },
       })
       .then((response) => {
-        console.log('🚀  response:', response);
-
         if (response.data?.isNewUser) {
           setShowUsername(true);
           return;

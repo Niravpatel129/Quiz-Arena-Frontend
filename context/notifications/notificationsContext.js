@@ -39,7 +39,6 @@ export const NotificationsProvider = ({ children }) => {
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-      console.log('🚀  response:', JSON.stringify(response));
       if (response.actionIdentifier === 'expo.modules.notifications.actions.DEFAULT') {
         fetchNotifications();
         navigator.navigate('Notifications');
