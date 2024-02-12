@@ -245,6 +245,16 @@ const GameScreen = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
+    socketService.on('round_over', (player_responses) => {
+      console.log('🚀  player_responses:', player_responses);
+    });
+
+    return () => {
+      socketService.off('round_over');
+    };
+  }, []);
+
+  useEffect(() => {
     setGameInProgress(true);
 
     setTimeout(() => setShowAnimation(false), 2000);

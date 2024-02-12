@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
-import { BackHandler, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { BackHandler, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import Toast from 'react-native-toast-message';
 import RematchModal from '../../components/RematchModal/RematchModal';
@@ -63,6 +63,8 @@ export default function GameOver3({ route }) {
   }, []);
 
   useEffect(() => {
+    // ignore for web and ios
+    if (Platform.OS !== 'android') return;
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       navigation.navigate('Categories');
     });
