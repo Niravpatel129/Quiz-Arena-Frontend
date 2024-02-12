@@ -1,11 +1,37 @@
-import { Image } from 'expo-image';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Animated, Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import AnimatedButton from '../../../components/AnimatedButton/AnimatedButton';
 
 const AnswerButton = ({ text, answerCorrect, isSelected, isAnswered, onPress, roundOverData }) => {
   const scaleValue = useRef(new Animated.Value(1)).current;
+  const playerAvatarScale = useRef(new Animated.Value(0)).current; // For player avatar bubble animation
+  const opponentAvatarScale = useRef(new Animated.Value(0)).current; // For opponent avatar bubble animation
+
+  useEffect(() => {
+    // reset the animation values
+    playerAvatarScale.setValue(0);
+    opponentAvatarScale.setValue(0);
+
+    console.log('render bubles');
+    if (roundOverData) animateAvatarPopIn();
+  }, [roundOverData]);
+
+  const animateAvatarPopIn = () => {
+    // Animate both avatars to pop in like a bubble simultaneously
+    Animated.parallel([
+      Animated.timing(playerAvatarScale, {
+        toValue: 1,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opponentAvatarScale, {
+        toValue: 1,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
 
   const bounceEffect = () => {
     Animated.sequence([
@@ -58,14 +84,13 @@ const AnswerButton = ({ text, answerCorrect, isSelected, isAnswered, onPress, ro
 
   const { buttonColor, buttonShadowColor, textColor } = getButtonStyles();
 
-  // Apply the animated scale to the button's style
   const animatedStyle = {
     transform: [{ scale: scaleValue }],
   };
 
   return (
     <AnimatedButton
-      onPress={handlePress} // Use the new handlePress function
+      onPress={handlePress}
       style={[
         {
           backgroundColor: buttonColor,
@@ -74,7 +99,7 @@ const AnswerButton = ({ text, answerCorrect, isSelected, isAnswered, onPress, ro
           borderRadius: 100,
         },
         animatedStyle,
-      ]} // Apply animated style
+      ]}
     >
       {roundOverData && (
         <View
@@ -88,11 +113,9 @@ const AnswerButton = ({ text, answerCorrect, isSelected, isAnswered, onPress, ro
         >
           {roundOverData.playerDetails.playerInformation.avatar &&
             roundOverData.playerAnswer.answer === text && (
-              <Image
+              <Animated.Image
                 source={{
-                  uri:
-                    roundOverData.playerDetails.playerInformation.avatar ||
-                    'https://skift.com/wp-content/uploads/2023/08/Trivago-Guy-hotel-price-scaled.jpeg',
+                  uri: roundOverData.playerDetails.playerInformation.avatar,
                 }}
                 style={{
                   height: 30,
@@ -100,17 +123,16 @@ const AnswerButton = ({ text, answerCorrect, isSelected, isAnswered, onPress, ro
                   borderRadius: 30,
                   borderWidth: 1,
                   borderColor: '#EC80B4',
+                  transform: [{ scale: playerAvatarScale }], // Apply animated scale for bubble effect
                 }}
               />
             )}
 
           {roundOverData.opponentDetails.playerInformation.avatar &&
             roundOverData.opponentAnswer.answer === text && (
-              <Image
+              <Animated.Image
                 source={{
-                  uri:
-                    roundOverData.opponentDetails.playerInformation.avatar ||
-                    'https://skift.com/wp-content/uploads/2023/08/Trivago-Guy-hotel-price-scaled.jpeg',
+                  uri: roundOverData.opponentDetails.playerInformation.avatar,
                 }}
                 style={{
                   height: 30,
@@ -118,6 +140,7 @@ const AnswerButton = ({ text, answerCorrect, isSelected, isAnswered, onPress, ro
                   borderRadius: 30,
                   borderWidth: 1,
                   borderColor: '#3F95F2',
+                  transform: [{ scale: opponentAvatarScale }], // Apply animated scale for bubble effect
                 }}
               />
             )}
