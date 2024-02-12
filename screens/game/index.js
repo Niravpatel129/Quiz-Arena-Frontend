@@ -30,6 +30,7 @@ const GameScreen = ({ navigation, route }) => {
   const [sendBotAnswer, setSendBotAnswer] = React.useState(false);
   const [gameInProgress, setGameInProgress] = React.useState(false);
   const [imagesToPreload, setImagesToPreload] = React.useState([]);
+  const [roundOverData, setRoundOverData] = React.useState();
   const hasNavigated = useRef(false);
 
   useEffect(() => {
@@ -73,7 +74,7 @@ const GameScreen = ({ navigation, route }) => {
     };
   }, []);
 
-  const giveBotAnswer = (botPlayer, sessionId, correctAnswer) => {
+  const giveBotAnswer = (botPlayer, sessionId, correctAnswer, wrongOption) => {
     if (sendBotAnswer) return;
 
     // random between 0.5 and 2 seconds
@@ -84,7 +85,7 @@ const GameScreen = ({ navigation, route }) => {
     socketService.emit('bot_answer', {
       sessionId: sessionId,
       botPlayer: botPlayer,
-      correctAnswer: giveCorrectAnswer ? correctAnswer : 'wrong answer',
+      correctAnswer: giveCorrectAnswer ? correctAnswer : wrongOption.optionText,
       timeRemaining: Math.floor(Math.random() * 10) + 1,
       currentRound: round,
     });
@@ -114,6 +115,7 @@ const GameScreen = ({ navigation, route }) => {
       navigation.navigate('Categories');
     });
     socketService.on('new_round', (roundData) => {
+      setRoundOverData(null);
       if (roundData.roundNumber === 1) {
         console.log('preload data');
         setImagesToPreload(roundData.rounds.map((round) => round.helperImage));
@@ -133,7 +135,10 @@ const GameScreen = ({ navigation, route }) => {
       const correctAnswer = roundData.options.find((option) => option.isCorrect);
 
       if (isBot) {
-        giveBotAnswer(opponentData, roundData.sessionId, correctAnswer.optionText);
+        const randomNumber = Math.floor(Math.random() * 4) + 1;
+        const wrongOption = roundData.options[randomNumber];
+
+        giveBotAnswer(opponentData, roundData.sessionId, correctAnswer.optionText, wrongOption);
       }
 
       setHighlightTrigger(false);
@@ -246,7 +251,7 @@ const GameScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     socketService.on('round_over', (player_responses) => {
-      console.log('🚀  player_responses:', player_responses);
+      setRoundOverData(player_responses);
     });
 
     return () => {
@@ -283,6 +288,7 @@ const GameScreen = ({ navigation, route }) => {
       )}
       {data && (
         <Ingame2
+          roundOverData={roundOverData}
           roundNumber={round}
           timer={timer}
           InGameData={{

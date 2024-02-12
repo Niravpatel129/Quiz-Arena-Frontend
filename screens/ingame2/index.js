@@ -6,7 +6,7 @@ import Header from './components/header';
 import Question from './components/question';
 import QuestionNoBar from './components/questionNoBar';
 
-export default function Ingame2({ roundNumber, InGameData, timer }) {
+export default function Ingame2({ roundNumber, InGameData, timer, roundOverData }) {
   const AnswersRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -112,6 +112,7 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
                 answers={InGameData.RoundData.answers}
                 sessionId={InGameData.sessionId}
                 timeRemaining={timer}
+                roundOverData={roundOverData}
               />
             </Animated.View>
           </ScrollView>

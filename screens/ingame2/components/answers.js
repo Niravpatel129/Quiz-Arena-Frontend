@@ -4,7 +4,7 @@ import { useSound } from '../../../context/sound/SoundContext';
 import socketService from '../../../services/socketService';
 import AnswerButton from './AnswerButton';
 
-export default function Answers({ answers, sessionId, timeRemaining }) {
+export default function Answers({ answers, sessionId, timeRemaining, roundOverData }) {
   const [selectedAnswer, setSelectedAnswer] = React.useState(null);
   const [randomziedAnswers, setRandomizedAnswers] = React.useState([]);
   const [isAnswered, setIsAnswered] = React.useState(false);
@@ -62,6 +62,7 @@ export default function Answers({ answers, sessionId, timeRemaining }) {
             answerCorrect={answer.isCorrect}
             isSelected={selectedAnswer === answer.optionText}
             isAnswered={isAnswered}
+            roundOverData={roundOverData}
             onPress={() => {
               if (!isAnswered) {
                 handleAnswer(answer.optionText, answer.isCorrect);

@@ -1,10 +1,11 @@
+import { Image } from 'expo-image';
 import React, { useRef } from 'react';
-import { Animated, Text } from 'react-native';
+import { Animated, Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import AnimatedButton from '../../../components/AnimatedButton/AnimatedButton';
 
-const AnswerButton = ({ text, answerCorrect, isSelected, isAnswered, onPress }) => {
-  const scaleValue = useRef(new Animated.Value(1)).current; // Step 2
+const AnswerButton = ({ text, answerCorrect, isSelected, isAnswered, onPress, roundOverData }) => {
+  const scaleValue = useRef(new Animated.Value(1)).current;
 
   const bounceEffect = () => {
     Animated.sequence([
@@ -75,6 +76,54 @@ const AnswerButton = ({ text, answerCorrect, isSelected, isAnswered, onPress }) 
         animatedStyle,
       ]} // Apply animated style
     >
+      {roundOverData && (
+        <View
+          style={{
+            position: 'absolute',
+            top: -7,
+            right: 10,
+            flexDirection: 'row',
+            gap: 3,
+          }}
+        >
+          {roundOverData.playerDetails.playerInformation.avatar &&
+            roundOverData.playerAnswer.answer === text && (
+              <Image
+                source={{
+                  uri:
+                    roundOverData.playerDetails.playerInformation.avatar ||
+                    'https://skift.com/wp-content/uploads/2023/08/Trivago-Guy-hotel-price-scaled.jpeg',
+                }}
+                style={{
+                  height: 30,
+                  width: 30,
+                  borderRadius: 30,
+                  borderWidth: 1,
+                  borderColor: '#EC80B4',
+                }}
+              />
+            )}
+
+          {roundOverData.opponentDetails.playerInformation.avatar &&
+            roundOverData.opponentAnswer.answer === text && (
+              <Image
+                source={{
+                  uri:
+                    roundOverData.opponentDetails.playerInformation.avatar ||
+                    'https://skift.com/wp-content/uploads/2023/08/Trivago-Guy-hotel-price-scaled.jpeg',
+                }}
+                style={{
+                  height: 30,
+                  width: 30,
+                  borderRadius: 30,
+                  borderWidth: 1,
+                  borderColor: '#3F95F2',
+                }}
+              />
+            )}
+        </View>
+      )}
+
       <Text
         style={{
           color: textColor,
