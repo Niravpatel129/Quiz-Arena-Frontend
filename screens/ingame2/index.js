@@ -27,11 +27,14 @@ export default function Ingame2({ roundNumber, InGameData, timer }) {
 
     // Sequence to animate question first, then answers after a delay
     Animated.sequence([
+      Animated.delay(500), // Delay of 1500ms (2 seconds) before starting the next animation
+
       Animated.timing(questionFadeAnim, {
         toValue: 1, // Fade in the question
         duration: 500, // Animation duration of 500ms
         useNativeDriver: true,
       }),
+
       Animated.delay(1000), // Delay of 1500ms (2 seconds) before starting the next animation
       Animated.timing(answersFadeAnim, {
         toValue: 1, // Fade in the answers
