@@ -4,6 +4,7 @@ import { AppState, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import HighlightEffect from '../../components/HighlightEffect';
 import PreGame from '../../components/PreGame/PreGame';
+import { useSound } from '../../context/sound/SoundContext';
 import checkIfBot from '../../helpers/checkIfBot';
 import socketService from '../../services/socketService';
 import Ingame2 from '../ingame2';
@@ -32,6 +33,16 @@ const GameScreen = ({ navigation, route }) => {
   const [imagesToPreload, setImagesToPreload] = React.useState([]);
   const [roundOverData, setRoundOverData] = React.useState();
   const hasNavigated = useRef(false);
+  const { playSound, stopSound } = useSound();
+
+  useEffect(() => {
+    playSound('in_game');
+    playSound('vs');
+
+    return () => {
+      stopSound('in_game');
+    };
+  }, []);
 
   useEffect(() => {
     if (!route.params?.gameSessionId) return;

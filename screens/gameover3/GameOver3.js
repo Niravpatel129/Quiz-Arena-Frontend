@@ -6,6 +6,7 @@ import { BackHandler, Platform, ScrollView, Text, TouchableOpacity, View } from 
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import Toast from 'react-native-toast-message';
 import RematchModal from '../../components/RematchModal/RematchModal';
+import { useSound } from '../../context/sound/SoundContext';
 import useInAppReview from '../../hooks/useInAppReview';
 import useRecentlyPlayed from '../../hooks/useRecentlyPlayed';
 import socketService from '../../services/socketService';
@@ -21,12 +22,21 @@ export default function GameOver3({ route }) {
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
   const requestReview = useInAppReview();
   const translateY = useSharedValue(50);
+  const { playSound } = useSound();
   const { addRecentlyPlayedCategory } = useRecentlyPlayed();
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{ translateY: translateY.value }],
     };
   });
+
+  useEffect(() => {
+    if (GameResults?.yourData?.didWin) {
+      playSound('game_win');
+    } else {
+      playSound('game_lose');
+    }
+  }, []);
 
   useEffect(() => {
     if (GameResults.category) addRecentlyPlayedCategory(GameResults.category);

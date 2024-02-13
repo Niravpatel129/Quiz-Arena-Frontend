@@ -4,11 +4,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect } from 'react';
 import {
   Animated,
+  Pressable,
   SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -217,7 +217,7 @@ export default function CategoryScreen2({ route }) {
                 gap: 10,
               }}
             >
-              <TouchableWithoutFeedback
+              <Pressable
                 onLongPress={() => {
                   navigation.navigate('Solo', {
                     categoryId: categoryId,
@@ -267,7 +267,7 @@ export default function CategoryScreen2({ route }) {
                     {category}
                   </Text>
                 </LinearGradient>
-              </TouchableWithoutFeedback>
+              </Pressable>
 
               {/* Buttons Container*/}
               <View

@@ -4,7 +4,7 @@ import { Audio } from 'expo-av';
 async function loadNavigationSound() {
   try {
     // Load the sound file
-    const { sound } = await Audio.Sound.createAsync(require('../../../assets/sounds/tap.mp3'), {
+    const { sound } = await Audio.Sound.createAsync(require('../../../assets/sounds/click.wav'), {
       shouldPlay: false,
     });
     return sound;

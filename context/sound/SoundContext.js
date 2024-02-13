@@ -12,6 +12,9 @@ export const SoundProvider = ({ children }) => {
   const [inGameSound, setInGameSound] = useState(null);
   const [fastSound, setFastSound] = useState(null);
   const [chopSound, setChopSound] = useState(null);
+  const [vsSound, setVsSound] = useState(null);
+  const [gameWin, setGameWin] = useState(null);
+  const [gameLose, setGameLose] = useState(null);
 
   useEffect(() => {
     loadSounds();
@@ -25,6 +28,9 @@ export const SoundProvider = ({ children }) => {
       inGameSound?.unloadAsync();
       fastSound?.unloadAsync();
       chopSound?.unloadAsync();
+      vsSound?.unloadAsync();
+      gameWin?.unloadAsync();
+      gameLose?.unloadAsync();
     };
   }, []);
 
@@ -57,6 +63,19 @@ export const SoundProvider = ({ children }) => {
         require('../../assets/sounds/chop.mp3'),
       );
 
+      const { sound: inGame } = await Audio.Sound.createAsync(
+        require('../../assets/sounds/in_game.mp3'),
+      );
+      const { sound: gameWin } = await Audio.Sound.createAsync(
+        require('../../assets/sounds/game_win.wav'),
+      );
+
+      const { sound: gameLose } = await Audio.Sound.createAsync(
+        require('../../assets/sounds/game_lose.wav'),
+      );
+
+      const { sound: vs } = await Audio.Sound.createAsync(require('../../assets/sounds/vs.wav'));
+
       await inGame.setVolumeAsync(0.5);
       await correctAnswer.setVolumeAsync(0.5);
       await buttonPress.setVolumeAsync(0.5);
@@ -65,6 +84,9 @@ export const SoundProvider = ({ children }) => {
       await soloFail.setVolumeAsync(0.5);
       await fast.setVolumeAsync(0.5);
       await chop.setVolumeAsync(0.5);
+      await vs.setVolumeAsync(0.5);
+      await gameWin.setVolumeAsync(0.5);
+      await gameLose.setVolumeAsync(0.5);
 
       setButtonPressSound(buttonPress);
       setCorrectAnswerSound(correctAnswer);
@@ -74,6 +96,9 @@ export const SoundProvider = ({ children }) => {
       setInGameSound(inGame);
       setFastSound(fast);
       setChopSound(chop);
+      setVsSound(vs);
+      setGameWin(gameWin);
+      setGameLose(gameLose);
     } catch (error) {
       console.log('error loading sounds', error);
     }
@@ -101,12 +126,29 @@ export const SoundProvider = ({ children }) => {
     }
 
     if (soundType === 'fast' && fastSound) {
-      // delay the sound by 2 seconds
       await fastSound.replayAsync();
     }
 
     if (soundType === 'chop' && chopSound) {
       await chopSound.replayAsync();
+    }
+
+    if (soundType === 'in_game' && inGameSound) {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await inGameSound.setVolumeAsync(0.5, { durationMillis: 2000 });
+      await inGameSound.replayAsync();
+    }
+
+    if (soundType === 'vs' && vsSound) {
+      await vsSound.replayAsync();
+    }
+
+    if (soundType === 'game_win' && gameWin) {
+      await gameWin.replayAsync();
+    }
+
+    if (soundType === 'game_lose' && gameLose) {
+      await gameLose.replayAsync();
     }
   };
 
@@ -117,6 +159,19 @@ export const SoundProvider = ({ children }) => {
 
     if (soundType === 'chop' && chopSound) {
       await chopSound.replayAsync();
+    }
+
+    if (soundType === 'in_game' && inGameSound) {
+      // fade out the sound
+      await inGameSound.setVolumeAsync(0, { durationMillis: 2000 });
+    }
+
+    if (soundType === 'vs' && vsSound) {
+      await vsSound.stopAsync();
+    }
+
+    if (soundType === 'game_win' && gameWin) {
+      await gameWin.replayAsync();
     }
   };
 

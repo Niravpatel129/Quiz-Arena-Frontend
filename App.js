@@ -309,7 +309,11 @@ function App() {
             <NavigationContainer
               theme={MyTheme}
               linking={linking}
-              onStateChange={() => {
+              onStateChange={(sat) => {
+                console.log('🚀  sat:', sat);
+                if (sat.routes[0].name === 'Game') return;
+                if (sat.routes[0].name === 'GameOver' && !sat.routes[1]) return;
+
                 playNavigationSound();
               }}
             >
