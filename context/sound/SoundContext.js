@@ -126,6 +126,8 @@ export const SoundProvider = ({ children }) => {
     }
 
     if (soundType === 'fast' && fastSound) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
       await fastSound.replayAsync();
     }
 
