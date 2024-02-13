@@ -164,6 +164,7 @@ export const SoundProvider = ({ children }) => {
     if (soundType === 'in_game' && inGameSound) {
       // fade out the sound
       await inGameSound.setVolumeAsync(0, { durationMillis: 2000 });
+      await inGameSound.stopAsync();
     }
 
     if (soundType === 'vs' && vsSound) {
