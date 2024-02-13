@@ -20,7 +20,6 @@ import { AuthProvider } from './context/auth/AuthContext';
 import { MenuProvider } from './context/menu/MenuContext';
 import { SocketProvider } from './context/socket/SocketContext';
 import { SoundProvider } from './context/sound/SoundContext';
-import { playNavigationSound } from './context/sound/helpers/SoundManager';
 import { TrackingProvider } from './context/tracking/TrackingContext';
 import { UpdateProvider } from './context/update/UpdateContext';
 import ProfileEditScreen from './screens';
@@ -310,11 +309,10 @@ function App() {
               theme={MyTheme}
               linking={linking}
               onStateChange={(sat) => {
-                console.log('🚀  sat:', sat);
-                if (sat.routes[0].name === 'Game') return;
-                if (sat.routes[0].name === 'GameOver' && !sat.routes[1]) return;
-
-                playNavigationSound();
+                // console.log('🚀  sat:', sat);
+                // if (sat.routes[0].name === 'Game') return;
+                // if (sat.routes[0].name === 'GameOver' && !sat.routes[1]) return;
+                // playNavigationSound();
               }}
             >
               <AuthProvider>
