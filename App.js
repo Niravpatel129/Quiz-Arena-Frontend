@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { LogBox, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import CustomHeader2 from './components/CustomHeader2/CustomHeader';
+import FeedbackModal from './components/FeedbackModal/FeedbackModal';
 import MenuModal from './components/MenuModal/MenuModal';
 import TabBar2 from './components/Tabbar2/Tabbar2';
 import fonts from './config/fonts';
@@ -326,6 +327,7 @@ function App() {
                           fontFeatureSettings: "'clig' off, 'liga' off",
                         }}
                       >
+                        <FeedbackModal />
                         <MenuModal />
                         <StackNavigator />
                       </LinearGradient>
