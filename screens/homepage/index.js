@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
@@ -13,6 +14,7 @@ export default function Homepage() {
   const opacity = useSharedValue(0);
   const [updateStreak] = useStreak();
   const { fetchRecentlyPlayed } = useRecentlyPlayed();
+  const navigation = useNavigation();
 
   const animatedStyle = useAnimatedStyle(() => {
     return {

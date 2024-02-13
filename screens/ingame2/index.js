@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, SafeAreaView, ScrollView, View } from 'react-native';
+import { useSound } from '../../context/sound/SoundContext';
 import Answers from './components/answers';
 import Header from './components/header';
 import Question from './components/question';
@@ -9,6 +10,7 @@ import QuestionNoBar from './components/questionNoBar';
 export default function Ingame2({ roundNumber, InGameData, timer, roundOverData }) {
   const AnswersRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { playSound } = useSound();
 
   // Initial value for opacity: 0
   const questionFadeAnim = useRef(new Animated.Value(0)).current;
@@ -36,12 +38,20 @@ export default function Ingame2({ roundNumber, InGameData, timer, roundOverData 
       }),
 
       Animated.delay(1000), // Delay of 1500ms (2 seconds) before starting the next animation
+
       Animated.timing(answersFadeAnim, {
         toValue: 1, // Fade in the answers
         duration: 500, // Animation duration of 500ms
         useNativeDriver: true,
       }),
     ]).start();
+
+    // delay 1000 then play sound
+    playSound('fast');
+
+    setTimeout(() => {
+      playSound('chop');
+    }, 2000);
   }, [roundNumber]); // Dependency array includes roundNumber to trigger effect on its change
 
   return (

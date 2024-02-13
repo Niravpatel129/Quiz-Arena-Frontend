@@ -85,7 +85,7 @@ const GameScreen = ({ navigation, route }) => {
     socketService.emit('bot_answer', {
       sessionId: sessionId,
       botPlayer: botPlayer,
-      correctAnswer: giveCorrectAnswer ? correctAnswer : wrongOption.optionText,
+      correctAnswer: giveCorrectAnswer ? correctAnswer : wrongOption?.optionText || 'wrong answer',
       timeRemaining: Math.floor(Math.random() * 10) + 1,
       currentRound: round,
     });
@@ -135,7 +135,7 @@ const GameScreen = ({ navigation, route }) => {
       const correctAnswer = roundData.options.find((option) => option.isCorrect);
 
       if (isBot) {
-        const randomNumber = Math.floor(Math.random() * 4) + 1;
+        const randomNumber = Math.floor(Math.random() * 3) + 1;
         const wrongOption = roundData.options[randomNumber];
 
         giveBotAnswer(opponentData, roundData.sessionId, correctAnswer.optionText, wrongOption);

@@ -20,6 +20,7 @@ import { AuthProvider } from './context/auth/AuthContext';
 import { MenuProvider } from './context/menu/MenuContext';
 import { SocketProvider } from './context/socket/SocketContext';
 import { SoundProvider } from './context/sound/SoundContext';
+import { playNavigationSound } from './context/sound/helpers/SoundManager';
 import { TrackingProvider } from './context/tracking/TrackingContext';
 import { UpdateProvider } from './context/update/UpdateContext';
 import ProfileEditScreen from './screens';
@@ -304,11 +305,17 @@ function App() {
     >
       <NativeBaseProvider>
         <SocketProvider>
-          <NavigationContainer theme={MyTheme} linking={linking}>
-            <AuthProvider>
-              <TrackingProvider>
-                <MenuProvider>
-                  <SoundProvider>
+          <SoundProvider>
+            <NavigationContainer
+              theme={MyTheme}
+              linking={linking}
+              onStateChange={() => {
+                playNavigationSound();
+              }}
+            >
+              <AuthProvider>
+                <TrackingProvider>
+                  <MenuProvider>
                     <UpdateProvider>
                       <LinearGradient
                         colors={['#0f0c29', '#302b63', '#24243e']}
@@ -321,12 +328,12 @@ function App() {
                         <StackNavigator />
                       </LinearGradient>
                     </UpdateProvider>
-                  </SoundProvider>
-                </MenuProvider>
-              </TrackingProvider>
-            </AuthProvider>
-            <Toast />
-          </NavigationContainer>
+                  </MenuProvider>
+                </TrackingProvider>
+              </AuthProvider>
+              <Toast />
+            </NavigationContainer>
+          </SoundProvider>
         </SocketProvider>
       </NativeBaseProvider>
     </View>
