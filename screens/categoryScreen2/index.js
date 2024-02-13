@@ -292,7 +292,11 @@ export default function CategoryScreen2({ route }) {
                   text: 'Invite',
                 })}
                 {renderButton({
-                  onPress: () => navigation.navigate('Contribute'),
+                  onPress: () =>
+                    navigation.navigate('Contribute', {
+                      category: category,
+                      parentCategory: categoryParent,
+                    }),
                   text: 'Contribute',
                 })}
               </View>
