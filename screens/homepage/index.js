@@ -1,20 +1,21 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { newRequest } from '../../api/newRequest';
 import useRecentlyPlayed from '../../hooks/useRecentlyPlayed';
 import useStreak from '../../hooks/useStreak';
+import { keys } from '../../keys';
 import CategoriesList from './components/CategoriesList';
+import RoyaleHeader from './components/RoyaleHeader';
 import UserProfile from './components/UserProfile';
 
 export default function Homepage() {
   const [categories, setCategories] = useState([]);
+  const [config, setConfig] = useState({ triviaTuesdayEnabled: false });
   const [userData, setUserData] = useState({});
   const opacity = useSharedValue(0);
   const [updateStreak] = useStreak();
   const { fetchRecentlyPlayed } = useRecentlyPlayed();
-  const navigation = useNavigation();
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -41,6 +42,17 @@ export default function Homepage() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchConfig = async () => {
+      const res = await newRequest.get(`/homepage/config/${keys.version}`);
+
+      setConfig(res.data);
+      console.log('🚀  res:', res);
+    };
+
+    fetchConfig();
+  }, []);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Animated.View
@@ -54,17 +66,10 @@ export default function Homepage() {
           animatedStyle,
         ]}
       >
-        <TouchableOpacity onPress={() => navigation.navigate('Royale')}>
-          <Text
-            style={{
-              fontSize: 30,
-            }}
-          >
-            Royale
-          </Text>
-        </TouchableOpacity>
-
         <UserProfile userData={userData} />
+        {config.triviaTuesdayEnabled && (
+          <RoyaleHeader triviaTuesdayEnabled={config.triviaTuesdayEnabled} />
+        )}
         {categories.map((category, index) => {
           return (
             <CategoriesList

@@ -2,6 +2,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import RoyaleIntro from '../../components/RoyaleIntro/RoyaleIntro';
 import socketService from '../../services/socketService';
 import AdditionalInformation from './components/AdditionalInformation';
@@ -65,6 +66,15 @@ export default function Royale() {
           ],
         });
       });
+
+      socketService.on('royaleMessage', (data) => {
+        console.log('Royale message', data);
+        Toast.show({
+          type: 'info',
+          text1: data.message,
+          position: 'bottom',
+        });
+      });
     }, 500);
 
     return () => {
@@ -72,6 +82,7 @@ export default function Royale() {
       socketService.off('joinedRoyalQueue');
       socketService.off('matchChallenge');
       socketService.off('game_start');
+      socketService.off('royaleMessage');
     };
   }, []);
 
