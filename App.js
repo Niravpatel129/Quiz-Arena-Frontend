@@ -42,6 +42,7 @@ import PlayersScreen from './screens/players';
 import Profile2 from './screens/profile2';
 import PublicProfile from './screens/publicProfile';
 import QueueScreen2 from './screens/queuescreen2';
+import Royale from './screens/royale';
 import SignUpLogin from './screens/signuplogin';
 
 Sentry.init({
@@ -293,6 +294,7 @@ function App() {
           }}
         />
         <Stack.Screen name='Feeder' component={FeederScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='Royale' component={Royale} options={{ headerShown: false }} />
       </Stack.Navigator>
     );
   }

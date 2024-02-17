@@ -180,6 +180,7 @@ const GameScreen = ({ navigation, route }) => {
           {
             name: 'GameOver',
             params: {
+              mode: results.gameSession.mode,
               results: {
                 rounds: results.gameSession.rounds,
                 playersRoundData: results.gameSession.players,

@@ -13,7 +13,6 @@ const AnswerButton = ({ text, answerCorrect, isSelected, isAnswered, onPress, ro
     playerAvatarScale.setValue(0);
     opponentAvatarScale.setValue(0);
 
-    console.log('render bubles');
     if (roundOverData) animateAvatarPopIn();
   }, [roundOverData]);
 

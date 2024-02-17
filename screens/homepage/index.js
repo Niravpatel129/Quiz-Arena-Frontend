@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { newRequest } from '../../api/newRequest';
 import useRecentlyPlayed from '../../hooks/useRecentlyPlayed';
@@ -54,6 +54,16 @@ export default function Homepage() {
           animatedStyle,
         ]}
       >
+        <TouchableOpacity onPress={() => navigation.navigate('Royale')}>
+          <Text
+            style={{
+              fontSize: 30,
+            }}
+          >
+            Royale
+          </Text>
+        </TouchableOpacity>
+
         <UserProfile userData={userData} />
         {categories.map((category, index) => {
           return (
