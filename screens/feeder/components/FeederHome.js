@@ -80,7 +80,7 @@ export default function FeederHome({ categoryName, handleEnter }) {
                 marginTop: 30,
               }}
             >
-              Feeder Mode
+              Secret Feeder Mode
             </Text>
             <Text
               style={{
