@@ -1,22 +1,19 @@
 // Royale.js
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import RoyaleIntro from '../../components/RoyaleIntro/RoyaleIntro';
 import socketService from '../../services/socketService';
-import AdditionalInformation from './components/AdditionalInformation';
-import CountdownTimer from './components/CountdownTimer';
-import EventInformation from './components/EventInformation';
 import EventTitle from './components/EventTitle';
-import GameModeDescription from './components/GameModeDescription';
-import GameTips from './components/GameTips';
 import JoinQueueButton from './components/JoinQueueButton';
+import PlayersList from './components/PlayerList';
 
 export default function Royale() {
   const navigation = useNavigation();
   const [roomData, setRoomData] = React.useState({});
   const [showIntroduction, setShowIntroduction] = useState(false);
+  const [isInQueue, setIsInQueue] = useState(false);
 
   const joinChallengeQueue = (challengeId) => {
     socketService.emit('joinChallengeQueue', {
@@ -27,6 +24,11 @@ export default function Royale() {
   };
 
   useEffect(() => {
+    // connect socket if not connected
+    if (!socketService.connected) {
+      socketService.connect();
+    }
+
     setTimeout(() => {
       console.log('Joining room');
       socketService.emit('joinRoyalRoom');
@@ -75,6 +77,11 @@ export default function Royale() {
           position: 'bottom',
         });
       });
+
+      socketService.on('updateQueueStatus', (data) => {
+        console.log('🚀 ~ file: JoinQueueButton.js ~ line 39 ~ socketService.on ~ data', data);
+        setIsInQueue(data.isInQueue);
+      });
     }, 500);
 
     return () => {
@@ -83,6 +90,7 @@ export default function Royale() {
       socketService.off('matchChallenge');
       socketService.off('game_start');
       socketService.off('royaleMessage');
+      socketService.off('updateQueueStatus');
     };
   }, []);
 
@@ -92,31 +100,31 @@ export default function Royale() {
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 20 }}>
-      <EventTitle />
-      <CountdownTimer />
-      <EventInformation />
-      <JoinQueueButton />
-      <TouchableOpacity onPress={() => setShowIntroduction(true)}>
-        <Text
-          style={{
-            textAlign: 'center',
-          }}
-        >
-          Introduction
-        </Text>
-      </TouchableOpacity>
-      <GameTips />
-      <AdditionalInformation />
-      <GameModeDescription />
+      <EventTitle setShowIntroduction={setShowIntroduction} />
+      {/* <CountdownTimer /> */}
+      {/* <EventInformation /> */}
+      {roomData.roomStatus !== 'completed' && (
+        <JoinQueueButton
+          status={roomData.roomStatus}
+          players={roomData.players}
+          isInQueue={isInQueue}
+        />
+      )}
+      {/* <JoinQueueButton status={roomData.roomStatus} /> */}
+      <PlayersList players={roomData.players} />
+
+      {/* <GameTips /> */}
+      {/* <AdditionalInformation /> */}
+      {/* <GameModeDescription /> */}
       <View>
         {/* players and their status */}
-        {roomData.players &&
+        {/* {roomData.players &&
           roomData.players.map((player) => (
             <View key={player.socketId}>
               <Text>{player.username}</Text>
               <Text>{player.status}</Text>
             </View>
-          ))}
+          ))} */}
       </View>
     </ScrollView>
   );

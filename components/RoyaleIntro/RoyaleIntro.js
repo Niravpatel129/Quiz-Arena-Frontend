@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
   Extrapolate,
@@ -13,9 +13,23 @@ const { width } = Dimensions.get('window');
 
 export default function RoyaleIntro({ setShowIntroduction }) {
   const scrollX = useSharedValue(0);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const scrollViewRef = useRef(null);
 
   const handleSkip = () => {
     setShowIntroduction(false);
+  };
+
+  const handleNextSlide = () => {
+    if (currentIndex < slides.length - 1) {
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      const offset = nextIndex * width;
+      scrollViewRef.current?.scrollTo({ x: offset, animated: true });
+    } else {
+      // Assuming you want to hide the intro if it's the last slide
+      handleSkip();
+    }
   };
 
   const scrollHandler = useAnimatedScrollHandler({
@@ -35,6 +49,7 @@ export default function RoyaleIntro({ setShowIntroduction }) {
         <Text style={styles.skipText}>Skip</Text>
       </TouchableOpacity>
       <Animated.ScrollView
+        ref={scrollViewRef}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
@@ -46,6 +61,17 @@ export default function RoyaleIntro({ setShowIntroduction }) {
             <Image source={{ uri: slide.image }} style={styles.image} />
             <Text style={styles.title}>{slide.title}</Text>
             <Text style={styles.description}>{slide.description}</Text>
+            {/* {slides.length - 1 === index && ( */}
+            <TouchableOpacity
+              onPress={() => {
+                handleNextSlide();
+                // handleSkip(false);
+                // continue to next slide
+              }}
+            >
+              <Text style={styles.skipText}>Continue</Text>
+            </TouchableOpacity>
+            {/* )} */}
           </View>
         ))}
       </Animated.ScrollView>

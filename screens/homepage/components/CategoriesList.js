@@ -32,6 +32,8 @@ const imageMap = {
   scientists: require('./images/scientists.png'),
   'harry potter': require('./images/harry_potter.png'),
   'taarak mehta ka ooltah chashmah': require('./images/tmkoc.jpeg'),
+  'mental math': require('./images/mental_math.jpg'),
+  space: require('./images/space.jpg'),
 };
 
 function CategoryCard({ item, parentCategory }) {
