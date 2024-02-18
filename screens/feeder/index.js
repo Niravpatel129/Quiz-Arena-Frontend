@@ -22,6 +22,19 @@ const FeederScreen = ({ route }) => {
   } = useFeederGameMode(route.params?.categoryId?.replace(/-/g, ' '));
   const [showCountdown, setShowCountdown] = useState(false);
 
+  // return (
+  //   <Text
+  //     style={{
+  //       textAlign: 'center',
+  //       fontSize: 20,
+  //       color: 'red',
+  //       fontWeight: 'bold',
+  //     }}
+  //   >
+  //     Hello World
+  //   </Text>
+  // );
+
   useEffect(() => {
     if (!gameActive) return;
 

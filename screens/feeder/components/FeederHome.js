@@ -11,8 +11,6 @@ export default function FeederHome({ categoryName, handleEnter }) {
   const fadeAnim = new Animated.Value(0);
   const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground);
   const [currentFeederKing, setCurrentFeederKing] = React.useState(undefined);
-  const [loaded, setLoaded] = React.useState(false);
-  const [imageLoaded, setImageLoaded] = React.useState(false);
 
   useEffect(() => {
     const fetchFeederKing = async () => {
@@ -22,8 +20,6 @@ export default function FeederHome({ categoryName, handleEnter }) {
         setCurrentFeederKing(response.data);
       } catch (error) {
         console.log('error', error);
-      } finally {
-        setLoaded(true);
       }
     };
 
@@ -31,8 +27,6 @@ export default function FeederHome({ categoryName, handleEnter }) {
   }, [categoryName]);
 
   useEffect(() => {
-    if (!loaded || !imageLoaded) return;
-
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 100,
@@ -42,14 +36,17 @@ export default function FeederHome({ categoryName, handleEnter }) {
   }, [fadeAnim]);
 
   return (
-    <AnimatedImageBackground
-      onLoad={() => {
-        setImageLoaded(true);
-      }}
+    <View
       source={{
         uri: 'https://cdn.discordapp.com/attachments/1110409819808079982/1202937279581134958/background.png?ex=65cf45a4&is=65bcd0a4&hm=0d4e4b94de5bd0f31709f4a3dfd9b219e6e3099638abc675d4ca44e1d457e9a1',
       }}
-      style={{ flex: 1, opacity: fadeAnim, width: '100%', height: '100%' }}
+      style={{
+        flex: 1,
+        opacity: fadeAnim,
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#0074da',
+      }}
       resizeMode='cover'
     >
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -128,6 +125,6 @@ export default function FeederHome({ categoryName, handleEnter }) {
           </View>
         </View>
       </ScrollView>
-    </AnimatedImageBackground>
+    </View>
   );
 }

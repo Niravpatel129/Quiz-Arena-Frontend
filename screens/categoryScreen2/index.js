@@ -218,7 +218,7 @@ export default function CategoryScreen2({ route }) {
               }}
             >
               <Pressable
-                onLongPress={() => {
+                onPress={() => {
                   navigation.navigate('Solo', {
                     categoryId: categoryId,
                     categoryName: category,
