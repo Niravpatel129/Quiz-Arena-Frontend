@@ -31,36 +31,27 @@ export default function GameOver3({ route }) {
   });
 
   useEffect(() => {
+    if (GameResults?.yourData?.didWin) {
+      playSound('game_win');
+    } else {
+      playSound('game_lose');
+    }
+  }, []);
+
+  useEffect(() => {
     const mode = route.params?.mode;
     if (mode === 'royale') {
       if (GameResults?.yourData?.didWin) {
-        playSound('game_win');
         socketService.emit('matchWin', {
           winnerUserId: GameResults.yourData.userId,
           loserUserId: GameResults.opponentData.userId,
         });
-      } else {
-        playSound('game_lose');
       }
 
       navigation.reset({
         index: 0,
         routes: [{ name: 'Royale' }],
       });
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log('route.params?.mode', route.params?.mode);
-    let mode = route.params?.mode;
-    if (mode) {
-      if (mode === 'royale') {
-        if (GameResults?.yourData?.didWin) {
-          console.log('royale_win');
-        } else {
-          console.log('royale_lose');
-        }
-      }
     }
   }, []);
 
