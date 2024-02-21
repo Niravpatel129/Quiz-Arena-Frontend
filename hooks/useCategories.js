@@ -19,8 +19,6 @@ export default function useCategories() {
         });
       }
 
-      res.data.categories = res.data.categories.slice(0, 7);
-
       setCategories(res.data.categories);
       setUserData(res.data.user);
     };

@@ -48,6 +48,7 @@ export default function Homepage() {
             backgroundColor: '#fff',
             height: '100%',
             gap: 20,
+            marginBottom: 100,
           },
           animatedStyle,
         ]}

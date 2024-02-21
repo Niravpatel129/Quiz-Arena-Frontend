@@ -1,8 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { ImageBackground } from 'expo-image';
 import { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 
 const imageMap = {
   logos: require('./images/logos.png'),
