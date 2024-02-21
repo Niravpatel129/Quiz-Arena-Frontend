@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { newRequest } from '../../api/newRequest';
-import useRecentlyPlayed from '../../hooks/useRecentlyPlayed';
+import useCategories from '../../hooks/useCategories';
 import useStreak from '../../hooks/useStreak';
 import { keys } from '../../keys';
 import CategoriesList from './components/CategoriesList';
@@ -10,12 +10,10 @@ import RoyaleHeader from './components/RoyaleHeader';
 import UserProfile from './components/UserProfile';
 
 export default function Homepage() {
-  const [categories, setCategories] = useState([]);
+  const { categories, userData } = useCategories();
   const [config, setConfig] = useState({ triviaTuesdayEnabled: false });
-  const [userData, setUserData] = useState({});
   const opacity = useSharedValue(0);
   const [updateStreak] = useStreak();
-  const { fetchRecentlyPlayed } = useRecentlyPlayed();
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -24,30 +22,18 @@ export default function Homepage() {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      updateStreak();
-      const res = await newRequest('/homepage/home');
-      const previous = await fetchRecentlyPlayed();
-      if (previous.length > 0)
-        res.data.categories.unshift({
-          parentCategory: 'Recently Played',
-          subCategories: previous.map((category) => ({ name: category, image: '' })),
-        });
-
-      setCategories(res.data.categories);
-      setUserData(res.data.user);
-    };
-    opacity.value = withSpring(1);
-
-    fetchData();
-  }, []);
+    if (categories) {
+      opacity.value = withSpring(1);
+    }
+  }, [categories]);
 
   useEffect(() => {
+    updateStreak();
+
     const fetchConfig = async () => {
       const res = await newRequest.get(`/homepage/config/${keys.version}`);
 
       setConfig(res.data);
-      console.log('🚀  res:', res);
     };
 
     fetchConfig();

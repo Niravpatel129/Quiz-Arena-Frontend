@@ -24,6 +24,7 @@ import { SoundProvider } from './context/sound/SoundContext';
 import { TrackingProvider } from './context/tracking/TrackingContext';
 import { UpdateProvider } from './context/update/UpdateContext';
 import ProfileEditScreen from './screens';
+import CategoriesListView from './screens/categoriesListView';
 import CategoryScreen2 from './screens/categoryScreen2';
 import ChallengeScreen from './screens/challenge';
 import Chat from './screens/chat';
@@ -295,6 +296,11 @@ function App() {
         />
         <Stack.Screen name='Feeder' component={FeederScreen} options={{ headerShown: false }} />
         <Stack.Screen name='Royale' component={Royale} options={{ headerShown: false }} />
+        <Stack.Screen
+          name='CategoriesListView'
+          component={CategoriesListView}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     );
   }

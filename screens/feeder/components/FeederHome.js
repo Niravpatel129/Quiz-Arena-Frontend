@@ -1,15 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { Animated, ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
 import CustomButton from './CustomButton';
 import RenderKing from './RenderKing';
 
 export default function FeederHome({ categoryName, handleEnter }) {
   const navigation = useNavigation();
-  const fadeAnim = new Animated.Value(0);
-  const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground);
   const [currentFeederKing, setCurrentFeederKing] = React.useState(undefined);
 
   useEffect(() => {
@@ -26,28 +24,14 @@ export default function FeederHome({ categoryName, handleEnter }) {
     fetchFeederKing();
   }, [categoryName]);
 
-  useEffect(() => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 100,
-      useNativeDriver: true,
-      delay: 200,
-    }).start();
-  }, [fadeAnim]);
-
   return (
     <View
-      source={{
-        uri: 'https://cdn.discordapp.com/attachments/1110409819808079982/1202937279581134958/background.png?ex=65cf45a4&is=65bcd0a4&hm=0d4e4b94de5bd0f31709f4a3dfd9b219e6e3099638abc675d4ca44e1d457e9a1',
-      }}
       style={{
         flex: 1,
-        opacity: fadeAnim,
         width: '100%',
         height: '100%',
         backgroundColor: '#0074da',
       }}
-      resizeMode='cover'
     >
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
@@ -77,7 +61,7 @@ export default function FeederHome({ categoryName, handleEnter }) {
                 textShadowColor: 'rgba(0, 0, 0, 0.75)',
                 textShadowOffset: { width: -1, height: 1 },
                 textShadowRadius: 3,
-                marginTop: 30,
+                marginTop: 100,
               }}
             >
               Secret Feeder Mode

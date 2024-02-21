@@ -1,164 +1,69 @@
-import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { FlatList, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Dimensions, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { DataProvider, LayoutProvider, RecyclerListView } from 'recyclerlistview';
+import CategoryCard from './CategoryCard';
 import DividerHeader from './DividerHeader';
 
-const imageMap = {
-  logos: require('./images/logos.png'),
-  friends: require('./images/friends.png'),
-  'the office': require('./images/the_office.png'),
-  flags: require('./images/flags.png'),
-  basketball: require('./images/basketball.png'),
-  capitals: require('./images/capitals.png'),
-  chemistry: require('./images/chemistry.png'),
-  biology: require('./images/biology.png'),
-  mathematics: require('./images/mathematics.png'),
-  psychology: require('./images/psychology.jpeg'),
-  physics: require('./images/physics.png'),
-  soccer: require('./images/soccer.png'),
-  cricket: require('./images/cricket.png'),
-  naruto: require('./images/naruto.png'),
-  'one piece': require('./images/one_piece.png'),
-  'attack on titan': require('./images/attack_on_titan.png'),
-  'game of thrones': require('./images/game_of_thrones.png'),
-  valorant: require('./images/valorant.png'),
-  'league of legends': require('./images/league_of_legends.png'),
-  overwatch: require('./images/overwatch.png'),
-  'pokemon gen 1': require('./images/pokemon_gen_1.png'),
-  'general knowledge': require('./images/general_knowledge.png'),
-  landmarks: require('./images/landmarks.png'),
-  scientists: require('./images/scientists.png'),
-  'harry potter': require('./images/harry_potter.png'),
-  'taarak mehta ka ooltah chashmah': require('./images/tmkoc.jpeg'),
-  'mental math': require('./images/mental_math.jpg'),
-  space: require('./images/space.jpg'),
-  'world war 1': require('./images/world_war_1.jpg'),
-  'british sitcoms': require('./images/british_sitcoms.jpg'),
-  disney: require('./images/disney.jpg'),
-  'formula 1': require('./images/formula_1.png'),
-  golf: require('./images/golf.jpg'),
-  'horse racing': require('./images/horse_racing.jpg'),
-  nascar: require('./images/nascar.jpg'),
-  'soap opera': require('./images/soap_opera.jpg'),
-  'the simpsons': require('./images/the_simpsons.jpg'),
-  'us geography': require('./images/us_geography.jpg'),
-};
-
-function CategoryCard({ item, parentCategory }) {
-  const navigation = useNavigation();
-  const [imageSource, setImageSource] = useState(
-    imageMap[item.name?.toLowerCase()] || {
-      uri:
-        item.logo ||
-        'https://images.unsplash.com/photo-1608848461950-0fe51dfc41cb?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-    },
-  );
-
-  const handleImageError = () => {
-    if (!imageMap[item.name]) {
-      setImageSource({
-        uri:
-          item.logo ||
-          'https://images.unsplash.com/photo-1608848461950-0fe51dfc41cb?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
-      });
-    }
-  };
-
-  const nameId = item.name.split(' ').join('-');
-
-  return (
-    <View
-      style={{
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginRight: 10,
-      }}
-    >
-      <TouchableOpacity
-        style={{
-          borderRadius: 16,
-          overflow: 'hidden',
-        }}
-        onPress={() => {
-          navigation.navigate('CategoryScreen', {
-            categoryId: nameId,
-            categoryName: item.name,
-            parentCategory: parentCategory,
-            categoryImage: item.logo || 'default_image_url',
-          });
-        }}
-      >
-        <ImageBackground
-          source={imageSource}
-          onError={handleImageError}
-          style={{
-            width: 120,
-            height: 160,
-            alignItems: 'center',
-            justifyContent: 'space-evenly',
-            padding: 2,
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              width: '100%',
-              height: '100%',
-              alignItems: 'flex-end',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <View></View>
-            <Ionicons name='play-circle' size={40} color='#fff' />
-          </View>
-        </ImageBackground>
-      </TouchableOpacity>
-      <Text
-        style={{
-          fontSize: 12,
-          fontWeight: 'bold',
-          color: '#1d284b',
-          textTransform: 'capitalize',
-          maxWidth: 90,
-          textAlign: 'center',
-          flexWrap: 'wrap',
-          flexShrink: 1,
-          marginTop: 4,
-        }}
-      >
-        {item.name}
-      </Text>
-    </View>
-  );
-}
+const { width } = Dimensions.get('window');
 
 export default function CategoriesList({ parentCategory, subCategories }) {
   const offset = useSharedValue(50);
   const opacity = useSharedValue(0);
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      opacity: opacity.value,
-      transform: [{ translateY: offset.value }],
-    };
-  });
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [{ translateY: offset.value }],
+  }));
 
   useEffect(() => {
     offset.value = withSpring(0, { stiffness: 150 });
     opacity.value = withSpring(1);
   }, []);
 
+  // Ensure the DataProvider receives an updated list when subCategories changes
+  const dataProvider = new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(subCategories);
+
+  const layoutProvider = new LayoutProvider(
+    () => 0, // Assuming all items are of the same type
+    (type, dim) => {
+      // Correctly set dimensions for horizontal layout
+      dim.width = width / 3; // Set the width of each item
+      dim.height = 200; // Set the height of each item appropriately
+    },
+  );
+
+  const shouldShowArrow = () => {
+    if (parentCategory === 'Recently Played' || subCategories.length === 0) {
+      return false;
+    }
+    return true;
+  };
+
+  const rowRenderer = (type, item) => <CategoryCard item={item} parentCategory={parentCategory} />;
+
   return (
     <Animated.View style={[{ flex: 1 }, animatedStyle]}>
-      <DividerHeader headerText={parentCategory} />
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={subCategories}
-        renderItem={({ item }) => <CategoryCard item={item} parentCategory={parentCategory} />}
-      />
+      <DividerHeader headerText={parentCategory} shouldShowArrow={shouldShowArrow()} />
+      {subCategories.length > 0 && (
+        <View
+          style={{
+            flex: 1,
+            minHeight: 200,
+          }}
+        >
+          <RecyclerListView
+            layoutProvider={layoutProvider}
+            dataProvider={dataProvider}
+            rowRenderer={rowRenderer}
+            isHorizontal={true}
+            scrollViewProps={{
+              showsHorizontalScrollIndicator: false,
+            }}
+            style={{ flex: 1 }}
+          />
+        </View>
+      )}
     </Animated.View>
   );
 }

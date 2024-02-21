@@ -36,6 +36,7 @@
     "expo-apple-authentication": "~6.1.0",
     "expo-auth-session": "~5.0.2",
     "expo-av": "~13.4.1",
+    "expo-build-properties": "~0.8.3",
     "expo-clipboard": "~4.3.1",
     "expo-constants": "~14.4.2",
     "expo-contacts": "~12.2.0",
@@ -57,6 +58,7 @@
     "expo-status-bar": "~1.6.0",
     "expo-store-review": "~6.4.0",
     "expo-system-ui": "~2.4.0",
+    "expo-tracking-transparency": "~3.1.0",
     "expo-web-browser": "~12.3.2",
     "mime": "^4.0.1",
     "native-base": "^3.4.28",
@@ -79,9 +81,8 @@
     "react-native-svg": "13.9.0",
     "react-native-toast-message": "^2.2.0",
     "react-native-web": "~0.19.6",
-    "socket.io-client": "^4.7.2",
-    "expo-tracking-transparency": "~3.1.0",
-    "expo-build-properties": "~0.8.3"
+    "recyclerlistview": "^4.2.0",
+    "socket.io-client": "^4.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
