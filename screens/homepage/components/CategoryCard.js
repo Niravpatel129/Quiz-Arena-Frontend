@@ -10,7 +10,7 @@ const imageMap = {
   'the office': require('./images/the_office.png'),
   flags: require('./images/flags.png'),
   basketball: require('./images/basketball.png'),
-  capitals: require('./images/capitals.png'),
+  capitals: require('./images/capitals.jpg'),
   chemistry: require('./images/chemistry.png'),
   biology: require('./images/biology.png'),
   mathematics: require('./images/mathematics.png'),
@@ -32,7 +32,7 @@ const imageMap = {
   'harry potter': require('./images/harry_potter.png'),
   'taarak mehta ka ooltah chashmah': require('./images/tmkoc.jpeg'),
   'mental math': require('./images/mental_math.jpg'),
-  space: require('./images/space.jpg'),
+  space: require('./images/space.png'),
   'world war 1': require('./images/world_war_1.jpg'),
   'british sitcoms': require('./images/british_sitcoms.jpg'),
   disney: require('./images/disney.jpg'),
@@ -43,6 +43,18 @@ const imageMap = {
   'soap opera': require('./images/soap_opera.jpg'),
   'the simpsons': require('./images/the_simpsons.jpg'),
   'us geography': require('./images/us_geography.jpg'),
+  'world cup': require('./images/world_cup.jpg'),
+  'american football': require('./images/american_football.jpg'),
+  'golden state warriors': require('./images/golden_state_warriors.png'),
+  'james bond': require('./images/james_bond.jpeg'),
+  'liverpool football club': require('./images/liverpool_football_club.jpg'),
+  'movie quotes': require('./images/movie_quotes.jpg'),
+  'movies since 2010': require('./images/movies_since_2010.jpg'),
+  'solar system': require('./images/solar_system.jpeg'),
+  'winter sports': require('./images/winter_sports.jpg'),
+  'rugby league': require('./images/rugby_league.jpg'),
+  'science general': require('./images/science_general.jpg'),
+  'british films': require('./images/british_films.jpg'),
 };
 
 function CategoryCard({ item, parentCategory }) {
@@ -74,8 +86,6 @@ function CategoryCard({ item, parentCategory }) {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-
-        paddingBottom: 30,
       }}
     >
       <TouchableOpacity
@@ -127,7 +137,7 @@ function CategoryCard({ item, parentCategory }) {
           flexWrap: 'wrap',
           flexShrink: 1,
           marginTop: 4,
-          height: 0,
+          height: 50,
         }}
       >
         {item.name}
