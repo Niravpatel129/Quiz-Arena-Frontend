@@ -5,11 +5,13 @@ import { getLocales } from 'expo-localization';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
+import { useAuth } from '../../../context/auth/AuthContext';
 import { useSocket } from '../../../context/socket/SocketContext';
 
 export default function SocialButton({ variation }) {
   const navigation = useNavigation();
   const socket = useSocket();
+  const { signIn } = useAuth();
 
   const handlePress = async (item) => {
     if (item === 'apple') {
@@ -49,6 +51,7 @@ export default function SocialButton({ variation }) {
           socket.ConnectSocket();
 
           const newSignIn = res.data?.newSignIn;
+          if (res.data?.token) signIn(res.data?.token);
 
           if (!res.data.user?.username || !res.data.user?.profile?.avatar || newSignIn) {
             console.log('🚀  navigating to create profile:', res.data?.user?.username);

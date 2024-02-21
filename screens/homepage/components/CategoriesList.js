@@ -34,12 +34,22 @@ const imageMap = {
   'taarak mehta ka ooltah chashmah': require('./images/tmkoc.jpeg'),
   'mental math': require('./images/mental_math.jpg'),
   space: require('./images/space.jpg'),
+  'world war 1': require('./images/world_war_1.jpg'),
+  'british sitcoms': require('./images/british_sitcoms.jpg'),
+  disney: require('./images/disney.jpg'),
+  'formula 1': require('./images/formula_1.png'),
+  golf: require('./images/golf.jpg'),
+  'horse racing': require('./images/horse_racing.jpg'),
+  nascar: require('./images/nascar.jpg'),
+  'soap opera': require('./images/soap_opera.jpg'),
+  'the simpsons': require('./images/the_simpsons.jpg'),
+  'us geography': require('./images/us_geography.jpg'),
 };
 
 function CategoryCard({ item, parentCategory }) {
   const navigation = useNavigation();
   const [imageSource, setImageSource] = useState(
-    imageMap[item.name] || {
+    imageMap[item.name?.toLowerCase()] || {
       uri:
         item.logo ||
         'https://images.unsplash.com/photo-1608848461950-0fe51dfc41cb?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D',
