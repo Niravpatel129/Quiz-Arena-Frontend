@@ -248,9 +248,7 @@ export default function ChallengeScreen({ route }) {
             }}
           >
             <Image
-              source={{
-                uri: 'https://cdn.discordapp.com/attachments/1201815017612398662/1202213592493981787/IMG_3419.webp?ex=65cca3a8&is=65ba2ea8&hm=3b03405ac15ecc894bab9a242ba73b08301b8cd8e5cb8dd634f5dbef8290f006&',
-              }}
+              source={require('../../assets/mascot.png')}
               style={{ width: 200, height: 200 }}
             />
             <Text
