@@ -58,7 +58,7 @@ export default function Profile2({ userId }) {
           source={{
             uri:
               image ||
-              'https://cdn.discordapp.com/attachments/1110409819808079982/1199519044018114760/image__9_-removebg-preview.png?ex=65c2d62a&is=65b0612a&hm=118f84d71691ba493e41d37e99b1edc5beceeeadc90185f93a012dcb510d492a&',
+              'https://res.cloudinary.com/dwu4qop1o/image/upload/v1708638053/Style1_1_gjosgx.png',
           }}
           style={{
             width: 100,
@@ -366,7 +366,7 @@ export default function Profile2({ userId }) {
                 {renderTrophyCard({
                   title: 'Early Bird',
                   image:
-                    'https://cdn.discordapp.com/attachments/1110409819808079982/1199519044018114760/image__9_-removebg-preview.png?ex=65c2d62a&is=65b0612a&hm=118f84d71691ba493e41d37e99b1edc5beceeeadc90185f93a012dcb510d492a&',
+                    'https://res.cloudinary.com/dwu4qop1o/image/upload/v1708638053/Style1_1_gjosgx.png',
                 })}
                 {userData?.awards?.map((trophy) => {
                   return renderTrophyCard({

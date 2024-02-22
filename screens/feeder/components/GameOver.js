@@ -56,9 +56,7 @@ export default function GameOver({ score, handleStartGame, results }) {
         Not too shabby!
       </Text>
       <Image
-        source={{
-          uri: 'https://cdn.discordapp.com/attachments/1201815017612398662/1202213592493981787/IMG_3419.webp',
-        }}
+        source={require('../../../assets/mascot.png')}
         style={{
           width: 200,
           height: 200,
