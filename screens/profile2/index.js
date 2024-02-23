@@ -55,6 +55,7 @@ export default function Profile2({ userId }) {
         ]}
       >
         <Image
+          contentFit='contain'
           source={{
             uri:
               image ||
@@ -151,6 +152,9 @@ export default function Profile2({ userId }) {
     );
   };
 
+  if (!userData) {
+    return null;
+  }
   if (userId && !userData)
     return (
       <View
