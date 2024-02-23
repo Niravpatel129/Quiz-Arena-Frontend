@@ -2,12 +2,34 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withTiming,
+} from 'react-native-reanimated';
 import { DataProvider, LayoutProvider, RecyclerListView } from 'recyclerlistview';
 import useCategories from '../../hooks/useCategories';
 import CategoryCard from '../homepage/components/CategoryCard';
 
 const { width } = Dimensions.get('window');
+
+const CategoryCardWrapper = ({ item, index, parentCategory }) => {
+  const opacity = useSharedValue(0);
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
+  useEffect(() => {
+    opacity.value = withDelay(index * 100, withTiming(1, { duration: 500 }));
+  }, []);
+
+  return (
+    <Animated.View style={[{ flex: 1 }, animatedStyle]}>
+      <CategoryCard item={item} parentCategory={parentCategory} />
+    </Animated.View>
+  );
+};
 
 export default function CategoriesListView() {
   const navigation = useNavigation();
@@ -55,10 +77,8 @@ export default function CategoriesListView() {
     },
   );
 
-  const renderRow = (type, item) => (
-    <Animated.View style={[{ flex: 1 }, animatedStyle]}>
-      <CategoryCard item={item} parentCategory={parentCategory} />
-    </Animated.View>
+  const renderRow = (type, item, index) => (
+    <CategoryCardWrapper item={item} index={index} parentCategory={parentCategory} />
   );
 
   return (
