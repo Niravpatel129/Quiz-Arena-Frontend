@@ -11,6 +11,7 @@ export default function Ingame2({ roundNumber, InGameData, timer, roundOverData 
   const AnswersRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const { playSound } = useSound();
+  const [areAnswersClickable, setAreAnswersClickable] = useState(false); // New state for controlling clickability
 
   // Initial value for opacity: 0
   const questionFadeAnim = useRef(new Animated.Value(0)).current;
@@ -44,7 +45,9 @@ export default function Ingame2({ roundNumber, InGameData, timer, roundOverData 
         duration: 500, // Animation duration of 500ms
         useNativeDriver: true,
       }),
-    ]).start();
+    ]).start(() => {
+      setAreAnswersClickable(true);
+    });
 
     // delay 1000 then play sound
     playSound('fast');
@@ -52,6 +55,8 @@ export default function Ingame2({ roundNumber, InGameData, timer, roundOverData 
     setTimeout(() => {
       playSound('chop');
     }, 2000);
+
+    setAreAnswersClickable(false);
   }, [roundNumber]); // Dependency array includes roundNumber to trigger effect on its change
 
   return (
@@ -123,6 +128,7 @@ export default function Ingame2({ roundNumber, InGameData, timer, roundOverData 
                 sessionId={InGameData.sessionId}
                 timeRemaining={timer}
                 roundOverData={roundOverData}
+                isClickable={areAnswersClickable}
               />
             </Animated.View>
           </ScrollView>
