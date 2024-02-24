@@ -85,7 +85,10 @@ export default function Royale() {
     }, 500);
 
     return () => {
-      socketService.off('royal_game_start');
+      console.log('Leaving room');
+      socketService.emit('leaveRoyalRoom');
+      socketService.off('roomStatus');
+      socketService.off('royalStart');
       socketService.off('joinedRoyalQueue');
       socketService.off('matchChallenge');
       socketService.off('game_start');
@@ -101,8 +104,7 @@ export default function Royale() {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 20 }}>
       <EventTitle setShowIntroduction={setShowIntroduction} />
-      {/* <CountdownTimer /> */}
-      {/* <EventInformation /> */}
+
       {roomData.roomStatus !== 'completed' && (
         <JoinQueueButton
           status={roomData.roomStatus}
@@ -110,22 +112,9 @@ export default function Royale() {
           isInQueue={isInQueue}
         />
       )}
-      {/* <JoinQueueButton status={roomData.roomStatus} /> */}
       <PlayersList players={roomData.players} />
 
-      {/* <GameTips /> */}
-      {/* <AdditionalInformation /> */}
-      {/* <GameModeDescription /> */}
-      <View>
-        {/* players and their status */}
-        {/* {roomData.players &&
-          roomData.players.map((player) => (
-            <View key={player.socketId}>
-              <Text>{player.username}</Text>
-              <Text>{player.status}</Text>
-            </View>
-          ))} */}
-      </View>
+      <View></View>
     </ScrollView>
   );
 }

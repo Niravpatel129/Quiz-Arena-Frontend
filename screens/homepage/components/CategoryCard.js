@@ -54,6 +54,8 @@ const imageMap = {
   'rugby league': require('./images/rugby_league.jpg'),
   'science general': require('./images/science_general.jpg'),
   'british films': require('./images/british_films.jpg'),
+  'hunter x hunter': require('./images/hunter_x_hunter.jpg'),
+  'dragon ball series': require('./images/dragon_ball_series.jpeg'),
 };
 
 function CategoryCard({ item, parentCategory }) {
