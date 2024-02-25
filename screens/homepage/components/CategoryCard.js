@@ -58,10 +58,9 @@ const imageMap = {
   'hunter x hunter': require('./images/hunter_x_hunter.jpg'),
   'dragon ball series': require('./images/dragon_ball_series.jpeg'),
   'hunger games': require('./images/hunger_games.jpg'),
-  // size comparison, what happened first,  baby animals
   'size comparison': require('./images/size_comparison.png'),
-  'what happened first': require('./images/what_happened_first.png'),
-  'baby animals': require('./images/baby_animals.png'),
+  'what happened first': require('./images/what_happened_first.jpg'),
+  'baby animals': require('./images/baby_animals.jpg'),
 };
 
 function CategoryCard({ item, parentCategory }) {

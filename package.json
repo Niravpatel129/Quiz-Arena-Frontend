@@ -29,7 +29,7 @@
     "@react-navigation/drawer": "^6.6.6",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
-    "@sentry/react-native": "^5.16.0",
+    "@sentry/react-native": "^5.19.0",
     "axios": "^1.6.2",
     "date-fns": "^3.0.6",
     "expo": "~49.0.15",
