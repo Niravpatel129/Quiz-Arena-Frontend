@@ -48,9 +48,15 @@ export default function PlayersList({ players }) {
           marginTop: 30,
         }}
       >
-        {playersRemaining} Player{playersRemaining > 1 ? 's' : ''} Remaining
+        {playersRemaining === 0 ? (
+          'Players'
+        ) : (
+          <>
+            {playersRemaining} Player{playersRemaining > 1 ? 's' : ''} Remaining
+          </>
+        )}
       </Text>
-      <ScrollView style={{ padding: 20 }}>
+      <ScrollView style={{ padding: 10 }}>
         {/* Table Header */}
         <View
           style={{
@@ -74,21 +80,28 @@ export default function PlayersList({ players }) {
               source={{ uri: player.userAvatar }}
               style={{ width: 40, height: 40, borderRadius: 20, marginRight: 10 }}
             />
-            <MaterialIcons
-              name={getStatusIcon(player.status).name}
-              size={24}
-              color={getStatusIcon(player.status).color}
-              style={{ marginRight: 5 }}
-            />
-            <Text
+            <View
               style={{
-                flex: 3,
-                fontSize: 16,
-                textDecorationLine: player.status === 'eliminated' ? 'line-through' : 'none',
+                flexDirection: 'row',
+                alignItems: 'center',
               }}
             >
-              {player.username}
-            </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  textDecorationLine: player.status === 'eliminated' ? 'line-through' : 'none',
+                }}
+              >
+                {player.username}
+              </Text>
+              <MaterialIcons
+                name={getStatusIcon(player.status).name}
+                size={24}
+                color={getStatusIcon(player.status).color}
+                style={{ marginRight: 5 }}
+              />
+            </View>
+
             <Text
               style={{
                 flex: 1,

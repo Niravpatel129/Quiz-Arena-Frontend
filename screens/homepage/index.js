@@ -54,9 +54,7 @@ export default function Homepage() {
         ]}
       >
         <UserProfile userData={userData} />
-        {config.triviaTuesdayEnabled && (
-          <RoyaleHeader triviaTuesdayEnabled={config.triviaTuesdayEnabled} />
-        )}
+        {true && <RoyaleHeader />}
         {categories.map((category, index) => {
           return (
             <CategoriesList

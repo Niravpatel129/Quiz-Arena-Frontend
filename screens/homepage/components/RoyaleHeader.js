@@ -3,7 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
-export default function RoyaleHeader({ triviaTuesdayEnabled }) {
+export default function RoyaleHeader() {
   const navigation = useNavigation();
   return (
     <TouchableOpacity

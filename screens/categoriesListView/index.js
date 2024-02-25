@@ -90,7 +90,7 @@ export default function CategoriesListView() {
             margin: 0,
             marginBottom: 0,
 
-            marginTop: 70,
+            marginTop: 20,
           }}
         >
           <Ionicons name='arrow-back' size={24} color='#000' />

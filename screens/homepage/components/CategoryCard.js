@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, Pressable, Text, View } from 'react-native';
+import { useSound } from '../../../context/sound/SoundContext';
 
 const imageMap = {
   logos: require('./images/logos.png'),
@@ -22,7 +23,7 @@ const imageMap = {
   'attack on titan': require('./images/attack_on_titan.png'),
   'game of thrones': require('./images/game_of_thrones.png'),
   valorant: require('./images/valorant.png'),
-  'league of legends': require('./images/league_of_legends.png'),
+  'league of legends': require('./images/league_of_legends.jpeg'),
   overwatch: require('./images/overwatch.png'),
   'pokemon gen 1': require('./images/pokemon_gen_1.png'),
   'general knowledge': require('./images/general_knowledge.png'),
@@ -56,9 +57,15 @@ const imageMap = {
   'british films': require('./images/british_films.jpg'),
   'hunter x hunter': require('./images/hunter_x_hunter.jpg'),
   'dragon ball series': require('./images/dragon_ball_series.jpeg'),
+  'hunger games': require('./images/hunger_games.jpg'),
+  // size comparison, what happened first,  baby animals
+  'size comparison': require('./images/size_comparison.png'),
+  'what happened first': require('./images/what_happened_first.png'),
+  'baby animals': require('./images/baby_animals.png'),
 };
 
 function CategoryCard({ item, parentCategory }) {
+  const { playSound } = useSound();
   const navigation = useNavigation();
   const [imageSource, setImageSource] = useState(
     imageMap[item.name?.toLowerCase()] || {
@@ -89,12 +96,13 @@ function CategoryCard({ item, parentCategory }) {
         justifyContent: 'center',
       }}
     >
-      <TouchableOpacity
+      <Pressable
         style={{
           borderRadius: 16,
           overflow: 'hidden',
         }}
         onPress={() => {
+          playSound('click');
           navigation.navigate('CategoryScreen', {
             categoryId: nameId,
             categoryName: item.name,
@@ -126,7 +134,7 @@ function CategoryCard({ item, parentCategory }) {
             <Ionicons name='play-circle' size={40} color='#fff' />
           </View>
         </ImageBackground>
-      </TouchableOpacity>
+      </Pressable>
       <Text
         style={{
           fontSize: 12,

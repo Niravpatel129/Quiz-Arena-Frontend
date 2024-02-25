@@ -1,7 +1,8 @@
 // Royale.js
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import RoyaleIntro from '../../components/RoyaleIntro/RoyaleIntro';
 import socketService from '../../services/socketService';
@@ -102,19 +103,32 @@ export default function Royale() {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 20 }}>
-      <EventTitle setShowIntroduction={setShowIntroduction} />
+    <SafeAreaView>
+      <Ionicons
+        name='arrow-back'
+        size={24}
+        color='#000'
+        onPress={() => navigation.goBack()}
+        style={{
+          margin: 20,
+          marginBottom: 0,
+        }}
+      />
+      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 20 }}>
+        <EventTitle setShowIntroduction={setShowIntroduction} />
+        {roomData?.nextRoundStartTime}
 
-      {roomData.roomStatus !== 'completed' && (
-        <JoinQueueButton
-          status={roomData.roomStatus}
-          players={roomData.players}
-          isInQueue={isInQueue}
-        />
-      )}
-      <PlayersList players={roomData.players} />
+        {roomData.roomStatus !== 'completed' && (
+          <JoinQueueButton
+            status={roomData.roomStatus}
+            players={roomData.players}
+            isInQueue={isInQueue}
+          />
+        )}
+        <PlayersList players={roomData.players} />
 
-      <View></View>
-    </ScrollView>
+        <View></View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }

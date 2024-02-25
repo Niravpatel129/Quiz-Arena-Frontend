@@ -29,7 +29,7 @@ export default function CategoriesList({ parentCategory, subCategories }) {
     (type, dim) => {
       // Correctly set dimensions for horizontal layout
       dim.width = width / 3; // Set the width of each item
-      dim.height = 200; // Set the height of each item appropriately
+      dim.height = 250; // Set the height of each item appropriately
     },
   );
 
@@ -43,7 +43,7 @@ export default function CategoriesList({ parentCategory, subCategories }) {
   const rowRenderer = (type, item) => <CategoryCard item={item} parentCategory={parentCategory} />;
 
   return (
-    <Animated.View style={[{ flex: 1 }, animatedStyle]}>
+    <Animated.View style={[{ flex: 1, marginBottom: -30 }, animatedStyle]}>
       <DividerHeader headerText={parentCategory} shouldShowArrow={shouldShowArrow()} />
       {subCategories.length > 0 && (
         <View
