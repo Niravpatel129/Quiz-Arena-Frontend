@@ -7,7 +7,7 @@ const useRecentlyPlayed = () => {
   const fetchRecentlyPlayed = async () => {
     const previouslyPlayed = await AsyncStorage.getItem('recentlyPlayed');
     const previouslyPlayedArray = previouslyPlayed ? JSON.parse(previouslyPlayed) : [];
-    const unique = [...new Set(previouslyPlayedArray)];
+    const unique = [...new Set(previouslyPlayedArray)].reverse();
 
     setRecentlyPlayed(unique);
     return unique;
