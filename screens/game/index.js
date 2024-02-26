@@ -85,10 +85,14 @@ const GameScreen = ({ navigation, route }) => {
     };
   }, []);
 
-  const giveBotAnswer = (botPlayer, sessionId, correctAnswer, wrongOption) => {
+  const giveBotAnswer = (botPlayer, sessionId, correctAnswer, wrongOption, correcAnswerRatio) => {
     if (sendBotAnswer) return;
 
-    const giveCorrectAnswer = Math.floor(Math.random() * 4) + 1 > 1;
+    let giveCorrectAnswer = Math.floor(Math.random() * 4) + 1 > 1;
+
+    if (correcAnswerRatio >= 80) {
+      giveCorrectAnswer = true;
+    }
 
     socketService.emit('bot_answer', {
       sessionId: sessionId,
@@ -146,7 +150,16 @@ const GameScreen = ({ navigation, route }) => {
         const randomNumber = Math.floor(Math.random() * 3) + 1;
         const wrongOption = roundData.options[randomNumber];
 
-        giveBotAnswer(opponentData, roundData.sessionId, correctAnswer.optionText, wrongOption);
+        // get round question
+        console.log('questionCorrectAnswerRatio', roundData.questionCorrectAnswerRatio);
+
+        giveBotAnswer(
+          opponentData,
+          roundData.sessionId,
+          correctAnswer.optionText,
+          wrongOption,
+          roundData.questionCorrectAnswerRatio,
+        );
       }
 
       setHighlightTrigger(false);
