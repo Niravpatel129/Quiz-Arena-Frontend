@@ -7,6 +7,7 @@ import Toast from 'react-native-toast-message';
 import RoyaleIntro from '../../components/RoyaleIntro/RoyaleIntro';
 import socketService from '../../services/socketService';
 import EventTitle from './components/EventTitle';
+import GameStatusModal from './components/GameStatusModal';
 import JoinQueueButton from './components/JoinQueueButton';
 import PlayersList from './components/PlayerList';
 
@@ -15,6 +16,8 @@ export default function Royale() {
   const [roomData, setRoomData] = React.useState({});
   const [showIntroduction, setShowIntroduction] = useState(false);
   const [isInQueue, setIsInQueue] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [gameStatus, setGameStatus] = useState('');
 
   const joinChallengeQueue = (challengeId) => {
     socketService.emit('joinChallengeQueue', {
@@ -23,6 +26,29 @@ export default function Royale() {
       mode: 'royale',
     });
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      socketService.on('winner', () => {
+        setModalVisible(true);
+        setGameStatus('won');
+      });
+      socketService.on('eliminated', () => {
+        setModalVisible(true);
+        setGameStatus('eliminated');
+      });
+      socketService.on('quallified', () => {
+        setModalVisible(true);
+        setGameStatus('nextRound');
+      });
+    }, 500);
+
+    return () => {
+      socketService.off('winner');
+      socketService.off('eliminated');
+      socketService.off('quallified');
+    };
+  }, []);
 
   useEffect(() => {
     // connect socket if not connected
@@ -104,6 +130,11 @@ export default function Royale() {
 
   return (
     <SafeAreaView>
+      <GameStatusModal
+        visible={modalVisible}
+        status={gameStatus}
+        onClose={() => setModalVisible(false)}
+      />
       <Ionicons
         name='arrow-back'
         size={24}
