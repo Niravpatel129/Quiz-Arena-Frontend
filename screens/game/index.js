@@ -88,10 +88,7 @@ const GameScreen = ({ navigation, route }) => {
   const giveBotAnswer = (botPlayer, sessionId, correctAnswer, wrongOption) => {
     if (sendBotAnswer) return;
 
-    // random between 0.5 and 2 seconds
-
     const giveCorrectAnswer = Math.floor(Math.random() * 4) + 1 > 1;
-    // only send 1 bot answer per round
 
     socketService.emit('bot_answer', {
       sessionId: sessionId,
