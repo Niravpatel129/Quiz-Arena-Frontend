@@ -24,21 +24,55 @@ export default function Chat({
   },
 }) {
   const [chat, setChat] = React.useState([]);
+  const [userDetail, setUserDetail] = React.useState({});
   const [textInput, setTextInput] = React.useState('');
   const scrollViewRef = useRef();
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchUserDetail = async () => {
+      try {
+        const userDetailRes = await newRequest.get(`/users/undefined`);
+        if (!userDetailRes.data) return;
+
+        setUserDetail({
+          name: userDetailRes.data.username,
+          avatar: userDetailRes.data.avatar,
+        });
+      } catch (err) {
+        console.log('Error fetching user detail:', err);
+      }
+    };
+
+    fetchUserDetail();
+  }, []);
 
   useEffect(() => {
     if (!chat._id) return;
 
     socketService.emit('join_chat', chat._id);
 
-    socketService.on('chat_message_recieved', () => {
-      fetchChat();
+    // Update to handle a new message
+    socketService.on('chat_message_received', (newMessage) => {
+      console.log('New message received:', newMessage);
+      // Assuming newMessage has the same structure as your current messages
+      // push something to chat.chatMessages array
+      setChat((currentChat) => ({
+        ...currentChat,
+        chatMessages: [
+          ...(currentChat.chatMessages || ''),
+          {
+            name: userDetail.name || 'Anonymous',
+            message: newMessage.message,
+            isSender: false,
+            sentAgo: new Date(),
+          },
+        ],
+      }));
     });
 
     return () => {
-      socketService.off('chat_message_recieved');
+      socketService.off('chat_message_received');
     };
   }, [chat]);
 
@@ -81,17 +115,36 @@ export default function Chat({
     try {
       if (textInput === '') return;
 
-      await newRequest.post(`/chat/send/${chat._id}`, {
+      // Optimistically update the UI with the new message
+      const optimisticMessage = {
+        // create a temp message object based on your message structure
+        message: textInput,
+        isSender: true,
+        // other necessary properties
+      };
+      setChat((currentChat) => ({
+        ...currentChat,
+        chatMessages: [...currentChat.chatMessages, optimisticMessage],
+      }));
+
+      setTextInput('');
+
+      const response = await newRequest.post(`/chat/send/${chat._id}`, {
         message: textInput,
       });
 
-      setTextInput('');
-      fetchChat();
+      socketService.emit('send_message', {
+        chatId: chat._id,
+        userDetail: userDetail,
+        message: textInput,
+      });
+
+      // Optionally: Update the message with the server's response if necessary
     } catch (err) {
-      console.log('🚀 ~ file: index.js ~ line 114 ~ sendMessage ~ err', err);
+      console.log('Error sending message:', err);
+      // Optionally: Roll back optimistic update here
     }
   };
-
   const renderChatBubble = (messageData) => {
     const { name, message, isSender, sentAgo } = messageData;
 

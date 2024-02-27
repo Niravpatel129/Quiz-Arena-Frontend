@@ -182,8 +182,6 @@ const GameScreen = ({ navigation, route }) => {
         (player) => player.socketId !== mySocketId,
       );
 
-      // only do it once
-      // toggle game off for debugging
       navigation.reset({
         index: 0,
         routes: [
