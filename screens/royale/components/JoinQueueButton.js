@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import socketService from '../../../services/socketService';
 
 const JoinQueueButton = ({ status, players, isInQueue }) => {
   // State to manage button cooldown
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  useEffect(() => {
+    if (status === 'in-progress') setIsButtonDisabled(true);
+  }, [status]);
 
   const toggleQueue = () => {
     if (isButtonDisabled) return; // Prevent action if button is in cooldown
