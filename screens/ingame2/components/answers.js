@@ -7,8 +7,21 @@ import AnswerButton from './AnswerButton';
 export default function Answers({ answers, sessionId, timeRemaining, roundOverData, isClickable }) {
   const [selectedAnswer, setSelectedAnswer] = React.useState(null);
   const [randomziedAnswers, setRandomizedAnswers] = React.useState([]);
+  const [didPlayerAnswerCorrect, setDidPlayerAnswerCorrect] = React.useState(false);
   const [isAnswered, setIsAnswered] = React.useState(false);
   const { playSound } = useSound();
+
+  useEffect(() => {
+    if (roundOverData && didPlayerAnswerCorrect) {
+      playSound('correct_answer');
+    }
+
+    if (roundOverData && !didPlayerAnswerCorrect) {
+      playSound('wrong');
+    }
+
+    setDidPlayerAnswerCorrect(false);
+  }, [roundOverData]);
 
   useEffect(() => {
     setSelectedAnswer(null);
@@ -28,11 +41,17 @@ export default function Answers({ answers, sessionId, timeRemaining, roundOverDa
       timeRemaining: timeRemaining,
     };
 
+    playSound('button_press');
+
     if (isCorrect) {
-      playSound('correct_answer');
-    } else {
-      playSound('button_press');
+      setDidPlayerAnswerCorrect(true);
     }
+
+    // if (isCorrect) {
+    //   playSound('correct_answer');
+    // } else {
+    //   playSound('button_press');
+    // }
 
     socketService.emit('submit_answer', resData);
   };

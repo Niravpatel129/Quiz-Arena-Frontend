@@ -62,6 +62,13 @@ const AnswerButton = ({ text, answerCorrect, isSelected, isAnswered, onPress, ro
     let buttonShadowColor = '#CBD9F0';
     let textColor = '#262625';
 
+    if (!roundOverData)
+      return {
+        buttonColor: isSelected ? '#3F95F2' : '#EFF8FF',
+        buttonShadowColor: isSelected ? '#3F95F2' : '#CBD9F0',
+        textColor: isSelected ? '#ffffff' : '#262625',
+      };
+
     if (isAnswered) {
       if (answerCorrect) {
         buttonColor = '#00C48C';

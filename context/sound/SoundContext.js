@@ -15,6 +15,7 @@ export const SoundProvider = ({ children }) => {
   const [vsSound, setVsSound] = useState(null);
   const [gameWin, setGameWin] = useState(null);
   const [gameLose, setGameLose] = useState(null);
+  const [wrong, setWrong] = useState(null);
   const [click, setClick] = useState(null);
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export const SoundProvider = ({ children }) => {
       gameWin?.unloadAsync();
       gameLose?.unloadAsync();
       click?.unloadAsync();
+      wrong?.unloadAsync();
     };
   }, []);
 
@@ -82,6 +84,10 @@ export const SoundProvider = ({ children }) => {
 
       const { sound: vs } = await Audio.Sound.createAsync(require('../../assets/sounds/vs.wav'));
 
+      const { sound: wrong } = await Audio.Sound.createAsync(
+        require('../../assets/sounds/wrong.mp3'),
+      );
+
       await inGame.setVolumeAsync(0.5);
       await correctAnswer.setVolumeAsync(0.5);
       await buttonPress.setVolumeAsync(0.5);
@@ -94,6 +100,7 @@ export const SoundProvider = ({ children }) => {
       await gameWin.setVolumeAsync(0.5);
       await gameLose.setVolumeAsync(0.5);
       await click.setVolumeAsync(0.5);
+      await wrong.setVolumeAsync(0.5);
 
       setButtonPressSound(buttonPress);
       setCorrectAnswerSound(correctAnswer);
@@ -107,6 +114,7 @@ export const SoundProvider = ({ children }) => {
       setGameWin(gameWin);
       setGameLose(gameLose);
       setClick(click);
+      setWrong(wrong);
     } catch (error) {
       console.log('error loading sounds', error);
     }
@@ -163,6 +171,10 @@ export const SoundProvider = ({ children }) => {
 
     if (soundType === 'click' && click) {
       await click.replayAsync();
+    }
+
+    if (soundType === 'wrong' && wrong) {
+      await wrong.replayAsync();
     }
   };
 
