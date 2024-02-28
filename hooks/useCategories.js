@@ -36,7 +36,15 @@ export default function useCategories() {
       if (previous.length > 0) {
         const recentlyPlayedCategory = {
           parentCategory: 'Recently Played',
-          subCategories: previous.map((category) => ({ name: category, image: '' })),
+          subCategories: previous.map((category) => {
+            const matchingCategory = categoriesData.find((c) =>
+              c.subCategories.some((sc) => sc.name === category),
+            );
+            const logoUrl = matchingCategory
+              ? matchingCategory.subCategories.find((sc) => sc.name === category).logo
+              : '';
+            return { name: category, logo: logoUrl };
+          }),
         };
 
         // Inject "Recently Played" at the beginning or update it if it already exists
