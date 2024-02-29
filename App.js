@@ -203,7 +203,11 @@ function App() {
           headerShadowVisible: false,
         }}
       >
-        {/* <Tab.Screen name='dev' component={Royale} options={{ headerShown: false }} /> */}
+        {/* <Tab.Screen
+          name='dev'
+          component={TriviaRoyaleWaitingRoom}
+          options={{ headerShown: false }}
+        /> */}
 
         <Stack.Screen
           name='Login2'
