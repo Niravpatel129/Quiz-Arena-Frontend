@@ -20,7 +20,7 @@ export default function Question({ question, questionImage, setImageLoaded }) {
       <Text
         style={{
           fontFamily: 'poppins-semiBold',
-          fontSize: question?.length > 40 && questionImage ? RFValue(12) : RFValue(17),
+          fontSize: question?.length > 40 && questionImage ? RFValue(12) : RFValue(14),
           letterSpacing: 0,
           textAlign: 'center',
           color: '#262625',
