@@ -1,6 +1,6 @@
 import Slider from '@react-native-community/slider';
 import React, { useState } from 'react';
-import { SafeAreaView, SectionList, StyleSheet, Switch, Text, View } from 'react-native';
+import { Platform, SafeAreaView, SectionList, StyleSheet, Switch, Text, View } from 'react-native';
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState({
@@ -26,11 +26,13 @@ export default function SettingsPage() {
           title: 'Volume',
           component: (
             <Slider
-              style={{ flex: 1 }}
+              style={{ width: Platform.OS === 'ios' ? 150 : 200, height: 40 }}
               value={settings.volume}
               onValueChange={(value) => setSettings({ ...settings, volume: value })}
               minimumValue={0}
               maximumValue={100}
+              minimumTrackTintColor='#007AFF'
+              maximumTrackTintColor='#000000'
             />
           ),
         },
@@ -38,14 +40,24 @@ export default function SettingsPage() {
           key: 'muteFx',
           title: 'Mute FX',
           component: (
-            <Switch onValueChange={() => handleToggle('muteFx')} value={settings.muteFx} />
+            <Switch
+              onValueChange={() => handleToggle('muteFx')}
+              value={settings.muteFx}
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
+              thumbColor={settings.muteFx ? '#f5dd4b' : '#f4f3f4'}
+            />
           ),
         },
         {
           key: 'muteMusic',
           title: 'Mute Music',
           component: (
-            <Switch onValueChange={() => handleToggle('muteMusic')} value={settings.muteMusic} />
+            <Switch
+              onValueChange={() => handleToggle('muteMusic')}
+              value={settings.muteMusic}
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
+              thumbColor={settings.muteMusic ? '#f5dd4b' : '#f4f3f4'}
+            />
           ),
         },
       ],
@@ -75,6 +87,8 @@ export default function SettingsPage() {
             <Switch
               onValueChange={() => handleToggle('notifications')}
               value={settings.notifications}
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
+              thumbColor={settings.notifications ? '#f5dd4b' : '#f4f3f4'}
             />
           ),
         },
@@ -97,10 +111,11 @@ export default function SettingsPage() {
     <SafeAreaView style={styles.container}>
       <SectionList
         sections={DATA}
-        keyExtractor={(item, index) => item + index}
+        keyExtractor={(item) => item.key}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
+        ListFooterComponent={() => <View style={{ height: 30 }} />} // Add space at the bottom
       />
     </SafeAreaView>
   );
@@ -112,34 +127,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#EFEFF4',
   },
   sectionHeader: {
-    paddingTop: 22,
+    paddingTop: 36,
     paddingLeft: 15,
-    paddingRight: 10,
     paddingBottom: 6,
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: 'bold',
     backgroundColor: '#EFEFF4',
     color: '#6D6D72',
+    textTransform: 'uppercase',
   },
   itemContainer: {
     backgroundColor: '#FFFFFF',
-    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingLeft: 15,
-    paddingRight: 10,
+    flexDirection: 'row',
+    paddingHorizontal: 15,
     height: 44,
   },
   itemTitle: {
     fontSize: 16,
+    color: '#000000',
   },
   actionText: {
     color: '#007AFF',
     fontSize: 16,
   },
   separator: {
+    backgroundColor: '#C6C7C8',
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#C8C7CC',
     marginLeft: 15,
   },
 });
