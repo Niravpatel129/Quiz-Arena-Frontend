@@ -82,7 +82,8 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-web": "~0.19.6",
     "recyclerlistview": "^4.2.0",
-    "socket.io-client": "^4.7.2"
+    "socket.io-client": "^4.7.2",
+    "expo-mail-composer": "~12.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

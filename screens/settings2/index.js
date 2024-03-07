@@ -1,9 +1,13 @@
 import { FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import Constants from 'expo-constants';
+import * as MailComposer from 'expo-mail-composer';
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Linking,
+  Platform,
   SafeAreaView,
   SectionList,
   Share,
@@ -13,8 +17,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
+import { newRequest } from '../../api/newRequest';
+import { useAuth } from '../../context/auth/AuthContext';
 
-export default function SettingsPage({ navigation }) {
+export default function SettingsPage() {
+  const auth = useAuth();
+  const navigation = useNavigation();
+
   const [settings, setSettings] = useState({
     volume: 50,
     muteFx: false,
@@ -34,6 +44,27 @@ export default function SettingsPage({ navigation }) {
       }
     } catch (error) {
       console.log('Failed to load the settings.', error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await newRequest.delete('/users');
+
+      auth.signOut();
+
+      Toast.show({
+        type: 'success',
+        position: 'bottom',
+        text1: 'Account Deleted',
+        text2: 'Logging out...',
+        visibilityTime: 3000,
+        autoHide: true,
+      });
+
+      //   logout user
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -82,15 +113,66 @@ export default function SettingsPage({ navigation }) {
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Delete',
-        onPress: () => console.log('Delete Account Pressed'),
+        onPress: () => handleDelete(),
         style: 'destructive',
       },
     ]);
   };
 
-  const reportBug = () => {
+  const reportBug = async () => {
     console.log('Report Bug Pressed');
-    // Placeholder for bug report functionality
+
+    const deviceModel = Constants.deviceName; // Get the device model
+    const osName = Platform.OS; // Get the OS name (e.g., ios, android)
+    const osVersion = Platform.Version; // Get the OS version
+    const appVersion = Constants.manifest.version; // Get the app version from the app manifest
+
+    // Create the email subject
+    const subject = `Bug Report - ${new Date().toLocaleDateString()}`;
+
+    // Create a detailed email body
+    const body = `
+Dear Support Team,
+
+I've encountered a bug while using your app and would like to report it for further investigation. Here are some details that might help you in diagnosing the issue:
+
+- **Bug Description**: [Please describe the bug in detail, including what you were trying to do when the bug occurred and any specific error messages you saw.]
+
+- **Steps to Reproduce**: [Provide steps to reproduce the bug, if possible.]
+
+- **Expected Behavior**: [Describe what you expected to happen.]
+
+- **Actual Behavior**: [Describe what actually happened.]
+
+- **Device Information**:
+  - Model: ${deviceModel}
+  - Operating System: ${osName}
+  - OS Version: ${osVersion}
+  - App Version: ${appVersion}
+
+Please let me know if you need any further information from my end.
+
+Best regards,
+[Your Name]
+`;
+
+    // Check if the MailComposer can send mail
+    const isAvailable = await MailComposer.isAvailableAsync();
+    if (isAvailable) {
+      MailComposer.composeAsync({
+        recipients: ['playquizarena@gmail.com'],
+        subject: subject,
+        body: body,
+      })
+        .then(() => {
+          console.log('Email composer opened');
+        })
+        .catch((error) => {
+          console.error('Error opening email composer: ', error);
+        });
+    } else {
+      console.log('Email is not setup on this device');
+    }
   };
 
   const DATA = [
@@ -147,21 +229,25 @@ export default function SettingsPage({ navigation }) {
         {
           key: 'instagram',
           title: 'Instagram',
+          action: () => Linking.openURL('https://www.instagram.com/quizarena_app/?hl=en'),
           icon: <Ionicons name='logo-instagram' size={20} color='#E1306C' />,
         },
         {
           key: 'tiktok',
           title: 'TikTok',
+          action: () => Linking.openURL('https://www.tiktok.com/@officialquizarena?lang=en'),
           icon: <FontAwesome5 name='tiktok' size={20} color='#000000' />,
         },
         {
           key: 'discord',
           title: 'Discord',
+          action: () => Linking.openURL('https://discord.gg/fEAkejAWKE'),
           icon: <MaterialCommunityIcons name='discord' size={23} color='#7289da' />,
         },
         {
           key: 'reddit',
           title: 'Reddit',
+          action: () => Linking.openURL('https://www.reddit.com/r/quizarena/'),
           icon: <Ionicons name='logo-reddit' size={20} color='#FF4500' />,
         },
       ],
