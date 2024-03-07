@@ -119,17 +119,6 @@ export default function SettingsPage({ navigation }) {
       ],
     },
     {
-      title: 'Account',
-      data: [
-        {
-          key: 'deleteAccount',
-          title: 'Delete Account',
-          action: deleteAccount,
-          icon: <Ionicons name='ios-trash-outline' size={20} color='#FF3B30' />,
-        },
-      ],
-    },
-    {
       title: 'Socials',
       data: [
         {
@@ -151,6 +140,17 @@ export default function SettingsPage({ navigation }) {
           key: 'reddit',
           title: 'Reddit',
           icon: <Ionicons name='logo-reddit' size={20} color='#FF4500' />,
+        },
+      ],
+    },
+    {
+      title: 'Account',
+      data: [
+        {
+          key: 'deleteAccount',
+          title: 'Delete Account',
+          action: deleteAccount,
+          icon: <Ionicons name='ios-trash-outline' size={20} color='#FF3B30' />,
         },
       ],
     },

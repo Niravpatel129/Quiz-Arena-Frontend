@@ -14,12 +14,14 @@ import Animated, {
 import { RFValue } from 'react-native-responsive-fontsize';
 import { newRequest } from '../../api/newRequest';
 import formatLastActive from '../../helpers/formatLastActive';
+import { useImagePicker } from '../../hooks/useImagePicker';
 
 export default function Profile2({ userId }) {
   const [userData, setUserData] = useState(null);
   const navigation = useNavigation();
   const opacity = useSharedValue(0);
   const translateY = useSharedValue(30);
+  const { imageUri, pickAndUploadImage } = useImagePicker();
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -209,28 +211,37 @@ export default function Profile2({ userId }) {
               <Ionicons name='ios-cog' size={24} color='#262625' />
             </TouchableOpacity>
           )} */}
-          <Animated.View
-            style={[
-              animatedStyle,
-              {
-                alignItems: 'center',
-                justifyContent: 'center',
-              },
-            ]}
+          <TouchableOpacity
+            onPress={() => {
+              if (userId) return;
+              pickAndUploadImage();
+            }}
           >
-            <Image
-              style={{
-                width: 140,
-                height: 140,
-                borderRadius: 150,
-              }}
-              source={{
-                uri:
-                  userData?.avatar ||
-                  'https://thumbs.dreamstime.com/b/astronaut-cat-wearing-space-suit-elements-image-furnished-nasa-first-trip-to-space-mixed-media-167670791.jpg',
-              }}
-            ></Image>
-          </Animated.View>
+            <Animated.View
+              style={[
+                animatedStyle,
+                {
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  width: 140,
+                  height: 140,
+                  borderRadius: 150,
+                }}
+                source={{
+                  uri:
+                    imageUri ||
+                    userData?.avatar ||
+                    'https://thumbs.dreamstime.com/b/astronaut-cat-wearing-space-suit-elements-image-furnished-nasa-first-trip-to-space-mixed-media-167670791.jpg',
+                }}
+              ></Image>
+            </Animated.View>
+          </TouchableOpacity>
+
           <View
             style={{
               textAlign: 'center',
