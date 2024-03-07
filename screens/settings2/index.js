@@ -3,8 +3,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
+  Linking,
   SafeAreaView,
   SectionList,
+  Share,
   StyleSheet,
   Switch,
   Text,
@@ -33,6 +35,27 @@ export default function SettingsPage({ navigation }) {
     } catch (error) {
       console.log('Failed to load the settings.', error);
     }
+  };
+
+  const rateApp = () => {
+    const iosAppId = 'id6474947179';
+    const androidAppPackage = 'com.niravpatelp129.QuizArenaFrontendScaffold';
+
+    const iosUrl = `itms-apps://itunes.apple.com/app/${iosAppId}`;
+    const androidUrl = `market://details?id=${androidAppPackage}`;
+
+    const url = Platform.OS === 'ios' ? iosUrl : androidUrl;
+
+    Linking.openURL(url).catch((err) => console.error('An error occurred', err));
+  };
+
+  const shareApp = () => {
+    const message = `Check out Quiz Arena on ios app store or google play store!!`;
+    Share.share({
+      message,
+      url: 'http://quizarena.gg',
+      title: 'Share App',
+    }).catch((err) => console.error('An error occurred', err));
   };
 
   const handleToggle = (setting) => {
@@ -96,13 +119,13 @@ export default function SettingsPage({ navigation }) {
         {
           key: 'rateApp',
           title: 'Rate App',
-          action: () => {}, // Placeholder function for demo
+          action: rateApp, // Placeholder function for demo
           icon: <Ionicons name='ios-star-outline' size={20} color='#007AFF' />,
         },
         {
           key: 'shareApp',
           title: 'Share App',
-          action: () => {}, // Placeholder function for demo
+          action: shareApp, // Placeholder function for demo
           icon: <Ionicons name='ios-share-outline' size={20} color='#007AFF' />,
         },
       ],
