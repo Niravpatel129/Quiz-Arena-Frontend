@@ -12,6 +12,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { RFValue } from 'react-native-responsive-fontsize';
+import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
 import formatLastActive from '../../helpers/formatLastActive';
 import { useImagePicker } from '../../hooks/useImagePicker';
@@ -192,7 +193,25 @@ export default function Profile2({ userId }) {
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         onSave={(newUsername) => {
-          setNewUsername(newUsername);
+          try {
+            setNewUsername(newUsername);
+            newRequest.put(`/users`, {
+              username: newUsername,
+            });
+
+            Toast.show({
+              type: 'success',
+              text1: 'Success',
+              text2: 'Username updated successfully',
+            });
+          } catch (e) {
+            Toast.show({
+              type: 'error',
+              text1: 'Error',
+              text2: 'An error occurred while updating your username',
+            });
+            console.log(e);
+          }
         }}
       />
 

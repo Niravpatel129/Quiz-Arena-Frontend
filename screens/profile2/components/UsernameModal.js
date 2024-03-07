@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal, StyleSheet, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 
-const UsernameModal = ({ visible, onClose, onSave }) => {
-  const [newUsername, setNewUsername] = useState('');
+const UsernameModal = ({ visible, onClose, onSave, defaultUsername }) => {
+  const [newUsername, setNewUsername] = useState(defaultUsername);
 
   const handleSave = () => {
     onSave(newUsername);
@@ -16,6 +16,7 @@ const UsernameModal = ({ visible, onClose, onSave }) => {
           <TouchableWithoutFeedback onPress={() => {}}>
             <View style={styles.modalView}>
               <TextInput
+                maxLength={8}
                 style={styles.modalTextInput}
                 placeholder='Enter new username'
                 value={newUsername}
