@@ -1,9 +1,16 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from 'expo-av';
 import React, { createContext, useEffect, useState } from 'react';
 
 export const SoundContext = createContext();
 
 export const SoundProvider = ({ children }) => {
+  const [soundSettings, setSoundSettings] = useState({
+    muteFx: false, // Assuming this controls sound effects
+    muteMusic: false, // Assuming this controls background music
+    volume: 50, // Assuming volume is a value between 0-100
+  });
+
   const [buttonPressSound, setButtonPressSound] = useState(null);
   const [correctAnswerSound, setCorrectAnswerSound] = useState(null);
   const [soloCorrectSound, setSoloCorrectSound] = useState(null);
@@ -17,6 +24,11 @@ export const SoundProvider = ({ children }) => {
   const [gameLose, setGameLose] = useState(null);
   const [wrong, setWrong] = useState(null);
   const [click, setClick] = useState(null);
+
+  useEffect(() => {
+    loadSettingsAndSounds();
+    return () => {};
+  }, []);
 
   useEffect(() => {
     loadSounds();
@@ -121,60 +133,67 @@ export const SoundProvider = ({ children }) => {
   };
 
   const playSound = async (soundType) => {
-    if (soundType === 'button_press' && buttonPressSound) {
-      await buttonPressSound.replayAsync();
+    const isMusicMuted = soundSettings?.muteMusic || false;
+    const isFxMuted = soundSettings?.muteFx || false;
+
+    if (!isMusicMuted) {
+      if (soundType === 'in_game' && inGameSound) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await inGameSound.setVolumeAsync(0.5, { durationMillis: 2000 });
+        await inGameSound.replayAsync();
+      }
     }
 
-    if (soundType === 'correct_answer' && correctAnswerSound) {
-      await correctAnswerSound.replayAsync();
-    }
+    if (!isFxMuted) {
+      if (soundType === 'button_press' && buttonPressSound) {
+        await buttonPressSound.replayAsync();
+      }
 
-    if (soundType === 'solo_correct' && soloCorrectSound) {
-      await soloCorrectSound.replayAsync();
-    }
+      if (soundType === 'correct_answer' && correctAnswerSound) {
+        await correctAnswerSound.replayAsync();
+      }
 
-    if (soundType === 'keyboard_press' && keyboardPressSound) {
-      await keyboardPressSound.replayAsync();
-    }
+      if (soundType === 'solo_correct' && soloCorrectSound) {
+        await soloCorrectSound.replayAsync();
+      }
 
-    if (soundType === 'solo_fail' && soloFailSound) {
-      await soloFailSound.replayAsync();
-    }
+      if (soundType === 'keyboard_press' && keyboardPressSound) {
+        await keyboardPressSound.replayAsync();
+      }
 
-    if (soundType === 'fast' && fastSound) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      if (soundType === 'solo_fail' && soloFailSound) {
+        await soloFailSound.replayAsync();
+      }
 
-      await fastSound.replayAsync();
-    }
+      if (soundType === 'fast' && fastSound) {
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
-    if (soundType === 'chop' && chopSound) {
-      await chopSound.replayAsync();
-    }
+        await fastSound.replayAsync();
+      }
 
-    if (soundType === 'in_game' && inGameSound) {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      await inGameSound.setVolumeAsync(0.5, { durationMillis: 2000 });
-      await inGameSound.replayAsync();
-    }
+      if (soundType === 'chop' && chopSound) {
+        await chopSound.replayAsync();
+      }
 
-    if (soundType === 'vs' && vsSound) {
-      await vsSound.replayAsync();
-    }
+      if (soundType === 'vs' && vsSound) {
+        await vsSound.replayAsync();
+      }
 
-    if (soundType === 'game_win' && gameWin) {
-      await gameWin.replayAsync();
-    }
+      if (soundType === 'game_win' && gameWin) {
+        await gameWin.replayAsync();
+      }
 
-    if (soundType === 'game_lose' && gameLose) {
-      await gameLose.replayAsync();
-    }
+      if (soundType === 'game_lose' && gameLose) {
+        await gameLose.replayAsync();
+      }
 
-    if (soundType === 'click' && click) {
-      await click.replayAsync();
-    }
+      if (soundType === 'click' && click) {
+        await click.replayAsync();
+      }
 
-    if (soundType === 'wrong' && wrong) {
-      await wrong.replayAsync();
+      if (soundType === 'wrong' && wrong) {
+        await wrong.replayAsync();
+      }
     }
   };
 
@@ -202,11 +221,25 @@ export const SoundProvider = ({ children }) => {
     }
   };
 
+  const loadSettingsAndSounds = async () => {
+    try {
+      // Load settings from AsyncStorage
+      const savedSettings = await AsyncStorage.getItem('settings');
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        setSoundSettings(settings); // Apply the loaded settings
+      }
+    } catch (error) {
+      console.log('Failed to load settings.', error);
+    }
+
+    // Then load sounds
+    loadSounds();
+  };
+
   return <SoundContext.Provider value={{ playSound, stopSound }}>{children}</SoundContext.Provider>;
 };
 
 export const useSound = () => {
   return React.useContext(SoundContext);
 };
-
-// play woosh sound without the hook useSound

@@ -23,7 +23,6 @@ import { SocketProvider } from './context/socket/SocketContext';
 import { SoundProvider } from './context/sound/SoundContext';
 import { TrackingProvider } from './context/tracking/TrackingContext';
 import { UpdateProvider } from './context/update/UpdateContext';
-import ProfileEditScreen from './screens';
 import CategoriesListView from './screens/categoriesListView';
 import CategoryScreen2 from './screens/categoryScreen2';
 import ChallengeScreen from './screens/challenge';
@@ -44,6 +43,7 @@ import Profile2 from './screens/profile2';
 import PublicProfile from './screens/publicProfile';
 import QueueScreen2 from './screens/queuescreen2';
 import Royale from './screens/royale';
+import SettingsPage from './screens/settings2';
 import SignUpLogin from './screens/signuplogin';
 
 Sentry.init({
@@ -203,11 +203,7 @@ function App() {
           headerShadowVisible: false,
         }}
       >
-        {/* <Tab.Screen
-          name='dev'
-          component={TriviaRoyaleWaitingRoom}
-          options={{ headerShown: false }}
-        /> */}
+        {/* <Tab.Screen name='dev' component={Settings2} options={{ headerShown: false }} /> */}
 
         <Stack.Screen
           name='Login2'
@@ -263,8 +259,8 @@ function App() {
 
         <Stack.Screen
           name='ProfileEdit'
-          component={ProfileEditScreen}
-          options={{ title: 'Profile Edit', headerShown: true }}
+          component={SettingsPage}
+          options={{ title: 'Profile Edit', headerShown: false }}
         />
         <Stack.Screen
           name='GameOver'
