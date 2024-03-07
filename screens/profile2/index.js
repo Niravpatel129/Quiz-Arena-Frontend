@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import Animated, {
   Easing,
@@ -15,6 +15,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { newRequest } from '../../api/newRequest';
 import formatLastActive from '../../helpers/formatLastActive';
 import { useImagePicker } from '../../hooks/useImagePicker';
+import UsernameModal from './components/UsernameModal';
 
 export default function Profile2({ userId }) {
   const [userData, setUserData] = useState(null);
@@ -22,6 +23,8 @@ export default function Profile2({ userId }) {
   const opacity = useSharedValue(0);
   const translateY = useSharedValue(30);
   const { imageUri, pickAndUploadImage } = useImagePicker();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newUsername, setNewUsername] = useState(userData?.username);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -184,6 +187,15 @@ export default function Profile2({ userId }) {
         backgroundColor: 'white',
       }}
     >
+      <UsernameModal
+        defaultUsername={userData?.username}
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSave={(newUsername) => {
+          setNewUsername(newUsername);
+        }}
+      />
+
       <SafeAreaView>
         {userId && (
           <TouchableOpacity
@@ -252,15 +264,22 @@ export default function Profile2({ userId }) {
               marginTop: 10,
             }}
           >
-            <Text
-              style={{
-                color: '#262625',
-                fontSize: 24,
-                fontFamily: 'poppins-regular',
+            <TouchableOpacity
+              onPress={() => {
+                if (userId) return;
+                setModalVisible(true);
               }}
             >
-              {userData?.username}
-            </Text>
+              <Text
+                style={{
+                  color: '#262625',
+                  fontSize: 24,
+                  fontFamily: 'poppins-regular',
+                }}
+              >
+                {newUsername || userData?.username}
+              </Text>
+            </TouchableOpacity>
             {userData?.country && <CountryFlag isoCode={userData?.country} size={20} />}
           </View>
           <Text
@@ -397,3 +416,34 @@ export default function Profile2({ userId }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTextInput: {
+    height: 40,
+    width: 200,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+});
