@@ -200,7 +200,7 @@ export default function Profile2({ userId }) {
             marginHorizontal: 10,
           }}
         >
-          {!userId && (
+          {/* {!userId && (
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('ProfileEdit');
@@ -208,7 +208,7 @@ export default function Profile2({ userId }) {
             >
               <Ionicons name='ios-cog' size={24} color='#262625' />
             </TouchableOpacity>
-          )}
+          )} */}
           <Animated.View
             style={[
               animatedStyle,

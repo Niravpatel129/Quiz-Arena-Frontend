@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Octicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -49,13 +49,25 @@ export default function CustomHeader2(props) {
                 Quiz Arena
               </Text>
             </TouchableOpacity>
-            <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: 20,
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.push('ProfileEdit');
+                }}
+              >
+                <Octicons name='gear' size={20} color='white' />
+              </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   navigation.push('Notifications');
                 }}
               >
-                <Ionicons name='notifications-outline' size={24} color='white' />
+                <Octicons name='bell' size={20} color='white' />
               </TouchableOpacity>
             </View>
           </View>
