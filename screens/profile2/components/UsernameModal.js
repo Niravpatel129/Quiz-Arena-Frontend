@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal, StyleSheet, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 
-const UsernameModal = ({ visible, onClose, onSave, defaultUsername }) => {
-  const [newUsername, setNewUsername] = useState(defaultUsername);
+const UsernameModal = ({ visible, onClose, onSave }) => {
+  const [newUsername, setNewUsername] = useState('');
 
   const handleSave = () => {
     onSave(newUsername);
@@ -20,8 +20,12 @@ const UsernameModal = ({ visible, onClose, onSave, defaultUsername }) => {
                 placeholder='Enter new username'
                 value={newUsername}
                 onChangeText={setNewUsername}
+                placeholderTextColor='#C7C7CD' // iOS-style placeholder text color
               />
-              <Button title='Save' onPress={handleSave} />
+              <View style={styles.buttonContainer}>
+                <Button title='Save' onPress={handleSave} color='#007AFF' />
+                {/* iOS-style button color */}
+              </View>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -35,13 +39,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Add a semi-transparent background
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Semi-transparent background
   },
   modalView: {
     margin: 20,
     backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: 14, // iOS-style border radius
+    padding: 20,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -49,15 +53,21 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowRadius: 3.84,
     elevation: 5,
   },
   modalTextInput: {
     height: 40,
-    width: 200,
+    width: 250, // Slightly wider to match iOS style
     margin: 12,
-    borderWidth: 1,
+    borderBottomWidth: 1, // iOS-style underline text input
+    borderColor: '#C7C7CD', // iOS-style border color
     padding: 10,
+  },
+  buttonContainer: {
+    marginTop: 10,
+    width: '100%', // Ensure the button is full-width
+    borderRadius: 14, // iOS-style border radius for buttons
   },
 });
 
