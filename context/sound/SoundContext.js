@@ -237,7 +237,11 @@ export const SoundProvider = ({ children }) => {
     loadSounds();
   };
 
-  return <SoundContext.Provider value={{ playSound, stopSound }}>{children}</SoundContext.Provider>;
+  return (
+    <SoundContext.Provider value={{ playSound, stopSound, setSoundSettings }}>
+      {children}
+    </SoundContext.Provider>
+  );
 };
 
 export const useSound = () => {

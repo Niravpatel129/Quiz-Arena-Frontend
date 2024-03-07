@@ -20,9 +20,11 @@ import {
 import Toast from 'react-native-toast-message';
 import { newRequest } from '../../api/newRequest';
 import { useAuth } from '../../context/auth/AuthContext';
+import { useSound } from '../../context/sound/SoundContext';
 
 export default function SettingsPage() {
   const auth = useAuth();
+  const { soundSettings, setSoundSettings } = useSound();
   const navigation = useNavigation();
 
   const [settings, setSettings] = useState({
@@ -96,6 +98,14 @@ export default function SettingsPage() {
         [setting]: !prevSettings[setting],
       };
       saveSettings(newSettings);
+      return newSettings;
+    });
+
+    setSoundSettings((prevSettings) => {
+      const newSettings = {
+        ...prevSettings,
+        [setting]: !prevSettings[setting],
+      };
       return newSettings;
     });
   };

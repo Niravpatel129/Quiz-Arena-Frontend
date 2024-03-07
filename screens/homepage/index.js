@@ -37,7 +37,7 @@ export default function Homepage() {
       setConfig(res.data);
       console.log('🚀  res:', res.data);
 
-      if (true || res.data?.updatedRequired) {
+      if (res.data?.updatedRequired) {
         Toast.show({
           type: 'info',
           position: 'bottom',
