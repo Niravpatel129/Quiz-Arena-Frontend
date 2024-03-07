@@ -146,24 +146,16 @@ Dear Support Team,
 
 I've encountered a bug while using your app and would like to report it for further investigation. Here are some details that might help you in diagnosing the issue:
 
-- **Bug Description**: [Please describe the bug in detail, including what you were trying to do when the bug occurred and any specific error messages you saw.]
+- Bug Description: 
 
-- **Steps to Reproduce**: [Provide steps to reproduce the bug, if possible.]
+- Steps to Reproduce: 
 
-- **Expected Behavior**: [Describe what you expected to happen.]
 
-- **Actual Behavior**: [Describe what actually happened.]
-
-- **Device Information**:
+- Device Information**:
   - Model: ${deviceModel}
   - Operating System: ${osName}
   - OS Version: ${osVersion}
   - App Version: ${appVersion}
-
-Please let me know if you need any further information from my end.
-
-Best regards,
-[Your Name]
 `;
 
     // Check if the MailComposer can send mail
