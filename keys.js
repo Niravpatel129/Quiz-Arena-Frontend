@@ -1,4 +1,4 @@
 export const keys = {
-  cloudinary: 997981818793491,
+  cloudinary: process.env.EXPO_CLOUDINARY_KEY,
   version: '62',
 };
