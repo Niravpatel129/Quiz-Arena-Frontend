@@ -44,7 +44,7 @@ const upload = async (fileUri) => {
 
   const data = new FormData();
   data.append('file', dataURL);
-  data.append('upload_preset', 'gamercoach');
+  data.append('upload_preset', 'elo_mastery');
 
   try {
     const response = await axios.post(uploadUrl, data, {
