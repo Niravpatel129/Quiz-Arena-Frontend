@@ -22,6 +22,7 @@ export default function SocialsList() {
 
   useEffect(() => {
     const getContacts = async () => {
+      return;
       try {
         // Ask for permission to query contacts.
 
