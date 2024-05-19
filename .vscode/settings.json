@@ -1,8 +1,1 @@
-{
-  // blue theme
-  // set status bar color theme
-  "workbench.colorCustomizations": {
-    "statusBar.background": "#0033ff",
-    "statusBar.foreground": "#ffffff"
-  }
-}
+{}
