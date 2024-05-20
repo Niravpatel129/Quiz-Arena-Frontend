@@ -70,12 +70,6 @@
           "isAutoInitEnabled": true
         }
       ],
-      [
-        "expo-contacts",
-        {
-          "contactsPermission": "Allow $(PRODUCT_NAME) to sync friends with your contacts."
-        }
-      ],
       ["react-native-appsflyer", {}],
       [
         "expo-tracking-transparency",

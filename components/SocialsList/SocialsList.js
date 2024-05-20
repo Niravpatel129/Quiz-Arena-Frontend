@@ -79,6 +79,7 @@ export default function SocialsList() {
 
   const sendAllEmailsToBackend = async () => {
     try {
+      return;
       const response = await newRequest.post('/users/sync-contacts', {
         contacts: friends.filter((friend) => friend.email).map((friend) => friend.email),
       });
