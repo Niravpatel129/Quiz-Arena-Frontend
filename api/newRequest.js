@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const IS_PRODUCTION = process.env.EXPO_PUBLIC_PROD_BACKEND || process.env.NODE_ENV === 'production';
+const IS_PRODUCTION = true
 
 export const newRequest = axios.create({
   baseURL: IS_PRODUCTION
