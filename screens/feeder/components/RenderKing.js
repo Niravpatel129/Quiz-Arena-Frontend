@@ -95,7 +95,7 @@ export default function RenderKing({ currentFeederKing }) {
                 style={{
                   marginLeft: 6,
                 }}
-                isoCode={previousFeederKing.userDetails.profile.country}
+                isoCode={previousFeederKing.userDetails.profile?.country || 'na'} 
                 size={13}
               />
             </Text>
