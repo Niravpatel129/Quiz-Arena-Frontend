@@ -125,52 +125,65 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
     }
 
     return (
-      <CustomButton
-        title={answer.optionText}
-        variant={buttonVariant}
-        setIsSelected={() => {
-          setIsSelected({ [answer.optionText]: true });
-        }}
-        isSelected={isSelected[answer.optionText]}
-        onPress={() => {
-          setUserSelected(answer.optionText);
-        }}
-      >
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '100%',
+      <View style={{ width: '48%', marginBottom: 10, marginHorizontal: '1%' }}>
+        <CustomButton
+          title={answer.optionText}
+          variant={buttonVariant}
+          setIsSelected={() => {
+            setIsSelected({ [answer.optionText]: true });
+          }}
+          isSelected={isSelected[answer.optionText]}
+          onPress={() => {
+            setUserSelected(answer.optionText);
           }}
         >
-          <Text
-            style={{
-              color: textColor,
-              fontSize: RFValue(16),
-              fontWeight: 'bold',
-              fontFamily: 'poppins-regular',
-            }}
+          <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            width: '100%',
+            height: 70, 
+            paddingHorizontal: 10, 
+            textAlign: 'center',
+            position: 'relative',
+          }}
           >
-            {answer.optionText}
-          </Text>
-          {gameState === 'answer-submitted' && (
             <Text
               style={{
                 color: textColor,
                 fontSize: RFValue(16),
                 fontWeight: 'bold',
                 fontFamily: 'poppins-regular',
+                textAlign: 'center',
+                flexShrink: 1,
+                flexWrap: 'wrap',
               }}
             >
-              {answer.pickPercentage}
+              {answer.optionText}
             </Text>
-          )}
-        </View>
-      </CustomButton>
+            {gameState === 'answer-submitted' && (
+              <Text
+                style={{
+                  position: 'absolute',
+                  top: 5,
+                  right: 5,
+                  color: textColor,
+                  fontSize: RFValue(16),
+                  fontWeight: 'bold',
+                  fontFamily: 'poppins-regular',
+                  marginLeft: 5,
+                }}
+              >
+                {answer.pickPercentage}
+              </Text>
+            )}
+          </View>
+        </CustomButton>
+      </View>
     );
   };
-
+  
   return (
     <View
       style={{
@@ -178,17 +191,28 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
         alignItems: 'center',
         width: '100%',
         marginBottom: 20,
-        gap: 10,
       }}
     >
-      {shuffledAnswers.map((answer, index) => {
-        return <React.Fragment key={index}>{renderAnswersBody({ answer })}</React.Fragment>;
-      })}
+      <View
+        style={{
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          width: '100%',
+        }}
+      >
+        {shuffledAnswers.map((answer, index) => (
+          <React.Fragment key={index}>{renderAnswersBody({ answer })}</React.Fragment>
+        ))}
+      </View>
+  
+      {/* Continue Button */}
       <View
         style={{
           width: '100%',
           justifyContent: 'center',
           alignItems: 'center',
+          marginTop: 20,
         }}
       >
         <CustomButton
