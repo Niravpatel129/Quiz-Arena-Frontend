@@ -125,7 +125,7 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
     }
 
     return (
-      <View style={{ width: '48%', marginBottom: 10, marginHorizontal: '1%' }}>
+      <View style={{ width: '48%', marginBottom: 10, marginHorizontal: '1%', position: 'relative' }}>
         <CustomButton
           title={answer.optionText}
           variant={buttonVariant}
@@ -138,16 +138,16 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
           }}
         >
           <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center', 
-            alignItems: 'center', 
-            width: '100%',
-            height: 70, 
-            paddingHorizontal: 10, 
-            textAlign: 'center',
-            position: 'relative',
-          }}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              width: '100%',
+              height: 70, 
+              paddingHorizontal: 10,
+              textAlign: 'center',
+              position: 'relative',
+            }}
           >
             <Text
               style={{
@@ -162,24 +162,35 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
             >
               {answer.optionText}
             </Text>
-            {gameState === 'answer-submitted' && (
-              <Text
-                style={{
-                  position: 'absolute',
-                  top: 5,
-                  right: 5,
-                  color: textColor,
-                  fontSize: RFValue(16),
-                  fontWeight: 'bold',
-                  fontFamily: 'poppins-regular',
-                  marginLeft: 5,
-                }}
-              >
-                {answer.pickPercentage}
-              </Text>
-            )}
           </View>
         </CustomButton>
+        {gameState === 'answer-submitted' && (
+          <View
+            style={{
+              position: 'absolute',
+              top: -10,
+              right: -10,
+              width: 40, 
+              height: 40, 
+              backgroundColor: 'gold', 
+              transform: [{ rotate: '45deg' }], 
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 1,
+            }}
+          >
+            <Text
+              style={{
+                color: 'white',
+                fontSize: RFValue(12),
+                fontWeight: 'bold',
+                transform: [{ rotate: '-45deg' }], 
+              }}
+            >
+              {answer.pickPercentage}
+            </Text>
+          </View>
+        )}
       </View>
     );
   };
