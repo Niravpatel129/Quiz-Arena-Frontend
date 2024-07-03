@@ -64,7 +64,7 @@ export default function MainGame({
           height: 50,
         }}
       >
-        <QuestionHeader score={score} question={question} categoryName={categoryName} />
+        <QuestionHeader score={score +1} question={question} categoryName={categoryName} />
       </View>
       <QuestionBody question={question} />
       <View>
