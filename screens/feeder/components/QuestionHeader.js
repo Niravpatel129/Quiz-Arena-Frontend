@@ -56,6 +56,7 @@ const QuestionHeader = ({ score }) => {
         style={{
           fontSize: 18,
           textAlign: 'center',
+          color: 'white',
         }}
       >
         Question No. {score}

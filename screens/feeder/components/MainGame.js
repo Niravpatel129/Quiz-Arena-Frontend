@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { ImageBackground, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import AnswersBody from './AnswersBody';
 import QuestionBody from './QuestionBody';
