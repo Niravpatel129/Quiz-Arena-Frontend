@@ -3,12 +3,14 @@ import { Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useSound } from '../../../context/sound/SoundContext';
 import CustomButton from './CustomButton';
+import AnswerResultModal from './AnswerResultModal';
 
 const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, setTimer }) => {
   const [userSelected, setUserSelected] = React.useState(null);
   const [gameState, setGameState] = React.useState('active');
   const [isSelected, setIsSelected] = React.useState({});
   const [wasCorrect, setWasCorrect] = React.useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false);
   const soundContext = useSound();
 
   const [timerStarted, setTimerStarted] = React.useState(false);
@@ -31,10 +33,8 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
 
   useEffect(() => {
     if (timer >= 110) {
-      // setGameOver(true);
+      setGameOver(true);
       setGameState('answer-submitted');
-      console.log('🚀  game over');
-      // stop the timer
       clearInterval(myInterval);
     }
   }, [timer]);
@@ -59,69 +59,44 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
     };
   }, [question]);
 
-  const handleContinueGame = () => {
-    // check if we have a selected answer
-    if (!userSelected && gameState === 'active') return;
+  const handleAnswerSelection = (answer) => {
+    setUserSelected(answer.optionText);
+    const wasUserCorrect = answer.isCorrect;
 
+    setWasCorrect(wasUserCorrect);
+    setModalVisible(true);
     clearInterval(myInterval);
 
-    let wasUserCorrect =
-      question.answers.find((answer) => answer.isCorrect).optionText === userSelected;
-    setWasCorrect(wasUserCorrect);
-
-    if (wasUserCorrect && gameState === 'active') {
+    if (wasUserCorrect) {
       soundContext.playSound('solo_correct');
-    }
-
-    if (wasUserCorrect === false && gameState === 'active') {
+      onAnswer(answer.optionText);
+    } else {
       soundContext.playSound('solo_fail');
-    }
-
-    if (gameState === 'active') {
-      // submit answer
-      onAnswer(userSelected);
-      setGameState('answer-submitted');
-    }
-
-    if (gameState === 'answer-submitted') {
-      if (!wasCorrect) setGameOver(true);
-
-      // restart game
-      continueGame();
-      setGameState('active');
     }
   };
 
-  React.useEffect(() => {
-    setUserSelected(null);
-  }, [question]);
+  const handleContinue = () => {
+    setModalVisible(false);
+    continueGame();
+  };
+
+  const handleTryAgain = () => {
+    setModalVisible(false);
+    setGameOver(true);
+  };
 
   const renderAnswersBody = ({ answer }) => {
     let textColor = 'black';
-    const didUserPickCorrectAnswer = answer.isCorrect && userSelected === answer.optionText;
     let buttonVariant = 'alternative';
-    // gameState === 'active' ? 'alternative' : didUserPickCorrectAnswer ? 'default' : 'alternative';
 
-    if (gameState === 'active') {
-      buttonVariant = 'alternative';
-    }
-
-    if (
-      gameState === 'answer-submitted' &&
-      answer.isCorrect &&
-      userSelected === answer.optionText
-    ) {
-      textColor = 'white';
-      buttonVariant = 'default';
-    }
-
-    if (
-      gameState === 'answer-submitted' &&
-      userSelected === answer.optionText &&
-      !answer.isCorrect
-    ) {
-      textColor = 'white';
-      buttonVariant = 'danger';
+    if (userSelected === answer.optionText) {
+      if (answer.isCorrect) {
+        buttonVariant = 'default';
+        textColor = 'white';
+      } else {
+        buttonVariant = 'danger';
+        textColor = 'white';
+      }
     }
 
     return (
@@ -133,17 +108,16 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
             setIsSelected({ [answer.optionText]: true });
           }}
           isSelected={isSelected[answer.optionText]}
-          onPress={() => {
-            setUserSelected(answer.optionText);
-          }}
+          onPress={() => handleAnswerSelection(answer)}
+          disabled={userSelected !== null} // Disable button after selection
         >
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'center', 
-              alignItems: 'center', 
+              justifyContent: 'center',
+              alignItems: 'center',
               width: '100%',
-              height: 70, 
+              height: 70,
               paddingHorizontal: 10,
               textAlign: 'center',
               position: 'relative',
@@ -164,37 +138,10 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
             </Text>
           </View>
         </CustomButton>
-        {gameState === 'answer-submitted' && (
-          <View
-            style={{
-              position: 'absolute',
-              top: -10,
-              right: -10,
-              width: 40, 
-              height: 40, 
-              backgroundColor: 'gold', 
-              transform: [{ rotate: '45deg' }], 
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: 1,
-            }}
-          >
-            <Text
-              style={{
-                color: 'white',
-                fontSize: RFValue(12),
-                fontWeight: 'bold',
-                transform: [{ rotate: '-45deg' }], 
-              }}
-            >
-              {answer.pickPercentage}
-            </Text>
-          </View>
-        )}
       </View>
     );
   };
-  
+
   return (
     <View
       style={{
@@ -216,42 +163,12 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
           <React.Fragment key={index}>{renderAnswersBody({ answer })}</React.Fragment>
         ))}
       </View>
-  
-      {/* Continue Button */}
-      <View
-        style={{
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 20,
-        }}
-      >
-        <CustomButton
-          variant={
-            {
-              active: 'customPink',
-              'answer-submitted': 'default',
-            }[gameState]
-          }
-          onPress={() => handleContinueGame()}
-        >
-          <Text
-            style={{
-              color: 'white',
-              fontSize: RFValue(16),
-              fontWeight: 'bold',
-              fontFamily: 'poppins-regular',
-            }}
-          >
-            {
-              {
-                active: 'Submit Answer',
-                'answer-submitted': wasCorrect ? 'Continue' : 'Try Again',
-              }[gameState]
-            }
-          </Text>
-        </CustomButton>
-      </View>
+      <AnswerResultModal
+        visible={modalVisible}
+        isCorrect={wasCorrect}
+        onContinue={handleContinue}
+        onTryAgain={handleTryAgain}
+      />
     </View>
   );
 };
