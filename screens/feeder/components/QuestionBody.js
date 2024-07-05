@@ -17,7 +17,7 @@ const QuestionBody = ({ question }) => {
           fontWeight: 'bold',
           fontFamily: 'poppins-regular',
           textAlign: 'center',
-          color: 'white',
+          color: 'black',
         }}
       >
         {question.question}
