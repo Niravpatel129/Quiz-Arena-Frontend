@@ -79,8 +79,6 @@ export default function MainGame({
 
         <TimeProgressBar currentTime={timer} maxTime={100} />
       </View>
-
-      {/* {timer} */}
     </Animated.View>
   );
 }
