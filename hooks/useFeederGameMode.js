@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Toast from 'react-native-toast-message';
 import { newRequest } from '../api/newRequest';
 
+// Function to fetch questions from the server
 const fetchQuestions = async (numQuestions, startOrder = 0, category) => {
   try {
     const response = await newRequest.get(
@@ -14,7 +15,9 @@ const fetchQuestions = async (numQuestions, startOrder = 0, category) => {
   }
 };
 
+// Custom hook to manage the feeder game mode
 const useFeederGameMode = (category = 'logos') => {
+  // State variables
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [gameActive, setGameActive] = useState(false);
@@ -25,12 +28,14 @@ const useFeederGameMode = (category = 'logos') => {
   const [results, setResults] = useState([]);
   const [gameOver, setGameOver] = useState(false);
 
+  // useEffect to fetch questions when game starts
   useEffect(() => {
     if (gameActive) {
       fetchQuestions(10, 0, category).then((qs) => setQuestions(qs));
     }
   }, [gameActive]);
 
+  // Function to start the game
   const startGame = () => {
     setGameActive(true);
     setCurrentQuestionIndex(0);
@@ -40,6 +45,7 @@ const useFeederGameMode = (category = 'logos') => {
     setScore(0);
   };
 
+  // Function to submit user answers to the server
   const submitUserAnswers = async () => {
     try {
       if (userAnswers.length === 0) return;
@@ -50,6 +56,7 @@ const useFeederGameMode = (category = 'logos') => {
     }
   };
 
+  // Function to handle answering a question
   const answerQuestion = useCallback(
     (answer) => {
       const isCorrect = questions[currentQuestionIndex].correctAnswer === answer;
@@ -73,6 +80,7 @@ const useFeederGameMode = (category = 'logos') => {
     [questions, currentQuestionIndex],
   );
 
+  // Function to upload feeder results to the server
   const uploadFeederResults = async () => {
     try {
       const res = await newRequest.post('/feeder/results', {
@@ -86,6 +94,7 @@ const useFeederGameMode = (category = 'logos') => {
     }
   };
 
+  // Function to continue the game
   const continueGame = useCallback(() => {
     const isCorrect =
       questions[currentQuestionIndex]?.correctAnswer === userAnswers[currentQuestionIndex]?.answer;
@@ -125,6 +134,7 @@ const useFeederGameMode = (category = 'logos') => {
     setWaitingForNext(false);
   }, [currentQuestionIndex, questions, userAnswers, gameActive]);
 
+  // Return the state and functions to be used in the component
   return {
     questions,
     currentQuestionIndex,
