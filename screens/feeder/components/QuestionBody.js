@@ -1,35 +1,35 @@
-import { Image } from 'expo-image';
-import React from 'react';
-import { Text, View } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
+import { Image } from "expo-image";
+import React from "react";
+import { Text, View } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const QuestionBody = ({ question }) => {
   return (
     <View
       style={{
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Text
         style={{
           fontSize: question.question.length > 40 ? RFValue(18) : RFValue(20),
-          fontWeight: 'bold',
-          fontFamily: 'poppins-regular',
-          textAlign: 'center',
-          color: 'black',
+          fontWeight: "bold",
+          fontFamily: "poppins-regular",
+          textAlign: "center",
+          color: "white",
         }}
       >
         {question.question}
       </Text>
-      {question.helperImage && question.helperImage !== '' && (
+      {question.helperImage && question.helperImage !== "" && (
         <Image
-          contentFit='contain'
+          contentFit="contain"
           source={{
-            uri: question.helperImage || '',
+            uri: question.helperImage || "",
           }}
           style={{
-            width: '100%',
+            width: "100%",
             height: 150,
             marginBottom: 10,
           }}
