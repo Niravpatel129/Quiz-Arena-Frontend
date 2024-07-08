@@ -64,6 +64,7 @@ export default function GameOver({ score, handleStartGame, results }) {
           fontSize: 24,
           textAlign: "center",
           letterSpacing: 2,
+          color: "white",
         }}
       >
         Not too shabby!
@@ -73,6 +74,7 @@ export default function GameOver({ score, handleStartGame, results }) {
         style={{
           width: 200,
           height: 200,
+          color: "white",
         }}
       />
       <Text
@@ -80,7 +82,7 @@ export default function GameOver({ score, handleStartGame, results }) {
           fontSize: 24,
           fontFamily: "poppins-regular",
           letterSpacing: 2,
-          color: "black",
+          color: "white",
           textAlign: "center",
         }}
       >
@@ -91,7 +93,7 @@ export default function GameOver({ score, handleStartGame, results }) {
           fontSize: 24,
           fontFamily: "poppins-regular",
           letterSpacing: 2,
-          color: "black",
+          color: "white",
           textAlign: "center",
         }}
       >
@@ -145,7 +147,7 @@ export default function GameOver({ score, handleStartGame, results }) {
         >
           <Text
             style={{
-              color: "black",
+              color: "white",
               fontFamily: "poppins-semiBold",
               fontSize: 14,
               textAlign: "center",
