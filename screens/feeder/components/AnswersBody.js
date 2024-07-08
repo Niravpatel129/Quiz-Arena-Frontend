@@ -77,10 +77,10 @@ const AnswersBody = ({
 
     if (wasUserCorrect) {
       soundContext.playSound("solo_correct");
-      onAnswer(answer.optionText);
     } else {
       soundContext.playSound("solo_fail");
     }
+    onAnswer(answer.optionText); // Call onAnswer regardless of correctness
   };
 
   const handleContinue = () => {

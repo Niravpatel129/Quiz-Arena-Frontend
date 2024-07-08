@@ -37,14 +37,14 @@ export default function GameOver({ score, handleStartGame, results }) {
     // }
   }, [results]); // Dependency array, effect runs when `results` changes
 
-  if (!results) {
-    console.log("No results found");
-    return (
-      <View>
-        <Text> Hello world</Text>
-      </View>
-    );
-  }
+  // if (!results) {
+  //   console.log("No results found");
+  //   return (
+  //     <View>
+  //       <Text> Hello world</Text>
+  //     </View>
+  //   );
+  // }
 
   console.log("Rendering GameOver component with results:", results);
 
@@ -101,12 +101,28 @@ export default function GameOver({ score, handleStartGame, results }) {
       </Text>
 
       {results.percentileRank && (
-        <Text>
+        <Text
+          style={{
+            fontSize: 12,
+            fontFamily: "poppins-regular",
+            letterSpacing: 2,
+            color: "white",
+            textAlign: "center",
+          }}
+        >
           That attempt was better than {results.percentileRank}% of the players!
         </Text>
       )}
       {results.personalBestPercentileRank && (
-        <Text>
+        <Text
+          style={{
+            fontSize: 12,
+            fontFamily: "poppins-regular",
+            letterSpacing: 2,
+            color: "white",
+            textAlign: "center",
+          }}
+        >
           Your personal best is in the Top {results.personalBestPercentileRank}%
           percentile.
         </Text>
