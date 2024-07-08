@@ -1,5 +1,5 @@
-import { Ionicons } from '@expo/vector-icons';
-import { Text, View } from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
+import { Text, View } from "react-native";
 
 // const QuestionHeader = ({ question, score, categoryName }) => {
 //   const skullColor =
@@ -42,21 +42,20 @@ import { Text, View } from 'react-native';
 //   );
 // };
 
-
 const QuestionHeader = ({ score }) => {
   return (
     <View
       style={{
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         paddingVertical: 10,
       }}
     >
       <Text
         style={{
           fontSize: 18,
-          textAlign: 'center',
-          color: 'black',
+          textAlign: "center",
+          color: "white",
         }}
       >
         Question No. {score}
