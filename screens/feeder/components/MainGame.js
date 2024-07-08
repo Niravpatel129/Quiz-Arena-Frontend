@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ImageBackground, View } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -20,9 +20,11 @@ export default function MainGame({
 }) {
   const opacity = useSharedValue(0);
   const [timer, setTimer] = useState(0);
+  const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
     console.log("question changed");
+    setShowMessage(false);
   }, [question]);
 
   useEffect(() => {
@@ -34,6 +36,11 @@ export default function MainGame({
       opacity: opacity.value,
     };
   });
+
+  const handleContinue = () => {
+    setShowMessage(false);
+    continueGame();
+  };
 
   if (!question) {
     return (
@@ -50,7 +57,6 @@ export default function MainGame({
     );
   }
 
-  // Wrap the main content with an Animated.View to apply the animated styles.
   return (
     <Animated.View
       style={[
@@ -78,14 +84,34 @@ export default function MainGame({
       <View>
         <AnswersBody
           question={question}
-          onAnswer={onAnswer}
+          onAnswer={(answer) => {
+            onAnswer(answer);
+            setShowMessage(true);
+          }}
           continueGame={continueGame}
           setGameOver={setGameOver}
           setTimer={setTimer}
           timer={timer}
+          showMessage={showMessage}
         />
-
-        <TimeProgressBar currentTime={timer} maxTime={100} />
+        {showMessage ? (
+          <TouchableOpacity
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 10,
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              borderRadius: 10,
+            }}
+            onPress={handleContinue}
+          >
+            <Text style={{ color: "white", fontSize: 18 }}>
+              Tap anywhere on screen to continue
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <TimeProgressBar currentTime={timer} maxTime={100} />
+        )}
       </View>
     </Animated.View>
   );
