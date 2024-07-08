@@ -100,6 +100,7 @@ const useFeederGameMode = (category = 'logos') => {
       questions[currentQuestionIndex]?.correctAnswer === userAnswers[currentQuestionIndex]?.answer;
     if (!isCorrect && gameActive) {
       setGameActive(false);
+      setGameOver(true); // Mark the game as over
       submitUserAnswers();
       uploadFeederResults();
     } else {

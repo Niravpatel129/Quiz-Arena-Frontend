@@ -181,7 +181,8 @@ const GameScreen = ({ navigation, route }) => {
       const opponentData = results.gameSession.players.find(
         (player) => player.socketId !== mySocketId,
       );
-
+      console.log('🚀  results:', results);
+      
       navigation.reset({
         index: 0,
         routes: [

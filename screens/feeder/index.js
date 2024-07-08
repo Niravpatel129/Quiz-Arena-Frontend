@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
-import useFeederGameMode from '../../hooks/useFeederGameMode';
-import FeederHome from './components/FeederHome';
-import GameOver from './components/GameOver';
-import MainGame from './components/MainGame';
-import Transition from './components/Transition';
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, ScrollView } from "react-native";
+import useFeederGameMode from "../../hooks/useFeederGameMode";
+import FeederHome from "./components/FeederHome";
+import GameOver from "./components/GameOver";
+import MainGame from "./components/MainGame";
+import Transition from "./components/Transition";
+import { ImageBackground } from "react-native";
 
 const FeederScreen = ({ route }) => {
   const {
@@ -19,7 +20,7 @@ const FeederScreen = ({ route }) => {
     results,
     gameOver,
     setGameOver,
-  } = useFeederGameMode(route.params?.categoryId?.replace(/-/g, ' '));
+  } = useFeederGameMode(route.params?.categoryId?.replace(/-/g, " "));
   const [showCountdown, setShowCountdown] = useState(false);
 
   // return (
@@ -50,7 +51,12 @@ const FeederScreen = ({ route }) => {
   };
 
   if (!gameActive && questions.length === 0) {
-    return <FeederHome categoryName={route.params?.categoryName} handleEnter={handleStartGame} />;
+    return (
+      <FeederHome
+        categoryName={route.params?.categoryName}
+        handleEnter={handleStartGame}
+      />
+    );
   }
 
   const renderGameState = () => {
@@ -59,7 +65,7 @@ const FeederScreen = ({ route }) => {
       const caluclateQuestionAnswerRatio = Math.floor(
         (questions[currentQuestionIndex].stats.correctAnswers /
           questions[currentQuestionIndex].stats.totalAnswers) *
-          100,
+          100
       );
 
       return (
@@ -67,7 +73,8 @@ const FeederScreen = ({ route }) => {
           animationText={[
             `Round ${currentQuestionIndex + 1}`,
             `${
-              caluclateQuestionAnswerRatio || Math.floor(Math.random() * (99 - 1 + 1)) + 1
+              caluclateQuestionAnswerRatio ||
+              Math.floor(Math.random() * (99 - 1 + 1)) + 1
             }% of the players have gotten this correct!`,
           ]}
         />
@@ -75,7 +82,13 @@ const FeederScreen = ({ route }) => {
     }
 
     if (gameOver) {
-      return <GameOver score={score} handleStartGame={handleStartGame} results={results} />;
+      return (
+        <GameOver
+          score={score}
+          handleStartGame={handleStartGame}
+          results={results}
+        />
+      );
     }
 
     return (
@@ -92,26 +105,31 @@ const FeederScreen = ({ route }) => {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        height: '100%',
-        flex: 1,
-      }}
+    <ImageBackground
+      source={require("../../assets/feeder_background_img.jpeg")}
+      style={{ flex: 1 }}
     >
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+      <SafeAreaView
         style={{
-          height: '100%',
+          height: "100%",
+          flex: 1,
         }}
       >
-        {renderGameState()}
-      </ScrollView>
-    </SafeAreaView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          style={{
+            height: "100%",
+          }}
+        >
+          {renderGameState()}
+        </ScrollView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 

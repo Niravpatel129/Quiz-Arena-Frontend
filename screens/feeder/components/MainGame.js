@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { ImageBackground, View } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import AnswersBody from './AnswersBody';
-import QuestionBody from './QuestionBody';
-import QuestionHeader from './QuestionHeader';
-import TimeProgressBar from './TimeProgressBar';
+import React, { useEffect, useState } from "react";
+import { ImageBackground, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import AnswersBody from "./AnswersBody";
+import QuestionBody from "./QuestionBody";
+import QuestionHeader from "./QuestionHeader";
+import TimeProgressBar from "./TimeProgressBar";
 
 export default function MainGame({
   question,
@@ -18,7 +22,7 @@ export default function MainGame({
   const [timer, setTimer] = useState(0);
 
   useEffect(() => {
-    console.log('question changed');
+    console.log("question changed");
   }, [question]);
 
   useEffect(() => {
@@ -35,10 +39,10 @@ export default function MainGame({
     return (
       <View
         style={{
-          height: '100%',
+          height: "100%",
           flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         {/* <ActivityIndicator size='large' color='#000' /> */}
@@ -51,10 +55,10 @@ export default function MainGame({
     <Animated.View
       style={[
         {
-          justifyContent: 'space-between',
+          justifyContent: "space-between",
           padding: 10,
-          width: '100%',
-          height: '100%',
+          width: "100%",
+          height: "100%",
         },
         animatedStyle,
       ]}
@@ -64,7 +68,11 @@ export default function MainGame({
           height: 50,
         }}
       >
-        <QuestionHeader score={score +1} question={question} categoryName={categoryName} />
+        <QuestionHeader
+          score={score + 1}
+          question={question}
+          categoryName={categoryName}
+        />
       </View>
       <QuestionBody question={question} />
       <View>
