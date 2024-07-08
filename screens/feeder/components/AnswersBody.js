@@ -1,21 +1,29 @@
-import React, { useEffect } from 'react';
-import { Text, View } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { useSound } from '../../../context/sound/SoundContext';
-import CustomButton from './CustomButton';
-import AnswerResultModal from './AnswerResultModal';
+import React, { useEffect, useState } from "react";
+import { Text, View } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { useSound } from "../../../context/sound/SoundContext";
+import CustomButton from "./CustomButton";
+import AnswerResultModal from "./AnswerResultModal";
 
-const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, setTimer }) => {
-  const [userSelected, setUserSelected] = React.useState(null);
-  const [gameState, setGameState] = React.useState('active');
-  const [isSelected, setIsSelected] = React.useState({});
-  const [wasCorrect, setWasCorrect] = React.useState(false);
-  const [modalVisible, setModalVisible] = React.useState(false);
+const AnswersBody = ({
+  question,
+  onAnswer,
+  continueGame,
+  setGameOver,
+  timer,
+  setTimer,
+  showMessage,
+}) => {
+  const [userSelected, setUserSelected] = useState(null);
+  const [gameState, setGameState] = useState("active");
+  const [isSelected, setIsSelected] = useState({});
+  const [wasCorrect, setWasCorrect] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const soundContext = useSound();
 
-  const [timerStarted, setTimerStarted] = React.useState(false);
-  const [myInterval, setMyInterval] = React.useState(null);
-  const [shuffledAnswers, setShuffledAnswers] = React.useState([]);
+  const [timerStarted, setTimerStarted] = useState(false);
+  const [myInterval, setMyInterval] = useState(null);
+  const [shuffledAnswers, setShuffledAnswers] = useState([]);
 
   // Shuffle function
   const shuffleArray = (array) => {
@@ -34,7 +42,7 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
   useEffect(() => {
     if (timer >= 110) {
       setGameOver(true);
-      setGameState('answer-submitted');
+      setGameState("answer-submitted");
       clearInterval(myInterval);
     }
   }, [timer]);
@@ -68,10 +76,10 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
     clearInterval(myInterval);
 
     if (wasUserCorrect) {
-      soundContext.playSound('solo_correct');
+      soundContext.playSound("solo_correct");
       onAnswer(answer.optionText);
     } else {
-      soundContext.playSound('solo_fail');
+      soundContext.playSound("solo_fail");
     }
   };
 
@@ -86,21 +94,28 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
   };
 
   const renderAnswersBody = ({ answer }) => {
-    let textColor = 'black';
-    let buttonVariant = 'alternative';
+    let textColor = "black";
+    let buttonVariant = "alternative";
 
     if (userSelected === answer.optionText) {
       if (answer.isCorrect) {
-        buttonVariant = 'default';
-        textColor = 'white';
+        buttonVariant = "default";
+        textColor = "white";
       } else {
-        buttonVariant = 'danger';
-        textColor = 'white';
+        buttonVariant = "danger";
+        textColor = "white";
       }
     }
 
     return (
-      <View style={{ width: '48%', marginBottom: 10, marginHorizontal: '1%', position: 'relative' }}>
+      <View
+        style={{
+          width: "48%",
+          marginBottom: 10,
+          marginHorizontal: "1%",
+          position: "relative",
+        }}
+      >
         <CustomButton
           title={answer.optionText}
           variant={buttonVariant}
@@ -109,29 +124,29 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
           }}
           isSelected={isSelected[answer.optionText]}
           onPress={() => handleAnswerSelection(answer)}
-          disabled={userSelected !== null} // Disable button after selection
+          disabled={userSelected !== null || showMessage} // Disable button after selection
         >
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: '100%',
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
               height: 70,
               paddingHorizontal: 10,
-              textAlign: 'center',
-              position: 'relative',
+              textAlign: "center",
+              position: "relative",
             }}
           >
             <Text
               style={{
                 color: textColor,
                 fontSize: RFValue(16),
-                fontWeight: 'bold',
-                fontFamily: 'poppins-regular',
-                textAlign: 'center',
+                fontWeight: "bold",
+                fontFamily: "poppins-regular",
+                textAlign: "center",
                 flexShrink: 1,
-                flexWrap: 'wrap',
+                flexWrap: "wrap",
               }}
             >
               {answer.optionText}
@@ -145,22 +160,24 @@ const AnswersBody = ({ question, onAnswer, continueGame, setGameOver, timer, set
   return (
     <View
       style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
         marginBottom: 20,
       }}
     >
       <View
         style={{
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
-          width: '100%',
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          width: "100%",
         }}
       >
         {shuffledAnswers.map((answer, index) => (
-          <React.Fragment key={index}>{renderAnswersBody({ answer })}</React.Fragment>
+          <React.Fragment key={index}>
+            {renderAnswersBody({ answer })}
+          </React.Fragment>
         ))}
       </View>
       <AnswerResultModal
