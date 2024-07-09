@@ -108,6 +108,7 @@ export default function GameOver({ score, handleStartGame, results }) {
             letterSpacing: 2,
             color: "white",
             textAlign: "center",
+            marginTop: 10,
           }}
         >
           That attempt was better than {results.percentileRank}% of the players!
@@ -121,6 +122,7 @@ export default function GameOver({ score, handleStartGame, results }) {
             letterSpacing: 2,
             color: "white",
             textAlign: "center",
+            marginTop: 10,
           }}
         >
           Your personal best is in the Top {results.personalBestPercentileRank}%
