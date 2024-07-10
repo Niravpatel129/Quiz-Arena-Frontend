@@ -1,6 +1,6 @@
 import React from "react";
 import { Image } from "expo-image";
-import { Text, View } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import CountryFlag from "react-native-country-flag";
 
 const leaderboardData = [
@@ -8,22 +8,25 @@ const leaderboardData = [
     username: "William James",
     country: "US",
     countryName: "United States",
-    score: 25532,
-    avatar: "https://via.placeholder.com/50", // Placeholder image URL
+    score: 11220,
+    avatar:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg", // Placeholder image URL
   },
   {
     username: "John David",
     country: "CA",
     countryName: "Canada",
-    score: 22000,
-    avatar: "https://via.placeholder.com/50", // Placeholder image URL
+    score: 11000,
+    avatar:
+      "https://upload.wikimedia.org/wikipedia/commons/6/69/June_odd-eyed-cat_cropped.jpg", // Placeholder image URL
   },
   {
     username: "Richard Michael",
     country: "CA",
     countryName: "Canada",
-    score: 21560,
-    avatar: "https://via.placeholder.com/50", // Placeholder image URL
+    score: 11220,
+    avatar:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Black_white_cat_on_fence.jpg/220px-Black_white_cat_on_fence.jpg", // Placeholder image URL
   },
 ];
 
@@ -31,22 +34,50 @@ export default function Leaderboard() {
   return (
     <View
       style={{
-        width: "100%",
-        backgroundColor: "#fff",
+        width: "115%",
+        backgroundColor: "transparent",
         borderRadius: 10,
         padding: 20,
+        marginBottom: -30,
       }}
     >
-      <Text
+      <View
         style={{
-          fontFamily: "poppins-semiBold",
-          fontSize: 20,
-          color: "#0074da",
+          backgroundColor: "#DCEDFD",
+          padding: 10,
+          borderRadius: 14,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
           marginBottom: 10,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
         }}
       >
-        Leaderboard
-      </Text>
+        <Text
+          style={{
+            fontFamily: "poppins-semiBold",
+            fontSize: 16, // decreased by 20%
+            color: "#0074da",
+          }}
+        >
+          Leaderboard
+        </Text>
+        <TouchableOpacity>
+          <Text
+            style={{
+              fontFamily: "poppins-semiBold",
+              fontSize: 11, // decreased by 20%
+              color: "#2CC672",
+            }}
+          >
+            See All
+          </Text>
+        </TouchableOpacity>
+      </View>
       {leaderboardData.map((player, index) => (
         <View
           key={index}
@@ -57,14 +88,17 @@ export default function Leaderboard() {
             marginBottom: 10,
             padding: 10,
             borderRadius: 10,
-            backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#e9e9e9",
+            backgroundColor: "#f9f9f9",
+            borderWidth: 1,
+            borderColor:
+              index === 0 ? "#FFD700" : index === 1 ? "#C0C0C0" : "#CD7F32",
           }}
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text
               style={{
                 fontFamily: "poppins-semiBold",
-                fontSize: 18,
+                fontSize: 14, // decreased by 20%
                 color: "#0074da",
                 marginRight: 10,
               }}
@@ -76,41 +110,32 @@ export default function Leaderboard() {
                 uri: player.avatar,
               }}
               style={{
-                width: 50,
-                height: 50,
+                width: 40,
+                height: 40,
                 borderRadius: 25,
                 marginRight: 10,
               }}
             />
             <View>
-              <Text
-                style={{
-                  fontFamily: "poppins-semiBold",
-                  fontSize: 16,
-                  color: "#000",
-                }}
-              >
-                {player.username}
-              </Text>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <CountryFlag isoCode={player.country} size={20} />
                 <Text
                   style={{
-                    fontFamily: "poppins-regular",
-                    fontSize: 14,
-                    color: "#666",
-                    marginLeft: 5,
+                    fontFamily: "poppins-semiBold",
+                    fontSize: 13, // decreased by 20%
+                    color: "#000",
+                    marginRight: 5,
                   }}
                 >
-                  {player.countryName}
+                  {player.username}
                 </Text>
+                <CountryFlag isoCode={player.country} size={12} />
               </View>
             </View>
           </View>
           <Text
             style={{
               fontFamily: "poppins-semiBold",
-              fontSize: 16,
+              fontSize: 13, // decreased by 20%
               color: "#0074da",
             }}
           >
