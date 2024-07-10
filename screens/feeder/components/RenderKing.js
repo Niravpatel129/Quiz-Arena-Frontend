@@ -13,14 +13,18 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
   return (
     <View
       style={{
-        margin: 20,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#3586ff", // Adjusted to match Figma design
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        backgroundColor: "#3F95F2",
+        padding: 20,
         borderRadius: 10,
-        width: "90%", // Adjusted width to make it more responsive
+        width: "105%",
+        marginTop: -5,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
       }}
     >
       <View
@@ -35,68 +39,101 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
           <Text
             style={{
               fontFamily: "poppins-semiBold",
-              fontSize: 18,
-              color: "#ffca28", // Highest Scorer color
+              fontSize: 14,
+              color: "#ffca28",
               marginBottom: 5,
             }}
           >
             Highest Score: {feederKing.scoreAchieved}
           </Text>
-          <Text
+          <View
             style={{
-              fontFamily: "poppins-semiBold",
-              fontSize: 22,
-              color: "#fff",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 2,
             }}
           >
-            {capitalizeFirstLetter(feederKing.userDetails.username)}
+            <Text
+              style={{
+                fontFamily: "poppins-semiBold",
+                fontSize: 18,
+                color: "#fff",
+                marginRight: 5,
+              }}
+            >
+              {capitalizeFirstLetter(feederKing.userDetails.username)}
+            </Text>
+            <CountryFlag
+              isoCode={feederKing.userDetails.profile.country}
+              size={18}
+            />
+          </View>
+          <Text
+            style={{
+              fontFamily: "poppins-regular",
+              fontSize: 14,
+              color: "#fff",
+              marginLeft: 5,
+            }}
+          >
+            {feederKing.userDetails.profile.countryName}
           </Text>
           <Text
             style={{
               fontFamily: "poppins-regular",
-              fontSize: 16,
+              fontSize: 14,
               color: "#fff",
+              marginTop: -10,
+              position: "relative",
+              bottom: 10,
             }}
           >
             {categoryName}
           </Text>
           <View
-            style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}
+            style={{
+              backgroundColor: "#fff",
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+              borderRadius: 20,
+              marginTop: 5,
+              marginLeft: 0,
+              alignItems: "center",
+              justifyContent: "center",
+              width: "50%",
+              position: "relative",
+              bottom: 10,
+            }}
           >
-            <CountryFlag
-              isoCode={feederKing.userDetails.profile.country}
-              size={20}
-            />
             <Text
               style={{
-                fontFamily: "poppins-regular",
-                fontSize: 16,
-                color: "#fff",
-                marginLeft: 5,
+                fontFamily: "poppins-semiBold",
+                fontSize: 14,
+                color: "#0074da",
               }}
             >
-              {feederKing.userDetails.profile.countryName}
+              Rating: {feederKing.userDetails.profile.rating || 1200}
             </Text>
           </View>
         </View>
-        <View style={{ alignItems: "center" }}>
+        <View style={{ alignItems: "center", marginLeft: 10 }}>
           <Image
             source={{
               uri: feederKing.userDetails.profile.avatar,
             }}
             style={{
-              width: 70,
-              height: 70,
-              borderRadius: 35,
+              width: 50,
+              height: 50,
+              borderRadius: 25,
               marginBottom: 5,
             }}
           />
           <View
             style={{
-              backgroundColor: "#ffd700", // Level background color
+              backgroundColor: "#ffd700",
               paddingHorizontal: 10,
               paddingVertical: 2,
-              borderRadius: 10,
+              borderRadius: 5,
             }}
           >
             <Text
@@ -112,29 +149,6 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
           </View>
         </View>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: 10,
-          backgroundColor: "#fff",
-          paddingHorizontal: 15,
-          paddingVertical: 5,
-          borderRadius: 20,
-        }}
-      >
-        <Text
-          style={{
-            fontFamily: "poppins-semiBold",
-            fontSize: 16,
-            color: "#0074da",
-          }}
-        >
-          Rating: {feederKing.userDetails.profile.rating || 1200}
-        </Text>
-      </View>
-
       {previousFeederKing &&
         previousFeederKing.userDetails.username !==
           feederKing.userDetails.username && (
