@@ -5,6 +5,8 @@ import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { newRequest } from "../../../api/newRequest";
 import CustomButton from "./CustomButton";
 import RenderKing from "./RenderKing";
+import Leaderboard from "./Leaderboard";
+// import LinearGradient from "react-native-linear-gradient";
 
 export default function FeederHome({ categoryName, handleEnter }) {
   const navigation = useNavigation();
@@ -31,18 +33,18 @@ export default function FeederHome({ categoryName, handleEnter }) {
         flex: 1,
         width: "100%",
         height: "100%",
-        backgroundColor: "#0074da",
-        justifyContent: "space-between", // This will help in positioning items correctly
-        padding: 30, // Adding padding for better spacing
+        backgroundColor: "linear-gradient(90deg, #2978E7 0%, #EC80B4 100%)",
+        justifyContent: "space-between",
+        padding: 30,
       }}
     >
       <TouchableOpacity
         onPress={() => {
           navigation.goBack();
         }}
-        style={{ position: "absolute", top: 30, left: 30, zIndex: 1 }} // Adjusted position to be inside padding
+        style={{ position: "absolute", top: 60, left: 30, zIndex: 1 }}
       >
-        <Ionicons name="close" size={30} color="#9f9f9f" />
+        <Ionicons name="arrow-back-outline" size={30} color="#9f9f9f" />
       </TouchableOpacity>
 
       <View style={{ alignItems: "center", marginTop: 60 }}>
@@ -51,21 +53,19 @@ export default function FeederHome({ categoryName, handleEnter }) {
             fontFamily: "poppins-semiBold",
             fontSize: 30,
             textAlign: "center",
-            color: "#fff",
-            textShadowColor: "rgba(0, 0, 0, 0.75)",
+            color: "#182C53",
             textShadowOffset: { width: -1, height: 1 },
             textShadowRadius: 3,
           }}
         >
-          Secret Feeder Mode
+          Secret Solo Mode
         </Text>
         <Text
           style={{
             fontFamily: "poppins-semiBold",
             fontSize: 22,
             textAlign: "center",
-            color: "#fff",
-            textShadowColor: "rgba(0, 0, 0, 0.75)",
+            color: "#204688",
             textShadowOffset: { width: -1, height: 1 },
             textShadowRadius: 10,
             textTransform: "capitalize",
@@ -85,18 +85,33 @@ export default function FeederHome({ categoryName, handleEnter }) {
         }}
       >
         {currentFeederKing && (
-          <RenderKing
-            currentFeederKing={currentFeederKing}
-            categoryName={categoryName}
-          />
+          <View
+            style={{
+              backgroundColor: "white",
+              padding: 20,
+              borderRadius: 10,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+              width: "105%",
+              alignItems: "center",
+            }}
+          >
+            <RenderKing
+              currentFeederKing={currentFeederKing}
+              categoryName={categoryName}
+            />
+            <Leaderboard />
+          </View>
         )}
       </View>
-
       <View
         style={{
           width: "100%",
           alignItems: "center",
-          marginBottom: 50, // Adjust this value as needed
+          marginBottom: 30,
         }}
       >
         <TouchableOpacity
@@ -104,25 +119,34 @@ export default function FeederHome({ categoryName, handleEnter }) {
             handleEnter();
           }}
           style={{
-            backgroundColor: "#fff",
-            paddingVertical: 10,
+            backgroundColor: "#3F95F2",
+            paddingVertical: 15,
             paddingHorizontal: 20,
             borderRadius: 25,
             flexDirection: "row",
             alignItems: "center",
+            width: "100%",
+            justifyContent: "center",
+            backgroundColor: "#3F95F2",
+            // background: "radial-gradient(circle, #71B5FF 0%, #3898FF 100%)",
+            shadowColor: "#3F95F2",
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.6,
+            shadowRadius: 0,
+            elevation: 10,
           }}
         >
           <Ionicons
             name="play"
-            size={20}
-            color="#0074da"
-            style={{ marginRight: 5 }}
+            size={25}
+            color="white"
+            style={{ marginRight: 10 }}
           />
           <Text
             style={{
               fontFamily: "poppins-semiBold",
-              fontSize: 18,
-              color: "#0074da",
+              fontSize: 22,
+              color: "white",
             }}
           >
             Play
