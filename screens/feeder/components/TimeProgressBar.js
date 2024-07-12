@@ -32,7 +32,7 @@ const TimeProgressBar = ({ currentTime, maxTime }) => {
     <View style={styles.container}>
       <Animated.View style={[styles.progressBar, animatedStyle]}>
         <LinearGradient
-          colors={["#EC80B4", "#2978E7"]}
+          colors={["#0096FF", "#1434A4"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={StyleSheet.absoluteFill}
@@ -45,10 +45,11 @@ const TimeProgressBar = ({ currentTime, maxTime }) => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 20,
+    height: 10,
     backgroundColor: "#ddd",
     borderRadius: 10,
     overflow: "hidden",
+    topPadding: -5,
   },
   progressBar: {
     height: "100%",

@@ -132,7 +132,7 @@ const AnswersBody = ({
               justifyContent: "center",
               alignItems: "center",
               width: "100%",
-              height: 70,
+              height: 80,
               paddingHorizontal: 10,
               textAlign: "center",
               position: "relative",

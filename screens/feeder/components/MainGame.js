@@ -9,6 +9,7 @@ import AnswersBody from "./AnswersBody";
 import QuestionBody from "./QuestionBody";
 import QuestionHeader from "./QuestionHeader";
 import TimeProgressBar from "./TimeProgressBar";
+import BonusOptionButton from "./BonusOptionButton";
 
 export default function MainGame({
   question,
@@ -71,7 +72,7 @@ export default function MainGame({
     >
       <View
         style={{
-          height: 50,
+          height: 70,
         }}
       >
         <QuestionHeader
@@ -99,20 +100,33 @@ export default function MainGame({
             style={{
               justifyContent: "center",
               alignItems: "center",
-              padding: 10,
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              padding: -5,
+              backgroundColor: "transparent",
               borderRadius: 10,
             }}
             onPress={handleContinue}
           >
-            <Text style={{ color: "white", fontSize: 18 }}>
-              Tap anywhere on screen to continue
+            <Text
+              style={{
+                fontStyle: "italic",
+                color: "white",
+                fontSize: 20,
+                textAlign: "center",
+              }}
+            >
+              --Tap anywhere on screen to continue--
             </Text>
           </TouchableOpacity>
         ) : (
           <TimeProgressBar currentTime={timer} maxTime={100} />
         )}
       </View>
+      <BonusOptionButton
+        onFiftyFifty={() => console.log("50:50 pressed")}
+        onRedo={() => console.log("Swap pressed")}
+        onBonusTime={() => console.log("Timer pressed")}
+        onHint={() => console.log("Hint pressed")}
+      />
     </Animated.View>
   );
 }
