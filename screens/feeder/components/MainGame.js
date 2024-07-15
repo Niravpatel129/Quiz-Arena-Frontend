@@ -62,7 +62,7 @@ export default function MainGame({
     <Animated.View
       style={[
         {
-          justifyContent: "space-between",
+          justifyContent: "flex-start", // Adjusted to move content up
           padding: 10,
           width: "100%",
           height: "100%",
@@ -81,8 +81,20 @@ export default function MainGame({
           categoryName={categoryName}
         />
       </View>
-      <QuestionBody question={question} />
-      <View>
+      <View
+        style={{
+          flex: 1, // Allow the QuestionBody to take the required space
+        }}
+      >
+        <QuestionBody question={question} />
+      </View>
+      <View
+        style={{
+          flex: 1, // Allow the AnswersBody to take the remaining space
+          justifyContent: "center", // Center the AnswersBody vertically
+          marginBottom: 10, // Added marginBottom for spacing
+        }}
+      >
         <AnswersBody
           question={question}
           onAnswer={(answer) => {
@@ -118,15 +130,28 @@ export default function MainGame({
             </Text>
           </TouchableOpacity>
         ) : (
-          <TimeProgressBar currentTime={timer} maxTime={100} />
+          <View
+            style={{
+              marginBottom: 10, // Added marginBottom for spacing
+            }}
+          >
+            <TimeProgressBar currentTime={timer} maxTime={100} />
+          </View>
         )}
       </View>
-      <BonusOptionButton
-        onFiftyFifty={() => console.log("50:50 pressed")}
-        onRedo={() => console.log("Swap pressed")}
-        onBonusTime={() => console.log("Timer pressed")}
-        onHint={() => console.log("Hint pressed")}
-      />
+      <View
+        style={{
+          justifyContent: "center",
+          marginBottom: 10, // Adjusted marginBottom for spacing
+        }}
+      >
+        <BonusOptionButton
+          onFiftyFifty={() => console.log("50:50 pressed")}
+          onRedo={() => console.log("Swap pressed")}
+          onBonusTime={() => console.log("Timer pressed")}
+          onHint={() => console.log("Hint pressed")}
+        />
+      </View>
     </Animated.View>
   );
 }

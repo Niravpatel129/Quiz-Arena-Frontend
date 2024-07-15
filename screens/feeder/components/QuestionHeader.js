@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 
 const QuestionHeader = ({ score }) => {
@@ -7,7 +6,6 @@ const QuestionHeader = ({ score }) => {
       style={{
         justifyContent: "center",
         alignItems: "center",
-        paddingVertical: 10,
       }}
     >
       <Text

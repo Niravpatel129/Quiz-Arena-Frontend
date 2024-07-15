@@ -9,17 +9,17 @@ const QuestionBody = ({ question }) => {
       style={{
         justifyContent: "center",
         alignItems: "center",
-        paddingHorizontal: 60, // Added padding to ensure the content is not too wide
+        paddingHorizontal: 30, // Reduced padding to ensure the content is not too wide
       }}
     >
       <Text
         style={{
-          fontSize: question.question.length > 40 ? RFValue(18) : RFValue(20),
+          fontSize: question.question.length > 40 ? RFValue(16) : RFValue(18), // Reduced font size
           fontWeight: "bold",
           fontFamily: "poppins-regular",
           textAlign: "center",
           color: "white",
-          marginBottom: 20, // Added margin bottom to create space between text and image
+          marginBottom: 20, // Reduced margin bottom to create space between text and image
         }}
       >
         {question.question}
@@ -27,7 +27,7 @@ const QuestionBody = ({ question }) => {
       {question.helperImage && question.helperImage !== "" && (
         <View
           style={{
-            width: "90%",
+            width: "60%", // Reduced width
             aspectRatio: 1.5, // Maintain aspect ratio to ensure proper spacing
             marginBottom: 10,
             borderColor: "white", // Added border color
@@ -36,7 +36,8 @@ const QuestionBody = ({ question }) => {
             overflow: "hidden", // Ensures the image does not overflow the border
             justifyContent: "center",
             alignItems: "center",
-            padding: 15, // Added padding to create space between the border and the image
+            padding: 10, // Reduced padding to create space between the border and the image
+            backgroundColor: "rgba(255, 255, 255, 0.08)", // Added 8% white background color
           }}
         >
           <Image

@@ -45,8 +45,8 @@ const BonusOptionButton = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 20,
+    justifyContent: "space-evenly", // Changed to space-evenly
+    padding: 10,
     backgroundColor: "transparent",
     borderRadius: 10,
     marginTop: -20,
