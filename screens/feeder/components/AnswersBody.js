@@ -141,13 +141,15 @@ const AnswersBody = ({
             <Text
               style={{
                 color: textColor,
-                fontSize: RFValue(16),
+                fontSize: 18,
+                // answer.optionText.length > 40 ? RFValue(14) : RFValue(16),
                 fontWeight: "bold",
                 fontFamily: "poppins-regular",
                 textAlign: "center",
                 flexShrink: 1,
-                flexWrap: "wrap",
               }}
+              adjustsFontSizeToFitWidth={false}
+              numberOfLines={3} // test a little more to make sure options look good
             >
               {answer.optionText}
             </Text>

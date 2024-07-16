@@ -83,7 +83,7 @@ export default function MainGame({
       </View>
       <View
         style={{
-          flex: 1, // Allow the QuestionBody to take the required space
+          flex: 1,
         }}
       >
         <QuestionBody question={question} />

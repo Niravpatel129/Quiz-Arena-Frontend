@@ -27,7 +27,7 @@ const QuestionBody = ({ question }) => {
       {question.helperImage && question.helperImage !== "" && (
         <View
           style={{
-            width: "60%", // Reduced width
+            width: "70%", // Reduced width
             aspectRatio: 1.5, // Maintain aspect ratio to ensure proper spacing
             marginBottom: 10,
             borderColor: "white", // Added border color
