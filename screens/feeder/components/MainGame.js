@@ -22,10 +22,24 @@ export default function MainGame({
   const opacity = useSharedValue(0);
   const [timer, setTimer] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
+  const [removeTwoIncorrectAnswers, setRemoveTwoIncorrectAnswers] =
+    useState(false);
+  const [allowRedo, setAllowRedo] = useState(false);
+  const [activeOption, setActiveOption] = useState(null); // Track active option
+  const [timerInterval, setTimerInterval] = useState(null); // Keep track of timer interval
+  const [redoMessage, setRedoMessage] = useState(
+    "You have 2 chances to pick the correct option!"
+  ); // Message for redo option
+  const [hintActive, setHintActive] = useState(false); // Track if hint is active
 
   useEffect(() => {
     console.log("question changed");
     setShowMessage(false);
+    setRemoveTwoIncorrectAnswers(false); // Reset 50/50 option for new question
+    setAllowRedo(false); // Reset Redo option for new question
+    setActiveOption(null); // Reset active option for new question
+    setRedoMessage("You have 2 chances to pick the correct option!"); // Reset message for new question
+    setHintActive(false); // Reset hint active state for new question
   }, [question]);
 
   useEffect(() => {
@@ -42,6 +56,61 @@ export default function MainGame({
     setShowMessage(false);
     continueGame();
   };
+
+  const startTimer = () => {
+    const interval = setInterval(() => {
+      setTimer((prev) => prev + 1);
+    }, 100);
+    setTimerInterval(interval);
+  };
+
+  const stopTimer = () => {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+  };
+
+  const resetTimer = () => {
+    stopTimer();
+    setTimer(0);
+    startTimer();
+  };
+
+  const handleFiftyFifty = () => {
+    if (activeOption) return; // Prevent multiple options at the same time
+    stopTimer();
+    setActiveOption("50/50");
+    console.log("50:50 pressed");
+    setRemoveTwoIncorrectAnswers(true); // Trigger 50/50 option
+  };
+
+  const handleRedo = () => {
+    if (activeOption) return; // Prevent multiple options at the same time
+    stopTimer();
+    setActiveOption("Redo");
+    setAllowRedo(true); // Allow user to select two answers
+    console.log("Redo pressed");
+  };
+
+  const handleBonusTime = () => {
+    if (activeOption) return; // Prevent multiple options at the same time
+    resetTimer();
+    setActiveOption("BonusTime");
+    console.log("Bonus time pressed");
+  };
+
+  const handleHint = () => {
+    if (activeOption) return; // Prevent multiple options at the same time
+    stopTimer();
+    setActiveOption("Hint");
+    setHintActive(true); // Activate hint
+    console.log("Hint pressed");
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => stopTimer();
+  }, [question]);
 
   if (!question) {
     return (
@@ -62,7 +131,7 @@ export default function MainGame({
     <Animated.View
       style={[
         {
-          justifyContent: "flex-start", // Adjusted to move content up
+          justifyContent: "flex-start",
           padding: 10,
           width: "100%",
           height: "100%",
@@ -90,9 +159,9 @@ export default function MainGame({
       </View>
       <View
         style={{
-          flex: 1, // Allow the AnswersBody to take the remaining space
-          justifyContent: "center", // Center the AnswersBody vertically
-          marginBottom: 10, // Added marginBottom for spacing
+          flex: 1,
+          justifyContent: "center",
+          marginBottom: 10,
         }}
       >
         <AnswersBody
@@ -100,12 +169,20 @@ export default function MainGame({
           onAnswer={(answer) => {
             onAnswer(answer);
             setShowMessage(true);
+            setAllowRedo(false); // Disable Redo after answer
+            setHintActive(false); // Disable hint after answer
+            setActiveOption(null); // Reset active option after answer
           }}
           continueGame={continueGame}
           setGameOver={setGameOver}
           setTimer={setTimer}
           timer={timer}
           showMessage={showMessage}
+          removeTwoIncorrectAnswers={removeTwoIncorrectAnswers} // Pass prop
+          allowRedo={allowRedo} // Pass allowRedo prop
+          setRedoMessage={setRedoMessage} // Pass setRedoMessage function
+          redoMessage={redoMessage} // Pass redoMessage state
+          hintActive={hintActive} // Pass hintActive state
         />
         {showMessage ? (
           <TouchableOpacity
@@ -132,7 +209,7 @@ export default function MainGame({
         ) : (
           <View
             style={{
-              marginBottom: 10, // Added marginBottom for spacing
+              marginBottom: 10,
             }}
           >
             <TimeProgressBar currentTime={timer} maxTime={100} />
@@ -142,14 +219,14 @@ export default function MainGame({
       <View
         style={{
           justifyContent: "center",
-          marginBottom: 10, // Adjusted marginBottom for spacing
+          marginBottom: 10,
         }}
       >
         <BonusOptionButton
-          onFiftyFifty={() => console.log("50:50 pressed")}
-          onRedo={() => console.log("Swap pressed")}
-          onBonusTime={() => console.log("Timer pressed")}
-          onHint={() => console.log("Hint pressed")}
+          onFiftyFifty={handleFiftyFifty}
+          onRedo={handleRedo}
+          onBonusTime={handleBonusTime}
+          onHint={handleHint}
         />
       </View>
     </Animated.View>

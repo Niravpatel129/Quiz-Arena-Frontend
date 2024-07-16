@@ -81,10 +81,11 @@ const Transition = ({ animationText }) => {
         <Image
           source={require("../../../assets/transition-axolotl.png")} // Have a thumbs up mascot image
           style={{
+            paddingTop: 15,
             width: 300,
             height: 300,
-            color: "white",
             justifyContent: "center",
+            alignContent: "center",
           }}
         />
       </Animated.View>

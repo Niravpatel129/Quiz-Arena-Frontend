@@ -13,24 +13,28 @@ const AnswersBody = ({
   timer,
   setTimer,
   showMessage,
+  removeTwoIncorrectAnswers,
+  allowRedo, // New prop for allowing redo
+  setRedoMessage, // New prop for setting redo message
+  redoMessage, // New prop for redo message state
+  hintActive, // New prop for hint active state
 }) => {
   const [userSelected, setUserSelected] = useState(null);
+  const [secondChance, setSecondChance] = useState(false); // Track if user has a second chance
   const [gameState, setGameState] = useState("active");
   const [isSelected, setIsSelected] = useState({});
   const [wasCorrect, setWasCorrect] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [removedAnswers, setRemovedAnswers] = useState([]);
   const soundContext = useSound();
 
-  const [timerStarted, setTimerStarted] = useState(false);
-  const [myInterval, setMyInterval] = useState(null);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
 
-  // Shuffle function
   const shuffleArray = (array) => {
-    let shuffled = array.slice(); // Create a copy of the array
+    let shuffled = array.slice();
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // Swap elements
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
   };
@@ -43,44 +47,28 @@ const AnswersBody = ({
     if (timer >= 110) {
       setGameOver(true);
       setGameState("answer-submitted");
-      clearInterval(myInterval);
     }
   }, [timer]);
-
-  const startTimer = () => {
-    if (timerStarted) return;
-    setTimerStarted(true);
-    const timerInterval = setInterval(() => {
-      setTimer((prev) => prev + 1);
-    }, 100);
-
-    setMyInterval(timerInterval);
-  };
-
-  useEffect(() => {
-    startTimer();
-
-    setTimer(0);
-
-    return () => {
-      clearInterval(myInterval);
-    };
-  }, [question]);
 
   const handleAnswerSelection = (answer) => {
     setUserSelected(answer.optionText);
     const wasUserCorrect = answer.isCorrect;
 
-    setWasCorrect(wasUserCorrect);
-    setModalVisible(true);
-    clearInterval(myInterval);
-
     if (wasUserCorrect) {
+      setWasCorrect(true);
+      setModalVisible(true);
       soundContext.playSound("solo_correct");
-    } else {
+      onAnswer(answer.optionText);
+    } else if (allowRedo && !secondChance) {
+      setSecondChance(true); // Allow the user to pick again
+      setRedoMessage("You have 1 more chance to pick the correct option!");
       soundContext.playSound("solo_fail");
+    } else {
+      setWasCorrect(false);
+      setModalVisible(true);
+      soundContext.playSound("solo_fail");
+      onAnswer(answer.optionText);
     }
-    onAnswer(answer.optionText); // Call onAnswer regardless of correctness
   };
 
   const handleContinue = () => {
@@ -93,9 +81,22 @@ const AnswersBody = ({
     setGameOver(true);
   };
 
+  useEffect(() => {
+    if (removeTwoIncorrectAnswers) {
+      const incorrectAnswers = shuffledAnswers.filter(
+        (answer) => !answer.isCorrect
+      );
+      const answersToRemove = incorrectAnswers
+        .slice(0, 2)
+        .map((answer) => answer.optionText);
+      setRemovedAnswers(answersToRemove);
+    }
+  }, [removeTwoIncorrectAnswers, shuffledAnswers]);
+
   const renderAnswersBody = ({ answer }) => {
     let textColor = "black";
     let buttonVariant = "alternative";
+    let isHighlighted = hintActive && answer.isCorrect;
 
     if (userSelected === answer.optionText) {
       if (answer.isCorrect) {
@@ -114,6 +115,8 @@ const AnswersBody = ({
           marginBottom: 10,
           marginHorizontal: "1%",
           position: "relative",
+          opacity: removedAnswers.includes(answer.optionText) ? 0.5 : 1, // Adjust opacity for removed answers
+          backgroundColor: isHighlighted ? "yellow" : "transparent", // Highlight correct answer when hint is active
         }}
       >
         <CustomButton
@@ -124,7 +127,11 @@ const AnswersBody = ({
           }}
           isSelected={isSelected[answer.optionText]}
           onPress={() => handleAnswerSelection(answer)}
-          disabled={userSelected !== null || showMessage} // Disable button after selection
+          disabled={
+            (userSelected !== null && !secondChance) ||
+            showMessage ||
+            removedAnswers.includes(answer.optionText)
+          } // Disable button for removed answers and after selection if no second chance
         >
           <View
             style={{
@@ -142,14 +149,13 @@ const AnswersBody = ({
               style={{
                 color: textColor,
                 fontSize: 18,
-                // answer.optionText.length > 40 ? RFValue(14) : RFValue(16),
                 fontWeight: "bold",
                 fontFamily: "poppins-regular",
                 textAlign: "center",
                 flexShrink: 1,
               }}
               adjustsFontSizeToFitWidth={false}
-              numberOfLines={3} // test a little more to make sure options look good
+              numberOfLines={3}
             >
               {answer.optionText}
             </Text>
@@ -168,6 +174,9 @@ const AnswersBody = ({
         marginBottom: 20,
       }}
     >
+      {allowRedo && (
+        <Text style={{ color: "white", marginBottom: 10 }}>{redoMessage}</Text>
+      )}
       <View
         style={{
           flexDirection: "row",
