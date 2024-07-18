@@ -7,8 +7,29 @@ import formatLastActive from "../../../helpers/formatLastActive";
 import { calculateExp } from "../../../helpers/calculateExp";
 
 export default function RenderKing({ currentFeederKing, categoryName }) {
-  const feederKing = currentFeederKing[0];
-  const previousFeederKing = currentFeederKing[1];
+  // Default profile to use if there is no feederKing
+  const defaultProfile = {
+    scoreAchieved: 1,
+    userDetails: {
+      username: "No King Yet",
+      profile: {
+        country: "AQ",
+        rating: 1200,
+        avatar:
+          "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/home_page_imgs%2Faxoltol-profile-pic.jpg?alt=media&token=1e49a0a3-9d7e-4d0c-bb75-a401c3f14825",
+        experience: 0,
+      },
+    },
+    updatedAt: new Date().toISOString(),
+  };
+
+  const feederKing = currentFeederKing?.[0] || defaultProfile;
+  const previousFeederKing = currentFeederKing?.[1];
+
+  // Ensure profile is set
+  const profile = feederKing.userDetails.profile || {};
+  // Ensure country code is set
+  const countryCode = profile.country || "AQ";
 
   return (
     <View
@@ -63,10 +84,7 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
             >
               {capitalizeFirstLetter(feederKing.userDetails.username)}
             </Text>
-            <CountryFlag
-              isoCode={feederKing.userDetails.profile.country}
-              size={18}
-            />
+            <CountryFlag isoCode={countryCode} size={18} />
           </View>
           <Text
             style={{
@@ -75,9 +93,7 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
               color: "#fff",
               marginLeft: 5,
             }}
-          >
-            {feederKing.userDetails.profile.countryName}
-          </Text>
+          ></Text>
           <Text
             style={{
               fontFamily: "poppins-regular",
@@ -112,14 +128,14 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
                 color: "#0074da",
               }}
             >
-              Rating: {feederKing.userDetails.profile.rating || 1200}
+              Rating: {profile.rating || 1200}
             </Text>
           </View>
         </View>
         <View style={{ alignItems: "center", marginLeft: 10 }}>
           <Image
             source={{
-              uri: feederKing.userDetails.profile.avatar,
+              uri: profile.avatar,
             }}
             style={{
               width: 50,
@@ -143,13 +159,13 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
                 color: "#000",
               }}
             >
-              Level{" "}
-              {calculateExp(feederKing.userDetails.profile.experience || 0)}
+              Level {calculateExp(profile.experience || 0)}
             </Text>
           </View>
         </View>
       </View>
       {previousFeederKing &&
+        previousFeederKing.userDetails &&
         previousFeederKing.userDetails.username !==
           feederKing.userDetails.username && (
           <>
@@ -169,7 +185,7 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
                   marginLeft: 6,
                 }}
                 isoCode={
-                  previousFeederKing.userDetails.profile?.country || "na"
+                  previousFeederKing.userDetails.profile?.country || "AQ"
                 }
                 size={13}
               />

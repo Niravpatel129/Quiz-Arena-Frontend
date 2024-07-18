@@ -10,7 +10,7 @@ import Leaderboard from "./Leaderboard";
 
 export default function FeederHome({ categoryName, handleEnter }) {
   const navigation = useNavigation();
-  const [currentFeederKing, setCurrentFeederKing] = React.useState(undefined);
+  const [currentFeederKing, setCurrentFeederKing] = React.useState([]);
 
   useEffect(() => {
     const fetchFeederKing = async () => {
@@ -21,6 +21,7 @@ export default function FeederHome({ categoryName, handleEnter }) {
         setCurrentFeederKing(response.data);
       } catch (error) {
         console.log("error", error);
+        setCurrentFeederKing([]); // Set to empty array if there is an error
       }
     };
 
@@ -84,28 +85,26 @@ export default function FeederHome({ categoryName, handleEnter }) {
           width: "100%",
         }}
       >
-        {currentFeederKing && (
-          <View
-            style={{
-              backgroundColor: "white",
-              padding: 20,
-              borderRadius: 10,
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5,
-              width: "105%",
-              alignItems: "center",
-            }}
-          >
-            <RenderKing
-              currentFeederKing={currentFeederKing}
-              categoryName={categoryName}
-            />
-            <Leaderboard />
-          </View>
-        )}
+        <View
+          style={{
+            backgroundColor: "white",
+            padding: 20,
+            borderRadius: 10,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+            elevation: 5,
+            width: "105%",
+            alignItems: "center",
+          }}
+        >
+          <RenderKing
+            currentFeederKing={currentFeederKing}
+            categoryName={categoryName}
+          />
+          <Leaderboard />
+        </View>
       </View>
       <View
         style={{

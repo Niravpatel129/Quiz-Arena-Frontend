@@ -70,12 +70,6 @@ export default function MainGame({
     }
   };
 
-  const resetTimer = () => {
-    stopTimer();
-    setTimer(0);
-    startTimer();
-  };
-
   const handleFiftyFifty = () => {
     if (activeOption) return; // Prevent multiple options at the same time
     stopTimer();
@@ -94,7 +88,7 @@ export default function MainGame({
 
   const handleBonusTime = () => {
     if (activeOption) return; // Prevent multiple options at the same time
-    resetTimer();
+    stopTimer();
     setActiveOption("BonusTime");
     console.log("Bonus time pressed");
   };
