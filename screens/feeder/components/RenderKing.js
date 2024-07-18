@@ -26,9 +26,7 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
   const feederKing = currentFeederKing?.[0] || defaultProfile;
   const previousFeederKing = currentFeederKing?.[1];
 
-  // Ensure profile is set
   const profile = feederKing.userDetails.profile || {};
-  // Ensure country code is set
   const countryCode = profile.country || "AQ";
 
   return (
@@ -135,7 +133,9 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
         <View style={{ alignItems: "center", marginLeft: 10 }}>
           <Image
             source={{
-              uri: profile.avatar,
+              uri:
+                profile.avatar ||
+                "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/home_page_imgs%2Faxoltol-profile-pic.jpg?alt=media&token=1e49a0a3-9d7e-4d0c-bb75-a401c3f14825",
             }}
             style={{
               width: 50,
