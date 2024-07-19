@@ -1,30 +1,31 @@
-import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   Animated,
-  Pressable,
   SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { newRequest } from '../../api/newRequest';
-import InviteModal from '../../components/InviteModal/InviteModal';
-import LeaderboardsList from './components/LeaderboardsList';
-import getParentCategoryIcon from './getParentCategoryIcon';
+} from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { newRequest } from "../../api/newRequest";
+import InviteModal from "../../components/InviteModal/InviteModal";
+import LeaderboardsList from "./components/LeaderboardsList";
+import getParentCategoryIcon from "./getParentCategoryIcon";
+import BottomModal from "./bottomModal";
 
 export default function CategoryScreen2({ route }) {
   const navigation = useNavigation();
   const category = route.params?.categoryName;
   const categoryId = route.params?.categoryId;
   const categoryParent = route.params?.parentCategory;
-  const [selectedTab, setSelectedTab] = React.useState('Top Players');
+  const [selectedTab, setSelectedTab] = React.useState("Top Players");
   const [leaderboardData, setLeaderboardData] = React.useState([]);
   const [isModalVisible, setModalVisible] = React.useState(false);
+  const [isBottomModalVisible, setBottomModalVisible] = React.useState(false);
 
   useEffect(() => {
     const fetchTopPlayers = async () => {
@@ -59,35 +60,50 @@ export default function CategoryScreen2({ route }) {
     fetchTopPlayers();
   }, []);
 
+  const handleSelectMode = (mode) => {
+    setBottomModalVisible(false);
+    if (mode === "1v1") {
+      navigation.navigate("Queue", {
+        categoryId: categoryId,
+        categoryName: category,
+      });
+    } else if (mode === "solo") {
+      navigation.navigate("Solo", {
+        categoryId: categoryId,
+        categoryName: category,
+      });
+    }
+  };
+
   const renderButton = ({ onPress, text }) => {
     return (
       <TouchableOpacity style={{}} onPress={onPress}>
         <LinearGradient
-          colors={['#EC80B4', '#3F95F2']}
+          colors={["#EC80B4", "#3F95F2"]}
           start={{ x: 0.0, y: 0.0 }}
           end={{ x: 1.0, y: 1.0 }}
           style={{
             borderRadius: 25,
             shadowOffset: { width: 1, height: 1 },
-            shadowColor: '#6F7CC8',
+            shadowColor: "#6F7CC8",
             shadowOpacity: 0.5,
             shadowRadius: 8,
             elevation: 5,
             minWidth: 180,
             padding: 10,
             height: 50,
-            alignItems: 'center',
-            justifyContent: 'center',
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <Text
             style={{
               fontSize: 16,
-              fontWeight: '600',
-              fontStyle: 'normal',
-              textAlign: 'center',
-              color: '#FFFFFF',
-              fontFamily: 'poppins-bold',
+              fontWeight: "600",
+              fontStyle: "normal",
+              textAlign: "center",
+              color: "#FFFFFF",
+              fontFamily: "poppins-bold",
             }}
           >
             {text}
@@ -103,18 +119,18 @@ export default function CategoryScreen2({ route }) {
         <TouchableOpacity
           onPress={onPress}
           style={{
-            alignItems: 'center',
+            alignItems: "center",
             paddingVertical: 12,
             borderRadius: 25,
-            backgroundColor: isSelected ? '#EFF8FF' : '#ffffff',
+            backgroundColor: isSelected ? "#EFF8FF" : "#ffffff",
             flex: 1,
           }}
         >
           <Text
             style={{
-              fontFamily: isSelected ? 'poppins-semiBold' : 'poppins-regular',
+              fontFamily: isSelected ? "poppins-semiBold" : "poppins-regular",
               fontSize: RFValue(12),
-              color: isSelected ? '#3F95F2' : '#000000',
+              color: isSelected ? "#3F95F2" : "#000000",
             }}
           >
             {text}
@@ -126,10 +142,10 @@ export default function CategoryScreen2({ route }) {
     return (
       <View
         style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          width: '100%',
-          backgroundColor: '#ffffff',
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "100%",
+          backgroundColor: "#ffffff",
           borderRadius: 25,
           paddingVertical: 10,
           paddingHorizontal: 10,
@@ -137,14 +153,14 @@ export default function CategoryScreen2({ route }) {
         }}
       >
         {renderTabButton({
-          isSelected: selectedTab === 'Top Players',
-          text: 'Top Players',
-          onPress: () => setSelectedTab('Top Players'),
+          isSelected: selectedTab === "Top Players",
+          text: "Top Players",
+          onPress: () => setSelectedTab("Top Players"),
         })}
         {renderTabButton({
-          isSelected: selectedTab === 'Top Contributers',
-          text: 'Top Contributers',
-          onPress: () => setSelectedTab('Top Contributers'),
+          isSelected: selectedTab === "Top Contributers",
+          text: "Top Contributers",
+          onPress: () => setSelectedTab("Top Contributers"),
         })}
       </View>
     );
@@ -152,7 +168,7 @@ export default function CategoryScreen2({ route }) {
 
   return (
     <LinearGradient
-      colors={['#ffffff', '#e5e5e5']}
+      colors={["#ffffff", "#e5e5e5"]}
       style={{
         flex: 1,
       }}
@@ -168,21 +184,26 @@ export default function CategoryScreen2({ route }) {
               setModalVisible(false);
             }}
           />
+          <BottomModal
+            isVisible={isBottomModalVisible}
+            onClose={() => setBottomModalVisible(false)}
+            onSelectMode={handleSelectMode}
+          />
           <View
             style={{
-              height: '100%',
+              height: "100%",
               padding: 10,
-              alignItems: 'center',
+              alignItems: "center",
             }}
           >
             <View
               style={{
-                width: '100%',
+                width: "100%",
                 marginTop: 10,
                 paddingTop: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
                 marginBottom: 20,
               }}
             >
@@ -191,16 +212,16 @@ export default function CategoryScreen2({ route }) {
                   navigation.goBack();
                 }}
               >
-                <Ionicons name='ios-arrow-back' size={24} color='black' />
+                <Ionicons name="ios-arrow-back" size={24} color="black" />
               </TouchableOpacity>
               <Text
                 style={{
                   fontSize: 32,
-                  fontWeight: '600',
-                  fontStyle: 'normal',
-                  textAlign: 'center',
-                  color: '#000000',
-                  fontFamily: 'poppins-semiBold',
+                  fontWeight: "600",
+                  fontStyle: "normal",
+                  textAlign: "center",
+                  color: "#000000",
+                  fontFamily: "poppins-semiBold",
                 }}
               >
                 Play
@@ -213,75 +234,61 @@ export default function CategoryScreen2({ route }) {
             </View>
             <View
               style={{
-                flexDirection: 'row',
+                flexDirection: "row",
                 gap: 10,
               }}
             >
-              <Pressable
-                onPress={() => {
-                  navigation.navigate('Solo', {
-                    categoryId: categoryId,
-                    categoryName: category,
-                  });
+              <LinearGradient
+                colors={["#FF8F3B", "#FF4646"]}
+                start={{ x: 0.0, y: 0.0 }}
+                end={{ x: 1.0, y: 1.0 }}
+                style={{
+                  width: 192,
+                  height: 188,
+                  borderRadius: 25,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  shadowOffset: { width: 1, height: 1 },
+                  shadowColor: "#6F7CC8",
+                  shadowOpacity: 0.5,
+                  shadowRadius: 8,
+                  elevation: 5,
+                  padding: 10,
                 }}
               >
-                <LinearGradient
-                  colors={['#FF8F3B', '#FF4646']}
-                  start={{ x: 0.0, y: 0.0 }}
-                  end={{ x: 1.0, y: 1.0 }}
+                <Ionicons
+                  name={getParentCategoryIcon(categoryParent)}
+                  size={100}
+                  color="white"
                   style={{
-                    width: 192,
-                    height: 188,
-                    borderRadius: 25,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    shadowOffset: { width: 1, height: 1 },
-                    shadowColor: '#6F7CC8',
-                    shadowOpacity: 0.5,
-                    shadowRadius: 8,
-                    elevation: 5,
-                    padding: 10,
+                    transform: [{ rotate: "-5deg" }],
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: category.length > 20 ? RFValue(12) : RFValue(15),
+                    fontWeight: "600",
+                    lineHeight: 22,
+                    fontStyle: "normal",
+                    textAlign: "center",
+                    color: "#FFFFFF",
+                    fontFamily: "poppins-bold",
+                    marginTop: -10,
+                    textTransform: "capitalize",
                   }}
                 >
-                  <Ionicons
-                    name={getParentCategoryIcon(categoryParent)}
-                    size={100}
-                    color='white'
-                    style={{
-                      transform: [{ rotate: '-5deg' }],
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontSize: category.length > 20 ? RFValue(12) : RFValue(15),
-                      fontWeight: '600',
-                      lineHeight: 22,
-                      fontStyle: 'normal',
-                      textAlign: 'center',
-                      color: '#FFFFFF',
-                      fontFamily: 'poppins-bold',
-                      marginTop: -10,
-                      textTransform: 'capitalize',
-                    }}
-                  >
-                    {category}
-                  </Text>
-                </LinearGradient>
-              </Pressable>
-
+                  {category}
+                </Text>
+              </LinearGradient>
               {/* Buttons Container*/}
               <View
                 style={{
-                  justifyContent: 'space-between',
+                  justifyContent: "space-between",
                 }}
               >
                 {renderButton({
-                  onPress: () =>
-                    navigation.navigate('Queue', {
-                      categoryId: categoryId,
-                      categoryName: category,
-                    }),
-                  text: 'Play',
+                  onPress: () => setBottomModalVisible(true),
+                  text: "Play",
                 })}
                 {renderButton({
                   onPress: () => {
@@ -289,21 +296,21 @@ export default function CategoryScreen2({ route }) {
 
                     setModalVisible(true);
                   },
-                  text: 'Invite',
+                  text: "Invite",
                 })}
                 {renderButton({
                   onPress: () =>
-                    navigation.navigate('Contribute', {
+                    navigation.navigate("Contribute", {
                       category: category,
                       parentCategory: categoryParent,
                     }),
-                  text: 'Contribute',
+                  text: "Contribute",
                 })}
               </View>
             </View>
             <View
               style={{
-                width: '100%',
+                width: "100%",
                 marginTop: 40,
                 marginVertical: 15,
               }}
@@ -312,26 +319,26 @@ export default function CategoryScreen2({ route }) {
             </View>
             <View
               style={{
-                width: '100%',
+                width: "100%",
               }}
             >
-              {leaderboardData && selectedTab === 'Top Players' && (
+              {leaderboardData && selectedTab === "Top Players" && (
                 <LeaderboardsList data={leaderboardData} />
               )}
             </View>
 
-            {selectedTab === 'Top Contributers' && (
+            {selectedTab === "Top Contributers" && (
               <View
                 style={{
-                  width: '100%',
+                  width: "100%",
                 }}
               >
                 <LeaderboardsList
                   data={[
                     {
                       placement: 1,
-                      username: 'Admin',
-                      country: 'us',
+                      username: "Admin",
+                      country: "us",
                       rating: 1321,
                     },
                   ]}
