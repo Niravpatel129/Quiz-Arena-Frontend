@@ -18,6 +18,14 @@ export default function MainGame({
   score,
   setGameOver,
   categoryName,
+  fiftyFiftyCount,
+  redoCount,
+  bonusTimeCount,
+  hintCount,
+  setFiftyFiftyCount,
+  setRedoCount,
+  setBonusTimeCount,
+  setHintCount,
 }) {
   const opacity = useSharedValue(0);
   const [timer, setTimer] = useState(0);
@@ -71,32 +79,35 @@ export default function MainGame({
   };
 
   const handleFiftyFifty = () => {
-    if (activeOption) return; // Prevent multiple options at the same time
+    if (activeOption || fiftyFiftyCount <= 0) return; // Prevent multiple options at the same time or if limit is reached
     stopTimer();
     setActiveOption("50/50");
+    setFiftyFiftyCount(fiftyFiftyCount - 1); // Decrement count
     console.log("50:50 pressed");
     setRemoveTwoIncorrectAnswers(true); // Trigger 50/50 option
   };
 
   const handleRedo = () => {
-    if (activeOption) return; // Prevent multiple options at the same time
+    if (activeOption || redoCount <= 0) return; // Prevent multiple options at the same time or if limit is reached
     stopTimer();
     setActiveOption("Redo");
+    setRedoCount(redoCount - 1); // Decrement count
     setAllowRedo(true); // Allow user to select two answers
     console.log("Redo pressed");
   };
 
   const handleBonusTime = () => {
-    if (activeOption) return; // Prevent multiple options at the same time
+    if (activeOption || bonusTimeCount <= 0) return; // Prevent multiple options at the same time or if limit is reached
     stopTimer();
-    setActiveOption("BonusTime");
+    setBonusTimeCount(bonusTimeCount - 1); // Decrease count
     console.log("Bonus time pressed");
   };
 
   const handleHint = () => {
-    if (activeOption) return; // Prevent multiple options at the same time
+    if (activeOption || hintCount <= 0) return; // Prevent multiple options at the same time or if limit is reached
     stopTimer();
     setActiveOption("Hint");
+    setHintCount(hintCount - 1); // Decrease count
     setHintActive(true); // Activate hint
     console.log("Hint pressed");
   };
@@ -221,6 +232,10 @@ export default function MainGame({
           onRedo={handleRedo}
           onBonusTime={handleBonusTime}
           onHint={handleHint}
+          fiftyFiftyCount={fiftyFiftyCount} // Pass count
+          redoCount={redoCount} // Pass count
+          bonusTimeCount={bonusTimeCount} // Pass count
+          hintCount={hintCount} // Pass count
         />
       </View>
     </Animated.View>
