@@ -7,35 +7,54 @@ const BonusOptionButton = ({
   onRedo,
   onBonusTime,
   onHint,
-  notificationCount = 3,
+  fiftyFiftyCount,
+  redoCount,
+  bonusTimeCount,
+  hintCount,
 }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onFiftyFifty} style={styles.button}>
+      <TouchableOpacity
+        onPress={onFiftyFifty}
+        style={[styles.button, fiftyFiftyCount <= 0 && styles.disabledButton]}
+        disabled={fiftyFiftyCount <= 0}
+      >
         <Icon name="md-remove-circle-outline" size={30} color="#FFF" />
         <View style={styles.notificationBadge}>
-          <Text style={styles.notificationText}>{notificationCount}</Text>
+          <Text style={styles.notificationText}>{fiftyFiftyCount}</Text>
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={onRedo} style={styles.button}>
+      <TouchableOpacity
+        onPress={onRedo}
+        style={[styles.button, redoCount <= 0 && styles.disabledButton]}
+        disabled={redoCount <= 0}
+      >
         <Icon name="md-sync" size={30} color="#FFF" />
         <View style={styles.notificationBadge}>
-          <Text style={styles.notificationText}>{notificationCount}</Text>
+          <Text style={styles.notificationText}>{redoCount}</Text>
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={onBonusTime} style={styles.button}>
+      <TouchableOpacity
+        onPress={onBonusTime}
+        style={[styles.button, bonusTimeCount <= 0 && styles.disabledButton]}
+        disabled={bonusTimeCount <= 0}
+      >
         <Icon name="md-time-outline" size={30} color="#FFF" />
         <View style={styles.notificationBadge}>
-          <Text style={styles.notificationText}>{notificationCount}</Text>
+          <Text style={styles.notificationText}>{bonusTimeCount}</Text>
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={onHint} style={styles.button}>
+      <TouchableOpacity
+        onPress={onHint}
+        style={[styles.button, hintCount <= 0 && styles.disabledButton]}
+        disabled={hintCount <= 0}
+      >
         <Icon name="md-bulb-outline" size={30} color="#FFF" />
         <View style={styles.notificationBadge}>
-          <Text style={styles.notificationText}>{notificationCount}</Text>
+          <Text style={styles.notificationText}>{hintCount}</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -68,6 +87,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
+  },
+  disabledButton: {
+    backgroundColor: "#A9A9A9", // Grey out the button when disabled
   },
   notificationBadge: {
     position: "absolute",
