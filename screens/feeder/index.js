@@ -20,6 +20,14 @@ const FeederScreen = ({ route }) => {
     results,
     gameOver,
     setGameOver,
+    fiftyFiftyCount,
+    redoCount,
+    bonusTimeCount,
+    hintCount,
+    setFiftyFiftyCount,
+    setRedoCount,
+    setBonusTimeCount,
+    setHintCount,
   } = useFeederGameMode(route.params?.categoryId?.replace(/-/g, " "));
   const [showCountdown, setShowCountdown] = useState(false);
 
@@ -87,6 +95,14 @@ const FeederScreen = ({ route }) => {
         showPickPercentage={showPickPercentage}
         continueGame={continueGame}
         setGameOver={setGameOver}
+        fiftyFiftyCount={fiftyFiftyCount} // pass count
+        redoCount={redoCount} // pass count
+        bonusTimeCount={bonusTimeCount} // pass count
+        hintCount={hintCount} // pass count
+        setFiftyFiftyCount={setFiftyFiftyCount} // pass setter
+        setRedoCount={setRedoCount} // pass setter
+        setBonusTimeCount={setBonusTimeCount} // pass setter
+        setHintCount={setHintCount} // pass setter
       />
     );
   };
