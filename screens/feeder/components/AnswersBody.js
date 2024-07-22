@@ -96,7 +96,6 @@ const AnswersBody = ({
   const renderAnswersBody = ({ answer }) => {
     let textColor = "black";
     let buttonVariant = "alternative";
-    let isHighlighted = hintActive && answer.isCorrect;
 
     if (userSelected === answer.optionText) {
       if (answer.isCorrect) {
@@ -108,6 +107,11 @@ const AnswersBody = ({
       }
     }
 
+    if (hintActive && answer.isCorrect) {
+      buttonVariant = "default"; // Change background color to highlight correct answer
+      textColor = "white"; // Change text color to white for visibility
+    }
+
     return (
       <View
         style={{
@@ -116,7 +120,6 @@ const AnswersBody = ({
           marginHorizontal: "1%",
           position: "relative",
           opacity: removedAnswers.includes(answer.optionText) ? 0.5 : 1, // Adjust opacity for removed answers
-          backgroundColor: isHighlighted ? "yellow" : "transparent", // Highlight correct answer when hint is active
         }}
       >
         <CustomButton
