@@ -11,6 +11,52 @@ import {
 } from "react-native";
 import { TriangleColorPicker } from "react-native-color-picker";
 
+// function to convert HSV to RGB
+function hsvToRgb(h, s, v) {
+  let r, g, b;
+
+  let i = Math.floor(h * 6);
+  let f = h * 6 - i;
+  let p = v * (1 - s);
+  let q = v * (1 - f * s);
+  let t = v * (1 - (1 - f) * s);
+
+  switch (i % 6) {
+    case 0:
+      (r = v), (g = t), (b = p);
+      break;
+    case 1:
+      (r = q), (g = v), (b = p);
+      break;
+    case 2:
+      (r = p), (g = v), (b = t);
+      break;
+    case 3:
+      (r = p), (g = q), (b = v);
+      break;
+    case 4:
+      (r = t), (g = p), (b = v);
+      break;
+    case 5:
+      (r = v), (g = p), (b = q);
+      break;
+  }
+
+  return `rgb(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(
+    b * 255
+  )})`;
+}
+
+// function to convert HSV to hex
+function hsvToHex(h, s, v) {
+  const rgb = hsvToRgb(h, s, v);
+  const result = rgb
+    .match(/\d+/g)
+    .map((x) => parseInt(x).toString(16).padStart(2, "0"))
+    .join("");
+  return `#${result}`;
+}
+
 const CombinedModal = ({
   visible,
   onClose,
@@ -23,7 +69,11 @@ const CombinedModal = ({
   const [selectedAvatar, setSelectedAvatar] = useState(defaultAvatar);
   const [selectedColor, setSelectedColor] = useState(defaultColor || "#ffffff");
   const [usernameInputVisible, setUsernameInputVisible] = useState(false);
+  const [iconInputVisible, setIconInputVisible] = useState(false);
   const [error, setError] = useState("");
+  const [avatarBackground, setAvatarBackground] = useState(
+    defaultColor || "#ffffff"
+  );
 
   const avatars = [
     "https://cdn.discordapp.com/attachments/1200130684010909737/1263752058801229944/axolotl-teacher-wout-bg-2.png?ex=669ffd92&is=669eac12&hm=9936613749b09be89261d0e660e6bff65b56f00d4d5c48440ab660d0f17f808d&",
@@ -46,14 +96,16 @@ const CombinedModal = ({
       setNewUsername(defaultUsername);
       setSelectedAvatar(defaultAvatar);
       setSelectedColor(defaultColor || "#ffffff");
+      setAvatarBackground(defaultColor || "#ffffff");
       setError("");
     }
   }, [visible, defaultUsername, defaultAvatar, defaultColor]);
 
   const handleSave = async () => {
     try {
-      await onSave(selectedAvatar, newUsername, selectedColor);
+      await onSave(selectedAvatar, newUsername, avatarBackground);
       setUsernameInputVisible(false);
+      setIconInputVisible(false);
       setError("");
     } catch (e) {
       setError("This username is already taken.");
@@ -64,8 +116,17 @@ const CombinedModal = ({
     setNewUsername(defaultUsername);
     setSelectedAvatar(defaultAvatar);
     setSelectedColor(defaultColor || "#ffffff");
+    setAvatarBackground(defaultColor || "#ffffff");
     setUsernameInputVisible(false);
+    setIconInputVisible(false);
     setError("");
+  };
+
+  const handleSetBackground = () => {
+    const color = selectedColor;
+    const colorString = hsvToHex(color.h / 360, color.s, color.v); // Adjust HSV to the 0-1 range for conversion
+    console.log("Set background button pressed. Selected color:", colorString);
+    setAvatarBackground(colorString);
   };
 
   return (
@@ -82,7 +143,14 @@ const CombinedModal = ({
       >
         <View style={styles.modalViewContainer}>
           <View style={styles.modalView}>
-            <Image source={{ uri: selectedAvatar }} style={styles.avatar} />
+            <View
+              style={[styles.avatar, { backgroundColor: avatarBackground }]}
+            >
+              <Image
+                source={{ uri: selectedAvatar }}
+                style={styles.avatarImage}
+              />
+            </View>
             <TextInput
               editable={usernameInputVisible}
               maxLength={8}
@@ -92,31 +160,39 @@ const CombinedModal = ({
               placeholderTextColor="#C7C7CD"
             />
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
-            {usernameInputVisible ? (
-              <View style={styles.buttonRow}>
-                <TouchableOpacity
-                  style={[styles.modalButton, styles.cancelButton]}
-                  onPress={handleCancel}
-                >
-                  <Text style={styles.buttonText}>Cancel</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.modalButton, styles.saveButton]}
-                  onPress={handleSave}
-                >
-                  <Text style={styles.buttonText}>Save</Text>
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <TouchableOpacity
-                style={styles.changeUsernameButton}
-                onPress={() => setUsernameInputVisible(true)}
-              >
-                <Text style={styles.changeUsernameButtonText}>
-                  Change Username
-                </Text>
-              </TouchableOpacity>
-            )}
+            <View style={styles.buttonRow}>
+              {usernameInputVisible || iconInputVisible ? (
+                <>
+                  <TouchableOpacity
+                    style={[styles.modalButton, styles.cancelButton]}
+                    onPress={handleCancel}
+                  >
+                    <Text style={styles.buttonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.modalButton, styles.saveButton]}
+                    onPress={handleSave}
+                  >
+                    <Text style={styles.buttonText}>Save</Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <TouchableOpacity
+                    style={styles.changeButton}
+                    onPress={() => setUsernameInputVisible(true)}
+                  >
+                    <Text style={styles.changeButtonText}>Change Username</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.changeButton}
+                    onPress={() => setIconInputVisible(true)}
+                  >
+                    <Text style={styles.changeButtonText}>Change Icon</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
             <ScrollView contentContainerStyle={styles.avatarContainer}>
               {avatars.map((avatar, index) => (
                 <TouchableOpacity
@@ -132,11 +208,24 @@ const CombinedModal = ({
                 Select Background Color:
               </Text>
               <TriangleColorPicker
-                onColorSelected={(color) => setSelectedColor(color)}
+                onColorChange={(color) => setSelectedColor(color)}
+                onColorSelected={(color) => {
+                  const colorString = hsvToHex(color.h / 360, color.s, color.v);
+                  setSelectedColor(colorString);
+                  console.log("Color selected:", colorString);
+                }}
                 style={styles.colorPicker}
                 defaultColor={selectedColor}
                 hideSliders={true}
               />
+              <TouchableOpacity
+                style={styles.setBackgroundButton}
+                onPress={handleSetBackground}
+              >
+                <Text style={styles.setBackgroundButtonText}>
+                  Set Background
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -175,10 +264,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: -10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  avatarImage: {
     width: 90,
     height: 90,
     borderRadius: 50,
-    marginBottom: -10,
   },
   modalTextInput: {
     height: 40,
@@ -192,14 +288,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignItems: "center",
   },
-  changeUsernameButton: {
+  changeButton: {
     backgroundColor: "#007AFF",
     padding: 10,
-    borderRadius: 8,
-    marginBottom: 10,
+    borderRadius: 10,
+    marginHorizontal: 5,
     alignItems: "center",
   },
-  changeUsernameButtonText: {
+  changeButtonText: {
     color: "white",
     fontSize: 14,
   },
@@ -252,6 +348,17 @@ const styles = StyleSheet.create({
   colorPicker: {
     width: 100,
     height: 100,
+  },
+  setBackgroundButton: {
+    backgroundColor: "#007AFF",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+    alignItems: "center",
+  },
+  setBackgroundButtonText: {
+    color: "white",
+    fontSize: 14,
   },
 });
 
