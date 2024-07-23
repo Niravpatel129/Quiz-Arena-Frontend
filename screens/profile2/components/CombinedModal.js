@@ -9,8 +9,7 @@ import {
   ScrollView,
   Text,
 } from "react-native";
-import { ColorPicker } from "react-native-color-picker";
-import Slider from "@react-native-community/slider";
+import { TriangleColorPicker } from "react-native-color-picker";
 
 const CombinedModal = ({
   visible,
@@ -132,11 +131,11 @@ const CombinedModal = ({
               <Text style={styles.colorPickerLabel}>
                 Select Background Color:
               </Text>
-              <ColorPicker
+              <TriangleColorPicker
                 onColorSelected={(color) => setSelectedColor(color)}
                 style={styles.colorPicker}
                 defaultColor={selectedColor}
-                sliderComponent={Slider}
+                hideSliders={true}
               />
             </View>
           </View>
