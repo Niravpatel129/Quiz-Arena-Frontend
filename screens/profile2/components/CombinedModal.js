@@ -9,6 +9,8 @@ import {
   ScrollView,
   Text,
 } from "react-native";
+import { ColorPicker } from "react-native-color-picker";
+import Slider from "@react-native-community/slider";
 
 const CombinedModal = ({
   visible,
@@ -16,9 +18,11 @@ const CombinedModal = ({
   onSave,
   defaultUsername,
   defaultAvatar,
+  defaultColor,
 }) => {
   const [newUsername, setNewUsername] = useState(defaultUsername);
   const [selectedAvatar, setSelectedAvatar] = useState(defaultAvatar);
+  const [selectedColor, setSelectedColor] = useState(defaultColor || "#ffffff");
   const [usernameInputVisible, setUsernameInputVisible] = useState(false);
   const [error, setError] = useState("");
 
@@ -42,13 +46,14 @@ const CombinedModal = ({
     if (visible) {
       setNewUsername(defaultUsername);
       setSelectedAvatar(defaultAvatar);
+      setSelectedColor(defaultColor || "#ffffff");
       setError("");
     }
-  }, [visible, defaultUsername, defaultAvatar]);
+  }, [visible, defaultUsername, defaultAvatar, defaultColor]);
 
   const handleSave = async () => {
     try {
-      await onSave(selectedAvatar, newUsername);
+      await onSave(selectedAvatar, newUsername, selectedColor);
       setUsernameInputVisible(false);
       setError("");
     } catch (e) {
@@ -59,6 +64,7 @@ const CombinedModal = ({
   const handleCancel = () => {
     setNewUsername(defaultUsername);
     setSelectedAvatar(defaultAvatar);
+    setSelectedColor(defaultColor || "#ffffff");
     setUsernameInputVisible(false);
     setError("");
   };
@@ -75,7 +81,7 @@ const CombinedModal = ({
         activeOpacity={1}
         onPress={onClose}
       >
-        <TouchableOpacity activeOpacity={1} style={styles.modalViewContainer}>
+        <View style={styles.modalViewContainer}>
           <View style={styles.modalView}>
             <Image source={{ uri: selectedAvatar }} style={styles.avatar} />
             <TextInput
@@ -118,13 +124,23 @@ const CombinedModal = ({
                   key={index}
                   onPress={() => setSelectedAvatar(avatar)}
                 >
-                  {/* <Image source={{ uri: avatar }} style={styles.avatarOption} /> */}
                   <Image source={{ uri: avatar }} style={styles.avatarOption} />
                 </TouchableOpacity>
               ))}
             </ScrollView>
+            <View style={styles.colorPickerContainer}>
+              <Text style={styles.colorPickerLabel}>
+                Select Background Color:
+              </Text>
+              <ColorPicker
+                onColorSelected={(color) => setSelectedColor(color)}
+                style={styles.colorPicker}
+                defaultColor={selectedColor}
+                sliderComponent={Slider}
+              />
+            </View>
           </View>
-        </TouchableOpacity>
+        </View>
       </TouchableOpacity>
     </Modal>
   );
@@ -141,7 +157,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    padding: 15,
+    paddingTop: 20,
+    paddingBottom: 40, // Add padding to the bottom to avoid cutting off
+    paddingHorizontal: 10,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -151,17 +169,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    maxHeight: "80%",
+    maxHeight: "70%",
   },
   modalView: {
+    width: "100%",
     alignItems: "center",
-    height: "80%",
   },
   avatar: {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
     borderRadius: 50,
-    marginBottom: 10,
+    marginBottom: -10,
   },
   modalTextInput: {
     height: 40,
@@ -222,6 +240,19 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
     marginTop: 10,
+  },
+  colorPickerContainer: {
+    marginTop: 20,
+    alignItems: "center",
+  },
+  colorPickerLabel: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  colorPicker: {
+    width: 100,
+    height: 100,
   },
 });
 
