@@ -1,12 +1,20 @@
 import React from "react";
 import { Image } from "expo-image";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import CountryFlag from "react-native-country-flag";
 import Modal from "react-native-modal";
+import { Ionicons } from "@expo/vector-icons";
 
 const TopPlayersModal = ({ isVisible, onClose, leaderboard }) => {
+  const navigation = useNavigation();
   // shows the top 20 players
   const top20Players = leaderboard.slice(0, 20);
+
+  const handleProfileNavigation = (userId) => {
+    onClose();
+    navigation.navigate("PublicProfile", { userId });
+  };
 
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose}>
@@ -15,20 +23,33 @@ const TopPlayersModal = ({ isVisible, onClose, leaderboard }) => {
           backgroundColor: "white",
           borderRadius: 10,
           padding: 20,
-          maxHeight: "70%",
+          maxHeight: "60%",
           width: "90%",
           alignSelf: "center",
+          paddingTop: 40,
         }}
       >
+        <TouchableOpacity
+          onPress={onClose}
+          style={{
+            position: "absolute",
+            top: 10,
+            left: 10,
+            zIndex: 1,
+          }}
+        >
+          <Ionicons name="arrow-back-outline" size={24} color="#0074da" />
+        </TouchableOpacity>
         <ScrollView>
           {top20Players.map((player, index) => {
-            const { userDetails, scoreAchieved } = player;
+            const { userDetails, scoreAchieved, _id } = player;
             const { profile, username } = userDetails || {};
             const { avatar, country } = profile || {};
 
             return (
-              <View
+              <TouchableOpacity
                 key={index}
+                onPress={() => handleProfileNavigation(_id)}
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
@@ -97,31 +118,10 @@ const TopPlayersModal = ({ isVisible, onClose, leaderboard }) => {
                 >
                   {scoreAchieved || 0}
                 </Text>
-              </View>
+              </TouchableOpacity>
             );
           })}
         </ScrollView>
-        <TouchableOpacity
-          onPress={onClose}
-          style={{
-            backgroundColor: "#0074da",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            borderRadius: 10,
-            marginTop: 20,
-            alignSelf: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: "poppins-semiBold",
-              fontSize: 16,
-              color: "white",
-            }}
-          >
-            Close
-          </Text>
-        </TouchableOpacity>
       </View>
     </Modal>
   );
