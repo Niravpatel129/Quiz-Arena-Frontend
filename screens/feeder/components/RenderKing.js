@@ -27,7 +27,7 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
   const previousFeederKing = currentFeederKing?.[1];
 
   const profile = feederKing.userDetails.profile || {};
-  const countryCode = profile.country || "AQ";
+  const countryCode = profile.country || "US";
 
   return (
     <View
@@ -185,7 +185,7 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
                   marginLeft: 6,
                 }}
                 isoCode={
-                  previousFeederKing.userDetails.profile?.country || "AQ"
+                  previousFeederKing.userDetails.profile?.country || "US"
                 }
                 size={13}
               />
