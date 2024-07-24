@@ -1,36 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image } from "expo-image";
 import { Text, View, TouchableOpacity } from "react-native";
 import CountryFlag from "react-native-country-flag";
+import TopPlayersModal from "./TopPlayersModal";
 
-const leaderboardData = [
-  {
-    username: "William James",
-    country: "US",
-    countryName: "United States",
-    score: 11220,
-    avatar:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg", // Placeholder image URL
-  },
-  {
-    username: "John David",
-    country: "CA",
-    countryName: "Canada",
-    score: 11000,
-    avatar:
-      "https://upload.wikimedia.org/wikipedia/commons/6/69/June_odd-eyed-cat_cropped.jpg", // Placeholder image URL
-  },
-  {
-    username: "Richard Michael",
-    country: "CA",
-    countryName: "Canada",
-    score: 11220,
-    avatar:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Black_white_cat_on_fence.jpg/220px-Black_white_cat_on_fence.jpg", // Placeholder image URL
-  },
-];
+export default function Leaderboard({ leaderboard }) {
+  const [isModalVisible, setModalVisible] = useState(false);
 
-export default function Leaderboard() {
+  // Display only the bottom 3 players after the first one
+  const bottomPlayers = leaderboard.slice(1, 4);
+
   return (
     <View
       style={{
@@ -41,6 +20,11 @@ export default function Leaderboard() {
         marginBottom: -30,
       }}
     >
+      <TopPlayersModal
+        isVisible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        leaderboard={leaderboard}
+      />
       <View
         style={{
           backgroundColor: "#DCEDFD",
@@ -60,17 +44,17 @@ export default function Leaderboard() {
         <Text
           style={{
             fontFamily: "poppins-semiBold",
-            fontSize: 16, // decreased by 20%
+            fontSize: 16,
             color: "#0074da",
           }}
         >
           Leaderboard
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Text
             style={{
               fontFamily: "poppins-semiBold",
-              fontSize: 11, // decreased by 20%
+              fontSize: 11,
               color: "#2CC672",
             }}
           >
@@ -78,71 +62,77 @@ export default function Leaderboard() {
           </Text>
         </TouchableOpacity>
       </View>
-      {leaderboardData.map((player, index) => (
-        <View
-          key={index}
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: 10,
-            padding: 10,
-            borderRadius: 10,
-            backgroundColor: "#f9f9f9",
-            borderWidth: 1,
-            borderColor:
-              index === 0 ? "#FFD700" : index === 1 ? "#C0C0C0" : "#CD7F32",
-          }}
-        >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+      {bottomPlayers.map((player, index) => {
+        const { userDetails, scoreAchieved } = player;
+        const { profile, username } = userDetails || {};
+        const { avatar, country } = profile || {};
+
+        return (
+          <View
+            key={index}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: 10,
+              padding: 10,
+              borderRadius: 10,
+              backgroundColor: "#f9f9f9",
+              borderWidth: 1,
+              borderColor:
+                index === 0 ? "#C0C0C0" : index === 1 ? "#CD7F32" : "#0074da",
+            }}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text
+                style={{
+                  fontFamily: "poppins-semiBold",
+                  fontSize: 14,
+                  color: "#0074da",
+                  marginRight: 10,
+                }}
+              >
+                {index + 2}
+              </Text>
+              <Image
+                source={{
+                  uri: avatar || "https://example.com/default-avatar.png",
+                }}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 25,
+                  marginRight: 10,
+                }}
+              />
+              <View>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Text
+                    style={{
+                      fontFamily: "poppins-semiBold",
+                      fontSize: 13,
+                      color: "#000",
+                      marginRight: 5,
+                    }}
+                  >
+                    {username || "Unknown"}
+                  </Text>
+                  <CountryFlag isoCode={country || "US"} size={12} />
+                </View>
+              </View>
+            </View>
             <Text
               style={{
                 fontFamily: "poppins-semiBold",
-                fontSize: 14, // decreased by 20%
+                fontSize: 13,
                 color: "#0074da",
-                marginRight: 10,
               }}
             >
-              {index + 1}
+              {scoreAchieved || 0}
             </Text>
-            <Image
-              source={{
-                uri: player.avatar,
-              }}
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 25,
-                marginRight: 10,
-              }}
-            />
-            <View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text
-                  style={{
-                    fontFamily: "poppins-semiBold",
-                    fontSize: 13, // decreased by 20%
-                    color: "#000",
-                    marginRight: 5,
-                  }}
-                >
-                  {player.username}
-                </Text>
-                <CountryFlag isoCode={player.country} size={12} />
-              </View>
-            </View>
           </View>
-          <Text
-            style={{
-              fontFamily: "poppins-semiBold",
-              fontSize: 13, // decreased by 20%
-              color: "#0074da",
-            }}
-          >
-            {player.score}
-          </Text>
-        </View>
-      ))}
+        );
+      })}
     </View>
   );
 }
