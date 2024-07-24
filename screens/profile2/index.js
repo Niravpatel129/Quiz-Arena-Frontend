@@ -63,7 +63,7 @@ export default function Profile2({ userId }) {
     setModalVisible(false);
     // Update user avatar and username on the server
     newRequest
-      .put(`/users`, { avatar, username })
+      .put(`/users/avatar`, { avatar, username })
       .then(() => {
         Toast.show({
           type: "success",
@@ -389,7 +389,7 @@ export default function Profile2({ userId }) {
             )}
             {renderStatsCard("Avg Score", 85, 3)}
           </Animated.View>
-          <View
+          {/* <View
             style={{
               paddingBottom: 60,
             }}
@@ -441,7 +441,7 @@ export default function Profile2({ userId }) {
                 })}
               </View>
             </Animated.View>
-          </View>
+          </View> */}
         </ScrollView>
       </SafeAreaView>
     </View>
