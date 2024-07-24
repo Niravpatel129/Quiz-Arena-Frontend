@@ -16,7 +16,7 @@ export default function FeederHome({ categoryName, handleEnter }) {
     const fetchFeederKing = async () => {
       try {
         const response = await newRequest.get(
-          `/feeder/king/${categoryName.replace(/ /g, "-")}`
+          `/feeder/king/${categoryName.replace(/ /g, "-")}` // Use this to render leaderboard rank 1-4
         );
         setCurrentFeederKing(response.data);
       } catch (error) {
