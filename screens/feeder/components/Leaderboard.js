@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Image } from "expo-image";
 import { Text, View, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import CountryFlag from "react-native-country-flag";
 import TopPlayersModal from "./TopPlayersModal";
 
 export default function Leaderboard({ leaderboard }) {
   const [isModalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
 
   // Display only the bottom 3 players after the first one
   const bottomPlayers = leaderboard.slice(1, 4);
@@ -63,13 +65,16 @@ export default function Leaderboard({ leaderboard }) {
         </TouchableOpacity>
       </View>
       {bottomPlayers.map((player, index) => {
-        const { userDetails, scoreAchieved } = player;
+        const { userDetails, scoreAchieved, _id } = player;
         const { profile, username } = userDetails || {};
         const { avatar, country } = profile || {};
 
         return (
-          <View
+          <TouchableOpacity
             key={index}
+            onPress={() =>
+              navigation.navigate("PublicProfile", { userId: _id })
+            }
             style={{
               flexDirection: "row",
               alignItems: "center",
@@ -96,7 +101,9 @@ export default function Leaderboard({ leaderboard }) {
               </Text>
               <Image
                 source={{
-                  uri: avatar || "https://example.com/default-avatar.png",
+                  uri:
+                    avatar ||
+                    "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Ffree-axolotl-thinking-wout-bg.png?alt=media&token=89e08dcf-7983-4805-9b39-978f86ae3d0b",
                 }}
                 style={{
                   width: 40,
@@ -130,7 +137,7 @@ export default function Leaderboard({ leaderboard }) {
             >
               {scoreAchieved || 0}
             </Text>
-          </View>
+          </TouchableOpacity>
         );
       })}
     </View>
