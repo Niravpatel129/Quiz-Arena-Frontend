@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { newRequest } from "../../../api/newRequest";
 import CustomButton from "./CustomButton";
@@ -10,22 +10,36 @@ import Leaderboard from "./Leaderboard";
 
 export default function FeederHome({ categoryName, handleEnter }) {
   const navigation = useNavigation();
-  const [currentFeederKing, setCurrentFeederKing] = React.useState([]);
+  const [currentFeederKing, setCurrentFeederKing] = useState([]);
+  const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
     const fetchFeederKing = async () => {
       try {
         const response = await newRequest.get(
-          `/feeder/king/${categoryName.replace(/ /g, "-")}` // Use this to render leaderboard rank 1-4
+          `/feeder/king/${categoryName.replace(/ /g, "-")}`
         );
         setCurrentFeederKing(response.data);
       } catch (error) {
-        console.log("error", error);
+        console.error("Error fetching Feeder King:", error);
         setCurrentFeederKing([]); // Set to empty array if there is an error
       }
     };
 
+    const fetchLeaderboard = async () => {
+      try {
+        const response = await newRequest.get(
+          `/feeder/king/leaders/${categoryName.replace(/ /g, "-")}`
+        );
+        setLeaderboard(response.data);
+      } catch (error) {
+        console.error("Error fetching leaderboard:", error);
+        setLeaderboard([]); // Set to empty array if there is an error
+      }
+    };
+
     fetchFeederKing();
+    fetchLeaderboard();
   }, [categoryName]);
 
   return (
@@ -103,7 +117,7 @@ export default function FeederHome({ categoryName, handleEnter }) {
             currentFeederKing={currentFeederKing}
             categoryName={categoryName}
           />
-          <Leaderboard />
+          <Leaderboard leaderboard={leaderboard} />
         </View>
       </View>
       <View
