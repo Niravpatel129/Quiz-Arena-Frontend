@@ -32,6 +32,15 @@ const ModalContainer = ({
   );
 
   const freeAvatars = [
+    "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2FFree-fighting-axolotl-wout-bg.png?alt=media&token=647452aa-1a33-4e3d-b43c-793484ed80d5",
+    "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Ffree-axolotl-thinking-wout-bg.png?alt=media&token=89e08dcf-7983-4805-9b39-978f86ae3d0b",
+    "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Ffree-axolotl-singing-wout-bg.png?alt=media&token=ac70949c-09b8-4a20-a19c-65040c1ea5c9",
+    "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Ffree-axolotl-laying-wout-bg.png?alt=media&token=5d450f0b-426e-483e-827c-cfdf4a0c9039",
+    "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Ffree-axolotl-angry-wout-bg.png?alt=media&token=160ffcfe-e558-4137-9358-09b98a6b1e0f",
+    "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Ffree-axolotl-floating-wout-bg.png?alt=media&token=15741842-42aa-4277-9e09-952c0b6483ee",
+  ];
+
+  const lockedAvatars = [
     "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Ffree-axolotl-wizard.png?alt=media&token=9fe71f84-ec70-491b-9d2b-85887f0e1b51",
     "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Ffree-axolotl-viking-2.png?alt=media&token=13ed55a1-e9b8-48cc-953b-9ca9180360a5",
     "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Ffree-axolotl-soccer-wout-bg.png?alt=media&token=6ccb55aa-1fb3-41b6-b851-c67b9be8b5e7",
@@ -46,9 +55,6 @@ const ModalContainer = ({
     "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Ffree-axolotl-cop.png?alt=media&token=0a1fe3b9-fc4e-499a-9aab-cf5f9d4b0116",
     "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Ffree-axolotl-clown-wout-bg.png?alt=media&token=2c06147d-6904-4099-a1a9-68b5a1174862",
     "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Ffree-axolotl-artist-1.png?alt=media&token=ea41e290-b626-4ba5-b2fe-cd7f508f9677",
-  ];
-
-  const lockedAvatars = [
     "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2FAxolotl-pirate.png?alt=media&token=d3ce5fe9-3074-43ec-b778-d4bcc8f7b1b6",
     "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Faxolotl-artist.png?alt=media&token=84edd532-cb33-48bb-a188-92c1ec6e990b",
     "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Faxolotl-astronaut-1.png?alt=media&token=1eaec453-e78d-4f23-95bc-78bd01be878a",
@@ -93,6 +99,7 @@ const ModalContainer = ({
   const handleSave = async () => {
     try {
       await onSave(selectedAvatar, newUsername, avatarBackground);
+
       setUsernameInputVisible(false);
       setIconInputVisible(false);
       setError("");
