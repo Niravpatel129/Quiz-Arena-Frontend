@@ -85,6 +85,7 @@ const ModalContainer = ({
     "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Faxolotl-teacher-wout-bg.png?alt=media&token=1354117e-135f-4b06-a62c-2b126f4de3e2",
     "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Faxolotl-you-lost.png?alt=media&token=6777d007-9afa-4046-8aba-013cdc673910",
     "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Faxoltol-you-won.png?alt=media&token=c79e7629-3625-4541-bd1f-2472ef258be4",
+    "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/axolotl-profile-avatars%2Faxolotl-prince-wout-bg.png?alt=media&token=3a6e359d-88e7-435c-a8d1-80fe563ba15a",
   ];
 
   useEffect(() => {
@@ -120,10 +121,25 @@ const ModalContainer = ({
   };
 
   const handleSetBackground = () => {
-    const color = selectedColor;
-    const colorString = hsvToHex(color.h / 360, color.s, color.v); // Adjust HSV to the 0-1 range for conversion
-    console.log("Set background button pressed. Selected color:", colorString);
-    setAvatarBackground(colorString);
+    if (
+      typeof selectedColor === "object" &&
+      selectedColor.h !== undefined &&
+      selectedColor.s !== undefined &&
+      selectedColor.v !== undefined
+    ) {
+      const colorString = hsvToHex(
+        selectedColor.h / 360,
+        selectedColor.s,
+        selectedColor.v
+      ); // Adjust HSV to the 0-1 range for conversion
+      console.log(
+        "Set background button pressed. Selected color:",
+        colorString
+      );
+      setAvatarBackground(colorString);
+    } else {
+      console.error("Invalid color format:", selectedColor);
+    }
   };
 
   return (

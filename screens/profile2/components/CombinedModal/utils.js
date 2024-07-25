@@ -1,4 +1,3 @@
-// utils.js
 export function hsvToRgb(h, s, v) {
   let r, g, b;
 
@@ -36,9 +35,13 @@ export function hsvToRgb(h, s, v) {
 
 export function hsvToHex(h, s, v) {
   const rgb = hsvToRgb(h, s, v);
-  const result = rgb
-    .match(/\d+/g)
-    .map((x) => parseInt(x).toString(16).padStart(2, "0"))
-    .join("");
-  return `#${result}`;
+  const matches = rgb.match(/\d+/g);
+  if (matches) {
+    const result = matches
+      .map((x) => parseInt(x).toString(16).padStart(2, "0"))
+      .join("");
+    return `#${result}`;
+  } else {
+    throw new Error("Invalid RGB string format");
+  }
 }

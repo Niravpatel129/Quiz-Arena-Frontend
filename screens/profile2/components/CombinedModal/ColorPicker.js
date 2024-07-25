@@ -6,7 +6,10 @@ const ColorPicker = ({ selectedColor, setSelectedColor }) => {
   return (
     <View style={styles.container}>
       <TriangleColorPicker
-        onColorSelected={(color) => setSelectedColor(color)}
+        onColorChange={(color) => {
+          const { h, s, v } = color;
+          setSelectedColor({ h, s, v });
+        }}
         style={styles.colorPicker}
         defaultColor={selectedColor}
         hideSliders={true}

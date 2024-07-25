@@ -6,17 +6,17 @@ const UsernameInput = ({
   setNewUsername,
   usernameInputVisible,
   error,
-  originalUsername,
 }) => {
   return (
     <View>
       <TextInput
         editable={usernameInputVisible}
         maxLength={8}
+        minxLength={3}
         style={styles.modalTextInput}
-        value={newUsername}
+        value={usernameInputVisible ? newUsername : ""}
         onChangeText={setNewUsername}
-        placeholder={originalUsername}
+        placeholder={usernameInputVisible ? "" : newUsername}
         placeholderTextColor="#C7C7CD"
       />
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
