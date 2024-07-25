@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   colorPicker: {
     width: 100,
     height: 100,
+    paddingBottom: 10,
   },
 });
 

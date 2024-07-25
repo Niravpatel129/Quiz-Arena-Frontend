@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   Text,
+  TouchableWithoutFeedback,
 } from "react-native";
 import UsernameInput from "./UsernameInput";
 import AvatarSelection from "./AvatarSelection";
@@ -137,77 +138,81 @@ const ModalContainer = ({
         activeOpacity={1}
         onPress={onClose}
       >
-        <View style={styles.modalViewContainer}>
-          <View style={styles.modalView}>
-            <View
-              style={[styles.avatar, { backgroundColor: avatarBackground }]}
-            >
-              <Image
-                source={{ uri: selectedAvatar }}
-                style={styles.avatarImage}
-              />
-            </View>
-            <UsernameInput
-              newUsername={newUsername}
-              setNewUsername={setNewUsername}
-              usernameInputVisible={usernameInputVisible}
-              error={error}
-            />
-            <View style={styles.buttonRow}>
-              {usernameInputVisible || iconInputVisible ? (
-                <>
-                  <TouchableOpacity
-                    style={[styles.modalButton, styles.cancelButton]}
-                    onPress={handleCancel}
-                  >
-                    <Text style={styles.buttonText}>Cancel</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.modalButton, styles.saveButton]}
-                    onPress={handleSave}
-                  >
-                    <Text style={styles.buttonText}>Save</Text>
-                  </TouchableOpacity>
-                </>
-              ) : (
-                <>
-                  <TouchableOpacity
-                    style={styles.changeButton}
-                    onPress={() => setUsernameInputVisible(true)}
-                  >
-                    <Text style={styles.changeButtonText}>Change Username</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.changeButton}
-                    onPress={() => setIconInputVisible(true)}
-                  >
-                    <Text style={styles.changeButtonText}>Change Icon</Text>
-                  </TouchableOpacity>
-                </>
-              )}
-            </View>
-            <ScrollView style={styles.scrollViewContainer}>
-              <AvatarSelection
-                freeAvatars={freeAvatars}
-                lockedAvatars={lockedAvatars}
-                selectedAvatar={selectedAvatar}
-                setSelectedAvatar={setSelectedAvatar}
-              />
-            </ScrollView>
-            <View style={styles.colorPickerContainer}>
-              <ColorPicker
-                selectedColor={selectedColor}
-                setSelectedColor={setSelectedColor}
-              />
-              <TouchableOpacity
-                style={styles.setButton}
-                onPress={handleSetBackground}
+        <TouchableWithoutFeedback>
+          <View style={styles.modalViewContainer}>
+            <View style={styles.modalView}>
+              <View
+                style={[styles.avatar, { backgroundColor: avatarBackground }]}
               >
-                <Text style={styles.buttonText}>Set Background</Text>
-              </TouchableOpacity>
+                <Image
+                  source={{ uri: selectedAvatar }}
+                  style={styles.avatarImage}
+                />
+              </View>
+              <UsernameInput
+                newUsername={newUsername}
+                setNewUsername={setNewUsername}
+                usernameInputVisible={usernameInputVisible}
+                error={error}
+              />
+              <View style={styles.buttonRow}>
+                {usernameInputVisible || iconInputVisible ? (
+                  <>
+                    <TouchableOpacity
+                      style={[styles.modalButton, styles.cancelButton]}
+                      onPress={handleCancel}
+                    >
+                      <Text style={styles.buttonText}>Cancel</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.modalButton, styles.saveButton]}
+                      onPress={handleSave}
+                    >
+                      <Text style={styles.buttonText}>Save</Text>
+                    </TouchableOpacity>
+                  </>
+                ) : (
+                  <>
+                    <TouchableOpacity
+                      style={styles.changeButton}
+                      onPress={() => setUsernameInputVisible(true)}
+                    >
+                      <Text style={styles.changeButtonText}>
+                        Change Username
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.changeButton}
+                      onPress={() => setIconInputVisible(true)}
+                    >
+                      <Text style={styles.changeButtonText}>Change Icon</Text>
+                    </TouchableOpacity>
+                  </>
+                )}
+              </View>
+              <ScrollView style={styles.scrollViewContainer}>
+                <AvatarSelection
+                  freeAvatars={freeAvatars}
+                  lockedAvatars={lockedAvatars}
+                  selectedAvatar={selectedAvatar}
+                  setSelectedAvatar={setSelectedAvatar}
+                />
+              </ScrollView>
+              <View style={styles.colorPickerContainer}>
+                <ColorPicker
+                  selectedColor={selectedColor}
+                  setSelectedColor={setSelectedColor}
+                />
+                <TouchableOpacity
+                  style={styles.setButton}
+                  onPress={handleSetBackground}
+                >
+                  <Text style={styles.buttonText}>Set Background</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </TouchableOpacity>
     </Modal>
   );

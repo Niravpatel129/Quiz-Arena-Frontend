@@ -6,6 +6,7 @@ const UsernameInput = ({
   setNewUsername,
   usernameInputVisible,
   error,
+  originalUsername,
 }) => {
   return (
     <View>
@@ -15,6 +16,7 @@ const UsernameInput = ({
         style={styles.modalTextInput}
         value={newUsername}
         onChangeText={setNewUsername}
+        placeholder={originalUsername}
         placeholderTextColor="#C7C7CD"
       />
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
