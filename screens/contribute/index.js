@@ -226,6 +226,7 @@ export default function Contribute({ route }) {
                 }}
               >
                 <Image
+                  cachePolicy='memory-disk'
                   resizeMode='contain'
                   style={{
                     width: '100%',

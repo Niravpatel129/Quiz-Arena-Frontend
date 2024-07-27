@@ -209,6 +209,7 @@ export default function QueueScreen2({ route }) {
         </View>
         <View>
           <Image
+            cachePolicy='memory-disk'
             source={{
               uri: userData?.avatar || '',
             }}
@@ -320,6 +321,7 @@ export default function QueueScreen2({ route }) {
               }}
             >
               <Image
+                cachePolicy='memory-disk'
                 source={require('../../assets/vs_icon.png')}
                 style={{ width: 100, height: 100 }}
               />

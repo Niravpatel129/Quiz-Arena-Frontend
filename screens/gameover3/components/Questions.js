@@ -60,6 +60,7 @@ export default function Questions({ questions }) {
         </Text>
         {questionData.QuestionImage && (
           <Image
+            cachePolicy='memory-disk'
             contentFit='contain'
             source={{ uri: questionData.QuestionImage }}
             style={{ width: 150, height: 150, marginBottom: 10 }}
@@ -167,6 +168,7 @@ export default function Questions({ questions }) {
         >
           {showYourAvatar && (
             <Image
+              cachePolicy='memory-disk'
               source={{
                 uri:
                   questionData.PlayerAnswers.you.playerAvatar ||
@@ -205,6 +207,7 @@ export default function Questions({ questions }) {
         >
           {showOpponentAvatar && (
             <Image
+              cachePolicy='memory-disk'
               source={{
                 uri:
                   questionData.PlayerAnswers.opponent.playerAvatar ||

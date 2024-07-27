@@ -78,6 +78,7 @@ export default function PlayersList({ players }) {
           >
             <Image
               source={{ uri: player.userAvatar }}
+              cachePolicy='memory-disk'
               style={{ width: 40, height: 40, borderRadius: 20, marginRight: 10 }}
             />
             <View

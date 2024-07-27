@@ -232,6 +232,7 @@ export default function Chat({
                 }}
               >
                 <Image
+                  cachePolicy='memory-disk'
                   style={{ width: 50, height: 50, borderRadius: 25 }}
                   source={{
                     uri: chat.chatingWith?.avatar,

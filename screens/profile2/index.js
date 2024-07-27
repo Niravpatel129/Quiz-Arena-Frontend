@@ -49,6 +49,11 @@ export default function Profile2({ userId }) {
   }, []);
 
   const renderTrophyCard = ({ title, image }) => {
+    console.log('🚀  image:', image);
+    if (image.includes('cloudinary') || image.includes('discordapp')) {
+      image = 'https://cdn-icons-png.flaticon.com/512/476/476851.png';
+    }
+
     return (
       <View
         key={title}
@@ -61,11 +66,10 @@ export default function Profile2({ userId }) {
         ]}
       >
         <Image
+          cachePolicy='memory-disk'
           contentFit='contain'
           source={{
-            uri:
-              image ||
-              'https://res.cloudinary.com/dwu4qop1o/image/upload/v1708638053/Style1_1_gjosgx.png',
+            uri: image || 'https://cdn-icons-png.flaticon.com/512/476/476851.png',
           }}
           style={{
             width: 100,
@@ -258,6 +262,7 @@ export default function Profile2({ userId }) {
               ]}
             >
               <Image
+                cachePolicy='memory-disk'
                 style={{
                   width: 140,
                   height: 140,
@@ -418,8 +423,7 @@ export default function Profile2({ userId }) {
               >
                 {renderTrophyCard({
                   title: 'Early Bird',
-                  image:
-                    'https://res.cloudinary.com/dwu4qop1o/image/upload/v1708638053/Style1_1_gjosgx.png',
+                  image: 'https://cdn-icons-png.flaticon.com/512/476/476851.png',
                 })}
                 {userData?.awards?.map((trophy) => {
                   return renderTrophyCard({

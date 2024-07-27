@@ -35,6 +35,7 @@ export default function TopThree({ data }) {
             }}
           >
             <Image
+              cachePolicy='memory-disk'
               source={{
                 uri: avatar,
               }}

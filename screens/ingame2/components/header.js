@@ -35,6 +35,7 @@ export default function Header({ timeRemaining, yourData, opponentData }) {
         }}
       >
         <Image
+          cachePolicy='memory-disk'
           source={{
             uri: isOpponent ? opponentData?.avatar : yourData?.avatar,
           }}

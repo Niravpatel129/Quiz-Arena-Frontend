@@ -156,6 +156,7 @@ export default function Challange({ myData, opponentData, category }) {
           }}
         >
           <Image
+            cachePolicy='memory-disk'
             source={{
               uri:
                 avatar ||

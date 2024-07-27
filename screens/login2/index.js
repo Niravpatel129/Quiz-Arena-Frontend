@@ -130,6 +130,7 @@ export default function Login() {
             }}
           >
             <Image
+              cachePolicy='memory-disk'
               onLoad={onImageLoad}
               style={{
                 width: 200,

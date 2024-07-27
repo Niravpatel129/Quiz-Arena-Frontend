@@ -14,6 +14,7 @@ export default function PlayerCards({ yourData, opponentData }) {
         }}
       >
         <Image
+          cachePolicy='memory-disk'
           source={{
             uri: playerData?.avatar || 'https://i.ytimg.com/vi/V24RwC2o_KE/maxresdefault.jpg',
           }}
@@ -94,6 +95,7 @@ export default function PlayerCards({ yourData, opponentData }) {
       }}
     >
       <ImageBackground
+        cachePolicy='memory-disk'
         source={require('../../../assets/cards.png')}
         style={{
           width: '100%',

@@ -64,6 +64,7 @@ const RematchModal = ({
           </View>
 
           <Image
+            cachePolicy='memory-disk'
             style={{
               width: 100,
               height: 100,

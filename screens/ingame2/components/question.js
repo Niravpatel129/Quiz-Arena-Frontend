@@ -41,6 +41,7 @@ export default function Question({ question, questionImage, setImageLoaded }) {
           }}
         >
           <Image
+            cachePolicy='memory-disk'
             onLoad={() => setImageLoaded(true)}
             contentFit='contain'
             source={{

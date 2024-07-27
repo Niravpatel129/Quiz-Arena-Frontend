@@ -33,6 +33,7 @@ const PlayerCard = ({ player, flipped }) => {
       }}
     >
       <Image
+        cachePolicy='memory-disk'
         style={{
           width: 50,
           height: 50,
@@ -222,6 +223,7 @@ const InGame = ({ InGameData, timer, roundNumber }) => {
         </Text>
         {InGameData?.RoundData?.image && (
           <Image
+            cachePolicy='memory-disk'
             resizeMode='contain'
             style={{
               width: 200,

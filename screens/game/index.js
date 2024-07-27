@@ -13,7 +13,12 @@ function PreloadImages({ imagesToPreload }) {
   return (
     <>
       {imagesToPreload.map((url, index) => (
-        <Image key={index} source={{ uri: url }} style={{ width: 0, height: 0, opacity: 0 }} />
+        <Image
+          cachePolicy='memory-disk'
+          key={index}
+          source={{ uri: url }}
+          style={{ width: 0, height: 0, opacity: 0 }}
+        />
       ))}
     </>
   );
@@ -182,7 +187,7 @@ const GameScreen = ({ navigation, route }) => {
         (player) => player.socketId !== mySocketId,
       );
       console.log('🚀  results:', results);
-      
+
       navigation.reset({
         index: 0,
         routes: [
