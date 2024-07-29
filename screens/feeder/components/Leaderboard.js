@@ -100,6 +100,7 @@ export default function Leaderboard({ leaderboard }) {
                 {index + 2}
               </Text>
               <Image
+                cachePolicy="memory-disk"
                 source={{
                   uri:
                     avatar ||

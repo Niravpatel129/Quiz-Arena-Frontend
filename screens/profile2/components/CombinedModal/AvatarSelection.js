@@ -17,7 +17,11 @@ const AvatarSelection = ({
             onPress={() => setSelectedAvatar(avatar)}
           >
             <View style={styles.avatarWrapper}>
-              <Image source={{ uri: avatar }} style={styles.avatarOption} />
+              <Image
+                cachePolicy="memory-disk"
+                source={{ uri: avatar }}
+                style={styles.avatarOption}
+              />
             </View>
           </TouchableOpacity>
         ))}

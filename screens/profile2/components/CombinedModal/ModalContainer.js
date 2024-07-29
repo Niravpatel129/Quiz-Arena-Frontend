@@ -161,6 +161,7 @@ const ModalContainer = ({
                 style={[styles.avatar, { backgroundColor: avatarBackground }]}
               >
                 <Image
+                  cachePolicy="memory-disk"
                   source={{ uri: selectedAvatar }}
                   style={styles.avatarImage}
                 />

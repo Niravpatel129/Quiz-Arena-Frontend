@@ -16,6 +16,7 @@ const AvatarModal = ({ visible, onClose, onSelectAvatar, avatars }) => {
       style={styles.avatarContainer}
     >
       <Image
+        cachePolicy="memory-disk"
         source={{ uri: item.uri }}
         style={[styles.avatarImage, item.locked && styles.lockedAvatar]}
       />

@@ -81,6 +81,7 @@ const TopPlayersModal = ({ isVisible, onClose, leaderboard }) => {
                     {index + 1}
                   </Text>
                   <Image
+                    cachePolicy="memory-disk"
                     source={{
                       uri: avatar || "https://example.com/default-avatar.png",
                     }}
