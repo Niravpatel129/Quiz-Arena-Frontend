@@ -207,12 +207,14 @@ const ModalContainer = ({
                 )}
               </View>
               <ScrollView style={styles.scrollViewContainer}>
-                <AvatarSelection
-                  freeAvatars={freeAvatars}
-                  lockedAvatars={lockedAvatars}
-                  selectedAvatar={selectedAvatar}
-                  setSelectedAvatar={setSelectedAvatar}
-                />
+                <View style={styles.avatarContainer}>
+                  <AvatarSelection
+                    freeAvatars={freeAvatars}
+                    lockedAvatars={lockedAvatars}
+                    selectedAvatar={selectedAvatar}
+                    setSelectedAvatar={setSelectedAvatar}
+                  />
+                </View>
               </ScrollView>
               <View style={styles.colorPickerContainer}>
                 <ColorPicker
@@ -309,8 +311,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   scrollViewContainer: {
-    maxHeight: "50%", // Adjust this value as needed
+    maxHeight: "50%",
     marginVertical: 10,
+  },
+  avatarContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
   colorPickerContainer: {
     flexDirection: "row",
