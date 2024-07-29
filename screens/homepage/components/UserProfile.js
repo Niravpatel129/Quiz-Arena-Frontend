@@ -45,7 +45,7 @@ export default function UserProfile({ userData }) {
           }}
         >
           <Image
-            cachePolicy='memory-disk'
+            cachePolicy="memory-disk"
             source={{
               uri:
                 userData?.profile?.avatar ||

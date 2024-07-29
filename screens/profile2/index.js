@@ -81,52 +81,6 @@ export default function Profile2({ userId }) {
       });
   };
 
-  const renderTrophyCard = ({ title, image }) => {
-    console.log("🚀  image:", image);
-    if (image.includes("cloudinary") || image.includes("discordapp")) {
-      image = "https://cdn-icons-png.flaticon.com/512/476/476851.png";
-    }
-
-    return (
-      <View
-        key={title}
-        style={[
-          {
-            alignItems: "center",
-            justifyContent: "center",
-            width: "30%",
-          },
-        ]}
-      >
-        <Image
-          cachePolicy="memory-disk"
-          contentFit="contain"
-          source={{
-            uri:
-              image ||
-              "https://res.cloudinary.com/dwu4qop1o/image/upload/v1708638053/Style1_1_gjosgx.png",
-          }}
-          style={{
-            width: 100,
-            height: 100,
-          }}
-        />
-        <Text
-          style={{
-            marginTop: 10,
-            fontFamily: "poppins-bold",
-            fontSize: 16,
-            color: "#181A17",
-            textAlign: "center",
-            textTransform: "capitalize",
-          }}
-        >
-          {title}
-        </Text>
-      </View>
-    );
-  };
-
   const renderStatsCard = (title, value, variation) => {
     let colors;
     let icon;
@@ -200,33 +154,9 @@ export default function Profile2({ userId }) {
   if (!userData) {
     return null;
   }
-  if (userId && !userData)
-    return (
-      <View
-        style={{
-          height: "100%",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "white",
-        }}
-      >
-        <Text
-          style={{
-            opacity: 0.5,
-          }}
-        >
-          Loading...
-        </Text>
-      </View>
-    );
 
   return (
-    <View
-      style={{
-        height: "100%",
-        backgroundColor: "white",
-      }}
-    >
+    <View style={styles.container}>
       <CombinedModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -235,13 +165,11 @@ export default function Profile2({ userId }) {
         defaultAvatar={selectedAvatar}
       />
 
-      <SafeAreaView>
+      <SafeAreaView style={styles.safeArea}>
         {userId && (
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={{
-              padding: 20,
-            }}
+            style={styles.backButton}
           >
             <Ionicons name="ios-arrow-back" size={24} color="#262625" />
           </TouchableOpacity>
@@ -249,9 +177,7 @@ export default function Profile2({ userId }) {
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{
-            marginHorizontal: 10,
-          }}
+          contentContainerStyle={styles.scrollViewContent}
         >
           <TouchableOpacity
             onPress={() => {
@@ -259,22 +185,10 @@ export default function Profile2({ userId }) {
               setModalVisible(true);
             }}
           >
-            <Animated.View
-              style={[
-                animatedStyle,
-                {
-                  alignItems: "center",
-                  justifyContent: "center",
-                },
-              ]}
-            >
+            <Animated.View style={[animatedStyle, styles.avatarContainer]}>
               <Image
                 cachePolicy="memory-disk"
-                style={{
-                  width: 140,
-                  height: 140,
-                  borderRadius: 150,
-                }}
+                style={styles.avatar}
                 source={{
                   uri:
                     selectedAvatar ||
@@ -285,29 +199,14 @@ export default function Profile2({ userId }) {
             </Animated.View>
           </TouchableOpacity>
 
-          <View
-            style={{
-              textAlign: "center",
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "row",
-              gap: 5,
-              marginTop: 10,
-            }}
-          >
+          <View style={styles.usernameContainer}>
             <TouchableOpacity
               onPress={() => {
                 if (userId) return;
                 setModalVisible(true);
               }}
             >
-              <Text
-                style={{
-                  color: "#262625",
-                  fontSize: 24,
-                  fontFamily: "poppins-regular",
-                }}
-              >
+              <Text style={styles.username}>
                 {newUsername || userData?.username}
               </Text>
             </TouchableOpacity>
@@ -315,79 +214,30 @@ export default function Profile2({ userId }) {
               <CountryFlag isoCode={userData?.country} size={20} />
             )}
           </View>
-          <Text
-            style={{
-              color: "#5E6064",
-              fontSize: 13,
-              fontFamily: "poppins-regular",
-              textAlign: "center",
-              marginBottom: 10,
-            }}
-          >
-            {/* Only show this if its last 5 days */}
+
+          <Text style={styles.lastActiveText}>
             {new Date().getTime() - new Date(userData?.lastActive).getTime() <
             432000000 ? (
               <>Last Active {formatLastActive(userData?.lastActive)}</>
             ) : null}
           </Text>
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text
-              style={{
-                color: "#FF4646",
-                fontSize: 14,
-                fontFamily: "poppins-regular",
-              }}
-            >
+
+          <View style={styles.experienceContainer}>
+            <Text style={styles.experienceText}>
               Rookie | {userData?.experience} XP
             </Text>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: "#EFF8FF",
-                flexDirection: "row",
-                alignItems: "center",
-                paddingVertical: 12,
-                borderRadius: 100,
-                marginTop: 10,
-                paddingHorizontal: 16,
-                gap: 5,
-              }}
-            >
+
+          <View style={styles.ratingContainer}>
+            <View style={styles.rating}>
               <Ionicons name="ios-star" size={24} color="#FDD92C" />
-              <Text
-                style={{
-                  color: "#3F95F2",
-                  fontFamily: "poppins-bold",
-                  fontWeight: 600,
-                }}
-              >
+              <Text style={styles.ratingText}>
                 Average Rating: {userData?.averageRating}
               </Text>
             </View>
           </View>
-          {/* Cards */}
-          <Animated.View
-            style={[
-              animatedStyle,
-              {
-                flexDirection: "row",
-                gap: 5,
-                marginTop: 20,
-              },
-            ]}
-          >
+
+          <Animated.View style={[animatedStyle, styles.statsContainer]}>
             {renderStatsCard("Games", userData?.totalGames || 0, 1)}
             {renderStatsCard(
               "Win Rate",
@@ -396,59 +246,6 @@ export default function Profile2({ userId }) {
             )}
             {renderStatsCard("Avg Score", 85, 3)}
           </Animated.View>
-          {/* <View
-            style={{
-              paddingBottom: 60,
-            }}
-          >
-            <Text
-              style={{
-                marginTop: 20,
-                color: "#5E6064",
-                fontSize: 16,
-                marginBottom: 10,
-                fontFamily: "poppins-bold",
-              }}
-            >
-              Trophies
-            </Text>
-
-            <Animated.View
-              style={[
-                animatedStyle,
-                {
-                  backgroundColor: "#DCEDFD",
-                  padding: 20,
-                  borderRadius: 12,
-                },
-              ]}
-            >
-              <View
-                style={[
-                  {
-                    flexWrap: "wrap",
-                    alignItems: "flex-start",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignContent: "space-between",
-                    gap: 5,
-                  },
-                ]}
-              >
-                {renderTrophyCard({
-                  title: "Early Bird",
-                  image:
-                    "https://res.cloudinary.com/dwu4qop1o/image/upload/v1708638053/Style1_1_gjosgx.png",
-                })}
-                {userData?.awards?.map((trophy) => {
-                  return renderTrophyCard({
-                    title: trophy.name,
-                    image: trophy.image,
-                  });
-                })}
-              </View>
-            </Animated.View>
-          </View> */}
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -456,32 +253,80 @@ export default function Profile2({ userId }) {
 }
 
 const styles = StyleSheet.create({
-  centeredView: {
+  container: {
+    height: "100%",
+    backgroundColor: "white",
+  },
+  safeArea: {
     flex: 1,
+  },
+  backButton: {
+    padding: 20,
+  },
+  scrollViewContent: {
+    paddingHorizontal: 10,
+  },
+  avatarContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  avatar: {
+    width: 140,
+    height: 140,
+    borderRadius: 150,
+  },
+  usernameContainer: {
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    gap: 5,
+    marginTop: 10,
+  },
+  username: {
+    color: "#262625",
+    fontSize: 24,
+    fontFamily: "poppins-regular",
+  },
+  lastActiveText: {
+    color: "#5E6064",
+    fontSize: 13,
+    fontFamily: "poppins-regular",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  experienceContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  experienceText: {
+    color: "#FF4646",
+    fontSize: 14,
+    fontFamily: "poppins-regular",
+  },
+  ratingContainer: {
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
+  rating: {
+    backgroundColor: "#EFF8FF",
+    flexDirection: "row",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    paddingVertical: 12,
+    borderRadius: 100,
+    marginTop: 10,
+    paddingHorizontal: 16,
+    gap: 5,
   },
-  modalTextInput: {
-    height: 40,
-    width: 200,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+  ratingText: {
+    color: "#3F95F2",
+    fontFamily: "poppins-bold",
+    fontWeight: 600,
+  },
+  statsContainer: {
+    flexDirection: "row",
+    gap: 5,
+    marginTop: 20,
   },
 });
