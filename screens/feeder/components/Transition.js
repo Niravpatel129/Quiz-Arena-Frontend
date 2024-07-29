@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   Extrapolate,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
 const Transition = ({ animationText }) => {
   const [index, setIndex] = useState(0); // Current question index
@@ -32,12 +32,7 @@ const Transition = ({ animationText }) => {
       opacity: opacity.value,
       transform: [
         {
-          scale: interpolate(
-            opacity.value,
-            [0, 1],
-            [0.5, 1],
-            Extrapolate.CLAMP
-          ),
+          scale: interpolate(opacity.value, [0, 1], [0.5, 1], Extrapolate.CLAMP),
         },
       ],
     };
@@ -50,18 +45,18 @@ const Transition = ({ animationText }) => {
           styles.textContainer,
           animatedStyle,
           {
-            height: "100%",
+            height: '100%',
             flex: 1,
-            marginTop: "40%",
+            marginTop: '40%',
           },
         ]}
       >
         <Text
           style={{
             fontSize: 30,
-            textAlign: "center",
+            textAlign: 'center',
             letterSpacing: 2,
-            color: "white",
+            color: 'white',
           }}
         >
           {animationText[index]}
@@ -70,22 +65,23 @@ const Transition = ({ animationText }) => {
           <Text
             style={{
               fontSize: 30,
-              textAlign: "center",
+              textAlign: 'center',
               letterSpacing: 2,
-              color: "white",
+              color: 'white',
             }}
           >
             {animationText[index + 1]}
           </Text>
         )}
         <Image
-          source={require("../../../assets/transition-axolotl.png")} // Have a thumbs up mascot image
+          source={require('../../../assets/transition-axolotl.png')} // Have a thumbs up mascot image
+          cachePolicy='memory-disk'
           style={{
             paddingTop: 15,
             width: 300,
             height: 300,
-            justifyContent: "center",
-            alignContent: "center",
+            justifyContent: 'center',
+            alignContent: 'center',
           }}
         />
       </Animated.View>
@@ -96,9 +92,9 @@ const Transition = ({ animationText }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 10,
   },
   textContainer: {
@@ -111,7 +107,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    backgroundColor: "invisible",
+    backgroundColor: 'invisible',
   },
 });
 

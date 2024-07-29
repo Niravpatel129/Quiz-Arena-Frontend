@@ -82,6 +82,11 @@ export default function Profile2({ userId }) {
   };
 
   const renderTrophyCard = ({ title, image }) => {
+    console.log("🚀  image:", image);
+    if (image.includes("cloudinary") || image.includes("discordapp")) {
+      image = "https://cdn-icons-png.flaticon.com/512/476/476851.png";
+    }
+
     return (
       <View
         key={title}
@@ -94,6 +99,7 @@ export default function Profile2({ userId }) {
         ]}
       >
         <Image
+          cachePolicy="memory-disk"
           contentFit="contain"
           source={{
             uri:
@@ -263,6 +269,7 @@ export default function Profile2({ userId }) {
               ]}
             >
               <Image
+                cachePolicy="memory-disk"
                 style={{
                   width: 140,
                   height: 140,

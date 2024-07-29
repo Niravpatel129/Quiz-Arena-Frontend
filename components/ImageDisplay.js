@@ -4,6 +4,7 @@ import { Image, StyleSheet } from 'react-native';
 const ImageDisplay = ({ sourceUri }) => {
   return (
     <Image
+      cachePolicy='memory-disk'
       source={{
         uri: sourceUri,
         headers: {

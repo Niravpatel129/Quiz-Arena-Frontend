@@ -89,6 +89,7 @@ export default function NotificationsScreen({ navigation }) {
                 borderWidth: 3,
                 borderColor: '#5E6064',
               }}
+              cachePolicy='memory-disk'
               source={{
                 uri: 'https://t4.ftcdn.net/jpg/05/69/84/67/360_F_569846700_i3o9u2fhPVVq7iJAzkqMqCwjWSyv53tT.jpg',
                 headers: {

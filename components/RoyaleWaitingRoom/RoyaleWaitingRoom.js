@@ -35,6 +35,7 @@ export default function RoyaleWaitingRoom() {
             1.
           </Text>
           <Image
+            cachePolicy='memory-disk'
             source={{
               uri: 'https://images.pexels.com/photos/127028/pexels-photo-127028.jpeg?auto=compress&cs=tinysrgb&w=800',
             }}
@@ -121,6 +122,7 @@ export default function RoyaleWaitingRoom() {
             }}
           >
             <Image
+              cachePolicy='memory-disk'
               source={{
                 uri: 'https://images.pexels.com/photos/127028/pexels-photo-127028.jpeg?auto=compress&cs=tinysrgb&w=800',
               }}

@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, View, StyleSheet } from "react-native";
+import {
+  ImageBackground,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import useFeederGameMode from "../../hooks/useFeederGameMode";
 import FeederHome from "./components/FeederHome";
 import GameOver from "./components/GameOver";
 import MainGame from "./components/MainGame";
 import Transition from "./components/Transition";
-import { ImageBackground } from "react-native";
 
 const FeederScreen = ({ route }) => {
   const {
@@ -109,6 +114,7 @@ const FeederScreen = ({ route }) => {
 
   return (
     <ImageBackground
+      cachePolicy="memory-disk"
       source={require("../../assets/feeder_background_img.jpeg")}
       style={styles.backgroundImage}
     >

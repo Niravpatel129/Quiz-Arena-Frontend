@@ -2,9 +2,9 @@ import { Image } from "expo-image";
 import React from "react";
 import { Text, View } from "react-native";
 import CountryFlag from "react-native-country-flag";
+import { calculateExp } from "../../../helpers/calculateExp";
 import capitalizeFirstLetter from "../../../helpers/capitalizeFirstLetter";
 import formatLastActive from "../../../helpers/formatLastActive";
-import { calculateExp } from "../../../helpers/calculateExp";
 
 export default function RenderKing({ currentFeederKing, categoryName }) {
   // Default profile to use if there is no feederKing
@@ -132,6 +132,7 @@ export default function RenderKing({ currentFeederKing, categoryName }) {
         </View>
         <View style={{ alignItems: "center", marginLeft: 10 }}>
           <Image
+            cachePolicy="memory-disk"
             source={{
               uri:
                 profile.avatar ||

@@ -125,6 +125,7 @@ export default function SocialsList() {
           }}
         >
           <Image
+            cachePolicy='memory-disk'
             style={{
               width: 50,
               height: 50,

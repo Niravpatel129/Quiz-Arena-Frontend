@@ -107,6 +107,7 @@ export default function GameOver2({ route }) {
         }}
       >
         <Image
+          cachePolicy='memory-disk'
           style={{
             width: 100,
             height: 100,

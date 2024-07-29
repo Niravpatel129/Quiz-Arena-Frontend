@@ -80,6 +80,7 @@ export default function LeaderboardsScreen({ navigation }) {
             }
           >
             <Image
+              cachePolicy='memory-disk'
               style={{
                 width: 90,
                 height: 90,
@@ -175,6 +176,7 @@ export default function LeaderboardsScreen({ navigation }) {
               }
             >
               <Image
+                cachePolicy='memory-disk'
                 style={{ width: 50, height: 50, borderRadius: 25 }}
                 source={{
                   uri:

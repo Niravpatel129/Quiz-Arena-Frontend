@@ -126,6 +126,7 @@ export default function PreGame({ myData, opponentData }) {
         </View>
         <View>
           <Image
+            cachePolicy='memory-disk'
             source={{
               uri: userData?.playerInformation?.avatar || '',
             }}
@@ -177,6 +178,7 @@ export default function PreGame({ myData, opponentData }) {
             ]}
           >
             <Image
+              cachePolicy='memory-disk'
               source={require('../../assets/vs_icon.png')}
               style={{ width: 100, height: 100 }}
             />

@@ -48,6 +48,7 @@ export default function LeaderboardsList({ data }) {
               {placement}
             </Text>
             <Image
+              cachePolicy="memory-disk"
               style={{
                 width: 40,
                 height: 40,
