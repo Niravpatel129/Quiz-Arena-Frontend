@@ -106,6 +106,7 @@ export default function ChallengeScreen({ route }) {
         }}
       >
         <Image
+          cachePolicy='memory-disk'
           style={{
             overflow: 'hidden',
             width: 120,
@@ -200,6 +201,7 @@ export default function ChallengeScreen({ route }) {
                 Waiting for your opponent to join...
               </Text>
               <Image
+                cachePolicy='memory-disk'
                 source={require('../../assets/mascot.png')}
                 style={{ width: 200, height: 200 }}
               />
@@ -246,6 +248,7 @@ export default function ChallengeScreen({ route }) {
             }}
           >
             <Image
+              cachePolicy='memory-disk'
               source={require('../../assets/mascot.png')}
               style={{ width: 200, height: 200 }}
             />

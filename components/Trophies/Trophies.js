@@ -14,8 +14,9 @@ export default function Trophies() {
   const renderItem = ({ item }) => (
     <View style={styles.trophyItem}>
       <Image
+        cachePolicy='memory-disk'
         source={{
-          uri: item.icon,
+          uri: item.icon || 'https://cdn-icons-png.flaticon.com/512/476/476851.png',
           headers: {
             Accept: '*/*',
           },

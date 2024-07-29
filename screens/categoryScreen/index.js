@@ -122,6 +122,7 @@ export default function CategoryScreen({ route }) {
               }
             >
               <Image
+                cachePolicy='memory-disk'
                 style={{ width: 40, height: 40, borderRadius: 25 }}
                 source={{
                   uri:
@@ -219,6 +220,7 @@ export default function CategoryScreen({ route }) {
             }}
           >
             <Image
+              cachePolicy='memory-disk'
               style={{ width: 40, height: 40, borderRadius: 25 }}
               source={{
                 uri: 'https://upload.wikimedia.org/wikipedia/en/e/e0/Felicette%2C_spacecat.jpg',
@@ -315,6 +317,7 @@ export default function CategoryScreen({ route }) {
             >
               <View>
                 <Image
+                  cachePolicy='memory-disk'
                   style={{
                     width: 200,
                     height: 200,

@@ -1,17 +1,17 @@
-import { useNavigation } from "@react-navigation/native";
-import { Image } from "expo-image";
-import React, { useEffect, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
+import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-} from "react-native-reanimated";
-import CustomButton from "./CustomButton"; // Ensure your file name matches
+} from 'react-native-reanimated';
+import CustomButton from './CustomButton'; // Ensure your file name matches
 
 export default function GameOver({ score, handleStartGame, results }) {
-  console.log("🚀  results:", results);
+  console.log('🚀  results:', results);
   const navigation = useNavigation();
   const [isSelected, setIsSelected] = useState(false);
 
@@ -27,9 +27,9 @@ export default function GameOver({ score, handleStartGame, results }) {
 
   // Trigger the animation when `results` changes and is not null
   useEffect(() => {
-    console.log("useEffect triggered with results:", results);
+    console.log('useEffect triggered with results:', results);
     // if (results && results.feeder) {
-    console.log("Results and feeder are present");
+    console.log('Results and feeder are present');
     opacity.value = withTiming(1, {
       duration: 500, // Animation duration in milliseconds
       easing: Easing.out(Easing.quad), // Easing function
@@ -46,14 +46,14 @@ export default function GameOver({ score, handleStartGame, results }) {
   //   );
   // }
 
-  console.log("Rendering GameOver component with results:", results);
+  console.log('Rendering GameOver component with results:', results);
 
   return (
     <Animated.View
       style={[
         {
-          justifyContent: "center",
-          alignItems: "center",
+          justifyContent: 'center',
+          alignItems: 'center',
           flex: 1, // Ensure it takes full space if needed
         },
         animatedStyle, // Apply the animated style here for the fade-in effect
@@ -62,28 +62,29 @@ export default function GameOver({ score, handleStartGame, results }) {
       <Text
         style={{
           fontSize: 24,
-          textAlign: "center",
+          textAlign: 'center',
           letterSpacing: 2,
-          color: "white",
+          color: 'white',
         }}
       >
         Not too shabby!
       </Text>
       <Image
-        source={require("../../../assets/mascot.png")}
+        cachePolicy='memory-disk'
+        source={require('../../../assets/mascot.png')}
         style={{
           width: 200,
           height: 200,
-          color: "white",
+          color: 'white',
         }}
       />
       <Text
         style={{
           fontSize: 24,
-          fontFamily: "poppins-regular",
+          fontFamily: 'poppins-regular',
           letterSpacing: 2,
-          color: "white",
-          textAlign: "center",
+          color: 'white',
+          textAlign: 'center',
         }}
       >
         Your Score: {score}
@@ -91,10 +92,10 @@ export default function GameOver({ score, handleStartGame, results }) {
       <Text
         style={{
           fontSize: 24,
-          fontFamily: "poppins-regular",
+          fontFamily: 'poppins-regular',
           letterSpacing: 2,
-          color: "white",
-          textAlign: "center",
+          color: 'white',
+          textAlign: 'center',
         }}
       >
         Your Personal Best: {results.personalBest}
@@ -104,10 +105,10 @@ export default function GameOver({ score, handleStartGame, results }) {
         <Text
           style={{
             fontSize: 12,
-            fontFamily: "poppins-regular",
+            fontFamily: 'poppins-regular',
             letterSpacing: 2,
-            color: "white",
-            textAlign: "center",
+            color: 'white',
+            textAlign: 'center',
             marginTop: 10,
           }}
         >
@@ -118,15 +119,14 @@ export default function GameOver({ score, handleStartGame, results }) {
         <Text
           style={{
             fontSize: 12,
-            fontFamily: "poppins-regular",
+            fontFamily: 'poppins-regular',
             letterSpacing: 2,
-            color: "white",
-            textAlign: "center",
+            color: 'white',
+            textAlign: 'center',
             marginTop: 10,
           }}
         >
-          Your personal best is in the Top {results.personalBestPercentileRank}%
-          percentile.
+          Your personal best is in the Top {results.personalBestPercentileRank}% percentile.
         </Text>
       )}
 
@@ -137,10 +137,10 @@ export default function GameOver({ score, handleStartGame, results }) {
         }}
       >
         <CustomButton
-          title="Play Again"
-          variant="primary"
+          title='Play Again'
+          variant='primary'
           onPress={() => {
-            console.log("Restart Game button pressed");
+            console.log('Restart Game button pressed');
             handleStartGame();
           }}
           isSelected={isSelected}
@@ -148,10 +148,10 @@ export default function GameOver({ score, handleStartGame, results }) {
         >
           <Text
             style={{
-              color: "white",
-              fontFamily: "poppins-semiBold",
+              color: 'white',
+              fontFamily: 'poppins-semiBold',
               fontSize: 18,
-              textAlign: "center",
+              textAlign: 'center',
             }}
           >
             Restart Game
@@ -159,16 +159,16 @@ export default function GameOver({ score, handleStartGame, results }) {
         </CustomButton>
         <TouchableOpacity
           onPress={() => {
-            console.log("Go back home button pressed");
-            navigation.navigate("Home");
+            console.log('Go back home button pressed');
+            navigation.navigate('Home');
           }}
         >
           <Text
             style={{
-              color: "white",
-              fontFamily: "poppins-semiBold",
+              color: 'white',
+              fontFamily: 'poppins-semiBold',
               fontSize: 14,
-              textAlign: "center",
+              textAlign: 'center',
             }}
           >
             Go back home

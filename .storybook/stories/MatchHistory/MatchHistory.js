@@ -126,6 +126,7 @@ export default function MatchHistory() {
           }}
         >
           <Image
+            cachePolicy='memory-disk'
             source={{
               uri:
                 opponentAvatar ||

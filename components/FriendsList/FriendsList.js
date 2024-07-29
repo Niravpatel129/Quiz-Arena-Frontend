@@ -113,6 +113,7 @@ export default function FriendsList() {
           >
             <View>
               <Image
+                cachePolicy='memory-disk'
                 style={{
                   width: 55,
                   height: 55,
@@ -256,6 +257,7 @@ export default function FriendsList() {
           }}
         >
           <Image
+            cachePolicy='memory-disk'
             style={{
               width: 60,
               height: 60,

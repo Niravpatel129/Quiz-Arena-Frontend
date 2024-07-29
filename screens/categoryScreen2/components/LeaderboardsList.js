@@ -9,7 +9,10 @@ export default function LeaderboardsList({ data }) {
 
   const leaderboardItem = ({ placement, name, avatar, country, elo, id }) => {
     return (
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          navigator.navigate('PublicProfile', { userId: id });
+        }}
         style={{
           backgroundColor: 'white',
           borderRadius: 12,
@@ -44,27 +47,22 @@ export default function LeaderboardsList({ data }) {
             >
               {placement}
             </Text>
-            <TouchableOpacity
-              onPress={() => {
-                navigator.navigate('PublicProfile', { userId: id });
+            <Image
+              cachePolicy='memory-disk'
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 50,
+                borderWidth: 1,
+                borderColor: '#FFBC3A',
+                overflow: 'hidden',
               }}
-            >
-              <Image
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 50,
-                  borderWidth: 1,
-                  borderColor: '#FFBC3A',
-                  overflow: 'hidden',
-                }}
-                source={{
-                  uri:
-                    avatar ||
-                    'https://img.freepik.com/free-photo/red-white-cat-i-white-studio_155003-13189.jpg',
-                }}
-              />
-            </TouchableOpacity>
+              source={{
+                uri:
+                  avatar ||
+                  'https://img.freepik.com/free-photo/red-white-cat-i-white-studio_155003-13189.jpg',
+              }}
+            />
           </View>
           <View
             style={{
@@ -102,7 +100,7 @@ export default function LeaderboardsList({ data }) {
             {Math.floor(elo || 0)}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 

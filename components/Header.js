@@ -14,6 +14,7 @@ const Header = ({ yourData, opponentData, countdown }) => {
         }}
       >
         <Image
+          cachePolicy='memory-disk'
           style={[
             styles.tinyLogo,
             {

@@ -80,6 +80,7 @@ export default function ChatHistory() {
           ]}
         >
           <Image
+            cachePolicy='memory-disk'
             style={{
               width: 60,
               height: 60,

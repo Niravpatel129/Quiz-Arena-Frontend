@@ -2,9 +2,9 @@
   "expo": {
     "name": "Quiz Arena",
     "slug": "Quiz-Arena-Frontend-Scaffold",
-    "version": "8.0.14",
+    "version": "8.0.15",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon2.jpg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon2.jpg",
         "backgroundColor": "#ffffff"
       },
       "package": "com.niravpatelp129.QuizArenaFrontendScaffold",
@@ -41,7 +41,7 @@
       ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon2.jpg"
     },
     "scheme": ["facebookLogin", "fb1015444866200816", "quizarena"],
     "extra": {

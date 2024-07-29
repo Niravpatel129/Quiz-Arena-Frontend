@@ -152,6 +152,7 @@ export default function QueueScreen({ route }) {
     return (
       <View style={{}}>
         <Image
+          cachePolicy='memory-disk'
           style={{
             width: 120,
             height: 120,

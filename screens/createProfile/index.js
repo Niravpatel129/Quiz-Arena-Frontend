@@ -94,6 +94,7 @@ export default function CreateProfile({ route, navigation }) {
               }}
             >
               <Image
+                cachePolicy='memory-disk'
                 source={require('../../assets/logo.png')}
                 style={{
                   width: 180,
@@ -138,6 +139,7 @@ export default function CreateProfile({ route, navigation }) {
                   >
                     {avatarUri ? (
                       <Image
+                        cachePolicy='memory-disk'
                         source={{
                           uri: avatarUri,
                           headers: {
@@ -148,6 +150,7 @@ export default function CreateProfile({ route, navigation }) {
                       />
                     ) : (
                       <Image
+                        cachePolicy='memory-disk'
                         source={{
                           uri:
                             currentAvatar ||

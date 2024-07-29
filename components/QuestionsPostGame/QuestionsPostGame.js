@@ -123,6 +123,7 @@ function QuestionsPostGame({ questions }) {
         {question.QuestionImage ? (
           <View>
             <Image
+              cachePolicy='memory-disk'
               resizeMode='contain'
               source={{
                 uri: question.QuestionImage,
@@ -161,6 +162,7 @@ function QuestionsPostGame({ questions }) {
                   {question.PlayerAnswers.you.answer === answer.optionText && (
                     <>
                       <Image
+                        cachePolicy='memory-disk'
                         resizeMode='stretch'
                         style={{
                           width: 25,
@@ -201,6 +203,7 @@ function QuestionsPostGame({ questions }) {
                   {question.PlayerAnswers.opponent.answer === answer.optionText && (
                     <>
                       <Image
+                        cachePolicy='memory-disk'
                         style={{ width: 25, height: 25, borderRadius: 50 }}
                         source={{
                           uri: question?.PlayerAnswers?.opponent?.playerAvatar,

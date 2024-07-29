@@ -144,6 +144,7 @@ export default function MatchHistory2() {
               }}
             >
               <Image
+                cachePolicy='memory-disk'
                 style={{
                   width: 40,
                   height: 40,
@@ -238,6 +239,7 @@ export default function MatchHistory2() {
               }}
             >
               <Image
+                cachePolicy='memory-disk'
                 style={{
                   width: 40,
                   height: 40,
