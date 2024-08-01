@@ -17,6 +17,59 @@ import ScoreCard from './components/ScoreCard';
 import TryAgain from './components/TryAgain';
 
 export default function GameOver3({ route }) {
+  // const fakeGameResults = {
+  //   yourData: {
+  //     didWin: false,
+  //     userId: "user1",
+  //     username: "Player1",
+  //     avatar: "https://example.com/avatar1.png",
+  //     gameData: {
+  //       scores: [{ points: 10 }, { points: 20 }, { points: 30 }]
+  //     }
+  //   },
+  //   opponentData: {
+  //     userId: "user2",
+  //     username: "Player2",
+  //     avatar: "https://example.com/avatar2.png",
+  //     gameData: {
+  //       scores: [{ points: 5 }, { points: 15 }, { points: 25 }]
+  //     }
+  //   },
+  //   category: "General Knowledge",
+  //   rounds: [
+  //     {
+  //       questionId: 1,
+  //       questionText: "What is the capital of France?",
+  //       options: ["Paris", "Berlin", "Rome", "Madrid"],
+  //       correctAnswer: "Paris",
+  //       helperImage: "https://example.com/image1.png"
+  //     },
+  //     {
+  //       questionId: 2,
+  //       questionText: "What is 2 + 2?",
+  //       options: ["3", "4", "5", "6"],
+  //       correctAnswer: "4",
+  //       helperImage: "https://example.com/image2.png"
+  //     }
+  //   ],
+  //   playersRoundData: [
+  //     {
+  //       name: "Player1",
+  //       answers: [
+  //         { answer: "Paris" },
+  //         { answer: "4" }
+  //       ]
+  //     },
+  //     {
+  //       name: "Player2",
+  //       answers: [
+  //         { answer: "Berlin" },
+  //         { answer: "3" }
+  //       ]
+  //     }
+  //   ]
+  // };
+  // const GameResults = route.params?.results || fakeGameResults;
   const GameResults = route.params?.results;
   const navigation = useNavigation();
   const [rematchModalVisible, setRematchModalVisible] = React.useState(false);
@@ -208,7 +261,7 @@ export default function GameOver3({ route }) {
           style={{
             backgroundColor: '#ffffff',
             flex: 1,
-            marginTop: 20,
+            marginTop: 10,
             borderTopLeftRadius: 25,
             borderTopRightRadius: 25,
             width: '100%',
@@ -228,7 +281,6 @@ export default function GameOver3({ route }) {
             <Animated.View
               style={[
                 {
-                  marginTop: 20,
                   alignItems: 'center',
                 },
                 animatedStyle,
@@ -241,7 +293,7 @@ export default function GameOver3({ route }) {
             </Animated.View>
             <View
               style={{
-                marginTop: 20,
+                marginTop: 10,
                 alignItems: 'center',
               }}
             >
@@ -249,7 +301,7 @@ export default function GameOver3({ route }) {
             </View>
             <View
               style={{
-                marginTop: 20,
+                marginTop: 10,
                 alignItems: 'center',
               }}
             >
