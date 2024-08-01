@@ -1,3 +1,4 @@
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
@@ -301,49 +302,51 @@ function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <NativeBaseProvider>
-          <SocketProvider>
-            <SoundProvider>
-              <NavigationContainer
-                theme={MyTheme}
-                linking={linking}
-                onStateChange={(sat) => {
-                  // console.log('🚀  sat:', sat);
-                  // if (sat.routes[0].name === 'Game') return;
-                  // if (sat.routes[0].name === 'GameOver' && !sat.routes[1]) return;
-                  // playNavigationSound();
-                }}
-              >
-                <AuthProvider>
-                  <TrackingProvider>
-                    <MenuProvider>
-                      <UpdateProvider>
-                        <LinearGradient
-                          colors={['#0f0c29', '#302b63', '#24243e']}
-                          style={{
-                            flex: 1,
-                            fontFeatureSettings: "'clig' off, 'liga' off",
-                          }}
-                        >
-                          <FeedbackModal />
-                          <MenuModal />
-                          <StackNavigator />
-                        </LinearGradient>
-                      </UpdateProvider>
-                    </MenuProvider>
-                  </TrackingProvider>
-                </AuthProvider>
-                <Toast />
-              </NavigationContainer>
-            </SoundProvider>
-          </SocketProvider>
-        </NativeBaseProvider>
-      </View>
+      <BottomSheetModalProvider>
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <NativeBaseProvider>
+            <SocketProvider>
+              <SoundProvider>
+                <NavigationContainer
+                  theme={MyTheme}
+                  linking={linking}
+                  onStateChange={(sat) => {
+                    // console.log('🚀  sat:', sat);
+                    // if (sat.routes[0].name === 'Game') return;
+                    // if (sat.routes[0].name === 'GameOver' && !sat.routes[1]) return;
+                    // playNavigationSound();
+                  }}
+                >
+                  <AuthProvider>
+                    <TrackingProvider>
+                      <MenuProvider>
+                        <UpdateProvider>
+                          <LinearGradient
+                            colors={['#0f0c29', '#302b63', '#24243e']}
+                            style={{
+                              flex: 1,
+                              fontFeatureSettings: "'clig' off, 'liga' off",
+                            }}
+                          >
+                            <FeedbackModal />
+                            <MenuModal />
+                            <StackNavigator />
+                          </LinearGradient>
+                        </UpdateProvider>
+                      </MenuProvider>
+                    </TrackingProvider>
+                  </AuthProvider>
+                  <Toast />
+                </NavigationContainer>
+              </SoundProvider>
+            </SocketProvider>
+          </NativeBaseProvider>
+        </View>
+      </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
 }

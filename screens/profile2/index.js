@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -235,37 +235,78 @@ export default function Profile2({ userId }) {
     );
 
   return (
-    <BottomSheetModalProvider>
-      <View
-        style={{
-          height: '100%',
-          backgroundColor: 'white',
-        }}
-      >
-        <CombinedModal
-          visible={modalVisible}
-          onClose={() => setModalVisible(false)}
-          onSave={handleSave}
-          defaultUsername={newUsername}
-          defaultAvatar={selectedAvatar}
-        />
+    <View
+      style={{
+        height: '100%',
+        backgroundColor: 'white',
+      }}
+    >
+      <CombinedModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSave={handleSave}
+        defaultUsername={newUsername}
+        defaultAvatar={selectedAvatar}
+      />
 
-        <SafeAreaView>
-          {userId && (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={{
-                padding: 20,
-              }}
-            >
-              <Ionicons name='ios-arrow-back' size={24} color='#262625' />
-            </TouchableOpacity>
-          )}
-
-          <ScrollView
-            showsVerticalScrollIndicator={false}
+      <SafeAreaView>
+        {userId && (
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
             style={{
-              marginHorizontal: 10,
+              padding: 20,
+            }}
+          >
+            <Ionicons name='ios-arrow-back' size={24} color='#262625' />
+          </TouchableOpacity>
+        )}
+
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{
+            marginHorizontal: 10,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              if (userId) return;
+              setModalVisible(true);
+            }}
+          >
+            <Animated.View
+              style={[
+                animatedStyle,
+                {
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                },
+              ]}
+            >
+              <Image
+                cachePolicy='memory-disk'
+                style={{
+                  width: 140,
+                  height: 140,
+                  borderRadius: 150,
+                }}
+                source={{
+                  uri:
+                    selectedAvatar ||
+                    userData?.avatar ||
+                    'https://thumbs.dreamstime.com/b/astronaut-cat-wearing-space-suit-elements-image-furnished-nasa-first-trip-to-space-mixed-media-167670791.jpg',
+                }}
+              ></Image>
+            </Animated.View>
+          </TouchableOpacity>
+
+          <View
+            style={{
+              textAlign: 'center',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'row',
+              gap: 5,
+              marginTop: 10,
             }}
           >
             <TouchableOpacity
@@ -274,155 +315,113 @@ export default function Profile2({ userId }) {
                 setModalVisible(true);
               }}
             >
-              <Animated.View
-                style={[
-                  animatedStyle,
-                  {
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  },
-                ]}
-              >
-                <Image
-                  cachePolicy='memory-disk'
-                  style={{
-                    width: 140,
-                    height: 140,
-                    borderRadius: 150,
-                  }}
-                  source={{
-                    uri:
-                      selectedAvatar ||
-                      userData?.avatar ||
-                      'https://thumbs.dreamstime.com/b/astronaut-cat-wearing-space-suit-elements-image-furnished-nasa-first-trip-to-space-mixed-media-167670791.jpg',
-                  }}
-                ></Image>
-              </Animated.View>
-            </TouchableOpacity>
-
-            <View
-              style={{
-                textAlign: 'center',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'row',
-                gap: 5,
-                marginTop: 10,
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  if (userId) return;
-                  setModalVisible(true);
-                }}
-              >
-                <Text
-                  style={{
-                    color: '#262625',
-                    fontSize: 24,
-                    fontFamily: 'poppins-regular',
-                  }}
-                >
-                  {newUsername || userData?.username}
-                </Text>
-              </TouchableOpacity>
-              {userData?.country && <CountryFlag isoCode={userData?.country} size={20} />}
-            </View>
-            <Text
-              style={{
-                color: '#5E6064',
-                fontSize: 13,
-                fontFamily: 'poppins-regular',
-                textAlign: 'center',
-                marginBottom: 10,
-              }}
-            >
-              {/* Only show this if its last 5 days */}
-              {new Date().getTime() - new Date(userData?.lastActive).getTime() < 432000000 ? (
-                <>Last Active {formatLastActive(userData?.lastActive)}</>
-              ) : null}
-            </Text>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
               <Text
                 style={{
-                  color: '#FF4646',
-                  fontSize: 14,
+                  color: '#262625',
+                  fontSize: 24,
                   fontFamily: 'poppins-regular',
                 }}
               >
-                Rookie | {userData?.experience} XP
+                {newUsername || userData?.username}
               </Text>
-            </View>
-            <View
+            </TouchableOpacity>
+            {userData?.country && <CountryFlag isoCode={userData?.country} size={20} />}
+          </View>
+          <Text
+            style={{
+              color: '#5E6064',
+              fontSize: 13,
+              fontFamily: 'poppins-regular',
+              textAlign: 'center',
+              marginBottom: 10,
+            }}
+          >
+            {/* Only show this if its last 5 days */}
+            {new Date().getTime() - new Date(userData?.lastActive).getTime() < 432000000 ? (
+              <>Last Active {formatLastActive(userData?.lastActive)}</>
+            ) : null}
+          </Text>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text
               style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
+                color: '#FF4646',
+                fontSize: 14,
+                fontFamily: 'poppins-regular',
               }}
             >
-              <View
+              Rookie | {userData?.experience} XP
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: '#EFF8FF',
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingVertical: 12,
+                borderRadius: 100,
+                marginTop: 10,
+                paddingHorizontal: 16,
+                gap: 5,
+              }}
+            >
+              <Ionicons name='ios-star' size={24} color='#FDD92C' />
+              <Text
                 style={{
-                  backgroundColor: '#EFF8FF',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingVertical: 12,
-                  borderRadius: 100,
-                  marginTop: 10,
-                  paddingHorizontal: 16,
-                  gap: 5,
+                  color: '#3F95F2',
+                  fontFamily: 'poppins-bold',
+                  fontWeight: 600,
                 }}
               >
-                <Ionicons name='ios-star' size={24} color='#FDD92C' />
-                <Text
-                  style={{
-                    color: '#3F95F2',
-                    fontFamily: 'poppins-bold',
-                    fontWeight: 600,
-                  }}
-                >
-                  Average Rating: {userData?.averageRating}
-                </Text>
-              </View>
+                Average Rating: {userData?.averageRating}
+              </Text>
             </View>
-            {/* Cards */}
-            <Animated.View
-              style={[
-                animatedStyle,
-                {
-                  flexDirection: 'row',
-                  gap: 5,
-                  marginTop: 20,
-                },
-              ]}
-            >
-              {renderStatsCard('Games', userData?.totalGames || 0, 1)}
-              {renderStatsCard('Win Rate', `${Math.floor(userData?.winRate || null)}%`, 2)}
-              {renderStatsCard('Avg Score', 85, 3)}
-            </Animated.View>
+          </View>
+          {/* Cards */}
+          <Animated.View
+            style={[
+              animatedStyle,
+              {
+                flexDirection: 'row',
+                gap: 5,
+                marginTop: 20,
+              },
+            ]}
+          >
+            {renderStatsCard('Games', userData?.totalGames || 0, 1)}
+            {renderStatsCard('Win Rate', `${Math.floor(userData?.winRate || null)}%`, 2)}
+            {renderStatsCard('Avg Score', 85, 3)}
+          </Animated.View>
 
-            {/* Bottom Sheet Button */}
-            <Button title='Open Bottom Sheet' onPress={handlePresentModalPress} />
-          </ScrollView>
-        </SafeAreaView>
+          {/* Bottom Sheet Button */}
+          <Button title='Open Bottom Sheet' onPress={handlePresentModalPress} />
+        </ScrollView>
+      </SafeAreaView>
 
-        {/* Bottom Sheet */}
-        <BottomSheetModal
-          ref={bottomSheetModalRef}
-          index={1}
-          snapPoints={snapPoints}
-          onChange={handleSheetChanges}
-        >
-          <BottomSheetView style={styles.contentContainer}>
-            <Text>Awesome 🎉</Text>
-          </BottomSheetView>
-        </BottomSheetModal>
-      </View>
-    </BottomSheetModalProvider>
+      {/* Bottom Sheet */}
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={1}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
+        style={styles.bottomSheet}
+      >
+        <BottomSheetView style={styles.contentContainer}>
+          <Text>Awesome 🎉</Text>
+        </BottomSheetView>
+      </BottomSheetModal>
+    </View>
   );
 }
 
@@ -430,5 +429,8 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: 'center',
+  },
+  bottomSheet: {
+    zIndex: 1000,
   },
 });
