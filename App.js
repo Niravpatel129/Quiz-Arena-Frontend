@@ -203,8 +203,13 @@ function App() {
           headerShadowVisible: false,
         }}
       >
-        {/* <Tab.Screen name='dev' component={Settings2} options={{ headerShown: false }} /> */} 
+        {/* <Tab.Screen name='dev' component={GameOver3} options={{ headerShown: false }} />  */}
         {/* change this component for specific page styling */}
+        {/* <Stack.Screen
+        name='GameOver3'
+        component={GameOver3}
+        options={{ title: 'Game Over', headerShown: false }}
+        /> */}
         <Stack.Screen
           name='Login2'
           component={Login2}
