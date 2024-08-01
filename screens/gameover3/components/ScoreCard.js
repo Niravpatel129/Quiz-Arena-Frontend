@@ -28,7 +28,7 @@ export default function ScoreCard({
           backgroundColor,
           borderWidth: 1,
           borderColor: textColor,
-          height: 45,
+          height: 50,
           alignItems: 'center',
           justifyContent: 'center',
         }}
@@ -60,7 +60,7 @@ export default function ScoreCard({
                 style={{
                   fontFamily: 'poppins-semiBold',
                   color: '#5E6064',
-                  marginVertical: 10,
+                  marginVertical: 15,
                 }}
               >
                 {index + 1}
@@ -111,9 +111,10 @@ export default function ScoreCard({
           fontFamily: 'poppins-semiBold',
           fontSize: 18,
           color: '#EC80B4',
-          marginBottom: 10,
           textAlign: 'center',
           textTransform: 'capitalize',
+          paddingTop: 10,
+          marginBottom: 10,
         }}
       >
         {player1}
@@ -135,7 +136,7 @@ export default function ScoreCard({
       </Text>
       <View
         style={{
-          marginTop: 20,
+          marginTop: 10,
           alignItems: 'center',
           justifyContent: 'center',
         }}
