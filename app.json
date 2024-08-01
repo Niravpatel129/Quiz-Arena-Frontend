@@ -4,7 +4,7 @@
     "slug": "Quiz-Arena-Frontend-Scaffold",
     "version": "8.0.16",
     "orientation": "portrait",
-    "icon": "./assets/icon2.jpg",
+    "icon": "./assets/icon2.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -70,7 +70,6 @@
           "isAutoInitEnabled": true
         }
       ],
-      ["react-native-appsflyer", {}],
       [
         "expo-tracking-transparency",
         {

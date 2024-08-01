@@ -53,18 +53,6 @@ Sentry.init({
 
 SplashScreen.preventAutoHideAsync();
 
-if (true) {
-  import('./services/appsFlyer')
-    .then((module) => {
-      try {
-        startAppFlyer = module.default;
-        startAppFlyer();
-      } catch (e) {}
-    })
-    .catch((err) => {
-      console.error('Failed to load startAppFlyer', err);
-    });
-}
 const prefix = Linking.createURL('/');
 
 const Stack = createNativeStackNavigator();
@@ -203,7 +191,7 @@ function App() {
           headerShadowVisible: false,
         }}
       >
-        {/* <Tab.Screen name='dev' component={Settings2} options={{ headerShown: false }} /> */} 
+        {/* <Tab.Screen name='dev' component={Settings2} options={{ headerShown: false }} /> */}
         {/* change this component for specific page styling */}
         <Stack.Screen
           name='Login2'
