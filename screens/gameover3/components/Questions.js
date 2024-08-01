@@ -1,37 +1,43 @@
-import { Ionicons } from '@expo/vector-icons';
-import { Image } from 'expo-image';
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
 import { newRequest } from '../../../api/newRequest';
+import ReportModal from './ReportModal'; 
 
 export default function Questions({ questions }) {
   const [thumbsStatus, setThumbsStatus] = useState(
     questions.map(() => ({ thumbsUp: false, thumbsDown: false })),
   );
+  const [modalVisible, setModalVisible] = useState(false);
+  const [currentQuestionId, setCurrentQuestionId] = useState(null);
 
   const handleThumbsClick = async (index, thumbType) => {
-    // dont allow undoing of thumbs up or down
-
     if (thumbsStatus[index].thumbsUp || thumbsStatus[index].thumbsDown) return;
 
-    // Toggle the status of the specific thumb for the question
-    const newThumbsStatus = [...thumbsStatus];
-    newThumbsStatus[index] = {
-      ...newThumbsStatus[index],
-      [thumbType]: !newThumbsStatus[index][thumbType],
-    };
-    setThumbsStatus(newThumbsStatus);
-
-    // Dummy console log function
-    console.log(`Thumbs ${thumbType} clicked for question ${index + 1}`);
-
-    if (thumbType === 'thumbsUp') {
-      await newRequest.put(`/question/${questions[index].QuestionId}/upvote`);
-    }
-
     if (thumbType === 'thumbsDown') {
-      await newRequest.put(`/question/${questions[index].QuestionId}/downvote`);
+      setCurrentQuestionId(questions[index].QuestionId);
+      setModalVisible(true);
+    } else {
+      const newThumbsStatus = [...thumbsStatus];
+      newThumbsStatus[index] = {
+        ...newThumbsStatus[index],
+        [thumbType]: !newThumbsStatus[index][thumbType],
+      };
+      setThumbsStatus(newThumbsStatus);
+
+      if (thumbType === 'thumbsUp') {
+        await newRequest.put(`/question/${questions[index].QuestionId}/upvote`);
+      }
     }
+  };
+
+  const handleReportSubmit = async (questionId, reportData) => {
+    await newRequest.post(`/report-question`, {
+      questionId,
+      data: reportData,
+    });
+    console.log(`Report submitted for question ${questionId}`, reportData);
   };
 
   const renderQuestion = (questionData, index) => {
@@ -235,6 +241,12 @@ export default function Questions({ questions }) {
       }}
     >
       {questions.map((question, index) => renderQuestion(question, index))}
+      <ReportModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSubmit={handleReportSubmit}
+        questionId={currentQuestionId}
+      />
     </View>
   );
 }
