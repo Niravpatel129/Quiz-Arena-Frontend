@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -46,6 +46,19 @@ export default function Profile2({ userId }) {
   const handleSheetChanges = useCallback((index) => {
     console.log('handleSheetChanges', index);
   }, []);
+
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+        opacity={0.5}
+        pressBehavior='close'
+      />
+    ),
+    [],
+  );
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -416,6 +429,7 @@ export default function Profile2({ userId }) {
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
         style={styles.bottomSheet}
+        backdropComponent={renderBackdrop}
       >
         <BottomSheetView style={styles.contentContainer}>
           <Text>Awesome 🎉</Text>
