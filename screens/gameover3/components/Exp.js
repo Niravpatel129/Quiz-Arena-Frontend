@@ -9,12 +9,12 @@ export default function Exp() {
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#EFF8FF',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 100,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 50,
       }}
     >
-      <Image source={require('../../../assets/star.png')} style={{ width: 50, height: 50 }} />
+      <Image source={require('../../../assets/star.png')} style={{ width: 30, height: 30 }} />
       <Text
         style={{
           fontFamily: 'poppins-bold',
