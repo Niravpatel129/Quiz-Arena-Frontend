@@ -99,7 +99,7 @@ export default function PlayerCards({ yourData, opponentData }) {
         source={require('../../../assets/cards.png')}
         style={{
           width: '100%',
-          height: 220,
+          height: 200,
           borderRadius: 10,
         }}
       >
