@@ -1,65 +1,66 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as Sentry from "@sentry/react-native";
-import { useFonts } from "expo-font";
-import { LinearGradient } from "expo-linear-gradient";
-import * as Linking from "expo-linking";
-import * as SplashScreen from "expo-splash-screen";
-import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
-import { NativeBaseProvider } from "native-base";
-import { useEffect } from "react";
-import { LogBox, View } from "react-native";
-import Toast from "react-native-toast-message";
-import CustomHeader2 from "./components/CustomHeader2/CustomHeader";
-import FeedbackModal from "./components/FeedbackModal/FeedbackModal";
-import MenuModal from "./components/MenuModal/MenuModal";
-import TabBar2 from "./components/Tabbar2/Tabbar2";
-import fonts from "./config/fonts";
-import { AuthProvider } from "./context/auth/AuthContext";
-import { MenuProvider } from "./context/menu/MenuContext";
-import { SocketProvider } from "./context/socket/SocketContext";
-import { SoundProvider } from "./context/sound/SoundContext";
-import { TrackingProvider } from "./context/tracking/TrackingContext";
-import { UpdateProvider } from "./context/update/UpdateContext";
-import CategoriesListView from "./screens/categoriesListView";
-import CategoryScreen2 from "./screens/categoryScreen2";
-import ChallengeScreen from "./screens/challenge";
-import Chat from "./screens/chat";
-import Contribute from "./screens/contribute";
-import CreateProfile from "./screens/createProfile";
-import FeederScreen from "./screens/feeder";
-import FriendsScreen from "./screens/friends";
-import GameScreen from "./screens/game";
-import GameOver3 from "./screens/gameover3/GameOver3";
-import Homepage from "./screens/homepage";
-import Leaderboards2 from "./screens/leaderboards2";
-import Login2 from "./screens/login2";
-import MatchHistory2 from "./screens/matchhistory2";
-import NotificationsScreen from "./screens/notifications";
-import PlayersScreen from "./screens/players";
-import Profile2 from "./screens/profile2";
-import PublicProfile from "./screens/publicProfile";
-import QueueScreen2 from "./screens/queuescreen2";
-import Royale from "./screens/royale";
-import SettingsPage from "./screens/settings2";
-import SignUpLogin from "./screens/signuplogin";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as Sentry from '@sentry/react-native';
+import { useFonts } from 'expo-font';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as Linking from 'expo-linking';
+import * as SplashScreen from 'expo-splash-screen';
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import { NativeBaseProvider } from 'native-base';
+import { useEffect } from 'react';
+import { LogBox, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
+import CustomHeader2 from './components/CustomHeader2/CustomHeader';
+import FeedbackModal from './components/FeedbackModal/FeedbackModal';
+import MenuModal from './components/MenuModal/MenuModal';
+import TabBar2 from './components/Tabbar2/Tabbar2';
+import fonts from './config/fonts';
+import { AuthProvider } from './context/auth/AuthContext';
+import { MenuProvider } from './context/menu/MenuContext';
+import { SocketProvider } from './context/socket/SocketContext';
+import { SoundProvider } from './context/sound/SoundContext';
+import { TrackingProvider } from './context/tracking/TrackingContext';
+import { UpdateProvider } from './context/update/UpdateContext';
+import CategoriesListView from './screens/categoriesListView';
+import CategoryScreen2 from './screens/categoryScreen2';
+import ChallengeScreen from './screens/challenge';
+import Chat from './screens/chat';
+import Contribute from './screens/contribute';
+import CreateProfile from './screens/createProfile';
+import FeederScreen from './screens/feeder';
+import FriendsScreen from './screens/friends';
+import GameScreen from './screens/game';
+import GameOver3 from './screens/gameover3/GameOver3';
+import Homepage from './screens/homepage';
+import Leaderboards2 from './screens/leaderboards2';
+import Login2 from './screens/login2';
+import MatchHistory2 from './screens/matchhistory2';
+import NotificationsScreen from './screens/notifications';
+import PlayersScreen from './screens/players';
+import Profile2 from './screens/profile2';
+import PublicProfile from './screens/publicProfile';
+import QueueScreen2 from './screens/queuescreen2';
+import Royale from './screens/royale';
+import SettingsPage from './screens/settings2';
+import SignUpLogin from './screens/signuplogin';
 
 Sentry.init({
-  dsn: "https://ebea8a70fc3ccc5fe921ee897bf9f2a3@o1363835.ingest.sentry.io/4506592682246144",
+  dsn: 'https://ebea8a70fc3ccc5fe921ee897bf9f2a3@o1363835.ingest.sentry.io/4506592682246144',
   tracesSampleRate: 1.0,
 });
 
 SplashScreen.preventAutoHideAsync();
 
-const prefix = Linking.createURL("/");
+const prefix = Linking.createURL('/');
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const linking = {
-  prefixes: [prefix, "quizarena.gg", "https://quizarena.gg"],
+  prefixes: [prefix, 'quizarena.gg', 'https://quizarena.gg'],
   config: {},
   getInitialURL: async () => {
     // Get the initial URL if the app is opened via a deep link
@@ -70,21 +71,21 @@ const linking = {
     const onReceiveURL = ({ url }) => {
       // Parse the URL and extract the path and query
       const { path, queryParams } = Linking.parse(url);
-      if (path === "invite") {
+      if (path === 'invite') {
         const id = queryParams.id;
 
         // store into local storage
         if (id) {
-          AsyncStorage.setItem("inviteId", id);
+          AsyncStorage.setItem('inviteId', id);
         }
 
-        console.log("🚀  id:", id);
+        console.log('🚀  id:', id);
 
         // set it inside params
         listener(id);
       }
     };
-    Linking?.addEventListener("url", onReceiveURL);
+    Linking?.addEventListener('url', onReceiveURL);
   },
 };
 
@@ -95,10 +96,10 @@ function App() {
     (async () => {
       const { status } = await requestTrackingPermissionsAsync();
       try {
-        if (status === "granted") {
-          console.log("Yay! I have user permission to track data");
+        if (status === 'granted') {
+          console.log('Yay! I have user permission to track data');
         } else {
-          console.log("Boo! I do not have user permission to track data");
+          console.log('Boo! I do not have user permission to track data');
         }
       } catch (e) {
         // console.log(e);
@@ -120,7 +121,7 @@ function App() {
 
   useEffect(() => {
     LogBox.ignoreLogs([
-      "In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.",
+      'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
     ]);
 
     LogBox.ignoreLogs([
@@ -134,7 +135,7 @@ function App() {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: "#fff",
+      background: '#fff',
     },
   };
 
@@ -142,35 +143,35 @@ function App() {
     return (
       <Tab.Navigator tabBar={(props) => <TabBar2 {...props} />}>
         <Tab.Screen
-          name="Home"
+          name='Home'
           component={Homepage}
           options={{
             headerShown: false,
           }}
         />
         <Tab.Screen
-          name="History"
+          name='History'
           component={MatchHistory2}
           options={{
             headerShown: false,
           }}
         />
         <Tab.Screen
-          name="Profile"
+          name='Profile'
           component={Profile2}
           options={{
             headerShown: false,
           }}
         />
         <Tab.Screen
-          name="Rankings"
+          name='Rankings'
           component={Leaderboards2}
           options={{
             headerShown: false,
           }}
         />
         <Tab.Screen
-          name="Friends"
+          name='Friends'
           component={FriendsScreen}
           options={{
             headerShown: false,
@@ -199,22 +200,22 @@ function App() {
         options={{ title: 'Game Over', headerShown: false }}
         /> */}
         <Stack.Screen
-          name="Login2"
+          name='Login2'
           component={Login2}
-          options={{ title: "Welcome", headerShown: false }}
+          options={{ title: 'Welcome', headerShown: false }}
         />
 
         <Stack.Screen
-          name="SignUpLogin"
+          name='SignUpLogin'
           component={SignUpLogin}
           options={{
-            title: "SignUpLogin",
+            title: 'SignUpLogin',
             headerShown: false,
           }}
         />
 
         <Stack.Screen
-          name="CreateProfile"
+          name='CreateProfile'
           component={CreateProfile}
           options={{
             headerShown: false,
@@ -222,7 +223,7 @@ function App() {
         />
 
         <Stack.Screen
-          name="CategoryScreen"
+          name='CategoryScreen'
           component={CategoryScreen2}
           options={{
             headerShown: false,
@@ -230,83 +231,67 @@ function App() {
           }}
         />
 
+        <Stack.Screen name='Contribute' component={Contribute} options={{ headerShown: true }} />
         <Stack.Screen
-          name="Contribute"
-          component={Contribute}
-          options={{ headerShown: true }}
-        />
-        <Stack.Screen
-          name="PublicProfile"
+          name='PublicProfile'
           component={PublicProfile}
           options={{ headerShown: false }}
         />
 
-        <Stack.Screen
-          name="Chat"
-          component={Chat}
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name='Chat' component={Chat} options={{ headerShown: false }} />
         {/* <Stack.Screen name='Drawer' component={DrawerNavigator} options={{ headerShown: false }} /> */}
         <Stack.Screen
-          name="Queue"
+          name='Queue'
           component={QueueScreen2}
-          options={{ title: "Queue", headerShown: false }}
+          options={{ title: 'Queue', headerShown: false }}
         />
         <Stack.Screen
-          name="Game"
+          name='Game'
           component={GameScreen}
-          options={{ title: "Game", headerShown: false }}
+          options={{ title: 'Game', headerShown: false }}
         />
 
         <Stack.Screen
-          name="ProfileEdit"
+          name='ProfileEdit'
           component={SettingsPage}
-          options={{ title: "Profile Edit", headerShown: false }}
+          options={{ title: 'Profile Edit', headerShown: false }}
         />
         <Stack.Screen
-          name="GameOver"
+          name='GameOver'
           component={GameOver3}
-          options={{ title: "Game Over", headerShown: false }}
+          options={{ title: 'Game Over', headerShown: false }}
         />
         <Stack.Screen
-          name="Players"
+          name='Players'
           component={PlayersScreen}
-          options={{ title: "Players", headerShown: true }}
+          options={{ title: 'Players', headerShown: true }}
         />
         <Stack.Screen
-          name="Notifications"
+          name='Notifications'
           component={NotificationsScreen}
-          options={{ title: "Notifications", headerShown: false }}
+          options={{ title: 'Notifications', headerShown: false }}
         />
         <Stack.Screen
-          name="Challenge"
+          name='Challenge'
           component={ChallengeScreen}
-          options={{ title: "Challenge", headerShown: true }}
+          options={{ title: 'Challenge', headerShown: true }}
         />
         <Stack.Screen
-          name="Categories"
+          name='Categories'
           component={HomeTabNavigator}
           options={{ headerShown: true }}
         />
         <Stack.Screen
-          name="Solo"
+          name='Solo'
           component={FeederScreen}
           options={{
             headerShown: false,
           }}
         />
+        <Stack.Screen name='Feeder' component={FeederScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='Royale' component={Royale} options={{ headerShown: false }} />
         <Stack.Screen
-          name="Feeder"
-          component={FeederScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Royale"
-          component={Royale}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="CategoriesListView"
+          name='CategoriesListView'
           component={CategoriesListView}
           options={{ headerShown: false }}
         />
@@ -315,49 +300,51 @@ function App() {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
-      <NativeBaseProvider>
-        <SocketProvider>
-          <SoundProvider>
-            <NavigationContainer
-              theme={MyTheme}
-              linking={linking}
-              onStateChange={(sat) => {
-                // console.log('🚀  sat:', sat);
-                // if (sat.routes[0].name === 'Game') return;
-                // if (sat.routes[0].name === 'GameOver' && !sat.routes[1]) return;
-                // playNavigationSound();
-              }}
-            >
-              <AuthProvider>
-                <TrackingProvider>
-                  <MenuProvider>
-                    <UpdateProvider>
-                      <LinearGradient
-                        colors={["#0f0c29", "#302b63", "#24243e"]}
-                        style={{
-                          flex: 1,
-                          fontFeatureSettings: "'clig' off, 'liga' off",
-                        }}
-                      >
-                        <FeedbackModal />
-                        <MenuModal />
-                        <StackNavigator />
-                      </LinearGradient>
-                    </UpdateProvider>
-                  </MenuProvider>
-                </TrackingProvider>
-              </AuthProvider>
-              <Toast />
-            </NavigationContainer>
-          </SoundProvider>
-        </SocketProvider>
-      </NativeBaseProvider>
-    </View>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <NativeBaseProvider>
+          <SocketProvider>
+            <SoundProvider>
+              <NavigationContainer
+                theme={MyTheme}
+                linking={linking}
+                onStateChange={(sat) => {
+                  // console.log('🚀  sat:', sat);
+                  // if (sat.routes[0].name === 'Game') return;
+                  // if (sat.routes[0].name === 'GameOver' && !sat.routes[1]) return;
+                  // playNavigationSound();
+                }}
+              >
+                <AuthProvider>
+                  <TrackingProvider>
+                    <MenuProvider>
+                      <UpdateProvider>
+                        <LinearGradient
+                          colors={['#0f0c29', '#302b63', '#24243e']}
+                          style={{
+                            flex: 1,
+                            fontFeatureSettings: "'clig' off, 'liga' off",
+                          }}
+                        >
+                          <FeedbackModal />
+                          <MenuModal />
+                          <StackNavigator />
+                        </LinearGradient>
+                      </UpdateProvider>
+                    </MenuProvider>
+                  </TrackingProvider>
+                </AuthProvider>
+                <Toast />
+              </NavigationContainer>
+            </SoundProvider>
+          </SocketProvider>
+        </NativeBaseProvider>
+      </View>
+    </GestureHandlerRootView>
   );
 }
 
