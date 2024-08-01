@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
-  Modal,
   View,
   TouchableOpacity,
   StyleSheet,
   Image,
   ScrollView,
   Text,
-  TouchableWithoutFeedback,
 } from "react-native";
 import UsernameInput from "./UsernameInput";
 import AvatarSelection from "./AvatarSelection";
@@ -25,8 +23,6 @@ const ModalContainer = ({
   const [newUsername, setNewUsername] = useState(defaultUsername);
   const [selectedAvatar, setSelectedAvatar] = useState(defaultAvatar);
   const [selectedColor, setSelectedColor] = useState(defaultColor || "#ffffff");
-  const [usernameInputVisible, setUsernameInputVisible] = useState(false);
-  const [iconInputVisible, setIconInputVisible] = useState(false);
   const [error, setError] = useState("");
   const [avatarBackground, setAvatarBackground] = useState(
     defaultColor || "#ffffff"
@@ -249,7 +245,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingTop: 20,
-    paddingBottom: 40, // Add padding to the bottom to avoid cutting off
+    paddingBottom: 40,
     paddingHorizontal: 10,
     alignItems: "center",
     shadowColor: "#000",
