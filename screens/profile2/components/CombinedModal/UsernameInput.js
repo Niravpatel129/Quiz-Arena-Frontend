@@ -2,6 +2,7 @@ import React from "react";
 import { TextInput, Text, View, StyleSheet } from "react-native";
 
 const UsernameInput = ({
+  defaultUsername,
   newUsername,
   setNewUsername,
   usernameInputVisible,
@@ -12,11 +13,11 @@ const UsernameInput = ({
       <TextInput
         editable={usernameInputVisible}
         maxLength={8}
-        minxLength={3}
+        minLength={3}
         style={styles.modalTextInput}
-        value={usernameInputVisible ? newUsername : ""}
+        value={newUsername}
         onChangeText={setNewUsername}
-        placeholder={usernameInputVisible ? "" : newUsername}
+        placeholder={defaultUsername}
         placeholderTextColor="#C7C7CD"
       />
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
@@ -27,7 +28,7 @@ const UsernameInput = ({
 const styles = StyleSheet.create({
   modalTextInput: {
     height: 40,
-    width: 300,
+    width: 250,
     margin: 12,
     borderBottomWidth: 1,
     borderColor: "#C7C7CD",
