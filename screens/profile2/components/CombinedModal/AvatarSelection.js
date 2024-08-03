@@ -18,7 +18,7 @@ const AvatarSelection = ({
           marginVertical: 10,
         }}
       >
-        Owned Avatars
+        Unlocked Avatars
       </Text>
       <View
         style={{
