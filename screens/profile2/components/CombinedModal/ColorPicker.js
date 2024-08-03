@@ -10,7 +10,7 @@ const ColorPicker = ({ selectedColor, setSelectedColor }) => {
           const { h, s, v } = color;
           setSelectedColor({ h, s, v });
         }}
-        style={{ width: 100, height: 100, paddingBottom: 10 }}
+        style={{ width: 150, height: 150, paddingTop: 10 }}
         defaultColor={selectedColor}
         hideSliders={true}
       />
