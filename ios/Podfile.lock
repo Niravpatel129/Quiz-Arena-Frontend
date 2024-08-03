@@ -676,6 +676,8 @@ PODS:
     - React-Core
   - RNDateTimePicker (7.2.0):
     - React-Core
+  - RNGestureHandler (2.12.1):
+    - React-Core
   - RNGoogleMobileAds (12.10.0):
     - Google-Mobile-Ads-SDK (= 10.14.0)
     - GoogleUserMessagingPlatform (= 2.1.0)
@@ -823,6 +825,7 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNGoogleMobileAds (from `../node_modules/react-native-google-mobile-ads`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -1024,6 +1027,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-picker/picker"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
   RNGoogleMobileAds:
     :path: "../node_modules/react-native-google-mobile-ads"
   RNLocalize:
@@ -1140,6 +1145,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: ddc4ee162bfd41b0d2c68bf2d95acd81dd7f1f93
   RNCPicker: 0bc2f0a29abcca7b7ed44a2d036aac9ab6d25700
   RNDateTimePicker: 3942382593f104af226ad9c56e16166960c7ae30
+  RNGestureHandler: c0d04458598fcb26052494ae23dda8f8f5162b13
   RNGoogleMobileAds: d72f57c54308f331a235d484df3923d4f20ae358
   RNLocalize: 1ce4263770515f53d3de442ce7657b3661b16a37
   RNReanimated: 9f7068e43b9358a46a688d94a5a3adb258139457
