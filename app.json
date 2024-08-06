@@ -2,7 +2,7 @@
   "expo": {
     "name": "Quiz Arena",
     "slug": "Quiz-Arena-Frontend-Scaffold",
-    "version": "8.0.16",
+    "version": "8.0.17",
     "orientation": "portrait",
     "icon": "./assets/icon2.png",
     "userInterfaceStyle": "light",
