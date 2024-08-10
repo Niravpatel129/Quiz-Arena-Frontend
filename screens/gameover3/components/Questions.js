@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { newRequest } from '../../../api/newRequest';
-import ReportModal from './ReportModal'; 
+import ReportModal from './ReportModal';
 
 export default function Questions({ questions }) {
   const [thumbsStatus, setThumbsStatus] = useState(
@@ -32,7 +32,7 @@ export default function Questions({ questions }) {
     }
   };
 
-  const handleReportSubmit = async (questionId, reportData) => {
+  const handleReportSubmit = async ({ questionId, reportData }) => {
     await newRequest.post(`/report-question`, {
       questionId,
       data: reportData,
