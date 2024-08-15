@@ -13,7 +13,10 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import Toast from "react-native-toast-message";
-import { BottomSheetModal, BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
 import { newRequest } from "../../api/newRequest";
 import useCategories from "../../hooks/useCategories";
 import useStreak from "../../hooks/useStreak";
@@ -63,13 +66,15 @@ export default function Homepage() {
         type: "info",
         position: "bottom",
         text1: "Update Available",
-        text2: "A new version of the app is available, we recommend updating it now.",
+        text2:
+          "A new version of the app is available, we recommend updating it now.",
         visibilityTime: 3000,
         autoHide: false,
         onPress: () => {
-          const link = Platform.OS === "ios"
-            ? "https://apps.apple.com/ca/app/quiz-arena-trivia-questions/id6474947179"
-            : "https://play.google.com/store/apps/details?id=com.niravpatelp129.QuizArenaFrontendScaffold";
+          const link =
+            Platform.OS === "ios"
+              ? "https://apps.apple.com/ca/app/quiz-arena-trivia-questions/id6474947179"
+              : "https://play.google.com/store/apps/details?id=com.niravpatelp129.QuizArenaFrontendScaffold";
           Linking.openURL(link);
         },
       });
@@ -78,40 +83,92 @@ export default function Homepage() {
 
   const handleOpenBottomSheet = (category) => {
     setSelectedCategory(category);
-    const categoryData = categories.find(cat => cat.parentCategory === category);
+    const categoryData = categories.find(
+      (cat) => cat.parentCategory === category
+    );
     setCategoryItems(categoryData ? categoryData.subCategories : []);
     bottomSheetRef.current?.present();
   };
 
   const renderCategoryItems = () => (
-    <View style={{ padding: 20 }}>
+    <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
       <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 10 }}>
         {selectedCategory}
       </Text>
-      <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+      <ScrollView
+        contentContainerStyle={{
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          padding: 0,
+        }}
+      >
         {categoryItems.map((item, index) => (
-          <CategoryCard key={index} item={item} parentCategory={selectedCategory} />
+          <View
+            key={index}
+            style={{
+              width: "30%",
+              borderRadius: 10,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <CategoryCard item={item} parentCategory={selectedCategory} />
+          </View>
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 
-  const categoryTiles = ["Popular", "Trending", "Recently Added", "Recently Played"];
+  const categoryTiles = [
+    "Popular",
+    "Trending",
+    "Recently Added",
+    "Recently Played",
+  ];
 
   return (
     <BottomSheetModalProvider>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Animated.View style={[styles.container, animatedStyle]}>
+        <Animated.View
+          style={[
+            {
+              padding: 10,
+              backgroundColor: "#fff",
+              height: "100%",
+              gap: 20,
+              marginBottom: 100,
+            },
+            animatedStyle,
+          ]}
+        >
           {config.triviaTuesdayEnabled && <RoyaleHeader />}
-          
-          <View style={styles.tilesContainer}>
+
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+            }}
+          >
             {categoryTiles.map((category, index) => (
               <TouchableOpacity
                 key={index}
-                style={styles.tile}
+                style={{
+                  backgroundColor: "#f8f8f8",
+                  padding: 20,
+                  marginBottom: 10,
+                  borderRadius: 10,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexBasis: "48%",
+                  height: 120,
+                }}
                 onPress={() => handleOpenBottomSheet(category)}
               >
-                <Text style={styles.tileText}>{category}</Text>
+                <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+                  {category}
+                </Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -121,40 +178,13 @@ export default function Homepage() {
       <BottomSheetModal
         ref={bottomSheetRef}
         index={0}
-        snapPoints={['50%', '75%']}
-        style={{ paddingHorizontal: 10 }}
+        snapPoints={["75%"]}
+        style={{
+          paddingHorizontal: 10,
+        }}
       >
         {renderCategoryItems()}
       </BottomSheetModal>
     </BottomSheetModalProvider>
   );
 }
-
-const styles = {
-  container: {
-    padding: 10,
-    backgroundColor: "#fff",
-    height: "100%",
-    gap: 20,
-    marginBottom: 100,
-  },
-  tilesContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  tile: {
-    backgroundColor: "#f8f8f8",
-    padding: 20,
-    marginBottom: 10,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    flexBasis: "48%",
-    height: 120,
-  },
-  tileText: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-};
