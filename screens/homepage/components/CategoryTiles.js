@@ -1,13 +1,12 @@
 import React, { useRef, useState } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import AvatarBottomSheet from "./AvatarBottomSheet"; // Reusing your existing bottom sheet structure
+import { BottomSheetModal, BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 const categoriesData = {
-  "Recently Played": [], // Add actual data
-  "Recently Added": [], // Add actual data
-  "Popular Categories": [], // Add actual data
-  "Trending Categories": [], // Add actual data
+  "Recently Played": ["Game 1", "Game 2", "Game 3"], // Example data
+  "Recently Added": ["Quiz 1", "Quiz 2", "Quiz 3"], // Example data
+  "Popular": ["Topic 1", "Topic 2", "Topic 3"], // Example data
+  "Trending": ["Trend 1", "Trend 2", "Trend 3"], // Example data
 };
 
 export default function CategoriesTiles() {
@@ -17,9 +16,28 @@ export default function CategoriesTiles() {
 
   const handleOpenBottomSheet = (categoryName) => {
     setSelectedCategory(categoryName);
-    setCategoryList(categoriesData[categoryName]); // Update with actual category data
-    bottomSheetRef.current?.present();
+    setCategoryList(categoriesData[categoryName]);
+    bottomSheetRef.current?.present(); // Open the bottom sheet
   };
+
+  const renderContent = () => (
+    <View style={{ padding: 20, backgroundColor: 'white', height: 300 }}>
+      <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+        {selectedCategory}
+      </Text>
+      <View style={{ marginTop: 10 }}>
+        {categoryList.length > 0 ? (
+          categoryList.map((item, index) => (
+            <Text key={index} style={{ fontSize: 16, marginBottom: 5 }}>
+              {item}
+            </Text>
+          ))
+        ) : (
+          <Text style={{ fontSize: 16 }}>No items available.</Text>
+        )}
+      </View>
+    </View>
+  );
 
   return (
     <BottomSheetModalProvider>
@@ -42,26 +60,13 @@ export default function CategoriesTiles() {
         ))}
       </View>
 
-      <AvatarBottomSheet
+      <BottomSheetModal
         ref={bottomSheetRef}
-        snapPoints={["50%"]}
-        onChange={(index) => {
-          if (index === -1) {
-            console.log("Bottom sheet dismissed");
-          }
-        }}
-        renderBackdrop={() => (
-          <View
-            style={{
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              flex: 1,
-            }}
-          />
-        )}
-        selectedAvatar={null} // Pass necessary props if needed
-        setSelectedAvatar={() => {}} // Pass necessary props if needed
-        onSaveChanges={() => {}} // Pass necessary props if needed
-      />
+        index={0}
+        snapPoints={['50%']}
+      >
+        {renderContent()}
+      </BottomSheetModal>
     </BottomSheetModalProvider>
   );
 }
