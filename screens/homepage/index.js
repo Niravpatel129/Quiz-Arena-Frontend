@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import {
   Linking,
   Platform,
@@ -16,6 +16,7 @@ import Toast from "react-native-toast-message";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
+  BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 import { newRequest } from "../../api/newRequest";
 import useCategories from "../../hooks/useCategories";
@@ -127,6 +128,19 @@ export default function Homepage() {
     "Recently Played",
   ];
 
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+        opacity={0}
+        pressBehavior="close"
+      />
+    ),
+    []
+  );
+
   return (
     <BottomSheetModalProvider>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -182,6 +196,7 @@ export default function Homepage() {
         style={{
           paddingHorizontal: 10,
         }}
+        backdropComponent={renderBackdrop}
       >
         {renderCategoryItems()}
       </BottomSheetModal>
