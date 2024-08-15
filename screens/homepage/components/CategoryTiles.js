@@ -1,12 +1,15 @@
 import React, { useRef, useState } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
-import { BottomSheetModal, BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { View, TouchableOpacity, Text, ScrollView } from "react-native";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
 
 const categoriesData = {
   "Recently Played": ["Game 1", "Game 2", "Game 3"], // Example data
   "Recently Added": ["Quiz 1", "Quiz 2", "Quiz 3"], // Example data
-  "Popular": ["Topic 1", "Topic 2", "Topic 3"], // Example data
-  "Trending": ["Trend 1", "Trend 2", "Trend 3"], // Example data
+  Popular: ["Topic 1", "Topic 2", "Topic 3"], // Example data
+  Trending: ["Trend 1", "Trend 2", "Trend 3"], // Example data
 };
 
 export default function CategoriesTiles() {
@@ -21,21 +24,21 @@ export default function CategoriesTiles() {
   };
 
   const renderContent = () => (
-    <View style={{ padding: 20, backgroundColor: 'white', height: 300 }}>
-      <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+    <View style={{ padding: 20, backgroundColor: "white", height: "100%" }}>
+      <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 10 }}>
         {selectedCategory}
       </Text>
-      <View style={{ marginTop: 10 }}>
+      <ScrollView style={{ flex: 1 }}>
         {categoryList.length > 0 ? (
           categoryList.map((item, index) => (
-            <Text key={index} style={{ fontSize: 16, marginBottom: 5 }}>
+            <Text key={index} style={{ fontSize: 20, marginBottom: 10 }}>
               {item}
             </Text>
           ))
         ) : (
           <Text style={{ fontSize: 16 }}>No items available.</Text>
         )}
-      </View>
+      </ScrollView>
     </View>
   );
 
@@ -60,11 +63,7 @@ export default function CategoriesTiles() {
         ))}
       </View>
 
-      <BottomSheetModal
-        ref={bottomSheetRef}
-        index={0}
-        snapPoints={['50%']}
-      >
+      <BottomSheetModal ref={bottomSheetRef} index={0} snapPoints={["75%"]}>
         {renderContent()}
       </BottomSheetModal>
     </BottomSheetModalProvider>
