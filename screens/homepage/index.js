@@ -23,6 +23,7 @@ import useCategories from "../../hooks/useCategories";
 import useStreak from "../../hooks/useStreak";
 import { keys } from "../../keys";
 import CategoryCard from "./components/CategoryCard";
+import ExploreMoreCategories from "./components/ExploreMoreCategories";
 
 export default function Homepage() {
   const { categories, userData } = useCategories();
@@ -185,6 +186,7 @@ export default function Homepage() {
                 </Text>
               </TouchableOpacity>
             ))}
+            <ExploreMoreCategories></ExploreMoreCategories>
           </View>
         </Animated.View>
       </ScrollView>
