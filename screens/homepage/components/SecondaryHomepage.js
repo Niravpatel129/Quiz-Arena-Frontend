@@ -6,13 +6,12 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import Toast from "react-native-toast-message";
-import { newRequest } from "../../api/newRequest";
-import useCategories from "../../hooks/useCategories";
-import useStreak from "../../hooks/useStreak";
-import { keys } from "../../keys";
-import CategoriesList from "./components/CategoriesList";
-import RoyaleHeader from "./components/RoyaleHeader";
-import UserProfile from "./components/UserProfile";
+import { newRequest } from "../../../api/newRequest";
+import useCategories from "../../../hooks/useCategories";
+import useStreak from "../../../hooks/useStreak";
+import { keys } from "../../../keys";
+import CategoriesList from "./CategoriesList";
+import RoyaleHeader from "./RoyaleHeader";
 
 export default function SecondaryHomepage() {
   const { categories, userData } = useCategories();
@@ -78,7 +77,6 @@ export default function SecondaryHomepage() {
           animatedStyle,
         ]}
       >
-        <UserProfile userData={userData} />
         {config.triviaTuesdayEnabled && <RoyaleHeader />}
         {categories.map((category, index) => {
           return (
