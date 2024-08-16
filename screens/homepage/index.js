@@ -196,7 +196,7 @@ export default function Homepage() {
       <BottomSheetModal
         ref={bottomSheetRef}
         index={0}
-        snapPoints={["75%"]}
+        snapPoints={["81%"]}
         style={{
           paddingHorizontal: 10,
         }}
