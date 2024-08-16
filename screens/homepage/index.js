@@ -24,6 +24,7 @@ import useStreak from "../../hooks/useStreak";
 import { keys } from "../../keys";
 import CategoryCard from "./components/CategoryCard";
 import ExploreMoreCategories from "./components/ExploreMoreCategories";
+import UserProfile from "./components/UserProfile";
 
 export default function Homepage() {
   const { categories, userData } = useCategories();
@@ -157,6 +158,7 @@ export default function Homepage() {
             animatedStyle,
           ]}
         >
+          <UserProfile userData={userData} />
           {config.triviaTuesdayEnabled && <RoyaleHeader />}
 
           <View
