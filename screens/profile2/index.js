@@ -16,7 +16,6 @@ import React, {
 import {
   SafeAreaView,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -370,8 +369,28 @@ export default function Profile2({ userId }) {
         visible={isUsernameModalVisible}
         onRequestClose={() => setIsUsernameModalVisible(false)}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 22,
+          }}
+        >
+          <View
+            style={{
+              margin: 20,
+              backgroundColor: "white",
+              borderRadius: 20,
+              padding: 35,
+              alignItems: "center",
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.25,
+              shadowRadius: 4,
+              elevation: 5,
+            }}
+          >
             <UsernameInput
               defaultUsername={defaultUsername}
               newUsername={newUsername}
@@ -379,18 +398,46 @@ export default function Profile2({ userId }) {
               usernameInputVisible={true}
               error=""
             />
-            <View style={styles.buttonContainer}>
+            <View style={{ flexDirection: "row", marginTop: 15 }}>
               <TouchableOpacity
-                style={[styles.button, styles.buttonCancel]}
+                style={{
+                  borderRadius: 20,
+                  padding: 10,
+                  elevation: 2,
+                  marginHorizontal: 10,
+                  backgroundColor: "#2196F3",
+                }}
                 onPress={() => setIsUsernameModalVisible(false)}
               >
-                <Text style={styles.textStyle}>Cancel</Text>
+                <Text
+                  style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  }}
+                >
+                  Cancel
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.button, styles.buttonSave]}
+                style={{
+                  borderRadius: 20,
+                  padding: 10,
+                  elevation: 2,
+                  marginHorizontal: 10,
+                  backgroundColor: "#4CAF50",
+                }}
                 onPress={handleUsernameChange}
               >
-                <Text style={styles.textStyle}>Save</Text>
+                <Text
+                  style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  }}
+                >
+                  Save
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -399,55 +446,3 @@ export default function Profile2({ userId }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  bottomSheet: {
-    zIndex: 1000,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    marginTop: 15,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-    marginHorizontal: 10,
-  },
-  buttonCancel: {
-    backgroundColor: "#2196F3",
-  },
-  buttonSave: {
-    backgroundColor: "#4CAF50",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-});
