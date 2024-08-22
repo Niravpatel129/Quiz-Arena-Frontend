@@ -6,10 +6,10 @@ import {
 } from "@gorhom/bottom-sheet";
 
 const categoriesData = {
-  "Recently Played": ["Game 1", "Game 2", "Game 3"], // Example data
-  "Recently Added": ["Quiz 1", "Quiz 2", "Quiz 3"], // Example data
-  Popular: ["Topic 1", "Topic 2", "Topic 3"], // Example data
-  Trending: ["Trend 1", "Trend 2", "Trend 3"], // Example data
+  "Recently Played": ["Game 1", "Game 2", "Game 3"],
+  "Recently Added": ["Quiz 1", "Quiz 2", "Quiz 3"],
+  Popular: ["Topic 1", "Topic 2", "Topic 3"],
+  Trending: ["Trend 1", "Trend 2", "Trend 3"],
 };
 
 export default function CategoriesTiles() {
