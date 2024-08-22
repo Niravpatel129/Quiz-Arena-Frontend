@@ -6,6 +6,7 @@ import {
   View,
   Image,
   ScrollView,
+  SafeAreaView,
 } from "react-native";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import ColorPicker from "./ColorPicker";
@@ -238,22 +239,24 @@ const AvatarBottomSheet = forwardRef(
               </TouchableOpacity>
             </View>
           ) : (
-            <TouchableOpacity
-              style={{
-                backgroundColor: "#007AFF",
-                padding: 10,
-                borderRadius: 10,
-                marginTop: 20,
-                alignItems: "center",
-              }}
-              onPress={handleSetBackground}
-            >
-              <Text
-                style={{ color: "white", fontSize: 14, fontWeight: "bold" }}
+            <SafeAreaView>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#007AFF",
+                  padding: 10,
+                  borderRadius: 10,
+                  marginTop: 20,
+                  alignItems: "center",
+                }}
+                onPress={handleSetBackground}
               >
-                Change Background
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{ color: "white", fontSize: 14, fontWeight: "bold" }}
+                >
+                  Change Background
+                </Text>
+              </TouchableOpacity>
+            </SafeAreaView>
           )}
         </BottomSheetView>
       </BottomSheetModal>
