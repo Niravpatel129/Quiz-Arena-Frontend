@@ -192,10 +192,11 @@ function App() {
           }}
         />
         <Tab.Screen
-          name="History"
-          component={MatchHistory2}
+          name="Categories"
+          component={SecondaryHomepage}
           options={{
             headerShown: false,
+            title: "Categories",
           }}
         />
         <Tab.Screen
