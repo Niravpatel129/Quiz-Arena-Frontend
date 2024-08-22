@@ -162,6 +162,25 @@ function App() {
     );
   }
 
+  const ProfileStack = createNativeStackNavigator();
+
+  function ProfileStackNavigator() {
+    return (
+      <ProfileStack.Navigator>
+        <ProfileStack.Screen
+          name="ProfileMain"
+          component={Profile2}
+          options={{ headerShown: false }}
+        />
+        <ProfileStack.Screen
+          name="MatchHistory"
+          component={MatchHistory2}
+          options={{ headerShown: false }}
+        />
+      </ProfileStack.Navigator>
+    );
+  }
+
   function HomeTabNavigator() {
     return (
       <Tab.Navigator tabBar={(props) => <TabBar2 {...props} />}>
@@ -181,7 +200,7 @@ function App() {
         />
         <Tab.Screen
           name="Profile"
-          component={Profile2}
+          component={ProfileStackNavigator}
           options={{
             headerShown: false,
           }}
@@ -322,6 +341,11 @@ function App() {
           name="SecondaryHomepage"
           component={SecondaryHomepage}
           options={{ headerShown: true, title: "Explore Categories" }} // Customize the title as needed
+        />
+        <Stack.Screen
+          name="MatchHistory"
+          component={MatchHistory2}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Feeder"
