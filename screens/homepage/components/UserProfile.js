@@ -48,9 +48,9 @@ export default function UserProfile({ userData }) {
                   "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/home_page_imgs%2Faxoltol-profile-pic.jpg?alt=media&token=1e49a0a3-9d7e-4d0c-bb75-a401c3f14825",
               }}
               style={{
-                width: 100,
-                height: 100,
-                borderRadius: 25,
+                width: 75,
+                height: 75,
+                borderRadius: 20,
                 borderWidth: 1,
                 borderColor: "#F8D2E6",
                 marginRight: 10,
@@ -69,14 +69,14 @@ export default function UserProfile({ userData }) {
               <Text
                 style={{
                   fontFamily: "poppins-bold",
-                  fontSize: 20,
+                  fontSize: 18,
                   color: "#000",
                 }}
               >
                 {capitalizeFirstLetter(userData?.username)}
               </Text>
               {userData?.profile?.country && (
-                <CountryFlag isoCode={userData.profile.country} size={16} />
+                <CountryFlag isoCode={userData.profile.country} size={14} />
               )}
             </View>
 
@@ -90,14 +90,13 @@ export default function UserProfile({ userData }) {
             >
               Level {calculateExp(userData?.profile?.experience || 0)}
             </Text>
-
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
             >
               <Ionicons name="ios-cash" size={20} color="#FFD700" />
               <Text
                 style={{
-                  color: "#000", // Changed to black for better visibility
+                  color: "#000",
                   fontFamily: "poppins-semiBold",
                   fontSize: RFValue(12),
                 }}
@@ -109,7 +108,7 @@ export default function UserProfile({ userData }) {
           </View>
         </View>
 
-        {/* Right Side - Arena Rating, Energy */}
+        {/* Arena Rating, Energy */}
         <View style={{ alignItems: "flex-end" }}>
           <View
             style={{
