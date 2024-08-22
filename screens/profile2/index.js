@@ -351,6 +351,21 @@ export default function Profile2({ userId }) {
           )}
           {renderStatsCard("Avg Score", 85, 3)}
         </Animated.View>
+
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#4CAF50",
+            padding: 10,
+            borderRadius: 5,
+            marginTop: 20,
+            alignItems: "center",
+          }}
+          onPress={() => navigation.navigate("MatchHistory")}
+        >
+          <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>
+            Match History
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
 
       <AvatarBottomSheet
@@ -362,7 +377,6 @@ export default function Profile2({ userId }) {
         setSelectedAvatar={setSelectedAvatar}
         onSaveChanges={handleSave}
       />
-
       <Modal
         animationType="slide"
         transparent={true}
