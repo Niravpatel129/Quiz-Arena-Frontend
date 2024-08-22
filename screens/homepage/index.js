@@ -25,16 +25,19 @@ import { keys } from "../../keys";
 import CategoryCard from "./components/CategoryCard";
 import ExploreMoreCategories from "./components/ExploreMoreCategories";
 import UserProfile from "./components/UserProfile";
+import DailyQuizBanner from "./components/DailyQuizBanner";
+import DailyQuizLeaderboard from "./components/DailyQuizLeaderboard";
 
 export default function Homepage() {
   const { categories, userData } = useCategories();
   const [config, setConfig] = useState({ triviaTuesdayEnabled: false });
   const opacity = useSharedValue(0);
   const [updateStreak] = useStreak();
-
+  const [leaderboard, setLeaderboard] = useState([]);
   const bottomSheetRef = useRef(null);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryItems, setCategoryItems] = useState([]);
+  const [isDailyQuiz, setIsDailyQuiz] = useState(false);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -51,6 +54,7 @@ export default function Homepage() {
   useEffect(() => {
     updateStreak();
     fetchConfig();
+    fetchLeaderboardData();
   }, []);
 
   const fetchConfig = async () => {
@@ -60,6 +64,15 @@ export default function Homepage() {
       handleUpdateNotification(res.data);
     } catch (error) {
       console.error("Error fetching config:", error);
+    }
+  };
+
+  const fetchLeaderboardData = async () => {
+    try {
+      const res = await newRequest.get("/leaderboard/dailyquiz"); // endpoint for daily quiz leaderboard
+      setLeaderboard(res.data);
+    } catch (error) {
+      console.error("Error fetching leaderboard data:", error);
     }
   };
 
@@ -86,42 +99,52 @@ export default function Homepage() {
 
   const handleOpenBottomSheet = (category) => {
     setSelectedCategory(category);
-    const categoryData = categories.find(
-      (cat) => cat.parentCategory === category
-    );
-    setCategoryItems(categoryData ? categoryData.subCategories : []);
+    if (category === "Daily Quiz") {
+      setIsDailyQuiz(true);
+    } else {
+      setIsDailyQuiz(false);
+      const categoryData = categories.find(
+        (cat) => cat.parentCategory === category
+      );
+      setCategoryItems(categoryData ? categoryData.subCategories : []);
+    }
     bottomSheetRef.current?.present();
   };
 
-  const renderCategoryItems = () => (
-    <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
-      <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 10 }}>
-        {selectedCategory}
-      </Text>
-      <ScrollView
-        contentContainerStyle={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          padding: 0,
-        }}
-      >
-        {categoryItems.map((item, index) => (
-          <View
-            key={index}
-            style={{
-              width: "30%",
-              borderRadius: 10,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <CategoryCard item={item} parentCategory={selectedCategory} />
-          </View>
-        ))}
-      </ScrollView>
-    </View>
-  );
+  const renderCategoryItems = () => {
+    if (isDailyQuiz) {
+      return <DailyQuizLeaderboard leaderboard={leaderboard} />;
+    }
+    return (
+      <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
+        <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 10 }}>
+          {selectedCategory}
+        </Text>
+        <ScrollView
+          contentContainerStyle={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            padding: 0,
+          }}
+        >
+          {categoryItems.map((item, index) => (
+            <View
+              key={index}
+              style={{
+                width: "30%",
+                borderRadius: 10,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <CategoryCard item={item} parentCategory={selectedCategory} />
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    );
+  };
 
   const categoryTiles = [
     "Popular",
@@ -159,8 +182,10 @@ export default function Homepage() {
           ]}
         >
           <UserProfile userData={userData} />
+          <DailyQuizBanner
+            onPress={() => handleOpenBottomSheet("Daily Quiz")}
+          />
           {config.triviaTuesdayEnabled && <RoyaleHeader />}
-
           <View
             style={{
               flexDirection: "row",
@@ -188,7 +213,7 @@ export default function Homepage() {
                 </Text>
               </TouchableOpacity>
             ))}
-            <ExploreMoreCategories></ExploreMoreCategories>
+            <ExploreMoreCategories />
           </View>
         </Animated.View>
       </ScrollView>
@@ -196,7 +221,7 @@ export default function Homepage() {
       <BottomSheetModal
         ref={bottomSheetRef}
         index={0}
-        snapPoints={["81%"]}
+        snapPoints={["40%", "65%"]}
         style={{
           paddingHorizontal: 10,
         }}
