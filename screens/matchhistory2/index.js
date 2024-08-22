@@ -320,7 +320,6 @@ export default function MatchHistory2() {
       </LinearGradient>
     );
   };
-
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -336,11 +335,22 @@ export default function MatchHistory2() {
           padding: 10,
         }}
       >
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{
+            position: 'absolute',
+            top: 10,
+            left: 10,
+            zIndex: 1,
+          }}
+        >
+          <Ionicons name="arrow-back" size={24} color="#5E6064" />
+        </TouchableOpacity>
         <Text
           style={{
             textAlign: 'center',
             fontSize: 30,
-            marginTop: 10,
+            marginTop: 40,
             marginBottom: 10,
             color: '#5E6064',
             fontFamily: 'poppins-semiBold',
