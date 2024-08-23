@@ -15,7 +15,6 @@ const CategoryTiles = ({ categoryTiles, handleOpenBottomSheet }) => {
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "space-between",
-        marginHorizontal: 10,
       }}
     >
       {categoryTiles.map((category, index) => (
@@ -27,14 +26,13 @@ const CategoryTiles = ({ categoryTiles, handleOpenBottomSheet }) => {
             alignItems: "center",
             justifyContent: "center",
             width: "47%",
-            aspectRatio: 16 / 9,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.1,
             shadowRadius: 4,
             elevation: 3,
             overflow: "hidden",
-            height: 250,
+            height: 120,
           }}
           onPress={() => handleOpenBottomSheet(category)}
         >
