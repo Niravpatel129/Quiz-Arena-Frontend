@@ -27,7 +27,8 @@ import ExploreMoreCategories from "./components/ExploreMoreCategories";
 import UserProfile from "./components/UserProfile";
 import DailyQuizBanner from "./components/DailyQuizBanner";
 import DailyQuizLeaderboard from "./components/DailyQuizLeaderboard";
-import CategoryTiles from "./components/CategoryTiles"; // Import the new component
+import CategoryTiles from "./components/CategoryTiles";
+import ShopTile from "./components/ShopTile";
 
 export default function Homepage() {
   const { categories, userData } = useCategories();
@@ -99,10 +100,11 @@ export default function Homepage() {
   };
 
   const handleOpenBottomSheet = (category) => {
-    setSelectedCategory(category.name);
-    if (category.name === "Daily Quiz") {
+    if (typeof category === "string" && category === "Daily Quiz") {
+      setSelectedCategory("Daily Quiz");
       setIsDailyQuiz(true);
     } else {
+      setSelectedCategory(category.name);
       setIsDailyQuiz(false);
       const categoryData = categories.find(
         (cat) => cat.parentCategory === category.name
@@ -169,7 +171,7 @@ export default function Homepage() {
               padding: 10,
               backgroundColor: "#fff",
               height: "100%",
-              gap: 20,
+              gap: 10,
             },
             animatedStyle,
           ]}
@@ -189,6 +191,7 @@ export default function Homepage() {
             handleOpenBottomSheet={handleOpenBottomSheet}
           />
           <ExploreMoreCategories />
+          <ShopTile />
         </Animated.View>
       </ScrollView>
 
