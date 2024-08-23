@@ -353,18 +353,40 @@ export default function Profile2({ userId }) {
         </Animated.View>
 
         <TouchableOpacity
-          style={{
-            backgroundColor: "#4CAF50",
-            padding: 10,
-            borderRadius: 5,
-            marginTop: 20,
-            alignItems: "center",
+          onPress={() => {
+            navigation.navigate("MatchHistory");
           }}
-          onPress={() => navigation.navigate("MatchHistory")}
+          style={{
+            paddingVertical: 10,
+            paddingHorizontal: 15,
+            backgroundColor: "#3F95F2", // Blue background
+            borderRadius: 16, // Rounded corners
+            alignItems: "center",
+            marginTop: 10,
+          }}
         >
-          <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>
+          <Text
+            style={{
+              color: "#fff",
+              fontSize: 18,
+              fontWeight: "bold",
+              textTransform: "uppercase",
+              letterSpacing: 1.5,
+            }}
+          >
             Match History
           </Text>
+          <LinearGradient
+            colors={["rgba(255, 215, 0, 0)", "#FFD700", "rgba(255, 215, 0, 0)"]}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+            style={{
+              height: 3,
+              width: "100%",
+              marginTop: 4,
+              borderRadius: 2,
+            }}
+          />
         </TouchableOpacity>
       </ScrollView>
 
