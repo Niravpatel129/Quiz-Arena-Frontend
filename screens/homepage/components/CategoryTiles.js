@@ -1,71 +1,70 @@
-import React, { useRef, useState } from "react";
-import { View, TouchableOpacity, Text, ScrollView } from "react-native";
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from "@gorhom/bottom-sheet";
+import React from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 
-const categoriesData = {
-  "Recently Played": ["Game 1", "Game 2", "Game 3"],
-  "Recently Added": ["Quiz 1", "Quiz 2", "Quiz 3"],
-  Popular: ["Topic 1", "Topic 2", "Topic 3"],
-  Trending: ["Trend 1", "Trend 2", "Trend 3"],
-};
-
-export default function CategoriesTiles() {
-  const bottomSheetRef = useRef(null);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [categoryList, setCategoryList] = useState([]);
-
-  const handleOpenBottomSheet = (categoryName) => {
-    setSelectedCategory(categoryName);
-    setCategoryList(categoriesData[categoryName]);
-    bottomSheetRef.current?.present(); // Open the bottom sheet
-  };
-
-  const renderContent = () => (
-    <View style={{ padding: 20, backgroundColor: "white", height: "100%" }}>
-      <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 10 }}>
-        {selectedCategory}
-      </Text>
-      <ScrollView style={{ flex: 1 }}>
-        {categoryList.length > 0 ? (
-          categoryList.map((item, index) => (
-            <Text key={index} style={{ fontSize: 20, marginBottom: 10 }}>
-              {item}
-            </Text>
-          ))
-        ) : (
-          <Text style={{ fontSize: 16 }}>No items available.</Text>
-        )}
-      </ScrollView>
-    </View>
-  );
+const CategoryTiles = ({ categoryTiles, handleOpenBottomSheet }) => {
+  const tileImages = [
+    require("../../../assets/recently-played.png"),
+    require("../../../assets/trending.png"),
+    require("../../../assets/recently-added.png"),
+    require("../../../assets/popular.png"),
+  ];
 
   return (
-    <BottomSheetModalProvider>
-      <View style={{ padding: 10 }}>
-        {Object.keys(categoriesData).map((categoryName, index) => (
-          <TouchableOpacity
-            key={index}
+    <View
+      style={{
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        marginHorizontal: 10,
+      }}
+    >
+      {categoryTiles.map((category, index) => (
+        <TouchableOpacity
+          key={index}
+          style={{
+            marginBottom: 15,
+            borderRadius: 20,
+            alignItems: "center",
+            justifyContent: "center",
+            width: "47%",
+            aspectRatio: 16 / 9,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 4,
+            elevation: 3,
+            overflow: "hidden",
+            height: 250,
+          }}
+          onPress={() => handleOpenBottomSheet(category)}
+        >
+          {/* Background Image */}
+          <Image
+            source={tileImages[index]}
             style={{
-              backgroundColor: "#f8f8f8",
-              padding: 20,
-              marginBottom: 10,
-              borderRadius: 10,
+              width: "100%",
+              height: "100%",
+              position: "absolute",
             }}
-            onPress={() => handleOpenBottomSheet(categoryName)}
+            resizeMode="cover"
+          />
+          {/* Centered Text */}
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              color: "#fff",
+              textShadowColor: "rgba(0, 0, 0, 0.5)",
+              textShadowOffset: { width: 1, height: 1 },
+              textShadowRadius: 1,
+            }}
           >
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-              {categoryName}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      <BottomSheetModal ref={bottomSheetRef} index={0} snapPoints={["75%"]}>
-        {renderContent()}
-      </BottomSheetModal>
-    </BottomSheetModalProvider>
+            {category.name}
+          </Text>
+        </TouchableOpacity>
+      ))}
+    </View>
   );
-}
+};
+
+export default CategoryTiles;
