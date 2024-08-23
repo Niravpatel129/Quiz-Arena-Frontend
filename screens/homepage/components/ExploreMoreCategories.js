@@ -15,6 +15,7 @@ export default function ExploreMoreCategories() {
         backgroundColor: "#3F95F2",
         borderRadius: 16,
         alignItems: "center",
+        marginVertical: -15,
       }}
     >
       <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>
