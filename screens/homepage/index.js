@@ -27,6 +27,7 @@ import ExploreMoreCategories from "./components/ExploreMoreCategories";
 import UserProfile from "./components/UserProfile";
 import DailyQuizBanner from "./components/DailyQuizBanner";
 import DailyQuizLeaderboard from "./components/DailyQuizLeaderboard";
+import CategoryTiles from "./components/CategoryTiles"; // Import the new component
 
 export default function Homepage() {
   const { categories, userData } = useCategories();
@@ -98,13 +99,13 @@ export default function Homepage() {
   };
 
   const handleOpenBottomSheet = (category) => {
-    setSelectedCategory(category);
-    if (category === "Daily Quiz") {
+    setSelectedCategory(category.name);
+    if (category.name === "Daily Quiz") {
       setIsDailyQuiz(true);
     } else {
       setIsDailyQuiz(false);
       const categoryData = categories.find(
-        (cat) => cat.parentCategory === category
+        (cat) => cat.parentCategory === category.name
       );
       setCategoryItems(categoryData ? categoryData.subCategories : []);
     }
@@ -146,13 +147,6 @@ export default function Homepage() {
     );
   };
 
-  const categoryTiles = [
-    "Popular",
-    "Trending",
-    "Recently Added",
-    "Recently Played",
-  ];
-
   const renderBackdrop = useCallback(
     (props) => (
       <BottomSheetBackdrop
@@ -176,7 +170,6 @@ export default function Homepage() {
               backgroundColor: "#fff",
               height: "100%",
               gap: 20,
-              marginBottom: 100,
             },
             animatedStyle,
           ]}
@@ -186,42 +179,23 @@ export default function Homepage() {
             onPress={() => handleOpenBottomSheet("Daily Quiz")}
           />
           {config.triviaTuesdayEnabled && <RoyaleHeader />}
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-            }}
-          >
-            {categoryTiles.map((category, index) => (
-              <TouchableOpacity
-                key={index}
-                style={{
-                  backgroundColor: "#f8f8f8",
-                  padding: 20,
-                  marginBottom: 10,
-                  borderRadius: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexBasis: "48%",
-                  height: 120,
-                }}
-                onPress={() => handleOpenBottomSheet(category)}
-              >
-                <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                  {category}
-                </Text>
-              </TouchableOpacity>
-            ))}
-            <ExploreMoreCategories />
-          </View>
+          <CategoryTiles
+            categoryTiles={[
+              { name: "Recently Played" },
+              { name: "Trending" },
+              { name: "Recently Added" },
+              { name: "Popular" },
+            ]}
+            handleOpenBottomSheet={handleOpenBottomSheet}
+          />
+          <ExploreMoreCategories />
         </Animated.View>
       </ScrollView>
 
       <BottomSheetModal
         ref={bottomSheetRef}
         index={0}
-        snapPoints={["40%", "65%"]}
+        snapPoints={isDailyQuiz ? ["65%"] : ["40%", "66%"]}
         style={{
           paddingHorizontal: 10,
         }}
