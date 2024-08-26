@@ -13,6 +13,7 @@ import { keys } from "../../../keys";
 import CategoriesList from "./CategoriesList";
 import RoyaleHeader from "./RoyaleHeader";
 
+// now the categories page
 export default function SecondaryHomepage() {
   const { categories, userData } = useCategories();
   const [config, setConfig] = useState({ triviaTuesdayEnabled: false });

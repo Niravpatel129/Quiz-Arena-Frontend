@@ -180,12 +180,12 @@ export default function Homepage() {
           <DailyQuizBanner
             onPress={() => handleOpenBottomSheet("Daily Quiz")}
           />
-          {config.triviaTuesdayEnabled && <RoyaleHeader />}
+          {/* {config.triviaTuesdayEnabled && <RoyaleHeader />} */}
           <CategoryTiles
             categoryTiles={[
               { name: "Recently Played" },
-              { name: "Trending" },
               { name: "Recently Added" },
+              { name: "Trending" },
               { name: "Popular" },
             ]}
             handleOpenBottomSheet={handleOpenBottomSheet}

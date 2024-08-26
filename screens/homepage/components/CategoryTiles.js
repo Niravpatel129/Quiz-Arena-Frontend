@@ -4,8 +4,8 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 const CategoryTiles = ({ categoryTiles, handleOpenBottomSheet }) => {
   const tileImages = [
     require("../../../assets/recently-played.png"),
-    require("../../../assets/trending.png"),
     require("../../../assets/recently-added.png"),
+    require("../../../assets/trending.png"),
     require("../../../assets/popular.png"),
   ];
 
