@@ -219,12 +219,14 @@ export default function Profile2({ userId }) {
   return (
     <View style={{ height: "100%", backgroundColor: "white" }}>
       {userId && (
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{ padding: 20 }}
-        >
-          <Ionicons name="ios-arrow-back" size={24} color="#262625" />
-        </TouchableOpacity>
+        <SafeAreaView>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{ padding: 20 }}
+          >
+            <Ionicons name="ios-arrow-back" size={24} color="#262625" />
+          </TouchableOpacity>
+        </SafeAreaView>
       )}
 
       <ScrollView

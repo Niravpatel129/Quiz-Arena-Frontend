@@ -168,7 +168,7 @@ export default function Homepage() {
         <Animated.View
           style={[
             {
-              padding: 10,
+              padding: 12,
               backgroundColor: "#fff",
               height: "100%",
               gap: 10,

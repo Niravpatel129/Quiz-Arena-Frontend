@@ -25,7 +25,7 @@ const CategoryTiles = ({ categoryTiles, handleOpenBottomSheet }) => {
             borderRadius: 20,
             alignItems: "center",
             justifyContent: "center",
-            width: "47%",
+            width: "48%",
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.1,
