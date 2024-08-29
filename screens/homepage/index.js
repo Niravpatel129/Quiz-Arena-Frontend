@@ -13,11 +13,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import Toast from "react-native-toast-message";
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-  BottomSheetBackdrop,
-} from "@gorhom/bottom-sheet";
+import { BottomSheetModal, BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { newRequest } from "../../api/newRequest";
 import useCategories from "../../hooks/useCategories";
 import useStreak from "../../hooks/useStreak";
@@ -163,7 +159,7 @@ export default function Homepage() {
   );
 
   return (
-    <BottomSheetModalProvider>
+    <>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Animated.View
           style={[
@@ -198,7 +194,7 @@ export default function Homepage() {
       <BottomSheetModal
         ref={bottomSheetRef}
         index={0}
-        snapPoints={isDailyQuiz ? ["65%"] : ["40%", "66%"]}
+        snapPoints={isDailyQuiz ? ["65%"] : ["52%", "75%"]}
         style={{
           paddingHorizontal: 10,
         }}
@@ -206,6 +202,6 @@ export default function Homepage() {
       >
         {renderCategoryItems()}
       </BottomSheetModal>
-    </BottomSheetModalProvider>
+    </>
   );
 }
