@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 import { ImageBackground } from 'expo-image';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
@@ -8,8 +8,8 @@ import { useSound } from '../../../context/sound/SoundContext';
 const imageMap = {};
 
 function CategoryCard({ item, parentCategory }) {
-  const { playSound } = useSound();
-  const navigation = useNavigation();
+  // const { playSound } = useSound();
+  // const navigation = useNavigation();
   const [imageSource, setImageSource] = useState(
     imageMap[item.name?.toLowerCase()] || {
       uri:
@@ -45,13 +45,13 @@ function CategoryCard({ item, parentCategory }) {
           overflow: 'hidden',
         }}
         onPress={() => {
-          playSound('click');
-          navigation.navigate('CategoryScreen', {
-            categoryId: nameId,
-            categoryName: item.name,
-            parentCategory: parentCategory,
-            categoryImage: item.logo || 'default_image_url',
-          });
+          // playSound('click');
+          // navigation.navigate('CategoryScreen', {
+          //   categoryId: nameId,
+          //   categoryName: item.name,
+          //   parentCategory: parentCategory,
+          //   categoryImage: item.logo || 'default_image_url',
+          // });
         }}
       >
         <ImageBackground
