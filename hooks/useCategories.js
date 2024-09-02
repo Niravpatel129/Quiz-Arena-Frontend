@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
-import { newRequest } from '../api/newRequest';
-import useRecentlyPlayed from './useRecentlyPlayed';
+import { useEffect, useState } from "react";
+import { newRequest } from "../api/newRequest";
+import useRecentlyPlayed from "./useRecentlyPlayed";
 
-// Module-level cache variables
 let cachedCategories = null;
 let cachedUserData = null;
 let isDataFetched = false;
 
 export default function useCategories() {
   const [categories, setCategories] = useState([]);
+  const [landingCategories, setLandingCategories] = useState([]);
+  const [exploreCategories, setExploreCategories] = useState([]);
   const [userData, setUserData] = useState({});
   const { fetchRecentlyPlayed } = useRecentlyPlayed();
 
@@ -18,18 +19,15 @@ export default function useCategories() {
       let userData = cachedUserData || {};
 
       if (!isDataFetched) {
-        // Fetch categories and user data only if not already fetched
         const res = await newRequest('/homepage/home');
         categoriesData = res.data.categories;
         userData = res.data.user;
 
-        // Cache the fetched data
         cachedCategories = categoriesData;
         cachedUserData = userData;
         isDataFetched = true;
       }
 
-      // Always fetch "Recently Played" to keep it updated
       const previous = await fetchRecentlyPlayed();
       let updatedCategories = [...categoriesData];
 
@@ -47,7 +45,6 @@ export default function useCategories() {
           }),
         };
 
-        // Inject "Recently Played" at the beginning or update it if it already exists
         const index = updatedCategories.findIndex((c) => c.parentCategory === 'Recently Played');
         if (index !== -1) {
           updatedCategories[index] = recentlyPlayedCategory;
@@ -56,13 +53,25 @@ export default function useCategories() {
         }
       }
 
-      // Update state
       setCategories(updatedCategories);
+
+      // Separate categories for landing page
+      const landingPageCategories = updatedCategories.filter(cat =>
+        ["Recently Added", "Popular", "Trending"].includes(cat.parentCategory)
+      );
+      setLandingCategories(landingPageCategories);
+
+      // Categories for Explore Categories page (excluding landing page categories)
+      const explorePageCategories = updatedCategories.filter(cat =>
+        !["Recently Added", "Popular", "Trending"].includes(cat.parentCategory)
+      );
+      setExploreCategories(explorePageCategories);
+
       setUserData(userData);
     };
 
     fetchData();
-  }, []); // The dependency array is kept empty to emulate componentDidMount behavior
+  }, []);
 
-  return { categories, userData };
+  return { landingCategories, exploreCategories, userData };
 }

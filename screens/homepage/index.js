@@ -27,7 +27,7 @@ import CategoryTiles from "./components/CategoryTiles";
 import ShopTile from "./components/ShopTile";
 
 export default function Homepage() {
-  const { categories, userData } = useCategories();
+  const { landingCategories, userData } = useCategories();
   const [config, setConfig] = useState({ triviaTuesdayEnabled: false });
   const opacity = useSharedValue(0);
   const [updateStreak] = useStreak();
@@ -44,10 +44,10 @@ export default function Homepage() {
   });
 
   useEffect(() => {
-    if (categories) {
+    if (landingCategories) {
       opacity.value = withSpring(1);
     }
-  }, [categories]);
+  }, [landingCategories]);
 
   useEffect(() => {
     updateStreak();
@@ -102,7 +102,7 @@ export default function Homepage() {
     } else {
       setSelectedCategory(category.name);
       setIsDailyQuiz(false);
-      const categoryData = categories.find(
+      const categoryData = landingCategories.find(
         (cat) => cat.parentCategory === category.name
       );
       setCategoryItems(categoryData ? categoryData.subCategories : []);
@@ -176,14 +176,10 @@ export default function Homepage() {
           <DailyQuizBanner
             onPress={() => handleOpenBottomSheet("Daily Quiz")}
           />
-          {/* {config.triviaTuesdayEnabled && <RoyaleHeader />} */}
           <CategoryTiles
-            categoryTiles={[
-              { name: "Recently Played" },
-              { name: "Recently Added" },
-              { name: "Trending" },
-              { name: "Popular" },
-            ]}
+            categoryTiles={landingCategories.map((cat) => ({
+              name: cat.parentCategory,
+            }))}
             handleOpenBottomSheet={handleOpenBottomSheet}
           />
           <ExploreMoreCategories />

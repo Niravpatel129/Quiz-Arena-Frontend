@@ -15,7 +15,7 @@ import RoyaleHeader from "./RoyaleHeader";
 
 // now the categories page
 export default function SecondaryHomepage() {
-  const { categories, userData } = useCategories();
+  const { exploreCategories, userData } = useCategories();
   const [config, setConfig] = useState({ triviaTuesdayEnabled: false });
   const opacity = useSharedValue(0);
   const [updateStreak] = useStreak();
@@ -27,10 +27,10 @@ export default function SecondaryHomepage() {
   });
 
   useEffect(() => {
-    if (categories) {
+    if (exploreCategories) {
       opacity.value = withSpring(1);
     }
-  }, [categories]);
+  }, [exploreCategories]);
 
   useEffect(() => {
     updateStreak();
@@ -79,15 +79,13 @@ export default function SecondaryHomepage() {
         ]}
       >
         {config.triviaTuesdayEnabled && <RoyaleHeader />}
-        {categories.map((category, index) => {
-          return (
-            <CategoriesList
-              key={index}
-              parentCategory={category.parentCategory}
-              subCategories={category.subCategories}
-            />
-          );
-        })}
+        {exploreCategories.map((category, index) => (
+          <CategoriesList
+            key={index}
+            parentCategory={category.parentCategory}
+            subCategories={category.subCategories}
+          />
+        ))}
       </Animated.View>
     </ScrollView>
   );
