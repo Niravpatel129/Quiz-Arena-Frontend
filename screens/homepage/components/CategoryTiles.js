@@ -2,12 +2,12 @@ import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 
 const CategoryTiles = ({ categoryTiles, handleOpenBottomSheet }) => {
-  const tileImages = [
-    require("../../../assets/recently-played.png"),
-    require("../../../assets/recently-added.png"),
-    require("../../../assets/trending.png"),
-    require("../../../assets/popular.png"),
-  ];
+  const tileImages = {
+    "Recently Played": require("../../../assets/recently-played.png"),
+    "Recently Added": require("../../../assets/recently-added.png"),
+    Trending: require("../../../assets/trending.png"),
+    Popular: require("../../../assets/popular.png"),
+  };
 
   return (
     <View
@@ -17,9 +17,9 @@ const CategoryTiles = ({ categoryTiles, handleOpenBottomSheet }) => {
         justifyContent: "space-between",
       }}
     >
-      {categoryTiles.map((category, index) => (
+      {categoryTiles.map((category) => (
         <TouchableOpacity
-          key={index}
+          key={category.name}
           style={{
             marginBottom: 15,
             borderRadius: 20,
@@ -38,7 +38,7 @@ const CategoryTiles = ({ categoryTiles, handleOpenBottomSheet }) => {
         >
           {/* Background Image */}
           <Image
-            source={tileImages[index]}
+            source={tileImages[category.name]}
             style={{
               width: "100%",
               height: "100%",
