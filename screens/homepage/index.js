@@ -22,7 +22,7 @@ import CategoryCard from "./components/CategoryCard";
 import ExploreMoreCategories from "./components/ExploreMoreCategories";
 import UserProfile from "./components/UserProfile";
 import DailyQuizBanner from "./components/DailyQuizBanner";
-import DailyQuizLeaderboard from "./components/DailyQuizLeaderboard";
+import DailyQuizLeaderboard from "./components/DailyQuiz";
 import CategoryTiles from "./components/CategoryTiles";
 import ShopTile from "./components/ShopTile";
 
@@ -190,7 +190,7 @@ export default function Homepage() {
       <BottomSheetModal
         ref={bottomSheetRef}
         index={0}
-        snapPoints={isDailyQuiz ? ["65%"] : ["52%", "75%"]}
+        snapPoints={isDailyQuiz ? ["45%"] : ["52%", "75%"]}
         style={{
           paddingHorizontal: 10,
         }}
