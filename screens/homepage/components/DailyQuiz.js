@@ -1,9 +1,9 @@
 import React from "react";
 import { Image } from "expo-image";
-import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import { Text, View, TouchableOpacity, ScrollView, Alert } from "react-native";
 import CountryFlag from "react-native-country-flag";
 
-export default function DailyQuizLeaderboard() {
+export default function DailyQuiz() {
   const placeholderLeaderboard = [
     {
       userDetails: {
@@ -184,7 +184,7 @@ export default function DailyQuizLeaderboard() {
           right: 20,
         }}
         onPress={() => {
-          /* Handle daily quiz */
+          Alert.alert("Coming Soon", "This feature is coming soon.");
         }}
       >
         <Text style={{ color: "#FFF", fontWeight: "bold" }}>
