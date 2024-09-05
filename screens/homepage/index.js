@@ -1,18 +1,11 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import {
-  Linking,
-  Platform,
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { ScrollView, View, Text, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import Toast from "react-native-toast-message";
 import { BottomSheetModal, BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { newRequest } from "../../api/newRequest";
 import useCategories from "../../hooks/useCategories";
@@ -27,6 +20,7 @@ import CategoryTiles from "./components/CategoryTiles";
 import ShopTile from "./components/ShopTile";
 
 export default function Homepage() {
+  const navigation = useNavigation();
   const { landingCategories, userData } = useCategories();
   const [config, setConfig] = useState({ triviaTuesdayEnabled: false });
   const opacity = useSharedValue(0);
@@ -59,7 +53,6 @@ export default function Homepage() {
     try {
       const res = await newRequest.get(`/homepage/config/${keys.version}`);
       setConfig(res.data);
-      handleUpdateNotification(res.data);
     } catch (error) {
       console.error("Error fetching config:", error);
     }
@@ -67,31 +60,10 @@ export default function Homepage() {
 
   const fetchLeaderboardData = async () => {
     try {
-      const res = await newRequest.get("/leaderboard/dailyquiz"); // endpoint for daily quiz leaderboard
+      const res = await newRequest.get("/leaderboard/dailyquiz");
       setLeaderboard(res.data);
     } catch (error) {
       console.error("Error fetching leaderboard data:", error);
-    }
-  };
-
-  const handleUpdateNotification = (configData) => {
-    if (configData?.updatedRequired) {
-      Toast.show({
-        type: "info",
-        position: "bottom",
-        text1: "Update Available",
-        text2:
-          "A new version of the app is available, we recommend updating it now.",
-        visibilityTime: 3000,
-        autoHide: false,
-        onPress: () => {
-          const link =
-            Platform.OS === "ios"
-              ? "https://apps.apple.com/ca/app/quiz-arena-trivia-questions/id6474947179"
-              : "https://play.google.com/store/apps/details?id=com.niravpatelp129.QuizArenaFrontendScaffold";
-          Linking.openURL(link);
-        },
-      });
     }
   };
 
@@ -108,6 +80,16 @@ export default function Homepage() {
       setCategoryItems(categoryData ? categoryData.subCategories : []);
     }
     bottomSheetRef.current?.present();
+  };
+
+  const handleCategoryPress = (item, parentCategory) => {
+    bottomSheetRef.current?.dismiss();
+    navigation.navigate("CategoryScreen", {
+      categoryId: item.name.split(" ").join("-"),
+      categoryName: item.name,
+      parentCategory: parentCategory,
+      categoryImage: item.logo || "default_image_url",
+    });
   };
 
   const renderCategoryItems = () => {
@@ -137,7 +119,11 @@ export default function Homepage() {
                 justifyContent: "center",
               }}
             >
-              <CategoryCard item={item} parentCategory={selectedCategory} />
+              <CategoryCard
+                item={item}
+                parentCategory={selectedCategory}
+                onPress={handleCategoryPress}
+              />
             </View>
           ))}
         </ScrollView>
