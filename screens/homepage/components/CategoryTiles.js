@@ -21,16 +21,11 @@ const CategoryTiles = ({ categoryTiles, handleOpenBottomSheet }) => {
         <TouchableOpacity
           key={category.name}
           style={{
-            marginBottom: 15,
+            marginBottom: 13,
             borderRadius: 20,
             alignItems: "center",
             justifyContent: "center",
             width: "48%",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 4,
-            elevation: 3,
             overflow: "hidden",
             height: 120,
           }}
