@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { ScrollView, View, Text, TouchableOpacity } from "react-native";
+import { ScrollView, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Animated, {
   useAnimatedStyle,
@@ -82,12 +82,12 @@ export default function Homepage() {
     bottomSheetRef.current?.present();
   };
 
-  const handleCategoryPress = (item, parentCategory) => {
-    bottomSheetRef.current?.dismiss();
+  const handleCategoryPress = (item) => {
+    const nameId = item.name.split(" ").join("-");
     navigation.navigate("CategoryScreen", {
-      categoryId: item.name.split(" ").join("-"),
+      categoryId: nameId,
       categoryName: item.name,
-      parentCategory: parentCategory,
+      parentCategory: selectedCategory,
       categoryImage: item.logo || "default_image_url",
     });
   };
@@ -122,7 +122,8 @@ export default function Homepage() {
               <CategoryCard
                 item={item}
                 parentCategory={selectedCategory}
-                onPress={handleCategoryPress}
+                isHomepageTile={true}
+                onCategoryPress={handleCategoryPress}
               />
             </View>
           ))}
@@ -165,6 +166,7 @@ export default function Homepage() {
           <CategoryTiles
             categoryTiles={landingCategories.map((cat) => ({
               name: cat.parentCategory,
+              isHomepageTile: true,
             }))}
             handleOpenBottomSheet={handleOpenBottomSheet}
           />
