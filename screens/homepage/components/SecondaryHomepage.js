@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, Platform, Linking } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -11,10 +12,10 @@ import useCategories from "../../../hooks/useCategories";
 import useStreak from "../../../hooks/useStreak";
 import { keys } from "../../../keys";
 import CategoriesList from "./CategoriesList";
-import RoyaleHeader from "./RoyaleHeader";
+// import RoyaleHeader from "./RoyaleHeader"; // Uncomment if needed
 
-// now the categories page
 export default function SecondaryHomepage() {
+  const navigation = useNavigation();
   const { exploreCategories, userData } = useCategories();
   const [config, setConfig] = useState({ triviaTuesdayEnabled: false });
   const opacity = useSharedValue(0);
@@ -64,6 +65,41 @@ export default function SecondaryHomepage() {
     fetchConfig();
   }, []);
 
+  const SPECIAL_CATEGORIES = ["Recently Added", "Popular", "Trending"];
+
+  const handleCategoryPress = (
+    item,
+    isParentCategory,
+    parentCategory,
+    subCategories
+  ) => {
+    const nameId = item.name.split(" ").join("-");
+
+    if (isParentCategory) {
+      if (SPECIAL_CATEGORIES.includes(item.name)) {
+        // Handle special categories
+        console.log("Open special category:", item.name);
+        navigation.navigate("SpecialCategoryScreen", {
+          categoryName: item.name,
+        });
+      } else {
+        // Navigate to subcategories screen for regular parent categories
+        navigation.navigate("SubcategoriesScreen", {
+          categoryName: item.name,
+          subcategories: item.subCategories,
+        });
+      }
+    } else {
+      // It's a subcategory
+      navigation.navigate("CategoryScreen", {
+        categoryId: nameId,
+        categoryName: item.name,
+        parentCategory: parentCategory,
+        categoryImage: item.logo || "default_image_url",
+      });
+    }
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Animated.View
@@ -78,12 +114,14 @@ export default function SecondaryHomepage() {
           animatedStyle,
         ]}
       >
-        {config.triviaTuesdayEnabled && <RoyaleHeader />}
+        {/* Uncomment the line below if Trivia Tuesday is enabled */}
+        {/* {config.triviaTuesdayEnabled && <RoyaleHeader />} */}
         {exploreCategories.map((category, index) => (
           <CategoriesList
             key={index}
-            parentCategory={category.parentCategory}
+            parentCategory={category.name || category.parentCategory} // Adjusted to use category.name if parentCategory doesn't exist
             subCategories={category.subCategories}
+            onCategoryPress={handleCategoryPress}
           />
         ))}
       </Animated.View>
