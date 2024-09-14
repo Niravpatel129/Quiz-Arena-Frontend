@@ -1,54 +1,43 @@
-import React, { useState, useContext } from "react";
-import { Pressable, Text, View } from "react-native";
-import { ImageBackground } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
-import { SoundContext } from "../../../context/sound/SoundContext";
+import { ImageBackground } from "expo-image";
+import { useState } from "react";
+import { Pressable, Text, View } from "react-native";
 
 const imageMap = {};
 
-function CategoryCard({ item, parentCategory, onPress }) {
-  // const { playSound } = useContext(SoundContext);
+function CategoryCard({
+  item,
+  parentCategory,
+  isParentCategory,
+  onCategoryPress,
+}) {
   const [imageSource, setImageSource] = useState(
     imageMap[item.name?.toLowerCase()] || {
-      uri:
-        item.logo ||
-        "https://images.unsplash.com/photo-1608848461950-0fe51dfc41cb?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D",
+      uri: item.logo || "default_image_url",
     }
   );
 
   const handleImageError = () => {
-    if (!imageMap[item.name]) {
-      setImageSource({
-        uri:
-          item.logo ||
-          "https://images.unsplash.com/photo-1608848461950-0fe51dfc41cb?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D",
-      });
-    }
+    setImageSource({
+      uri: item.logo || "default_image_url",
+    });
   };
 
   const handlePress = () => {
-    // if (playSound) {
-    //   playSound("click");
-    // }
-    if (onPress) {
-      onPress(item, parentCategory);
+    if (onCategoryPress) {
+      onCategoryPress(
+        item,
+        isParentCategory,
+        parentCategory,
+        item.subCategories
+      );
     }
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Pressable
-        style={{
-          borderRadius: 16,
-          overflow: "hidden",
-        }}
+        style={{ borderRadius: 16, overflow: "hidden" }}
         onPress={handlePress}
       >
         <ImageBackground
