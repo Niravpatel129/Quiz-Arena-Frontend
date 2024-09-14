@@ -114,12 +114,11 @@ export default function SecondaryHomepage() {
           animatedStyle,
         ]}
       >
-        {/* Uncomment the line below if Trivia Tuesday is enabled */}
         {/* {config.triviaTuesdayEnabled && <RoyaleHeader />} */}
         {exploreCategories.map((category, index) => (
           <CategoriesList
             key={index}
-            parentCategory={category.name || category.parentCategory} // Adjusted to use category.name if parentCategory doesn't exist
+            parentCategory={category.name || category.parentCategory}
             subCategories={category.subCategories}
             onCategoryPress={handleCategoryPress}
           />
