@@ -1,7 +1,6 @@
 // components/ShopTile.js
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { TouchableOpacity, ImageBackground, View } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function ShopTile() {
@@ -20,18 +19,25 @@ export default function ShopTile() {
     <TouchableOpacity onPress={handleShopClick}>
       <View
         style={{
-          backgroundColor: "#f5f5f5",
           borderRadius: 10,
-          padding: 20,
-          alignItems: "center",
-          justifyContent: "center",
+          overflow: "hidden",
           marginVertical: 15,
+          width: "100%",
+          height: 130,
         }}
       >
-        <FontAwesome name="shopping-cart" size={50} color="#333" />
-        <Text style={{ marginTop: 10, fontSize: 18, fontWeight: "bold" }}>
-          Shop
-        </Text>
+        <ImageBackground
+          source={require("../../../assets/shop-img.png")}
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+          imageStyle={{
+            width: "100%",
+            height: "100%",
+            resizeMode: "stretch",
+          }}
+        />
       </View>
     </TouchableOpacity>
   );
