@@ -84,6 +84,7 @@ export default function Homepage() {
 
   const handleCategoryPress = (item) => {
     const nameId = item.name.split(" ").join("-");
+    bottomSheetRef.current?.dismiss();
     navigation.navigate("CategoryScreen", {
       categoryId: nameId,
       categoryName: item.name,
