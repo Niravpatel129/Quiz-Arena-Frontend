@@ -34,7 +34,7 @@ export default function DividerHeader({ headerText, shouldShowArrow }) {
             borderRadius: 100,
           }}
           onPress={() => {
-            navigation.push('CategoriesListView', {
+            navigation.navigate('CategoriesListView', {
               parentCategory: headerText,
             });
           }}

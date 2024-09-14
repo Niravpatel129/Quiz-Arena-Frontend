@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, SafeAreaView, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { Dimensions, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -34,14 +34,17 @@ const CategoryCardWrapper = ({ item, index, parentCategory }) => {
 export default function CategoriesListView() {
   const navigation = useNavigation();
   const [searchTerm, setSearchTerm] = useState('');
-  const parentCategory = useRoute()?.params?.parentCategory;
+  const route = useRoute();
+  const parentCategory = route?.params?.parentCategory;
   const { categories } = useCategories();
 
   const opacity = useSharedValue(0);
 
   useEffect(() => {
+    console.log('Categories:', categories);
+    console.log('Parent Category:', parentCategory);
     opacity.value = withTiming(1, { duration: 500 });
-  }, [categories]);
+  }, [categories, parentCategory]);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -49,31 +52,41 @@ export default function CategoriesListView() {
     };
   });
 
-  if (!categories) return null;
+  if (!categories) {
+    console.log('Categories are null or undefined');
+    return <Text>Loading categories...</Text>;
+  }
 
   const selectedCategory = categories.find(
     (category) => category.parentCategory === parentCategory,
   );
 
-  if (!selectedCategory) return null;
+  if (!selectedCategory) {
+    console.log('Selected category not found for parent:', parentCategory);
+    return <Text>Category not found</Text>;
+  }
+
+  console.log('Selected Category:', selectedCategory);
 
   const filteredSubCategories = selectedCategory.subCategories.filter((category) =>
     category.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
+  console.log('Filtered Subcategories:', filteredSubCategories);
+
   const dataProvider = new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(filteredSubCategories);
 
-  const itemSpacing = 10; // Spacing between items
+  const itemSpacing = 10;
   const itemPerRow = 3;
-  const totalSpacing = itemSpacing * (itemPerRow - 1); // Total spacing between items in a row
-  const availableWidth = width - totalSpacing; // Adjust width for spacing
+  const totalSpacing = itemSpacing * (itemPerRow - 1);
+  const availableWidth = width - totalSpacing;
   const itemWidth = availableWidth / itemPerRow;
 
   const layoutProvider = new LayoutProvider(
-    () => 1, // Assuming all items have the same type
+    () => 1,
     (type, dim) => {
       dim.width = itemWidth;
-      dim.height = 250; // Adjust the height as per your requirement
+      dim.height = 250;
     },
   );
 
@@ -89,7 +102,6 @@ export default function CategoriesListView() {
           style={{
             margin: 0,
             marginBottom: 0,
-
             marginTop: 20,
           }}
         >
@@ -111,13 +123,16 @@ export default function CategoriesListView() {
           <Text style={{ textAlign: 'center', marginTop: 20 }}>No shows found</Text>
         ) : (
           <Animated.View
-            style={{
-              flex: 1,
-              minHeight: 800,
-              minWidth: 0,
-              marginBottom: 20,
-              paddingBottom: 40,
-            }}
+            style={[
+              {
+                flex: 1,
+                minHeight: 800,
+                minWidth: 0,
+                marginBottom: 20,
+                paddingBottom: 40,
+              },
+              animatedStyle,
+            ]}
           >
             <RecyclerListView
               style={{ flex: 1, width: '100%', height: '120%' }}
