@@ -19,13 +19,17 @@ export default function useCategories() {
       let userData = cachedUserData || {};
 
       if (!isDataFetched) {
-        const res = await newRequest("/homepage/home");
-        categoriesData = res.data.categories;
-        userData = res.data.user;
+        try {
+          const res = await newRequest("/homepage/home");
+          categoriesData = res.data.categories;
+          userData = res.data.user;
 
-        cachedCategories = categoriesData;
-        cachedUserData = userData;
-        isDataFetched = true;
+          cachedCategories = categoriesData;
+          cachedUserData = userData;
+          isDataFetched = true;
+        } catch (error) {
+          console.error("Error fetching categories:", error);
+        }
       }
 
       const previous = await fetchRecentlyPlayed();
@@ -86,5 +90,5 @@ export default function useCategories() {
     fetchData();
   }, []);
 
-  return { landingCategories, exploreCategories, userData };
+  return { categories, landingCategories, exploreCategories, userData };
 }
