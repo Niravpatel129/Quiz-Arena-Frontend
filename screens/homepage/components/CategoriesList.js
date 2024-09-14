@@ -7,7 +7,7 @@ import DividerHeader from './DividerHeader';
 
 const { width } = Dimensions.get('window');
 
-export default function CategoriesList({ parentCategory, subCategories }) {
+export default function CategoriesList({ parentCategory, subCategories, onCategoryPress }) {
   const offset = useSharedValue(50);
   const opacity = useSharedValue(0);
 
@@ -33,14 +33,29 @@ export default function CategoriesList({ parentCategory, subCategories }) {
     },
   );
 
+  const SPECIAL_CATEGORIES = ['Recently Added', 'Popular', 'Trending'];
+
   const shouldShowArrow = () => {
-    if (parentCategory === 'Recently Played' || subCategories.length === 0) {
+    if (
+      parentCategory === 'Recently Played' ||
+      subCategories.length === 0 ||
+      SPECIAL_CATEGORIES.includes(parentCategory)
+    ) {
       return false;
     }
     return true;
   };
 
-  const rowRenderer = (type, item) => <CategoryCard item={item} parentCategory={parentCategory} />;
+  const rowRenderer = (type, item) => (
+    <CategoryCard
+      item={item}
+      parentCategory={parentCategory}
+      isParentCategory={false} // These are subcategories
+      onCategoryPress={(item) =>
+        onCategoryPress(item, false, parentCategory, subCategories)
+      }
+    />
+  );
 
   return (
     <Animated.View style={[{ flex: 1, marginBottom: -30 }, animatedStyle]}>
