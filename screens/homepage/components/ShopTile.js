@@ -21,9 +21,9 @@ export default function ShopTile() {
         style={{
           borderRadius: 10,
           overflow: "hidden",
-          marginVertical: 15,
+          marginVertical: -10,
           width: "100%",
-          height: 130,
+          height: 200,
         }}
       >
         <ImageBackground
