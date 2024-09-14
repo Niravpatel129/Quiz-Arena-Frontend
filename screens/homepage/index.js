@@ -171,7 +171,6 @@ export default function Homepage() {
             }))}
             handleOpenBottomSheet={handleOpenBottomSheet}
           />
-          <ExploreMoreCategories />
           <ShopTile />
         </Animated.View>
       </ScrollView>
