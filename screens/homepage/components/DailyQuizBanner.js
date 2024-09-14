@@ -1,67 +1,35 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
 
 export default function DailyQuizBanner({ onPress }) {
   return (
-    <LinearGradient
-      // Slightly lighter gradient colors
-      colors={["#8e95cf", "#c295b8"]}
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: 20,
-        borderRadius: 10,
-        shadowColor: "#000",
-        shadowOpacity: 0.5,
-        shadowRadius: 10,
-      }}
-    >
-      <View style={{ flex: 1 }}>
+    <TouchableOpacity onPress={onPress}>
+      <ImageBackground
+        source={require("../../../assets/daily-quiz-background.png")}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 20,
+          borderRadius: 10,
+          overflow: "hidden",
+          height: 100,
+        }}
+        imageStyle={{ borderRadius: 10 }}
+      >
         <Text
           style={{
-            fontSize: 24,
-            fontWeight: "bold",
+            fontSize: 20,
             color: "#fff",
-            textShadowColor: "#000", // Subtle shadow for pop effect
-            textShadowOffset: { width: 1, height: 1 },
-            textShadowRadius: 5,
-          }}
-        >
-          Daily Quiz
-        </Text>
-        <Text
-          style={{
-            paddingRight: 10,
-            fontSize: 14,
-            color: "#ddd",
-            marginTop: 5,
+            fontWeight: "bold",
+            textAlign: "center",
             textShadowColor: "#000",
             textShadowOffset: { width: 1, height: 1 },
-            textShadowRadius: 4,
+            textShadowRadius: 3,
           }}
         >
-          Join the Ultimate Quiz Adventure and Test Your Intellect
+          Join Daily Quiz
         </Text>
-      </View>
-      <TouchableOpacity
-        style={{
-          backgroundColor: "#333",
-          paddingVertical: 10,
-          paddingHorizontal: 20,
-          borderRadius: 20,
-          shadowColor: "#000",
-          shadowOpacity: 0.5,
-          shadowRadius: 6,
-          elevation: 8,
-        }}
-        onPress={onPress}
-      >
-        <Text style={{ fontSize: 16, color: "#fff", fontWeight: "bold" }}>
-          Join a quiz
-        </Text>
-      </TouchableOpacity>
-    </LinearGradient>
+      </ImageBackground>
+    </TouchableOpacity>
   );
 }
