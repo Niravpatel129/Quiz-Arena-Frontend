@@ -1,18 +1,6 @@
-import React from 'react';
-import { View } from 'react-native';
-import Profile2 from '../profile2';
+import React from "react";
+import PublicProfile from "./PublicProfile";
 
-export default function PublicProfile({ route }) {
-  const userId = route.params?.userId;
-
-  return (
-    <View
-      style={{
-        height: '100%',
-      }}
-    >
-      <Profile2 userId={userId} />
-      {/* <ProfileComponent userId={userId} /> */}
-    </View>
-  );
+export default function PublicProfileScreen(props) {
+  return <PublicProfile {...props} />;
 }
