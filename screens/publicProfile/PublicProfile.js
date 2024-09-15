@@ -1,15 +1,16 @@
 // PublicProfile.js
-import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { Image } from "expo-image";
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { Image } from "expo-image";
 import CountryFlag from "react-native-country-flag";
 import Animated, {
   Easing,
@@ -29,6 +30,8 @@ export default function PublicProfile({ route }) {
   const navigation = useNavigation();
   const opacity = useSharedValue(0);
   const translateY = useSharedValue(30);
+  const [isFriend, setIsFriend] = useState(false);
+  const [friendRequestSent, setFriendRequestSent] = useState(false);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -63,14 +66,15 @@ export default function PublicProfile({ route }) {
     fetchUser();
   }, [userId]);
 
-  const handleAddFriend = async (id) => {
+  const handleAddFriend = async () => {
     try {
-      await newRequest.post("/users/addFriend", { friendId: id });
+      await newRequest.post("/users/addFriend", { friendId: userId });
       Toast.show({
         type: "success",
         text1: "Success",
         text2: "Friend request sent",
       });
+      setFriendRequestSent(true);
     } catch (error) {
       console.log(error);
       Toast.show({
@@ -158,12 +162,48 @@ export default function PublicProfile({ route }) {
   return (
     <View style={{ height: "100%", backgroundColor: "white" }}>
       <SafeAreaView>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{ padding: 20 }}
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingHorizontal: 20,
+          }}
         >
-          <Ionicons name="ios-arrow-back" size={24} color="#262625" />
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="ios-arrow-back" size={24} color="#262625" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              if (isFriend) {
+                Alert.alert(
+                  "Already Friends",
+                  "You are already friends with this user."
+                );
+              } else if (friendRequestSent) {
+                Alert.alert(
+                  "Request Sent",
+                  "You have already sent a friend request to this user."
+                );
+              } else {
+                handleAddFriend();
+              }
+            }}
+          >
+            <Ionicons
+              name={
+                isFriend
+                  ? "person"
+                  : friendRequestSent
+                  ? "person-add-outline"
+                  : "person-add"
+              }
+              size={24}
+              color="#262625"
+            />
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
 
       <ScrollView
@@ -287,41 +327,6 @@ export default function PublicProfile({ route }) {
           )}
           {renderStatsCard("Avg Score", userData?.averageScore || 0, 3)}
         </Animated.View>
-
-        <TouchableOpacity
-          onPress={() => handleAddFriend(userId)}
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 15,
-            backgroundColor: "#3F95F2",
-            borderRadius: 16,
-            alignItems: "center",
-            marginTop: 10,
-          }}
-        >
-          <Text
-            style={{
-              color: "#fff",
-              fontSize: 18,
-              fontWeight: "bold",
-              textTransform: "uppercase",
-              letterSpacing: 1.5,
-            }}
-          >
-            Add Friend
-          </Text>
-          <LinearGradient
-            colors={["rgba(255, 215, 0, 0)", "#FFD700", "rgba(255, 215, 0, 0)"]}
-            start={{ x: 0, y: 0.5 }}
-            end={{ x: 1, y: 0.5 }}
-            style={{
-              height: 3,
-              width: "100%",
-              marginTop: 4,
-              borderRadius: 2,
-            }}
-          />
-        </TouchableOpacity>
       </ScrollView>
     </View>
   );
