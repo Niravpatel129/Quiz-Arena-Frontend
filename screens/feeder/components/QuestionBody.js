@@ -4,45 +4,47 @@ import { Text, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 const QuestionBody = ({ question }) => {
+  const hasImage = question.helperImage && question.helperImage !== '';
   return (
     <View
       style={{
-        justifyContent: 'center',
+        flex: 1,
+        justifyContent: hasImage ? 'flex-start' : 'center',
         alignItems: 'center',
-        paddingHorizontal: 30, // Reduced padding to ensure the content is not too wide
+        paddingHorizontal: 30,
       }}
     >
       <Text
         style={{
-          fontSize: question.question.length > 40 ? RFValue(16) : RFValue(18), // Reduced font size
+          fontSize: question.question.length > 40 ? RFValue(16) : RFValue(18),
           fontWeight: 'bold',
           fontFamily: 'poppins-regular',
           textAlign: 'center',
           color: 'white',
-          marginBottom: 20, // Reduced margin bottom to create space between text and image
+          marginBottom: hasImage ? 20 : 0,
         }}
       >
         {question.question}
       </Text>
-      {question.helperImage && question.helperImage !== '' && (
+      {hasImage && (
         <View
           style={{
-            width: '70%', // Reduced width
-            aspectRatio: 1.5, // Maintain aspect ratio to ensure proper spacing
+            width: '70%',
+            aspectRatio: 1.5,
             marginBottom: 10,
-            borderColor: 'white', // Added border color
-            borderWidth: 2, // Added border width
-            borderRadius: 10, // Optional: adds rounded corners to the border
-            overflow: 'hidden', // Ensures the image does not overflow the border
+            borderColor: 'white',
+            borderWidth: 2,
+            borderRadius: 10,
+            overflow: 'hidden',
             justifyContent: 'center',
             alignItems: 'center',
-            padding: 10, // Reduced padding to create space between the border and the image
-            backgroundColor: 'rgba(255, 255, 255, 0.08)', // Added 8% white background color
+            padding: 10,
+            backgroundColor: 'rgba(255, 255, 255, 1)',
           }}
         >
           <Image
-            cachePolicy='memory-disk'
-            contentFit='contain'
+            cachePolicy="memory-disk"
+            contentFit="contain"
             source={{
               uri: question.helperImage || '',
             }}
