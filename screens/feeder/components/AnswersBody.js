@@ -157,8 +157,10 @@ const AnswersBody = ({
                 textAlign: "center",
                 flexShrink: 1,
               }}
-              adjustsFontSizeToFitWidth={false}
-              numberOfLines={3}
+              adjustsFontSizeToFit={true} // Allows the font size to adjust to fit
+              minimumFontScale={0.5} // Sets the minimum scaling factor for the font
+              numberOfLines={3} // Limits the number of lines to 3
+              ellipsizeMode="tail" // If the text is still too long, it will show an ellipsis at the end
             >
               {answer.optionText}
             </Text>
