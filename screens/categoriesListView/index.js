@@ -14,7 +14,7 @@ import CategoryCard from '../homepage/components/CategoryCard';
 
 const { width } = Dimensions.get('window');
 
-const CategoryCardWrapper = ({ item, index, parentCategory }) => {
+const CategoryCardWrapper = ({ item, index, parentCategory, onCategoryPress }) => {
   const opacity = useSharedValue(0);
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -26,7 +26,7 @@ const CategoryCardWrapper = ({ item, index, parentCategory }) => {
 
   return (
     <Animated.View style={[{ flex: 1 }, animatedStyle]}>
-      <CategoryCard item={item} parentCategory={parentCategory} />
+      <CategoryCard item={item} parentCategory={parentCategory} onCategoryPress={onCategoryPress} />
     </Animated.View>
   );
 };
@@ -90,8 +90,18 @@ export default function CategoriesListView() {
     },
   );
 
+  const handleCategoryPress = (item) => {
+    const nameId = item.name.split(" ").join("-");
+    navigation.navigate("CategoryScreen", {
+      categoryId: nameId,
+      categoryName: item.name,
+      parentCategory: parentCategory,
+      categoryImage: item.logo || "default_image_url",
+    });
+  };
+
   const renderRow = (type, item, index) => (
-    <CategoryCardWrapper item={item} index={index} parentCategory={parentCategory} />
+    <CategoryCardWrapper item={item} index={index} parentCategory={parentCategory} onCategoryPress={handleCategoryPress} />
   );
 
   return (
