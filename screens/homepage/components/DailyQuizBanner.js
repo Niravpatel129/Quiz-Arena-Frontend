@@ -5,7 +5,9 @@ export default function DailyQuizBanner({ onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <ImageBackground
-        source={require("../../../assets/daily-quiz-background.png")}
+        source={{
+          uri: "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/home_page_imgs%2Fdaily-quiz-background.png?alt=media&token=64085815-b66b-4b2d-b747-c62bf2d7d88a",
+        }}
         style={{
           justifyContent: "center",
           alignItems: "center",
