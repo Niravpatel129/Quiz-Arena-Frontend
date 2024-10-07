@@ -27,7 +27,9 @@ export default function ShopTile() {
         }}
       >
         <ImageBackground
-          source={require("../../../assets/shop-img.png")}
+          source={{
+            uri: "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/home_page_imgs%2Fshop-img.png?alt=media&token=74d5e8c3-fab8-4294-b1aa-91b4f6342112",
+          }}
           style={{
             width: "100%",
             height: "100%",
