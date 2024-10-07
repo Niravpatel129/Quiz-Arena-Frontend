@@ -3,10 +3,18 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 
 const CategoryTiles = ({ categoryTiles, handleOpenBottomSheet }) => {
   const tileImages = {
-    "Recently Played": require("../../../assets/recently-played.png"),
-    "Recently Added": require("../../../assets/recently-added.png"),
-    Trending: require("../../../assets/trending.png"),
-    Popular: require("../../../assets/popular.png"),
+    "Recently Played": {
+      uri: "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/home_page_imgs%2Frecently-added.png?alt=media&token=e932c480-2f14-4b18-bdaa-06c98dd09771",
+    },
+    "Recently Added": {
+      uri: "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/home_page_imgs%2Frecently-played.png?alt=media&token=3b023abe-876d-4dd8-9643-cc57ecd4914d",
+    },
+    Trending: {
+      uri: "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/home_page_imgs%2Ftrending.png?alt=media&token=4b551d11-fd3d-45ba-8928-517055000a4e",
+    },
+    Popular: {
+      uri: "https://firebasestorage.googleapis.com/v0/b/quiz-arena-e2415.appspot.com/o/home_page_imgs%2Fpopular.png?alt=media&token=d04973e1-aae3-4266-84e4-34e757d517b4",
+    },
   };
 
   return (
